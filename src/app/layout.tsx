@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
+import BrandIntro from '@/components/layout/BrandIntro';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -39,7 +40,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to main content
         </a>
-        <Providers>{children}</Providers>
+        <Providers>
+          <BrandIntro />
+          {children}
+        </Providers>
       </body>
     </html>
   );

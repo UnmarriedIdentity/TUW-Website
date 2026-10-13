@@ -3,54 +3,70 @@
 import React, { useState, useEffect } from 'react';
 import TuwEmblem from './TuwEmblem';
 
-interface BrandIntroProps {
-  forceShow?: boolean;
-}
-
 const BRAND_WORDS = [
-  ['T', 'H', 'E'],
-  ['U', 'N', 'P', 'L', 'U', 'G', 'G', 'E', 'D'],
-  ['W', 'E', 'A', 'R'],
+  { word: 'THE', chars: ['T', 'H', 'E'] },
+  { word: 'UNPLUGGED', chars: ['U', 'N', 'P', 'L', 'U', 'G', 'G', 'E', 'D'] },
+  { word: 'WEAR', chars: ['W', 'E', 'A', 'R'] },
 ];
 
-export default function BrandIntro({ forceShow = false }: BrandIntroProps) {
-  // Phase progression matching Homespace ID Framer reference
-  // 1. 'mounted': black screen
-  // 2. 'emblem': leaping deer logo moves up into view (replaces "H")
-  // 3. 'letters': letters animate in one by one (translateX 40px -> 0, opacity 0 -> 1)
-  // 4. 'tagline': subtle architectural tagline fades in
-  // 5. 'curtain': entire container lifts upwards with 60fps cubic-bezier curve
-  // 6. 'done': completely unmounts from DOM
-  const [phase, setPhase] = useState<'mounted' | 'emblem' | 'letters' | 'tagline' | 'curtain' | 'done'>('mounted');
+export default function BrandIntro() {
+  // Homespace ID Staggered Letter-by-Letter Architecture:
+  // 1. Initial State (0ms - 100ms): Dark stage; official leaping deer stag emblem blooms
+  // 2. Letter-by-Letter Load (320ms - 1100ms): 16 letters ascend sequentially through masked viewports (45ms stagger)
+  // 3. Brand Crest Settle (1250ms): Gold accent rule and slow-living atelier sub-mark fade in
+  // 4. Shutter Up Curtain Transition (2050ms): Shutter sweeps straight UP (translateY -120vh) unveiling the home page
+  // 5. Completion (3000ms): Clean unmount from DOM, restoring viewport scrolling
+  const [emblemVisible, setEmblemVisible] = useState(false);
+  const [lettersVisible, setLettersVisible] = useState(false);
+  const [taglineVisible, setTaglineVisible] = useState(false);
+  const [shutterUp, setShutterUp] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     // 1. Accessibility: check for prefers-reduced-motion
     if (typeof window !== 'undefined') {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) {
-        setPhase('done');
+        setDone(true);
         return;
       }
-
-      // Check session storage unless explicitly forced
-      const hasSeen = sessionStorage.getItem('tuw_intro_seen');
-      if (hasSeen && !forceShow) {
-        setPhase('done');
-        return;
-      }
-      sessionStorage.setItem('tuw_intro_seen', 'true');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Choreographed timeline matching Homespace ID
-    const tEmblem = setTimeout(() => setPhase('emblem'), 150);
-    const tLetters = setTimeout(() => setPhase('letters'), 600);
-    const tTagline = setTimeout(() => setPhase('tagline'), 1400);
-    const tCurtain = setTimeout(() => setPhase('curtain'), 2200);
-    const tDone = setTimeout(() => setPhase('done'), 3150);
+    // Step 1 (100ms): Leaping deer stag emblem blooms
+    const tEmblem = setTimeout(() => {
+      setEmblemVisible(true);
+    }, 100);
+
+    // Step 2 (320ms): Letters begin loading one by one
+    const tLetters = setTimeout(() => {
+      setLettersVisible(true);
+    }, 320);
+
+    // Step 3 (1250ms): Subtitle & gold rule fade in
+    const tTagline = setTimeout(() => {
+      setTaglineVisible(true);
+    }, 1250);
+
+    // Step 4 (2050ms): Curtain sweeps upward into home page
+    const tShutter = setTimeout(() => {
+      setShutterUp(true);
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = '';
+      }
+    }, 2050);
+
+    // Step 5 (3000ms): Unmount from DOM after animation clears
+    const tDone = setTimeout(() => {
+      setDone(true);
+    }, 3000);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setPhase('done');
+        if (typeof window !== 'undefined') {
+          document.body.style.overflow = '';
+        }
+        setDone(true);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -59,94 +75,104 @@ export default function BrandIntro({ forceShow = false }: BrandIntroProps) {
       clearTimeout(tEmblem);
       clearTimeout(tLetters);
       clearTimeout(tTagline);
-      clearTimeout(tCurtain);
+      clearTimeout(tShutter);
       clearTimeout(tDone);
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = '';
+      }
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [forceShow]);
+  }, []);
 
-  if (phase === 'done') {
+  if (done) {
     return null;
   }
 
   const handleSkip = () => {
-    setPhase('done');
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+    setDone(true);
   };
 
-  const isEmblemActive = phase !== 'mounted';
-  const areLettersActive = phase === 'letters' || phase === 'tagline' || phase === 'curtain';
-  const isTaglineActive = phase === 'tagline' || phase === 'curtain';
-  const isCurtainLifting = phase === 'curtain';
-
-  // Calculate flat letter index for staggering
-  let globalLetterIndex = 0;
+  // Compute global running letter index for smooth cross-word staggering
+  let globalCharIndex = 0;
 
   return (
-    <div
+    <aside
       aria-label="The Unplugged Wear Brand Introduction"
       aria-live="polite"
       onClick={handleSkip}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white select-none overflow-hidden cursor-pointer intro-curtain-ultra ${
-        isCurtainLifting ? 'intro-curtain-sliding' : ''
+      className={`intro-shutter-wrap select-none cursor-pointer ${
+        shutterUp ? 'intro-shutter-up' : ''
       }`}
     >
-      {/* Center Container Loading matching Homespace ID structure */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 max-w-5xl mx-auto text-center">
-        {/* Logo Wrapper: Official Leaping Deer Stag Emblem (In place of "H") */}
+      {/* Centered Brand Presentation matching Homespace ID standard */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-4 max-w-5xl mx-auto text-center pointer-events-none">
+        {/* Official Leaping Deer Stag Emblem */}
         <div
-          className={`intro-emblem-motion flex items-center justify-center mb-6 sm:mb-8 transition-all duration-700 ${
-            isEmblemActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-90'
+          className={`intro-emblem-motion flex items-center justify-center mb-5 sm:mb-6 ${
+            emblemVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'
           }`}
         >
-          <TuwEmblem className="intro-emblem-size text-white drop-shadow-xl" />
+          <TuwEmblem className="w-16 h-16 sm:w-20 sm:h-20 text-white drop-shadow-2xl" />
         </div>
 
-        {/* Brand Text Wrapper with Staggered Letter Spans */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 intro-display-typography font-heading font-extrabold text-white tracking-tight">
-          {BRAND_WORDS.map((word, wordIndex) => (
-            <span key={wordIndex} className="inline-flex items-center whitespace-nowrap">
-              {word.map((char, charIndex) => {
-                const currentDelay = globalLetterIndex * 45;
-                globalLetterIndex += 1;
+        {/* Brand Text Wrapper with Staggered Letter-by-Letter Masks */}
+        <h1 className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 intro-brand-typography font-heading font-extrabold text-white tracking-tight">
+          {BRAND_WORDS.map((item, wordIdx) => (
+            <span key={wordIdx} className="inline-flex items-center whitespace-nowrap">
+              {item.chars.map((char, charIdx) => {
+                const currentDelay = globalCharIndex * 45;
+                globalCharIndex += 1;
                 return (
                   <span
-                    key={charIndex}
-                    style={{
-                      transitionDelay: areLettersActive ? `${currentDelay}ms` : '0ms',
-                    }}
-                    className={`intro-letter ${
-                      areLettersActive ? 'intro-letter-visible' : 'intro-letter-hidden'
+                    key={charIdx}
+                    className={`intro-letter-mask ${
+                      lettersVisible ? 'intro-letter-revealed' : ''
                     }`}
                   >
-                    {char}
+                    <span
+                      style={{
+                        transitionDelay: lettersVisible ? `${currentDelay}ms` : '0ms',
+                      }}
+                      className="intro-letter-char"
+                    >
+                      {char}
+                    </span>
                   </span>
                 );
               })}
             </span>
           ))}
-        </div>
+        </h1>
 
-        {/* Subtext Tagline & Thin Gold Rule */}
+        {/* Architectural Subtitle & Refined Gold Accent Rule */}
         <div
-          className={`flex flex-col items-center space-y-3 mt-6 sm:mt-8 transition-all duration-700 ${
-            isTaglineActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          className={`flex flex-col items-center space-y-3 mt-5 sm:mt-6 transition-all duration-700 ${
+            taglineVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <div className="w-16 h-px bg-store-gold opacity-75" />
+          <div className="w-16 h-px bg-store-gold opacity-80" />
           <p className="font-sans font-medium text-2xs sm:text-xs uppercase tracking-widest text-white/70">
-            Architectural Form • Zero Deadstock
+            Slow-Living Luxury • Architectural Form
           </p>
         </div>
       </div>
 
-      {/* Subtle Skip Prompt in Corner */}
+      {/* Architectural Shutter Bottom Lip (20vh tail extending below panel) */}
+      <div className="intro-shutter-lip">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-store-gold/40 to-transparent" />
+      </div>
+
+      {/* Accessible Skip Button */}
       <button
         type="button"
         onClick={handleSkip}
-        className="absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-2xs font-sans uppercase tracking-wider text-white/60 hover:text-white transition-colors cursor-pointer"
+        className="absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-2xs font-sans uppercase tracking-wider text-white/60 hover:text-white transition-colors z-20 cursor-pointer pointer-events-auto"
       >
         Skip [Esc]
       </button>
-    </div>
+    </aside>
   );
 }
