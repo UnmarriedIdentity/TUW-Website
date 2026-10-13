@@ -9,16 +9,21 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 5,
-    "done": 5,
+    "total": 11,
+    "done": 11,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "d67f6e8",
-    "unpushed": [],
-    "next_up": "Live intro and home page verified; ready for user preview",
+    "tip": "e4833b9",
+    "unpushed": [
+      "975def3",
+      "5a8cf99",
+      "0b1c585",
+      "a77ade2"
+    ],
+    "next_up": "Ready for remote push to origin preview after user confirmation",
     "pending_verifications": [],
     "last_updated": "2026-10-13",
     "updated_by": "agent"
@@ -107,6 +112,107 @@
         "Added instant Escape key and click-to-skip support",
         "Enforced WCAG 2.2 AA reduced motion compliance (prefers-reduced-motion triggers immediate unmount)",
         "Zero hex codes and zero arbitrary bracket classes across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-006",
+      "title": "Redesign Hero Carousel with Homespace ID 3-Video Thumbnail Selector, Glassmorphism Client Trust Badge, and Stratosphere 4th Video Integration",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Homespace ID Framer hero specimen (Image 1) with 3 video thumbnail pills (Modern, Classic, Scandinavian), glassmorphism [4.9] Client Trust rating badge, removed unnecessary play/pause/mute buttons, and 4th video (h4.mp4) embedded as full-width looping background in Stratosphere banner (Image 2).",
+      "key_decisions": [
+        "Limit hero video carousel to 3 benchmark videos (h1.mp4, h2.mp4, h3.mp4)",
+        "Implement floating 3-card thumbnail selector with active glowing border ring matching Image 1",
+        "Implement frosted glass [4.9] Client Trust badge with 5 gold stars matching Image 1",
+        "Remove all distracting play/pause, volume, and progress line buttons per user directive",
+        "Embed 4th video (h4.mp4) into the 'Let\\'s Take Your Fashion to The Stratosphere' banner before footer matching Image 2",
+        "Enforce zero hex codes and zero arbitrary bracket classes in JSX"
+      ]
+    },
+    {
+      "id": "TL-WEB-007",
+      "title": "Refine Storefront Hero Section with Ultra-Minimal Text and Slow-Living Haute Luxury Aesthetics",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Minimal slow-living luxury editorial aesthetic: hairline gold eyebrow, architectural 2-part title, 7-word subtitle, removed cluttered spec pills, luxury pill CTAs, and bilateral frosted glass audio/scroll controls.",
+      "key_decisions": [
+        "Replaced 4-line stacked bold headline with sculptural 2-part architectural title (Architectural Form. Pure Permanence)",
+        "Reduced 20-word technical spec paragraph to a quiet 7-word luxury statement ('Dense 500 GSM organic essentials, tailored on-demand')",
+        "Completely eliminated cluttered spec chips ('500 GSM French Terry', 'Zero Deadstock', 'Tiruppur Atelier')",
+        "Elevated primary CTA to haute couture pill proportion (h-12, px-8, tracking-luxury uppercase)",
+        "Removed commercial 4.9 client trust badge to establish calm luxury bilateral symmetry (Sound Off/On at left, Scroll to Explore at right)",
+        "Zero hex codes and zero arbitrary bracket classes across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-008",
+      "title": "Implement Jitter.video Signature Scooped-Bottom Footer Reveal Animation with Floating Action Dock and Dark Video Motion Under-Layer",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Jitter.video signature footer architecture: inner warm-ivory canvas card with responsive scooped bottom corners (border-bottom-radius 2.75rem to 7.5rem), dark obsidian base layer revealed underneath with looping fabric video badge and Dispatch newsletter form, plus floating frosted quick action dock.",
+      "key_decisions": [
+        "Enabled true CSS sticky curtain reveal by removing overflow:hidden from .jitter-footer-shell and applying position:sticky; bottom:0; z-index:10; will-change:transform on .jitter-footer-reveal",
+        "Configured .jitter-footer-inner with z-index:20 and 7.5rem scooped border-radius to roll up smoothly over the pinned dark layer",
+        "Integrated looping 500 GSM French terry video badge (h3.mp4) in the revealed under-layer matching Jitter motion sticker pattern",
+        "Enforced store-gold CTA styling on Dispatch newsletter button to strictly prevent admin purple per AGENTS.md invariant",
+        "Constructed .jitter-floating-dock with leaping deer emblem, quick links, and dynamic scroll threshold reveal (>300px scrollY)",
+        "Zero hex codes and zero arbitrary bracket classes across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-009",
+      "title": "Purge Sound Off/On and Scroll to Explore Bottom Capsule Controls from Hero Section",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Clean, undisturbed architectural slow-living hero: video plays silently and seamlessly on continuous loop without overlay control pill artifacts.",
+      "key_decisions": [
+        "Purged [SOUND OFF] audio toggle pill button and [SCROLL TO EXPLORE] pill prompt from hero bottom row",
+        "Cleaned up audio mute state, video reference hooks, and unneeded Lucide icon imports (Volume2, VolumeX, ChevronDown)",
+        "Removed deprecated equalizer keyframes and utilities (.eq-bar-*) from globals.css",
+        "Centered editorial title and primary CTA pills vertically within hero viewport",
+        "Zero hex codes and zero arbitrary bracket classes across all touched lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-010",
+      "title": "Resolve Footer Reveal Visibility Issue & Refine Architectural Atelier Brand Display",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "High-visibility architectural brand showcase in revealed under-layer: single-line fluid brushed titanium gradient title, leaping deer emblem, 16:10 video badge with zero top-clipping, and dedicated clearance zone for floating action dock.",
+      "key_decisions": [
+        "Eliminated low-contrast 10% opacity watermark text that was wrapping awkwardly into 3 lines and overflowing viewport height",
+        "Created .jitter-brand-signature with single-line whitespace:nowrap, fluid clamp(1.85rem, 5.4vw, 5.25rem), and luxury metallic gradient (from 80% to 20% white)",
+        "Integrated TuwEmblem leaping deer icon and GOTS Organic / Zero Deadstock certification labels into brand showcase",
+        "Streamlined vertical padding and video badge dimensions (18rem x 11.25rem) to guarantee full visibility with zero top clipping under the scooped curtain",
+        "Ensured floating quick-action dock sits gracefully in dedicated bottom clearance buffer without obscuring brand copy",
+        "Zero hex codes and zero arbitrary bracket classes across touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-011",
+      "title": "Implement Homespace ID Staggered Letter-by-Letter Loading and Shutter Curtain Unveil in BrandIntro",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Homespace ID kinetic typography preloader: 16 individual letters emerge sequentially through overflow-hidden viewports (45ms stagger) rather than blooming all at once, followed by gold accent hairline, and smooth upward curtain shutter lift (translateY -120vh) unveiling the home page.",
+      "key_decisions": [
+        "Replaced single-block word bloom with choreographed letter-by-letter masked reveals (.intro-letter-mask and .intro-letter-char)",
+        "Calculated continuous global letter indices across words (THE, UNPLUGGED, WEAR) with 45ms step delays to ensure smooth typing cadence",
+        "Integrated blooming leaping deer emblem (TuwEmblem) ahead of letter reveal",
+        "Constructed smooth upward shutter transition (translateY -120vh with cubic-bezier(0.76, 0, 0.24, 1)) and 20vh gradient lip unveiling the home page",
+        "Maintained accessible escape/click skip handler, body scroll locking, and prefers-reduced-motion bypass",
+        "Zero hex codes and zero arbitrary bracket classes across touched JSX lines"
       ]
     }
   ]
