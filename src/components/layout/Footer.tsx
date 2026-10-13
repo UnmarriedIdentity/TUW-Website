@@ -20,15 +20,15 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#111111] text-[#E0E0E0] pt-16 pb-12 border-t border-black">
+    <footer className="bg-primary-dark text-white/90 pt-16 pb-0 border-t border-white/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-[#2A2A2A]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-white/10">
           {/* Brand Manifesto Col (Spans 2 on desktop) */}
           <div className="lg:col-span-2 space-y-4">
-            <span className="font-extrabold text-2xl tracking-tighter uppercase text-white">
+            <span className="font-heading font-extrabold text-2xl tracking-tighter uppercase text-white">
               The Unplugged Wear
             </span>
-            <p className="text-sm text-[#A0A0A0] max-w-sm leading-relaxed">
+            <p className="text-sm text-white/70 max-w-sm leading-relaxed font-sans">
               Quiet, dense organic garments built to outlast fast-paced digital cycles. Printed
               purely on-demand in Tiruppur to guarantee zero deadstock and zero excess inventory.
             </p>
@@ -39,7 +39,7 @@ export default function Footer() {
               </span>
 
               {subscribed ? (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-[#1E293B] border border-[#334155] text-xs text-[#38BDF8]">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-white/10 border border-white/20 text-xs text-secondary-blue">
                   <CheckCircle2 size={16} />
                   <span>You are subscribed to the TUW Dispatch. Welcome.</span>
                 </div>
@@ -51,7 +51,7 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="flex-1 h-11 px-4 text-xs rounded-full bg-[#1C1C1E] border border-[#333333] text-white placeholder:text-[#666] outline-none focus:border-white transition-colors"
+                    className="flex-1 h-11 px-4 text-xs rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/40 outline-none focus:border-white transition-colors"
                   />
                   <Button variant="primary" size="sm" type="submit" icon={<ArrowRight size={14} />} iconPosition="right">
                     Join
@@ -64,7 +64,7 @@ export default function Footer() {
           {/* Col 2: Catalog Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Catalog</h4>
-            <ul className="space-y-2 text-xs text-[#A0A0A0]">
+            <ul className="space-y-2 text-xs text-white/70">
               <li>
                 <Link href="/shop" className="hover:text-white transition-colors">
                   All Apparel
@@ -98,10 +98,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Company & Story */}
+          {/* Col 3: Company & Ethos */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Ethos</h4>
-            <ul className="space-y-2 text-xs text-[#A0A0A0]">
+            <ul className="space-y-2 text-xs text-white/70">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About TUW
@@ -135,10 +135,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Help & Policies */}
+          {/* Col 4: Policies */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Policies</h4>
-            <ul className="space-y-2 text-xs text-[#A0A0A0]">
+            <ul className="space-y-2 text-xs text-white/70">
               <li>
                 <Link href="/faq" className="hover:text-white transition-colors">
                   Disclosures & FAQ
@@ -169,17 +169,17 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & POD Note */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#707070]">
+        <div className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
           <div>
             © {new Date().getFullYear()} The Unplugged Wear. Mindful POD apparel. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5">
-              <Shield size={14} className="text-[#10B981]" />
+              <Shield size={14} className="text-secondary-mint" />
               GOTS Organic Cotton
             </span>
             <span className="flex items-center gap-1.5">
-              <RefreshCw size={14} className="text-[#7539FF]" />
+              <RefreshCw size={14} className="text-secondary-blue" />
               Zero Surplus Inventory
             </span>
             <span>Made with Care in India</span>
@@ -187,9 +187,9 @@ export default function Footer() {
         </div>
 
         {/* Interactive Demo Controls Ribbon per MOCK_DATA.md */}
-        <div className="mt-8 pt-6 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#888888]">
+        <div className="mt-4 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/60">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-white uppercase tracking-wider text-[11px]">
+            <span className="font-semibold text-white uppercase tracking-wider text-2xs">
               Demo Scenarios:
             </span>
             {[
@@ -202,10 +202,10 @@ export default function Footer() {
                 key={sc.id}
                 type="button"
                 onClick={() => setScenario(sc.id as any)}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
+                className={`px-2.5 py-1 rounded-full text-2xs font-medium transition-all ${
                   scenario === sc.id
-                    ? 'bg-white text-black font-semibold'
-                    : 'bg-[#222222] text-[#AAAAAA] hover:text-white hover:bg-[#333333]'
+                    ? 'bg-white text-tertiary-black font-semibold'
+                    : 'bg-white/10 text-white/70 hover:text-white hover:bg-white/20'
                 }`}
               >
                 {sc.label}
@@ -221,14 +221,21 @@ export default function Footer() {
                   resetStoreData();
                 }
               }}
-              className="text-[#C8A96A] hover:underline font-medium text-[11px] flex items-center gap-1"
+              className="text-store-gold hover:underline font-medium text-2xs flex items-center gap-1"
             >
               <span>Reset Demo State</span>
             </button>
-            <span className="text-[#555555] text-[10px] hidden sm:inline">
+            <span className="text-white/40 text-2xs hidden sm:inline">
               Local mock storage (tuw_website_v2) · Independent client state
             </span>
           </div>
+        </div>
+      </div>
+
+      {/* Massive Architectural Typography Watermark matching Figma "MONALISA" specimen */}
+      <div className="w-full overflow-hidden pt-8 select-none pointer-events-none border-t border-white/5">
+        <div className="font-heading font-black text-white/10 uppercase tracking-tighter text-center watermark-brand-display translate-y-3">
+          The Unplugged Wear
         </div>
       </div>
     </footer>

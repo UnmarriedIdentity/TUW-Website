@@ -9,16 +9,16 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 3,
-    "done": 3,
+    "total": 5,
+    "done": 5,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "5c56e0e",
+    "tip": "60167b5",
     "unpushed": [],
-    "next_up": "Live Vercel deployment synced at https://tuw-storefront.vercel.app/; await next user instructions",
+    "next_up": "Live intro and home page verified; ready for user preview",
     "pending_verifications": [],
     "last_updated": "2026-10-13",
     "updated_by": "agent"
@@ -71,6 +71,40 @@
         "Implemented Rolls-Royce inspired whisper-quiet scroll morph animation: displays full 'THE UNPLUGGED WEAR' Futura wordmark at top (scrollY < 24px), smoothly morphing into the official black leaping deer / stag logo vector on scroll with zero CLS",
         "Configured official leaping deer emblem as the tab icon/favicon (/icon.png, /favicon.ico) in app layout metadata",
         "Strictly maintained zero hex codes and zero bracket arbitraries across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-004",
+      "title": "Build Pixel-Perfect Home Page with Video Carousel Hero, Best Selling Filters, Asymmetric New Collection, and Monalisa Watermark Footer matching Figma",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Pixel-perfect implementation of Figma home page screenshots with 4-video carousel hero, best-selling filters, 3-pillar customer experience banner, asymmetric new collection showcase, and Monalisa-specimen bottom watermark footer.",
+      "key_decisions": [
+        "Integrated user-provided videos (h1.mp4, h2.mp4, h3.mp4, h4.mp4) with 4-segment progress bars, play/pause, and mute/unmute controls",
+        "Implemented category filter pills (All Collection, Pullover, Pant, Tippers, T-shirt, Jacket, Long Sleeve, Swim Shorts) with dynamic active filtering",
+        "Built deep teal customer experience banner matching Figma with 3 core pillars and circular icons",
+        "Constructed asymmetric 3-column editorial grid with stacked side cards and tall center denim highlight card",
+        "Rendered massive architectural typography watermark 'THE UNPLUGGED WEAR' at bottom of footer matching Figma specimen",
+        "Strictly adhered to zero hex codes and zero arbitrary bracket classes across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-005",
+      "title": "Build Ultra-Smooth Luxury Intro Animation with Leaping Deer Emblem & Typographic Reveal matching Homespace ID Framer Standard",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Homespace ID Framer luxury intro benchmark — center monogram replaced with official leaping deer emblem (TuwEmblem), smoothly expanding into 'THE UNPLUGGED WEAR' Futura wordmark with thin gold accent line, followed by an accelerated 60fps curtain lift.",
+      "key_decisions": [
+        "Replaced 'H' monogram with official leaping deer emblem vector (TuwEmblem) entering smoothly in center",
+        "Orchestrated 4-step sequence: emblem scale-in (0-850ms) -> typographic expansion (850-2000ms) -> curtain lift (2000-2850ms) -> complete DOM unmount",
+        "Implemented session persistence via sessionStorage('tuw_intro_seen') to prevent annoying repeats during browsing",
+        "Added instant Escape key and click-to-skip support",
+        "Enforced WCAG 2.2 AA reduced motion compliance (prefers-reduced-motion triggers immediate unmount)",
+        "Zero hex codes and zero arbitrary bracket classes across all touched JSX lines"
       ]
     }
   ]

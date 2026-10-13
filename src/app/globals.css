@@ -44,6 +44,13 @@
   --color-store-input-focus: #002B3A;
   --color-store-link: #002B3A;
   --color-header-topbar: #171535;
+  --color-store-cream: #F4F1EA;
+  --color-store-card-border: #E2DDCF;
+  --color-store-gold: #C8A96A;
+  --color-store-charcoal: #1A1A1A;
+  --color-store-muted: #8A8A8A;
+  --color-store-deep-teal: #002B3A;
+  --color-store-dark-card: #001F2B;
 
   /* Figma Auto Layout Dimensions (Sidebar Details: W 1612, H 529, Gap 150) */
   --width-figma-frame: 1612px;
@@ -243,6 +250,63 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 .svg-google-red {
   fill: #EA4335;
+}
+
+/* Storefront Layout & Geometry Utilities */
+.hero-viewport-height {
+  min-height: clamp(36rem, 85vh, 56rem);
+}
+.aspect-card-tall {
+  aspect-ratio: 3 / 4;
+}
+.aspect-card-square {
+  aspect-ratio: 1 / 1;
+}
+.aspect-card-story {
+  aspect-ratio: 16 / 10;
+}
+.aspect-asymmetric-tall {
+  min-height: 38rem;
+}
+.watermark-brand-display {
+  font-size: clamp(3rem, 11.5vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+.watermark-subdued {
+  font-size: clamp(4rem, 16vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+}
+.hero-scrim-gradient {
+  background: linear-gradient(180deg, rgba(15, 15, 15, 0.45) 0%, rgba(15, 15, 15, 0.2) 40%, rgba(15, 15, 15, 0.75) 100%);
+}
+.hero-scrim-horizontal {
+  background: linear-gradient(90deg, rgba(15, 15, 15, 0.7) 0%, rgba(15, 15, 15, 0.35) 60%, rgba(15, 15, 15, 0.1) 100%);
+}
+
+/* Luxury Intro Animation Utilities */
+.intro-curtain-exit {
+  transition: transform 0.85s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+  will-change: transform, opacity;
+}
+.intro-curtain-sliding {
+  transform: translateY(-100%);
+}
+.intro-emblem-motion {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.intro-text-motion {
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, letter-spacing;
+}
+.intro-line-motion {
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+.intro-emblem-size {
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 /* --------------------------------------------------------------------------

@@ -4,3 +4,4 @@ export { default as AnnouncementBar } from './AnnouncementBar';
 export { default as MobileMenu } from './MobileMenu';
 export { default as CartDrawer } from './CartDrawer';
 export { default as TuwEmblem } from './TuwEmblem';
+export { default as BrandIntro } from './BrandIntro';
