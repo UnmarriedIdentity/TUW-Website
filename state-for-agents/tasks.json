@@ -15,10 +15,10 @@
     "backlog": 0
   },
   "session": {
-    "branch": "feat/storefront-meet",
-    "tip": "476b5e9deb95e333c60c3eb344e3b722589454fc",
+    "branch": "preview",
+    "tip": "6c98a09",
     "unpushed": [],
-    "next_up": "Await next user instructions for storefront features",
+    "next_up": "Await Vercel deployed site link from user to update route links",
     "pending_verifications": [],
     "last_updated": "2026-10-13",
     "updated_by": "agent"
