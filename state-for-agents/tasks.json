@@ -1,0 +1,77 @@
+{
+  "project": "tuw-website storefront",
+  "tracker_version": 1,
+  "source_of_truth": {
+    "code": "tuw-website/src",
+    "tokens": "tuw-website/src/app/globals.css (@theme store roles)",
+    "skill-index": "tuw-website/state-for-agents/skills",
+    "reference": "Figma canonical Node 82:5702 (Futura Headings, Outfit Body everywhere else, 3-tier Color Style, 1612x529 Auto-layout Frame)"
+  },
+  "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
+  "summary": {
+    "total": 3,
+    "done": 3,
+    "in_progress": 0,
+    "backlog": 0
+  },
+  "session": {
+    "branch": "feat/storefront-meet",
+    "tip": "476b5e9deb95e333c60c3eb344e3b722589454fc",
+    "unpushed": [],
+    "next_up": "Await next user instructions for storefront features",
+    "pending_verifications": [],
+    "last_updated": "2026-10-13",
+    "updated_by": "agent"
+  },
+  "workflow": {
+    "how_to_close_a_task": "gates green → status done + log commit + design_match + verified + finished → recompute summary → refresh session → commit code + tracker together",
+    "validation": "JSON parses; ids unique; parent ids exist; summary counts match tasks array; done implies log + verified"
+  },
+  "tasks": [
+    {
+      "id": "TL-WEB-001",
+      "title": "Integrate Figma Node 82:5702 Design Foundation (Futura/Outfit, Color Style & Auto-Layout Frame)",
+      "status": "done",
+      "verified": true,
+      "design_match": "Figma Node 82:5702 — Upper Futura heading, lower Outfit body, 2 primary, 4 secondary, 5 tertiary colors, sidebar metrics W 1612 H 529 Gap 150",
+      "finished": "2026-10-13",
+      "key_decisions": [
+        "Configured Next.js Outfit font variable for body and UI",
+        "Configured Futura font-heading for all h1-h6 and uppercase headings",
+        "Embedded Figma Color Style tokens in @theme and globals.css",
+        "Documented and rendered 1612x529 Auto-Layout Frame specimen in /design-system"
+      ]
+    },
+    {
+      "id": "TL-WEB-002",
+      "title": "Build Figma Login & Register pages (Desktop 1440px & Mobile 375px/768px)",
+      "status": "done",
+      "verified": true,
+      "design_match": "Byte-identical layout matching Figma node 233:11587 (Login Desktop), 233:11617 (Login Mobile), 233:11647 (Register Desktop), 233:11676 (Register Mobile).",
+      "finished": "2026-10-13",
+      "key_decisions": [
+        "Exported and applied high-res lifestyle hero images login-hero.png and register-hero.png directly from Figma assets",
+        "Removed storefront Header and Footer from /login and /register to achieve true standalone full-page experience",
+        "Constructed two-column split for desktop (1440x1024) and top-card/bottom-image stack for mobile (375px) matching Figma frames byte-identically",
+        "Implemented accessible password eye toggles, input preservation, and truthful demo authentication",
+        "Guaranteed zero hex codes and zero bracket arbitraries across all touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-003",
+      "title": "Build Figma Home Page Navigation Bar with Rolls-Royce Scroll Logo Morph Animation & Deer Favicon",
+      "status": "done",
+      "started": "2026-10-13",
+      "finished": "2026-10-13",
+      "verified": true,
+      "design_match": "Figma node 221:12598 (template 2 header) + WhatsApp leaping deer brand logo vector + Rolls-Royce luxury scroll-morph logo animation",
+      "key_decisions": [
+        "Implemented 36px top bar with deep navy background #171535, links (Blogs, FAQ's, Support), 4 social icons, and interactive USD selector",
+        "Implemented 73px main navbar with warm ivory canvas #FCFAF6, category links (Men, Women, Kids, New Collection, About), and 4 action icons (Search, Wishlist, Account, Cart)",
+        "Implemented Rolls-Royce inspired whisper-quiet scroll morph animation: displays full 'THE UNPLUGGED WEAR' Futura wordmark at top (scrollY < 24px), smoothly morphing into the official black leaping deer / stag logo vector on scroll with zero CLS",
+        "Configured official leaping deer emblem as the tab icon/favicon (/icon.png, /favicon.ico) in app layout metadata",
+        "Strictly maintained zero hex codes and zero bracket arbitraries across all touched JSX lines"
+      ]
+    }
+  ]
+}
