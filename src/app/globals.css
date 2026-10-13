@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TUW Website — THE ONLY CSS FILE (single app.css)
+   Imported once in src/app/layout.tsx.
+   Sections: Tokens / Base / Utilities. Do not create a 2nd CSS file
+   until this file exceeds ~500 lines.
+   ============================================================ */
+
+@theme {
+  --font-sans: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Futura", "Trebuchet MS", var(--font-outfit), "Outfit", sans-serif;
+  --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  /* Figma Node 82:5702 Color Style Foundation */
+  --color-primary-dark: #002B3A;
+  --color-primary-teal: #005B6C;
+
+  --color-secondary-mint: #82C3B7;
+  --color-secondary-coral: #FF8B66;
+  --color-secondary-blue: #57AFFF;
+  --color-secondary-purple: #8364FF;
+
+  --color-tertiary-black: #0F0F0F;
+  --color-tertiary-gray: #676767;
+  --color-tertiary-light-gray: #E8E8E8;
+  --color-tertiary-offwhite: #FCFAF6;
+  --color-tertiary-white: #FFFFFF;
+
+  --color-canvas-navy: #00003F;
+
+  /* Brand & Semantic Storefront Tokens */
+  --color-store-canvas: #FCFAF6;
+  --color-store-surface: #FFFFFF;
+  --color-store-text-primary: #0F0F0F;
+  --color-store-text-secondary: #676767;
+  --color-store-border: #E8E8E8;
+  --color-store-action-primary: #002B3A;
+  --color-store-action-hover: #001C26;
+  --color-store-accent: #57AFFF;
+  --color-store-input-bg: #FFFFFF;
+  --color-store-input-border: #E8E8E8;
+  --color-store-input-focus: #002B3A;
+  --color-store-link: #002B3A;
+  --color-header-topbar: #171535;
+
+  /* Figma Auto Layout Dimensions (Sidebar Details: W 1612, H 529, Gap 150) */
+  --width-figma-frame: 1612px;
+  --height-figma-frame: 529px;
+  --spacing-figma-gap: 150px;
+
+  --radius-form-card: 1.5rem;
+  --radius-form-input: 0.75rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --text-2xs: 0.625rem;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.08);
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --font-heading: "Futura", "Trebuchet MS", var(--font-outfit), "Outfit", sans-serif;
+  --font-body: var(--font-outfit), "Outfit", sans-serif;
+  --font-urbanist: var(--font-outfit), "Outfit", sans-serif;
+
+  /* Figma Color Style Variables */
+  --tuw-primary-dark: #002B3A;
+  --tuw-primary-teal: #005B6C;
+  --tuw-secondary-mint: #82C3B7;
+  --tuw-secondary-coral: #FF8B66;
+  --tuw-secondary-blue: #57AFFF;
+  --tuw-secondary-purple: #8364FF;
+  --tuw-tertiary-black: #0F0F0F;
+  --tuw-tertiary-gray: #676767;
+  --tuw-tertiary-light-gray: #E8E8E8;
+  --tuw-tertiary-offwhite: #FCFAF6;
+  --tuw-tertiary-white: #FFFFFF;
+  --tuw-canvas-navy: #00003F;
+
+  /* Storefront Design System Tokens */
+  --tuw-store-canvas: #FCFAF6;
+  --tuw-store-surface: #FFFFFF;
+  --tuw-store-text-primary: #0F0F0F;
+  --tuw-store-text-secondary: #676767;
+  --tuw-store-border: #E8E8E8;
+  --tuw-store-action-primary: #002B3A;
+  --tuw-store-action-hover: #001C26;
+  --tuw-store-accent: #57AFFF;
+
+  /* Figma Auto Layout Frame Metrics */
+  --tuw-frame-max-w: 1612px;
+  --tuw-frame-h: 529px;
+  --tuw-frame-gap: 150px;
+  --tuw-frame-radius: 0px;
+
+  /* Spacing Scale */
+  --tuw-space-4: 4px;
+  --tuw-space-8: 8px;
+  --tuw-space-12: 12px;
+  --tuw-space-16: 16px;
+  --tuw-space-24: 24px;
+  --tuw-space-32: 32px;
+  --tuw-space-48: 48px;
+  --tuw-space-64: 64px;
+
+  /* Standard control height */
+  --tuw-control-height: 44px;
+}
+
+body {
+  background: var(--tuw-store-canvas);
+  color: var(--tuw-store-text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+}
+
+/* --------------------------------------------------------------------------
+   Urbanist Type Scale per DESIGN_SYSTEM.md
+   -------------------------------------------------------------------------- */
+.tuw-type-display {
+  font-size: clamp(2.5rem, 5vw, 3rem); /* 40–48px */
+  line-height: clamp(3rem, 5.5vw, 3.5rem); /* 48–56px */
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tuw-type-heading-page {
+  font-size: 2rem; /* 32px */
+  line-height: 2.5rem; /* 40px */
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tuw-type-heading-section {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tuw-type-heading-subsection {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tuw-type-heading-card {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.625rem; /* 26px */
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tuw-type-body-large {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.tuw-type-body-default {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.375rem; /* 22px */
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.tuw-type-label-control {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20–22px */
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.tuw-type-caption-default {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.125rem; /* 18px */
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* Tabular numerals for prices, counts and numeric data */
+.tuw-tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ---------- Utilities (keep at bottom) ---------- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Auth Layout Geometry & Brand Utilities */
+.auth-split-card {
+  min-height: 40rem;
+}
+.auth-hero-col {
+  min-height: 40rem;
+}
+.auth-desktop-frame {
+  max-width: 90rem;
+  min-height: 64rem;
+}
+.auth-form-card {
+  width: 100%;
+  max-width: 44.5rem;
+  border-radius: 1.5rem;
+}
+.header-topbar-height {
+  height: 2.25rem;
+}
+.header-main-height {
+  height: 4.5625rem;
+}
+.svg-google-blue {
+  fill: #4285F4;
+}
+.svg-google-green {
+  fill: #34A853;
+}
+.svg-google-yellow {
+  fill: #FBBC05;
+}
+.svg-google-red {
+  fill: #EA4335;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion Preference (WCAG 2.2 AA)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
