@@ -396,19 +396,28 @@ export default function HomePage() {
             ========================================================================= */}
         <section className="bg-primary-dark text-white py-20 border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center space-y-3 mb-16">
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-                We Deliver Exceptional
-                <br />
-                Customer Experiences
-              </h2>
-              <p className="text-sm text-white/70 font-sans leading-relaxed">
-                Take advantage of our dedicated customer service team ready to assist with any
-                questions or issues you may encounter.
-              </p>
+            {/* Header Row matching Explore section format */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+              <div>
+                <span className="text-2xs font-bold uppercase tracking-widest text-store-gold block mb-2 font-sans">
+                  Customer Experience
+                </span>
+                <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                  We Deliver Exceptional
+                  <br />
+                  Customer Experiences
+                </h2>
+              </div>
+
+              <div className="max-w-md">
+                <p className="text-sm text-white/70 font-sans leading-relaxed">
+                  Take advantage of our dedicated customer service team ready to assist with any
+                  questions or issues you may encounter.
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
               {/* Feature 1 */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-mint">
