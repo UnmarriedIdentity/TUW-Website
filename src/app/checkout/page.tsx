@@ -130,7 +130,7 @@ export default function CheckoutPage() {
             <span className="text-xs uppercase font-bold tracking-[0.2em] text-[#10B981]">
               Simulated Order Confirmed
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1A1A1A] mt-2">
+            <h1 className="text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-[#1A1A1A] mt-2">
               Thank You for Your Order
             </h1>
             <p className="text-sm text-[#666] max-w-md mx-auto mt-2 leading-relaxed">
@@ -270,7 +270,7 @@ export default function CheckoutPage() {
         />
 
         <div className="my-6">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1A1A1A]">
+          <h1 className="text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-[#1A1A1A]">
             Checkout Simulation
           </h1>
           <p className="text-sm text-[#666] mt-1">

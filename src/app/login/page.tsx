@@ -73,7 +73,7 @@ export default function LoginPage() {
           <div className="w-full space-y-6">
             {/* Header: Detail */}
             <div className="space-y-2">
-              <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl uppercase tracking-wider text-store-text-primary leading-tight">
+              <h1 className="font-heading text-[clamp(1.5rem,3vw+0.5rem,2.5rem)] uppercase tracking-wider text-store-text-primary leading-tight">
                 Welcome to The Unplugged Wear
               </h1>
               <p className="font-sans text-xs sm:text-sm text-store-text-secondary leading-relaxed">

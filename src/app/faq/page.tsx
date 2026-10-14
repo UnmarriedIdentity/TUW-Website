@@ -36,7 +36,7 @@ export default function FaqPage() {
         />
 
         <div className="my-8">
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">
+          <h1 className="text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-[#1A1A1A]">
             Frequently Asked Questions
           </h1>
           <p className="text-sm text-[#666] mt-2 leading-relaxed">

@@ -26,7 +26,7 @@ export default function ShippingPolicyPage() {
             <span>Draft Policy: Carbon-neutral surface logistics guidelines.</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">
+          <h1 className="text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-[#1A1A1A]">
             Shipping & Logistics Policy
           </h1>
           <p className="text-xs text-[#8A8A8A] mt-2">Last modified: October 2026</p>

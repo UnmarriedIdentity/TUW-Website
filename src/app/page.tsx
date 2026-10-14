@@ -7,22 +7,25 @@ import {
   ShoppingBag,
   Heart,
   ShieldCheck,
-  Sparkles,
   Headphones,
   Users,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import VirtualFittingRoom from '@/components/commerce/VirtualFittingRoom';
 import { useStore } from '@/mocks/store';
 import { formatINR } from '@/lib/format';
 
 
 
-// 2. Best-Selling Products matching Figma specimen
+// 2. Best-Selling Products matching Figma & Blackout specimen
+interface ProductColorVariant {
+  name: string;
+  hex: string;
+  image: string;
+}
+
 interface BestSellerItem {
   id: string;
   slug: string;
@@ -30,68 +33,123 @@ interface BestSellerItem {
   category: string;
   colorCount: number;
   priceINR: number;
+  compareAtPriceINR?: number;
+  discountPercent?: number;
   image: string;
+  hoverImage?: string;
   isBestseller?: boolean;
+  colors?: ProductColorVariant[];
+  sizes?: string[];
 }
 
 const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
   {
     id: 'bs-1',
-    slug: 'suede-classic-shirts',
-    title: 'Suede Classic Shirts',
-    category: 'Long Sleeve',
-    colorCount: 2,
+    slug: 'satin-finish-tailored-blazer',
+    title: 'Satin-Finish Tailored Blazer',
+    category: 'Jacket',
+    colorCount: 4,
+    discountPercent: 30,
     priceINR: 3099,
-    image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=900&auto=format&fit=crop&q=80',
+    compareAtPriceINR: 4499,
+    image: '/images/products/satin-blazer/pink.png',
+    hoverImage: '/images/products/satin-blazer/black.png',
     isBestseller: true,
+    colors: [
+      { name: 'Rose', hex: '#D7A19E', image: '/images/products/satin-blazer/pink.png' },
+      { name: 'Crimson', hex: '#E60000', image: '/images/products/satin-blazer/red.png' },
+      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/satin-blazer/lime.png' },
+      { name: 'Onyx Black', hex: '#1B1B1B', image: '/images/products/satin-blazer/black.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-2',
-    slug: 'eolo-x-zip-shirt',
-    title: 'Eolo X Zip Shirt',
+    slug: 'linen-blend-two-piece-suit-set',
+    title: 'Linen-Blend Two-Piece Suit Set',
     category: 'Jacket',
-    colorCount: 4,
+    colorCount: 2,
+    discountPercent: 25,
     priceINR: 1805,
-    image: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=900&auto=format&fit=crop&q=80',
+    compareAtPriceINR: 2400,
+    image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp',
+    hoverImage: '/images/products/linen-suit/blue.png',
     isBestseller: true,
+    colors: [
+      { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp' },
+      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/linen-suit/blue.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-3',
-    slug: 'suede-3d-shirt',
-    title: 'Suede 3D Shirt',
+    slug: 'oversized-logo-graphic-tee',
+    title: 'Oversized Logo Graphic Tee',
     category: 'T-shirt',
     colorCount: 2,
+    discountPercent: 20,
     priceINR: 2099,
-    image: 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=900&auto=format&fit=crop&q=80',
+    compareAtPriceINR: 2600,
+    image: '/images/products/graphic-tee/lime.png',
+    hoverImage: '/images/products/graphic-tee/black.webp',
     isBestseller: true,
+    colors: [
+      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/graphic-tee/lime.png' },
+      { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/graphic-tee/black.webp' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-4',
-    slug: 'modern-crew-neck-plum',
-    title: 'Modern Crew Neck',
-    category: 'Pullover',
-    colorCount: 3,
-    priceINR: 1100,
-    image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=900&auto=format&fit=crop&q=80',
+    slug: 'tailored-wide-leg-pantsuit',
+    title: 'Tailored Wide-Leg Pantsuit',
+    category: 'Pant',
+    colorCount: 2,
+    discountPercent: 30,
+    priceINR: 3499,
+    compareAtPriceINR: 4999,
+    image: '/images/products/pantsuit/blue.png',
+    hoverImage: '/images/products/pantsuit/brown.webp',
+    colors: [
+      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/pantsuit/blue.png' },
+      { name: 'Espresso Brown', hex: '#4A3525', image: '/images/products/pantsuit/brown.webp' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-5',
-    slug: 'modern-crew-neck-charcoal',
-    title: 'Modern Crew Neck',
-    category: 'Pullover',
-    colorCount: 3,
-    priceINR: 1100,
-    image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=900&auto=format&fit=crop&q=80',
+    slug: 'short-sleeve-relaxed-fit-shirt',
+    title: 'Short-Sleeve Relaxed Fit Shirt',
+    category: 'Long Sleeve',
+    colorCount: 2,
+    discountPercent: 55,
+    priceINR: 1899,
+    compareAtPriceINR: 3999,
+    image: '/images/products/relaxed-shirt/red.png',
+    hoverImage: '/images/products/relaxed-shirt/ecru.webp',
+    colors: [
+      { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/relaxed-shirt/red.png' },
+      { name: 'Ecru Linen', hex: '#E8E2D5', image: '/images/products/relaxed-shirt/ecru.webp' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-6',
-    slug: 'sundero-zip-hoodie',
-    title: 'Sundero Hoodie',
-    category: 'Pullover',
+    slug: 'corduroy-teddy-bomber-jacket',
+    title: 'Corduroy Teddy Bomber Jacket',
+    category: 'Jacket',
     colorCount: 2,
-    priceINR: 1150,
-    image: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=900&auto=format&fit=crop&q=80',
+    discountPercent: 40,
+    priceINR: 3150,
+    compareAtPriceINR: 5250,
+    image: '/images/products/bomber-jacket/black.png',
+    hoverImage: '/images/products/bomber-jacket/camel.png',
     isBestseller: true,
+    colors: [
+      { name: 'Pitch Black', hex: '#1B1B1B', image: '/images/products/bomber-jacket/black.png' },
+      { name: 'Warm Camel', hex: '#C49760', image: '/images/products/bomber-jacket/camel.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
 ];
 
@@ -106,53 +164,7 @@ const CATEGORY_PILLS = [
   'Swim Shorts',
 ];
 
-// 3. New Collection Asymmetric Grid Products
-const NEW_COLLECTION_LEFT = [
-  {
-    id: 'nc-1',
-    slug: 'sand-safari-shirt',
-    title: 'Tauri Sand Shirt',
-    colors: '2 Colors',
-    priceINR: 1450,
-    image: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=900&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'nc-2',
-    slug: 'camp-collar-black',
-    title: 'Resort Black Shirt',
-    colors: '3 Colors',
-    priceINR: 1600,
-    image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=900&auto=format&fit=crop&q=80',
-  },
-];
-
-const NEW_COLLECTION_CENTER = {
-  id: 'nc-center',
-  slug: 'dust-splatter-denim-set',
-  title: 'Dust Splatter and Dark Jeans',
-  colors: '3 Colors',
-  priceINR: 1600,
-  image: 'https://images.unsplash.com/photo-1516826957135-700dedea698c?w=1000&auto=format&fit=crop&q=80',
-};
-
-const NEW_COLLECTION_RIGHT = [
-  {
-    id: 'nc-3',
-    slug: 'safari-twill-overshirt',
-    title: 'Canyon Twill Shirt',
-    colors: '2 Colors',
-    priceINR: 1750,
-    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=900&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'nc-4',
-    slug: 'linen-relaxed-yellow',
-    title: 'Lauro Soft Shirt',
-    colors: '3 Colors',
-    priceINR: 1300,
-    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=900&auto=format&fit=crop&q=80',
-  },
-];
+// 3. Virtual fitting room data + interaction live in @/components/commerce/VirtualFittingRoom.tsx
 
 // 4. Product Recommendations / Lookbook Stories
 const RECOMMENDATION_STORIES = [
@@ -179,8 +191,174 @@ const RECOMMENDATION_STORIES = [
   },
 ];
 
+// Interactive Best-Selling Card with Blackout-style Swatch Hover & Size Chips
+function BestSellingCard({
+  item,
+  isFav,
+  onToggleWishlist,
+}: {
+  item: BestSellerItem;
+  isFav: boolean;
+  onToggleWishlist: () => void;
+}) {
+  const [selectedColor, setSelectedColor] = useState<ProductColorVariant | null>(item.colors?.[0] || null);
+  const [hoveredColor, setHoveredColor] = useState<ProductColorVariant | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>('M');
+
+  // Active display image: hovered color if mouse is over a swatch, otherwise selected color image, otherwise base image
+  const displayImage = hoveredColor?.image || selectedColor?.image || item.image;
+  const activeColorName = hoveredColor?.name || selectedColor?.name || '';
+  const sizes = item.sizes || ['S', 'M', 'L', 'XL'];
+
+  return (
+    <div className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg">
+      {/* Image Container matching Blackout Template (Fast, clean dual-image swap on hover) */}
+      <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
+        <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
+          {/* Default / Active Color Image */}
+          <img
+            src={displayImage}
+            alt={`${item.title} ${activeColorName}`}
+            loading="lazy"
+            className={`w-full h-full object-cover transition-all duration-300 ease-out group-hover:scale-105 ${
+              item.hoverImage && !hoveredColor ? 'group-hover:opacity-0' : ''
+            }`}
+          />
+
+          {/* Hover Image (Fast snappy reveal on card hover when not hovering a swatch) */}
+          {item.hoverImage && !hoveredColor && (
+            <img
+              src={item.hoverImage}
+              alt={`${item.title} hover view`}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+            />
+          )}
+        </Link>
+
+        {/* Discount Pill Badge (e.g. -30%, -25%) */}
+        {item.discountPercent ? (
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-red-600 shadow-xs">
+              -{item.discountPercent}%
+            </span>
+          </div>
+        ) : item.isBestseller ? (
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
+            <Badge variant="dark" size="sm">
+              Bestseller
+            </Badge>
+          </div>
+        ) : null}
+
+        {/* Wishlist Heart Button (Clean, crisp, no blur) */}
+        <button
+          type="button"
+          aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleWishlist();
+          }}
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white border border-store-border flex items-center justify-center text-store-text-primary hover:scale-110 active:scale-95 transition-transform duration-150 cursor-pointer shadow-xs"
+        >
+          <Heart
+            size={16}
+            className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
+          />
+        </button>
+      </div>
+
+      {/* Product Details matching Blackout Specimen */}
+      <div className="p-4 flex flex-col gap-2.5">
+        {/* Row 1: Title & Price */}
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-sans font-bold text-sm text-store-text-primary leading-tight">
+            <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
+              {item.title}
+            </Link>
+          </h3>
+          <div className="flex items-baseline gap-1.5 text-right shrink-0">
+            <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
+              {formatINR(item.priceINR * 100)}
+            </span>
+            {item.compareAtPriceINR && (
+              <span className="text-2xs text-store-text-secondary line-through tuw-tabular-nums">
+                {formatINR(item.compareAtPriceINR * 100)}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Row 2: View Details & Size Selector Buttons */}
+        <div className="flex items-center justify-between pt-0.5">
+          <Link
+            href={`/products/${item.slug}`}
+            className="text-xs text-store-text-secondary hover:text-store-text-primary underline underline-offset-2 transition-colors font-medium"
+          >
+            View details
+          </Link>
+
+          {/* Size Pills: [S] [M] [L] [XL] */}
+          <div className="flex items-center gap-1">
+            {sizes.map((s) => {
+              const isSelected = selectedSize === s;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSelectedSize(s)}
+                  className={`h-5 min-w-5 px-1 text-2xs font-semibold border rounded transition-all cursor-pointer flex items-center justify-center ${
+                    isSelected
+                      ? 'bg-store-text-primary text-white border-store-text-primary'
+                      : 'bg-white text-store-text-secondary border-store-border hover:border-store-text-primary hover:text-store-text-primary'
+                  }`}
+                  aria-label={`Select size ${s}`}
+                >
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Row 3: Color Swatches with Real-Time Hover Color Swap */}
+        {item.colors && item.colors.length > 0 && (
+          <div className="flex items-center justify-between pt-1.5 border-t border-store-border/60">
+            <div className="flex items-center gap-1.5">
+              {item.colors.map((color) => {
+                const isActive = (hoveredColor?.name || selectedColor?.name) === color.name;
+                return (
+                  <button
+                    key={color.name}
+                    type="button"
+                    title={color.name}
+                    aria-label={`View ${item.title} in ${color.name}`}
+                    onMouseEnter={() => setHoveredColor(color)}
+                    onMouseLeave={() => setHoveredColor(null)}
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-4 h-4 rounded-full border transition-all cursor-pointer ${
+                      isActive
+                        ? 'ring-2 ring-store-text-primary ring-offset-1 scale-110'
+                        : 'border-store-border hover:scale-105 opacity-80 hover:opacity-100'
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                  />
+                );
+              })}
+            </div>
+            <span className="text-2xs text-store-text-secondary font-medium lowercase first-letter:uppercase">
+              {hoveredColor ? hoveredColor.name : selectedColor?.name || `${item.colorCount} colors`}
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
-  const { isInWishlist, toggleWishlist, addToCart } = useStore();
+  const { isInWishlist, toggleWishlist } = useStore();
 
   const [activeCategory, setActiveCategory] = useState('All Collection');
 
@@ -200,7 +378,7 @@ export default function HomePage() {
             ========================================================================= */}
         <section
           aria-label="Hero Showcase"
-          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-center border-b border-store-border select-none"
+          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-end border-b border-store-border select-none"
         >
           {/* Background Video (Dedicated Benchmark Hero Video h1, full muted in continuous loop) */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -219,8 +397,8 @@ export default function HomePage() {
           <div className="absolute inset-0 hero-scrim-horizontal z-10 pointer-events-none" />
           <div className="absolute inset-0 hero-scrim-gradient z-10 pointer-events-none" />
 
-          {/* Quiet Luxury Minimal Editorial Presentation */}
-          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-12 flex-1 flex flex-col justify-center">
+          {/* Quiet Luxury Minimal Editorial Presentation (Bottom Anchored, Unified Cohesive Group) */}
+          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16 flex-1 flex flex-col justify-end">
             <div className="max-w-xl space-y-4">
               {/* Delicate Architectural Eyebrow */}
               <div className="flex items-center gap-3 text-2xs uppercase tracking-editorial text-white/70 font-sans font-medium">
@@ -230,10 +408,10 @@ export default function HomePage() {
 
               {/* Ultra-Refined Minimal Headline */}
               <h1 className="font-heading tracking-tight text-white leading-[1.04]">
-                <span className="block font-light text-4xl sm:text-6xl lg:text-7xl">
+                <span className="block font-light text-[clamp(2rem,5vw+0.5rem,4.5rem)]">
                   Architectural Form<span className="text-store-gold">.</span>
                 </span>
-                <span className="block font-normal text-2xl sm:text-4xl lg:text-5xl text-white/80 tracking-wide mt-1">
+                <span className="block font-normal text-[clamp(1.375rem,3vw+0.5rem,3rem)] text-white/80 tracking-wide mt-1">
                   Pure Permanence
                 </span>
               </h1>
@@ -243,8 +421,8 @@ export default function HomePage() {
                 Dense 500 GSM organic essentials, tailored on-demand.
               </p>
 
-              {/* Refined Luxury Action Buttons */}
-              <div className="pt-2 flex flex-wrap gap-4 items-center">
+              {/* Refined Luxury Action Buttons (Directly unified beneath subtitle, zero excessive gap) */}
+              <div className="pt-2 sm:pt-3 flex flex-wrap gap-4 items-center">
                 <Link
                   href="/shop"
                   className="group inline-flex items-center gap-3 px-8 h-12 rounded-full bg-white text-primary-dark font-sans font-medium text-xs tracking-luxury uppercase hover:bg-store-cream active:scale-95 transition-all shadow-md"
@@ -275,10 +453,10 @@ export default function HomePage() {
               <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
                 Curated Bestsellers
               </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-store-text-primary">
                 Explore Our Best Selling
-                <br />
-                Product Collection
+                <br className="hidden sm:inline" />
+                {' '}Product Collection
               </h2>
             </div>
 
@@ -324,70 +502,14 @@ export default function HomePage() {
 
           {/* 6 Product Cards Grid (3 columns x 2 rows) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProducts.map((item) => {
-              const isFav = isInWishlist(item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-200 hover:shadow-md"
-                >
-                  {/* Image Container */}
-                  <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                    <Link href={`/products/${item.slug}`} className="block w-full h-full">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </Link>
-
-                    {/* Wishlist Heart Button */}
-                    <button
-                      type="button"
-                      aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleWishlist(item.id);
-                      }}
-                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white active:scale-90 transition-transform cursor-pointer shadow-xs"
-                    >
-                      <Heart
-                        size={16}
-                        className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
-                      />
-                    </button>
-
-                    {item.isBestseller && (
-                      <div className="absolute top-3 left-3">
-                        <Badge variant="dark" size="sm">
-                          Bestseller
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="p-4 flex items-center justify-between">
-                    <div>
-                      <h3 className="font-sans font-bold text-sm text-store-text-primary">
-                        <Link href={`/products/${item.slug}`} className="hover:underline">
-                          {item.title}
-                        </Link>
-                      </h3>
-                      <p className="text-2xs text-store-text-secondary mt-0.5">
-                        {item.colorCount} Colors • {item.category}
-                      </p>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
-                        {formatINR(item.priceINR * 100)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {filteredProducts.map((item) => (
+              <BestSellingCard
+                key={item.id}
+                item={item}
+                isFav={isInWishlist(item.id)}
+                onToggleWishlist={() => toggleWishlist(item.id)}
+              />
+            ))}
           </div>
         </section>
 
@@ -396,19 +518,28 @@ export default function HomePage() {
             ========================================================================= */}
         <section className="bg-primary-dark text-white py-20 border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center space-y-3 mb-16">
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-                We Deliver Exceptional
-                <br />
-                Customer Experiences
-              </h2>
-              <p className="text-sm text-white/70 font-sans leading-relaxed">
-                Take advantage of our dedicated customer service team ready to assist with any
-                questions or issues you may encounter.
-              </p>
+            {/* Header Row matching Explore section format */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+              <div>
+                <span className="text-2xs font-bold uppercase tracking-widest text-store-gold block mb-2 font-sans">
+                  Customer Experience
+                </span>
+                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-white">
+                  We Deliver Exceptional
+                  <br className="hidden sm:inline" />
+                  {' '}Customer Experiences
+                </h2>
+              </div>
+
+              <div className="max-w-md">
+                <p className="text-sm text-white/70 font-sans leading-relaxed">
+                  Take advantage of our dedicated customer service team ready to assist with any
+                  questions or issues you may encounter.
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
               {/* Feature 1 */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-mint">
@@ -449,166 +580,22 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            SECTION 4: EXPLORE OUR NEW COLLECTION (Asymmetric / Masonry Layout)
+            SECTION 4: VIRTUAL FITTING ROOM
             ========================================================================= */}
-        <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
-          {/* Header Row */}
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
-                Curated Aesthetics
-              </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-store-text-primary">
-                Explore Our New Collection
-              </h2>
-              <p className="text-sm text-store-text-secondary font-sans mt-2 max-w-lg">
-                Discover curated items with minimal aesthetics tailored for the modern daily spirit.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                aria-label="Previous collection"
-                className="w-10 h-10 rounded-full border border-store-border bg-store-surface hover:bg-store-cream flex items-center justify-center text-store-text-primary transition-colors cursor-pointer"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                type="button"
-                aria-label="Next collection"
-                className="w-10 h-10 rounded-full bg-store-action-primary text-white hover:bg-store-action-hover flex items-center justify-center transition-colors cursor-pointer"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* Asymmetric 3-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-            {/* Left Col: 2 Stacked Cards */}
-            <div className="flex flex-col gap-6 justify-between">
-              {NEW_COLLECTION_LEFT.map((card) => (
-                <div
-                  key={card.id}
-                  className="group bg-store-surface rounded-2xl border border-store-border overflow-hidden hover:shadow-md transition-shadow"
-                >
-                  <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <button
-                      type="button"
-                      aria-label="Save to wishlist"
-                      onClick={() => toggleWishlist(card.id)}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white transition-all shadow-xs"
-                    >
-                      <Heart size={14} className={isInWishlist(card.id) ? 'fill-secondary-purple text-secondary-purple' : ''} />
-                    </button>
-                  </div>
-                  <div className="p-4 flex items-center justify-between">
-                    <div>
-                      <h4 className="font-bold text-xs text-store-text-primary">{card.title}</h4>
-                      <p className="text-2xs text-store-text-secondary">{card.colors}</p>
-                    </div>
-                    <span className="font-heading font-extrabold text-xs text-store-text-primary tuw-tabular-nums">
-                      {formatINR(card.priceINR * 100)}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Center Col: Tall Feature Hero Card */}
-            <div className="group bg-store-surface rounded-2xl border border-store-border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
-              <div className="relative w-full flex-1 aspect-asymmetric-tall bg-store-cream overflow-hidden">
-                <img
-                  src={NEW_COLLECTION_CENTER.image}
-                  alt={NEW_COLLECTION_CENTER.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <button
-                  type="button"
-                  aria-label="Save to wishlist"
-                  onClick={() => toggleWishlist(NEW_COLLECTION_CENTER.id)}
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white transition-all shadow-xs"
-                >
-                  <Heart
-                    size={16}
-                    className={isInWishlist(NEW_COLLECTION_CENTER.id) ? 'fill-secondary-purple text-secondary-purple' : ''}
-                  />
-                </button>
-                <div className="absolute top-4 left-4">
-                  <Badge variant="dark" size="sm">
-                    Signature Drop
-                  </Badge>
-                </div>
-              </div>
-
-              <div className="p-5 flex items-center justify-between bg-white border-t border-store-border">
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-store-text-primary">
-                    {NEW_COLLECTION_CENTER.title}
-                  </h4>
-                  <p className="text-xs text-store-text-secondary mt-0.5">
-                    {NEW_COLLECTION_CENTER.colors}
-                  </p>
-                </div>
-                <span className="font-heading font-extrabold text-base text-store-text-primary tuw-tabular-nums">
-                  {formatINR(NEW_COLLECTION_CENTER.priceINR * 100)}
-                </span>
-              </div>
-            </div>
-
-            {/* Right Col: 2 Stacked Cards */}
-            <div className="flex flex-col gap-6 justify-between">
-              {NEW_COLLECTION_RIGHT.map((card) => (
-                <div
-                  key={card.id}
-                  className="group bg-store-surface rounded-2xl border border-store-border overflow-hidden hover:shadow-md transition-shadow"
-                >
-                  <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <button
-                      type="button"
-                      aria-label="Save to wishlist"
-                      onClick={() => toggleWishlist(card.id)}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white transition-all shadow-xs"
-                    >
-                      <Heart size={14} className={isInWishlist(card.id) ? 'fill-secondary-purple text-secondary-purple' : ''} />
-                    </button>
-                  </div>
-                  <div className="p-4 flex items-center justify-between">
-                    <div>
-                      <h4 className="font-bold text-xs text-store-text-primary">{card.title}</h4>
-                      <p className="text-2xs text-store-text-secondary">{card.colors}</p>
-                    </div>
-                    <span className="font-heading font-extrabold text-xs text-store-text-primary tuw-tabular-nums">
-                      {formatINR(card.priceINR * 100)}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <section aria-label="Virtual fitting room" className="py-20 sm:py-28 border-b border-store-border">
+          <VirtualFittingRoom />
         </section>
 
         {/* =========================================================================
             SECTION 5: PRODUCT RECOMMENDATIONS (Figma Editorial Cards)
             ========================================================================= */}
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
-          <div className="flex items-end justify-between mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
               <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
                 Stories & Insights
               </span>
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
               <p className="text-sm text-store-text-secondary font-sans mt-1">
@@ -618,7 +605,7 @@ export default function HomePage() {
 
             <Link
               href="/journal"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-store-action-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-store-action-hover transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-store-action-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-store-action-hover transition-colors shrink-0 self-start sm:self-auto"
             >
               <span>2024 Trends</span>
               <ArrowRight size={14} />
@@ -681,10 +668,10 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] font-extrabold tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
-              <br />
-              The Stratosphere
+              <br className="hidden sm:inline" />
+              {' '}The Stratosphere
             </h2>
             <p className="text-base sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed font-sans">
               Ready to elevate your style journey? Step into our latest line crafted for every moment.

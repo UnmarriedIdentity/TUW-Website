@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
   CheckCircle2,
   Shield,
   RefreshCw,
-  ShoppingBag,
   Sparkles,
   PackageCheck,
   Mail,
@@ -17,22 +16,9 @@ import { useStore } from '@/mocks/store';
 import TuwEmblem from './TuwEmblem';
 
 export default function Footer() {
-  const { scenario, setScenario, resetStoreData, cartCount } = useStore();
+  const { scenario, setScenario, resetStoreData } = useStore();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
-  const [showDock, setShowDock] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Reveal dock when scrolled past initial hero
-      const scrolled = window.scrollY > 300;
-      setShowDock(scrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,64 +29,8 @@ export default function Footer() {
   };
 
   return (
-    <>
-      {/* Floating Action Dock matching Jitter.video standard */}
-      <div
-        className={`jitter-floating-dock hidden md:inline-flex items-center gap-5 px-5 py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-store-border text-xs font-sans text-store-text-primary ${
-          showDock ? '' : 'jitter-floating-dock-hidden'
-        }`}
-        aria-label="Quick Action Dock"
-      >
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <TuwEmblem className="h-5 w-auto text-primary-dark" />
-          <span className="font-heading font-bold text-xs uppercase tracking-wider text-store-text-primary">
-            The Unplugged Wear
-          </span>
-        </Link>
-
-        <span className="w-px h-4 bg-store-border" aria-hidden="true" />
-
-        <nav className="flex items-center gap-4 text-2xs uppercase tracking-wider font-medium text-store-text-secondary">
-          <Link href="/shop" className="hover:text-store-text-primary transition-colors">
-            All Apparel
-          </Link>
-          <Link href="/about" className="hover:text-store-text-primary transition-colors">
-            Ethos
-          </Link>
-          <Link href="/journal" className="hover:text-store-text-primary transition-colors">
-            Journal
-          </Link>
-        </nav>
-
-        <span className="w-px h-4 bg-store-border" aria-hidden="true" />
-
-        <div className="flex items-center gap-3">
-          <Link
-            href="/cart"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-store-canvas hover:bg-store-cream text-2xs font-semibold uppercase tracking-wider text-store-text-primary transition-colors"
-          >
-            <ShoppingBag size={13} />
-            <span>Bag</span>
-            {cartCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-primary-dark text-white text-3xs flex items-center justify-center font-bold">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-
-          <Link
-            href="/shop"
-            className="group flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-dark text-white hover:bg-store-action-hover text-2xs font-semibold uppercase tracking-wider transition-all"
-          >
-            <span>Explore</span>
-            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Signature Scooped-Bottom Footer Container */}
-      <footer aria-label="Site Footer" className="jitter-footer-shell pt-4 pb-0 select-none">
-        {/* Upper Card: Scooped Ivory Canvas with Primary Directory & Disclosures (Z-index 20) */}
+    <footer aria-label="Site Footer" className="jitter-footer-shell pt-4 pb-0 select-none">
+      {/* Upper Card: Scooped Ivory Canvas with Primary Directory & Disclosures (Z-index 20) */}
         <div className="jitter-footer-inner pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 border-t border-store-border">
           <div className="max-w-7xl mx-auto">
             {/* Top Grid: Brand Ethos + Navigation Directory */}
@@ -109,7 +39,7 @@ export default function Footer() {
               <div className="lg:col-span-2 space-y-4">
                 <div className="flex items-center gap-2.5">
                   <TuwEmblem className="h-7 w-auto text-primary-dark" />
-                  <span className="font-heading font-extrabold text-2xl tracking-tighter uppercase text-store-text-primary">
+                  <span className="font-heading font-extrabold text-[clamp(1.25rem,2vw+0.5rem,1.5rem)] tracking-tighter uppercase text-store-text-primary">
                     The Unplugged Wear
                   </span>
                 </div>
@@ -268,7 +198,7 @@ export default function Footer() {
             </div>
 
             {/* Interactive Demo Controls Ribbon per MOCK_DATA.md */}
-            <div className="pt-4 border-t border-store-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-store-text-secondary">
+            <div className="pt-4 border-t border-store-border flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-store-text-secondary">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-semibold text-store-text-primary uppercase tracking-wider text-2xs">
                   Demo Scenarios:
@@ -339,7 +269,7 @@ export default function Footer() {
                       Slow-Living Motion • Tiruppur
                     </span>
                   </div>
-                  <h3 className="font-heading font-medium text-xl sm:text-2xl text-white tracking-tight leading-snug">
+                  <h3 className="font-heading font-medium text-[clamp(1.125rem,2vw+0.5rem,1.5rem)] text-white tracking-tight leading-snug">
                     Crafted for Quiet Permanence.
                   </h3>
                   <p className="text-xs text-white/70 max-w-sm font-sans leading-relaxed">
@@ -408,6 +338,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </>
   );
 }
