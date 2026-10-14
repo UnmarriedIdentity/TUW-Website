@@ -16,9 +16,9 @@
   },
   "session": {
     "branch": "preview",
-    "tip": "1671c60",
+    "tip": "0a26a57",
     "unpushed": [
-      "1671c60"
+      "0a26a57"
     ],
     "next_up": "Browser visual audit across 360/768/1024/1440px viewports",
     "pending_verifications": [],

@@ -72,11 +72,11 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     discountPercent: 25,
     priceINR: 1805,
     compareAtPriceINR: 2400,
-    image: '/images/images/image%202.avif',
+    image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp',
     hoverImage: '/images/products/linen-suit/blue.png',
     isBestseller: true,
     colors: [
-      { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/images/image%202.avif' },
+      { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp' },
       { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/linen-suit/blue.png' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
@@ -86,15 +86,14 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'oversized-logo-graphic-tee',
     title: 'Oversized Logo Graphic Tee',
     category: 'T-shirt',
-    colorCount: 3,
+    colorCount: 2,
     discountPercent: 20,
     priceINR: 2099,
     compareAtPriceINR: 2600,
-    image: '/images/images/image%203.webp',
-    hoverImage: '/images/products/graphic-tee/lime.png',
+    image: '/images/products/graphic-tee/lime.png',
+    hoverImage: '/images/products/graphic-tee/black.webp',
     isBestseller: true,
     colors: [
-      { name: 'Cobalt Blue', hex: '#1D5BD8', image: '/images/images/image%203.webp' },
       { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/graphic-tee/lime.png' },
       { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/graphic-tee/black.webp' },
     ],
@@ -105,14 +104,13 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'tailored-wide-leg-pantsuit',
     title: 'Tailored Wide-Leg Pantsuit',
     category: 'Pant',
-    colorCount: 3,
+    colorCount: 2,
     discountPercent: 30,
     priceINR: 3499,
     compareAtPriceINR: 4999,
-    image: '/images/images/image%204.webp',
-    hoverImage: '/images/products/pantsuit/blue.png',
+    image: '/images/products/pantsuit/blue.png',
+    hoverImage: '/images/products/pantsuit/brown.webp',
     colors: [
-      { name: 'Magenta', hex: '#D81B9C', image: '/images/images/image%204.webp' },
       { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/pantsuit/blue.png' },
       { name: 'Espresso Brown', hex: '#4A3525', image: '/images/products/pantsuit/brown.webp' },
     ],
@@ -123,14 +121,13 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'short-sleeve-relaxed-fit-shirt',
     title: 'Short-Sleeve Relaxed Fit Shirt',
     category: 'Long Sleeve',
-    colorCount: 3,
+    colorCount: 2,
     discountPercent: 55,
     priceINR: 1899,
     compareAtPriceINR: 3999,
-    image: '/images/images/image%205.avif',
-    hoverImage: '/images/products/relaxed-shirt/red.png',
+    image: '/images/products/relaxed-shirt/red.png',
+    hoverImage: '/images/products/relaxed-shirt/ecru.webp',
     colors: [
-      { name: 'Cerulean', hex: '#4B79A1', image: '/images/images/image%205.avif' },
       { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/relaxed-shirt/red.png' },
       { name: 'Ecru Linen', hex: '#E8E2D5', image: '/images/products/relaxed-shirt/ecru.webp' },
     ],
@@ -141,15 +138,14 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'corduroy-teddy-bomber-jacket',
     title: 'Corduroy Teddy Bomber Jacket',
     category: 'Jacket',
-    colorCount: 3,
+    colorCount: 2,
     discountPercent: 40,
     priceINR: 3150,
     compareAtPriceINR: 5250,
-    image: '/images/images/image%206.avif',
-    hoverImage: '/images/products/bomber-jacket/black.png',
+    image: '/images/products/bomber-jacket/black.png',
+    hoverImage: '/images/products/bomber-jacket/camel.png',
     isBestseller: true,
     colors: [
-      { name: 'Saffron Gold', hex: '#E5A912', image: '/images/images/image%206.avif' },
       { name: 'Pitch Black', hex: '#1B1B1B', image: '/images/products/bomber-jacket/black.png' },
       { name: 'Warm Camel', hex: '#C49760', image: '/images/products/bomber-jacket/camel.png' },
     ],
@@ -216,26 +212,26 @@ function BestSellingCard({
 
   return (
     <div className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg">
-      {/* Image Container matching Blackout Template (Clean dual-image swap on hover) */}
+      {/* Image Container matching Blackout Template (Fast, clean dual-image swap on hover) */}
       <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
         <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
-          {/* Default / Active Color Image (fades out on card hover only if card hover image is active) */}
+          {/* Default / Active Color Image */}
           <img
             src={displayImage}
             alt={`${item.title} ${activeColorName}`}
             loading="lazy"
-            className={`w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+            className={`w-full h-full object-cover transition-all duration-300 ease-out group-hover:scale-105 ${
               item.hoverImage && !hoveredColor ? 'group-hover:opacity-0' : ''
             }`}
           />
 
-          {/* Hover Image (Reveals smoothly on card hover if user is not hovering a swatch) */}
+          {/* Hover Image (Fast snappy reveal on card hover when not hovering a swatch) */}
           {item.hoverImage && !hoveredColor && (
             <img
               src={item.hoverImage}
               alt={`${item.title} hover view`}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
             />
           )}
         </Link>
@@ -255,7 +251,7 @@ function BestSellingCard({
           </div>
         ) : null}
 
-        {/* Wishlist Heart Button */}
+        {/* Wishlist Heart Button (Clean, crisp, no blur) */}
         <button
           type="button"
           aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
@@ -264,23 +260,13 @@ function BestSellingCard({
             e.stopPropagation();
             onToggleWishlist();
           }}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white hover:scale-110 active:scale-90 transition-all cursor-pointer shadow-xs"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white border border-store-border flex items-center justify-center text-store-text-primary hover:scale-110 active:scale-95 transition-transform duration-150 cursor-pointer shadow-xs"
         >
           <Heart
             size={16}
             className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
           />
         </button>
-
-        {/* Quick View Pill (Slides Up on Card Hover, Blackout style) */}
-        <Link
-          href={`/products/${item.slug}`}
-          aria-label={`Quick view ${item.title}`}
-          className="absolute inset-x-4 bottom-3 z-10 flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-white/60 text-store-text-primary font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-200"
-        >
-          <span>Quick View</span>
-          <ArrowRight size={12} />
-        </Link>
       </div>
 
       {/* Product Details matching Blackout Specimen */}

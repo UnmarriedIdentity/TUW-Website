@@ -56,7 +56,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           <ImageWithFallback
             src={activeImage}
             alt={product.title}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
           />
         </Link>
 
@@ -64,13 +64,13 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none z-10">
           {product.isNew && <Badge variant="dark">New</Badge>}
           {product.videoUrl && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#1A1A1A]/85 text-white backdrop-blur-xs">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#1A1A1A]/85 text-white">
               ▶ Reel
             </span>
           )}
           {product.isBestseller && <Badge variant="neutral">Bestseller</Badge>}
           {product.sustainabilityBadge && (
-            <Badge variant="outline" className="bg-white/80 backdrop-blur-xs">
+            <Badge variant="outline" className="bg-white">
               {product.sustainabilityBadge}
             </Badge>
           )}
@@ -85,7 +85,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-[#E2DDCF] flex items-center justify-center text-[#1A1A1A] hover:bg-white transition-transform active:scale-90 z-10 shadow-xs"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-[#E2DDCF] flex items-center justify-center text-[#1A1A1A] hover:scale-110 active:scale-95 transition-transform duration-150 z-10 shadow-xs"
         >
           <Heart
             size={16}
