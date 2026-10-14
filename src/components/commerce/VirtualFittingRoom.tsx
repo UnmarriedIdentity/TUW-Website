@@ -37,7 +37,7 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
       title: 'Atelier Signature Overshirt',
       cat: 'OVERSHIRT',
       priceINR: 2100,
-      image: '/images/section image/m3.png',
+      image: '/images/section%20image/m3.png',
       badge: 'Signature Drop',
     },
     cards: [
@@ -46,28 +46,28 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
         title: 'Tailored Ivory Oxford',
         cat: 'OXFORD SHIRT',
         priceINR: 1899,
-        image: '/images/section image/m1.png',
+        image: '/images/section%20image/m1.png',
       },
       {
         id: 'nc-m2',
         title: 'Sandstone Camp Shirt',
         cat: 'CAMP SHIRT',
         priceINR: 1450,
-        image: '/images/section image/m2.png',
+        image: '/images/section%20image/m2.png',
       },
       {
         id: 'nc-m4',
         title: 'Canyon Twill Overshirt',
         cat: 'OVERSHIRT',
         priceINR: 1750,
-        image: '/images/section image/m4.png',
+        image: '/images/section%20image/m4.png',
       },
       {
         id: 'nc-m5',
         title: 'Onyx Minimal Tee',
         cat: 'T-SHIRT',
         priceINR: 1299,
-        image: '/images/section image/m5.png',
+        image: '/images/section%20image/m5.png',
       },
     ],
   },
@@ -77,7 +77,7 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
       title: 'Atelier Sculpted Dress',
       cat: 'DRESS',
       priceINR: 2299,
-      image: '/images/section image/w3.png',
+      image: '/images/section%20image/w3.png',
       badge: 'Signature Drop',
     },
     cards: [
@@ -86,28 +86,28 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
         title: 'Ivory Draped Blouse',
         cat: 'BLOUSE',
         priceINR: 1799,
-        image: '/images/section image/w1.png',
+        image: '/images/section%20image/w1.png',
       },
       {
         id: 'nc-w2',
         title: 'Rosewood Soft Knit',
         cat: 'KNIT',
         priceINR: 1599,
-        image: '/images/section image/w2.png',
+        image: '/images/section%20image/w2.png',
       },
       {
         id: 'nc-w4',
         title: 'Ecru Relaxed Shirt',
         cat: 'SHIRT',
         priceINR: 1499,
-        image: '/images/section image/w4.png',
+        image: '/images/section%20image/w4.png',
       },
       {
         id: 'nc-w5',
         title: 'Noir Gallery Tee',
         cat: 'T-SHIRT',
         priceINR: 1399,
-        image: '/images/section image/w5.png',
+        image: '/images/section%20image/w5.png',
       },
     ],
   },
@@ -117,7 +117,7 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
       title: 'Little Atelier Pinafore',
       cat: 'PINAFORE',
       priceINR: 1299,
-      image: '/images/section image/k3.png',
+      image: '/images/section%20image/k3.png',
       badge: 'Signature Drop',
     },
     cards: [
@@ -126,28 +126,28 @@ const FITTING_SETS: Record<FittingAudience, FittingSet> = {
         title: 'Mini Ivory Shirt',
         cat: 'SHIRT',
         priceINR: 999,
-        image: '/images/section image/k1.png',
+        image: '/images/section%20image/k1.png',
       },
       {
         id: 'nc-k2',
         title: 'Playdate Soft Set',
         cat: 'SET',
         priceINR: 1199,
-        image: '/images/section image/k2.png',
+        image: '/images/section%20image/k2.png',
       },
       {
         id: 'nc-k4',
         title: 'Dune Twill Shirt',
         cat: 'SHIRT',
         priceINR: 1099,
-        image: '/images/section image/k4.png',
+        image: '/images/section%20image/k4.png',
       },
       {
         id: 'nc-k5',
         title: 'Cloud Soft Sweatshirt',
         cat: 'SWEATSHIRT',
         priceINR: 899,
-        image: '/images/section image/k5.png',
+        image: '/images/section%20image/k5.png',
       },
     ],
   },
@@ -159,9 +159,15 @@ export default function VirtualFittingRoom() {
   const [current, setCurrent] = useState(-1);
   const [liveMsg, setLiveMsg] = useState('Men base look.');
 
+  const set = FITTING_SETS[audience];
+  const [underSrc, setUnderSrc] = useState(set.base.image);
+  const [topSrc, setTopSrc] = useState(set.base.image);
+  const [topClip, setTopClip] = useState('inset(0 0 0% 0)');
+
   const busyRef = useRef(false);
   const queuedRef = useRef<number | null>(null);
   const currentRef = useRef(-1);
+  const currentDisplayedSrcRef = useRef(set.base.image);
   const audienceRef = useRef<FittingAudience>('men');
   const reducedRef = useRef(false);
   const runRef = useRef(0);
@@ -172,18 +178,14 @@ export default function VirtualFittingRoom() {
   const topLayerRef = useRef<HTMLDivElement>(null);
   const topImgRef = useRef<HTMLImageElement>(null);
   const scanRef = useRef<HTMLSpanElement>(null);
-  const ringRef = useRef<HTMLSpanElement>(null);
-  const slotRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const cardBtnRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  const set = FITTING_SETS[audience];
   const worn = current >= 0 ? set.cards[current] : null;
 
   useEffect(() => {
     reducedRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, []);
 
-  // Pre-decode every frame so first tap and repeat taps behave identically (cached).
+  // Pre-decode all audience images so repeat clicks and transitions run instantly
   useEffect(() => {
     const urls = [FITTING_SETS[audience].base.image, ...FITTING_SETS[audience].cards.map((c) => c.image)];
     urls.forEach((src) => {
@@ -203,7 +205,7 @@ export default function VirtualFittingRoom() {
           resolve();
         }
       };
-      const timer = window.setTimeout(finish, 1500);
+      const timer = window.setTimeout(finish, 800);
       im.onload = () => {
         window.clearTimeout(timer);
         if (im.decode) {
@@ -218,283 +220,160 @@ export default function VirtualFittingRoom() {
     });
   }, []);
 
-  // Gentle idle float on the garment slots (desktop delight, skipped for reduced motion)
-  useEffect(() => {
-    if (reducedRef.current) return;
-    const anims = slotRefs.current.map((el, i) => {
-      if (!el) return null;
-      return el.animate([{ transform: 'translateY(-4px)' }, { transform: 'translateY(4px)' }], {
-        duration: 3000 + i * 400,
-        direction: 'alternate',
-        iterations: Infinity,
-        easing: 'ease-in-out',
-        delay: i * 220,
-      });
-    });
-    return () => anims.forEach((a) => a?.cancel());
-  }, [audience]);
-
-  const flyCardToStage = useCallback((t: number): Promise<void> => {
-    const src = cardBtnRefs.current[t];
-    const stage = stageRef.current;
-    if (!src || !stage) return Promise.resolve();
-    const r = src.getBoundingClientRect();
-    const sr = stage.getBoundingClientRect();
-    const clone = src.cloneNode(true) as HTMLElement;
-    clone.setAttribute('aria-hidden', 'true');
-    clone.style.position = 'fixed';
-    clone.style.left = `${r.left}px`;
-    clone.style.top = `${r.top}px`;
-    clone.style.width = `${r.width}px`;
-    clone.style.height = `${r.height}px`;
-    clone.style.margin = '0';
-    clone.style.zIndex = '60';
-    clone.style.pointerEvents = 'none';
-    document.body.append(clone);
-    const sx = r.left + r.width / 2;
-    const sy = r.top + r.height / 2;
-    const ex = sr.left + sr.width / 2;
-    const ey = sr.top + sr.height * 0.4;
-    const dx = ex - sx;
-    const dy = ey - sy;
-    const lift = Math.min(-60, -Math.hypot(dx, dy) * 0.15);
-    const anim = clone.animate(
-      [
-        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-        { transform: `translate(${dx * 0.5}px, ${dy * 0.5 + lift}px) scale(0.72)`, opacity: 1, offset: 0.55 },
-        { transform: `translate(${dx}px, ${dy}px) scale(0.42)`, opacity: 0.4 },
-      ],
-      { duration: 650, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-    );
-    return anim.finished.then(
-      () => clone.remove(),
-      () => clone.remove()
-    );
-  }, []);
-
-  const pulseRing = useCallback(() => {
-    const ring = ringRef.current;
-    if (!ring) return Promise.resolve();
-    const anim = ring.animate(
-      [
-        { transform: 'scale(0.4)', opacity: 1 },
-        { transform: 'scale(1.7)', opacity: 0 },
-      ],
-      { duration: 450, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-    );
-    return anim.finished.then(
-      () => undefined,
-      () => undefined
-    );
-  }, []);
-
-  const revealLook = useCallback((top: HTMLElement, wear: boolean): Promise<void> => {
-    const scan = scanRef.current;
-    const stage = stageRef.current;
-    const height = stage?.offsetHeight ?? 600;
-    const from = wear ? 'inset(0 0 100% 0)' : 'inset(0 0 0% 0)';
-    const to = wear ? 'inset(0 0 0% 0)' : 'inset(0 0 100% 0)';
-    top.style.clipPath = from;
-    void top.offsetWidth;
-    const D = 780;
-    const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
-    const clipAnim = top.animate([{ clipPath: from }, { clipPath: to }], {
-      duration: D,
-      easing: EASE,
-      fill: 'forwards',
-    });
-    const jobs: Array<Promise<unknown>> = [
-      clipAnim.finished.then(
-        () => undefined,
-        () => undefined
-      ),
-    ];
-    if (scan) {
-      // Scan edge rides exactly on the clip boundary: same duration + easing.
-      const scanAnim = wear
-        ? scan.animate(
-            [
-              { transform: 'translateY(-4px)', opacity: 1 },
-              { transform: `translateY(${height}px)`, opacity: 1, offset: 0.85 },
-              { transform: `translateY(${height}px)`, opacity: 0 },
-            ],
-            { duration: D, easing: EASE, fill: 'forwards' }
-          )
-        : scan.animate(
-            [
-              { transform: `translateY(${height}px)`, opacity: 1 },
-              { transform: 'translateY(-4px)', opacity: 1, offset: 0.85 },
-              { transform: 'translateY(-4px)', opacity: 0 },
-            ],
-            { duration: D, easing: EASE, fill: 'forwards' }
-          );
-      jobs.push(
-        scanAnim.finished.then(
-          () => undefined,
-          () => undefined
-        )
-      );
-    }
-    if (stage) {
-      const settle = stage.animate(
-        [{ transform: 'scale(1)' }, { transform: 'scale(1.012)', offset: 0.5 }, { transform: 'scale(1)' }],
-        { duration: D, easing: 'ease-in-out' }
-      );
-      jobs.push(
-        settle.finished.then(
-          () => undefined,
-          () => undefined
-        )
-      );
-    }
-    return Promise.all(jobs).then(() => {
-      top.style.clipPath = to;
-      if (scan) {
-        scan.getAnimations().forEach((a) => {
-          try {
-            a.cancel();
-          } catch {
-            /* noop */
-          }
-        });
-      }
-    });
-  }, []);
-
-  // Every wear uses revealLook so the scan line always leads the cloth.
   const play = useCallback(
-    (t: number) => {
+    async (t: number) => {
       const startedAudience = audienceRef.current;
       const activeSet = FITTING_SETS[startedAudience];
-      const prev = currentRef.current;
       const wear = t >= 0;
-      const look = wear ? activeSet.cards[t] : null;
-      const top = topLayerRef.current;
-      const img = topImgRef.current;
-      if (!top || !img) return;
-      busyRef.current = true;
-      const finish = () => {
-        busyRef.current = false;
-        if (audienceRef.current !== startedAudience) {
-          const next = queuedRef.current;
-          queuedRef.current = null;
-          if (next !== null) play(next);
-          return;
-        }
-        currentRef.current = t;
-        setCurrent(t);
-        setLiveMsg(look ? `Now wearing: ${look.title}` : `${AUDIENCE_LABELS[startedAudience]} base look.`);
-        const next = queuedRef.current;
-        queuedRef.current = null;
-        if (next !== null) play(next);
-      };
-      if (reducedRef.current) {
-        if (baseImgRef.current) baseImgRef.current.src = activeSet.base.image;
-        img.src = look ? look.image : activeSet.base.image;
-        top.style.clipPath = look ? 'inset(0 0 0% 0)' : 'inset(0 0 100% 0)';
-        finish();
+      const targetLook = wear ? activeSet.cards[t] : null;
+      const targetSrc = targetLook ? targetLook.image : activeSet.base.image;
+      const currentSrc = currentDisplayedSrcRef.current;
+
+      // If target is already on display and not animating, nothing to change
+      if (t === currentRef.current && targetSrc === currentSrc) {
         return;
       }
-      (async () => {
-        const runId = ++runRef.current;
-        const isStale = () => runId !== runRef.current || audienceRef.current !== startedAudience;
-        const abort = () => {
-          // Never leave the room locked: release busy and drain one queued tap.
-          busyRef.current = false;
-          const next = queuedRef.current;
-          queuedRef.current = null;
-          if (next !== null && audienceRef.current === startedAudience) play(next);
-        };
-        if (wear && look) {
-          // Every wear uses the same cinematic order: line first, cloth second.
-          // 1. Keep the old look on stage during fly + pulse (no pop).
-          // 2. Preload the target so decode never flashes mid-reveal.
-          const preload = preloadSrc(look.image);
-          if (prev >= 0) {
-            await flyCardToStage(t);
-            if (isStale()) {
-              abort();
-              return;
-            }
-            await pulseRing();
-            if (isStale()) {
-              abort();
-              return;
-            }
-            await preload;
-            if (isStale()) {
-              abort();
-              return;
-            }
-          } else {
-            top.style.clipPath = 'inset(0 0 100% 0)';
-            img.src = look.image;
-            await flyCardToStage(t);
-            if (isStale()) {
-              abort();
-              return;
-            }
-            await pulseRing();
-            if (isStale()) {
-              abort();
-              return;
-            }
-            await preload;
-            if (isStale()) {
-              abort();
-              return;
-            }
-          }
-          if (prev >= 0) {
-            const oldLook = activeSet.cards[prev];
-            // Stage the old look underneath so hiding the top never flashes base.
-            if (baseImgRef.current && oldLook) baseImgRef.current.src = oldLook.image;
-            top.style.clipPath = 'inset(0 0 100% 0)';
-            img.src = look.image;
-            try {
-              await img.decode?.();
-            } catch {
-              // Ignore decode errors; reveal still runs.
-            }
-            if (isStale()) {
-              abort();
-              return;
-            }
-          } else {
-            try {
-              await img.decode?.();
-            } catch {
-              // Ignore decode errors; reveal still runs.
-            }
-            if (isStale()) {
-              abort();
-              return;
-            }
-          }
-          await revealLook(top, true);
-          if (isStale()) {
-            abort();
-            return;
-          }
-          if (baseImgRef.current) baseImgRef.current.src = activeSet.base.image;
-        } else {
-          // Look -> base: reverse reveal back to the base look.
-          if (baseImgRef.current) baseImgRef.current.src = activeSet.base.image;
-          await revealLook(top, false);
-          if (isStale()) {
-            abort();
-            return;
-          }
+
+      busyRef.current = true;
+      const runId = ++runRef.current;
+      const isStale = () => runId !== runRef.current || audienceRef.current !== startedAudience;
+
+      // Reduced motion fallback: instant swap without scan line
+      if (reducedRef.current) {
+        currentRef.current = t;
+        currentDisplayedSrcRef.current = targetSrc;
+        setCurrent(t);
+        setUnderSrc(targetSrc);
+        setTopSrc(targetSrc);
+        setTopClip('inset(0 0 0% 0)');
+        setLiveMsg(targetLook ? `Now wearing: ${targetLook.title}` : `${AUDIENCE_LABELS[startedAudience]} base look.`);
+        busyRef.current = false;
+        const next = queuedRef.current;
+        queuedRef.current = null;
+        if (next !== null && next !== t && audienceRef.current === startedAudience) {
+          play(next);
         }
-        finish();
-      })().catch(() => {
-        if (look) img.src = look.image;
-        top.style.clipPath = look ? 'inset(0 0 0% 0)' : 'inset(0 0 100% 0)';
-        if (baseImgRef.current) baseImgRef.current.src = activeSet.base.image;
-        finish();
-      });
+        return;
+      }
+
+      try {
+        await preloadSrc(targetSrc);
+        if (isStale()) {
+          busyRef.current = false;
+          return;
+        }
+
+        const top = topLayerRef.current;
+        const topImg = topImgRef.current;
+        const baseImg = baseImgRef.current;
+        const scan = scanRef.current;
+        const stage = stageRef.current;
+
+        if (!top || !topImg || !baseImg || !scan || !stage) {
+          busyRef.current = false;
+          return;
+        }
+
+        // 1. Stage the currently visible look underneath
+        baseImg.src = currentSrc;
+
+        // 2. Prepare the incoming target look on the top layer
+        topImg.src = targetSrc;
+        try {
+          await topImg.decode?.();
+        } catch {
+          // ignore decode errors
+        }
+        if (isStale()) {
+          busyRef.current = false;
+          return;
+        }
+
+        // 3. Reset top layer to clipped at top
+        top.style.clipPath = 'inset(0 0 100% 0)';
+        void top.offsetWidth;
+
+        const stageHeight = stage.offsetHeight || 600;
+        const DURATION = 550;
+        const EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+        // 4. Run synchronized scan line and clip-path wipe from top to bottom
+        const clipAnim = top.animate(
+          [
+            { clipPath: 'inset(0 0 100% 0)' },
+            { clipPath: 'inset(0 0 0% 0)' },
+          ],
+          { duration: DURATION, easing: EASING, fill: 'forwards' }
+        );
+
+        const scanAnim = scan.animate(
+          [
+            { transform: 'translateY(-2px)', opacity: 0 },
+            { transform: 'translateY(0px)', opacity: 1, offset: 0.05 },
+            { transform: `translateY(${stageHeight - 8}px)`, opacity: 1, offset: 0.92 },
+            { transform: `translateY(${stageHeight}px)`, opacity: 0 },
+          ],
+          { duration: DURATION, easing: EASING, fill: 'forwards' }
+        );
+
+        const stagePulse = stage.animate(
+          [
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.008)', offset: 0.5 },
+            { transform: 'scale(1)' },
+          ],
+          { duration: DURATION, easing: 'ease-in-out' }
+        );
+
+        await Promise.all([
+          clipAnim.finished.catch(() => undefined),
+          scanAnim.finished.catch(() => undefined),
+          stagePulse.finished.catch(() => undefined),
+        ]);
+
+        if (isStale()) {
+          busyRef.current = false;
+          return;
+        }
+
+        // 5. Commit DOM styles to target state
+        top.style.clipPath = 'inset(0 0 0% 0)';
+        baseImg.src = targetSrc;
+
+        // 6. Synchronize React state with DOM
+        currentRef.current = t;
+        currentDisplayedSrcRef.current = targetSrc;
+        setCurrent(t);
+        setUnderSrc(targetSrc);
+        setTopSrc(targetSrc);
+        setTopClip('inset(0 0 0% 0)');
+        setLiveMsg(targetLook ? `Now wearing: ${targetLook.title}` : `${AUDIENCE_LABELS[startedAudience]} base look.`);
+
+        try {
+          clipAnim.cancel();
+          scanAnim.cancel();
+          stagePulse.cancel();
+        } catch {
+          // noop
+        }
+      } catch {
+        // Safe fallback on unexpected error
+        currentRef.current = t;
+        currentDisplayedSrcRef.current = targetSrc;
+        setCurrent(t);
+        setUnderSrc(targetSrc);
+        setTopSrc(targetSrc);
+        setTopClip('inset(0 0 0% 0)');
+      } finally {
+        busyRef.current = false;
+        const next = queuedRef.current;
+        queuedRef.current = null;
+        if (next !== null && next !== currentRef.current && audienceRef.current === startedAudience) {
+          play(next);
+        }
+      }
     },
-    [flyCardToStage, pulseRing, revealLook, preloadSrc]
+    [preloadSrc]
   );
 
   const enqueue = useCallback(
@@ -510,7 +389,7 @@ export default function VirtualFittingRoom() {
 
   const requestWear = useCallback(
     (i: number) => {
-      if (!busyRef.current && i === currentRef.current) {
+      if (i === currentRef.current) {
         if (i === -1) {
           const stage = stageRef.current;
           if (stage && !reducedRef.current) {
@@ -523,6 +402,7 @@ export default function VirtualFittingRoom() {
           setLiveMsg(`${AUDIENCE_LABELS[audienceRef.current]} base look.`);
           return;
         }
+        // If the look is already worn, clicking it again resets back to base look
         enqueue(-1);
         return;
       }
@@ -547,11 +427,13 @@ export default function VirtualFittingRoom() {
     setAudience(key);
     queuedRef.current = null;
     currentRef.current = -1;
+    const newBase = FITTING_SETS[key].base.image;
+    currentDisplayedSrcRef.current = newBase;
+    busyRef.current = false;
     setCurrent(-1);
-    const nextSet = FITTING_SETS[key];
-    if (baseImgRef.current) baseImgRef.current.src = nextSet.base.image;
-    if (topImgRef.current) topImgRef.current.src = nextSet.base.image;
-    if (topLayerRef.current) topLayerRef.current.style.clipPath = 'inset(0 0 100% 0)';
+    setUnderSrc(newBase);
+    setTopSrc(newBase);
+    setTopClip('inset(0 0 0% 0)');
     setLiveMsg(`${AUDIENCE_LABELS[key]} base look.`);
   }, []);
 
@@ -562,19 +444,6 @@ export default function VirtualFittingRoom() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [requestWear]);
-
-  const handleTilt = (e: React.PointerEvent<HTMLButtonElement>) => {
-    if (reducedRef.current || e.pointerType === 'touch' || busyRef.current) return;
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateY(${px * 14}deg) rotateX(${-py * 14}deg) translateY(-4px)`;
-  };
-
-  const resetTilt = (e: React.PointerEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.transform = '';
-  };
 
   const handleRoomMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (reducedRef.current || e.pointerType === 'touch') return;
@@ -598,7 +467,7 @@ export default function VirtualFittingRoom() {
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
             Virtual Fitting Room
           </span>
-          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-store-text-primary">
+          <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-store-text-primary">
             Choose a piece. Watch it get worn.
           </h2>
           <p className="text-sm text-store-text-secondary font-sans mt-2 max-w-lg">
@@ -659,7 +528,7 @@ export default function VirtualFittingRoom() {
         })}
       </div>
 
-      {/* Fitting room */}
+      {/* Fitting room layout */}
       <div
         className="vfr-room"
         onPointerMove={handleRoomMove}
@@ -670,23 +539,12 @@ export default function VirtualFittingRoom() {
             const isOn = current === i;
             const isFav = isInWishlist(look.id);
             return (
-              <div
-                key={look.id}
-                ref={(el) => {
-                  slotRefs.current[i] = el;
-                }}
-                className="vfr-slot"
-              >
+              <div key={look.id} className="vfr-slot">
                 <button
-                  ref={(el) => {
-                    cardBtnRefs.current[i] = el;
-                  }}
                   type="button"
                   aria-pressed={isOn}
                   aria-label={isOn ? `${look.title} is on the model, tap to remove` : `Wear ${look.title}`}
                   onClick={() => requestWear(i)}
-                  onPointerMove={handleTilt}
-                  onPointerLeave={resetTilt}
                   className={cn('vfr-card', isOn ? 'vfr-card-on' : '')}
                 >
                   <span className="vfr-ph">
@@ -732,6 +590,7 @@ export default function VirtualFittingRoom() {
           })}
         </div>
 
+        {/* Center model stage */}
         <div className="vfr-stage-col">
           <div ref={tiltRef} className="vfr-stage-tilt">
             <div
@@ -740,14 +599,37 @@ export default function VirtualFittingRoom() {
               aria-label={`Model wearing ${worn ? worn.title : set.base.title}`}
               className="vfr-stage"
             >
+              {/* Underneath layer (currently displayed look) */}
               <div className="vfr-layer">
-                <img ref={baseImgRef} src={set.base.image} alt="" width={941} height={1672} draggable={false} />
+                <img
+                  ref={baseImgRef}
+                  src={underSrc}
+                  alt=""
+                  width={941}
+                  height={1672}
+                  draggable={false}
+                />
               </div>
-              <div ref={topLayerRef} className="vfr-layer" style={{ clipPath: 'inset(0 0 100% 0)' }}>
-                <img ref={topImgRef} src={set.base.image} alt="" width={941} height={1672} draggable={false} />
+
+              {/* Top layer (incoming look revealed by scan) */}
+              <div
+                ref={topLayerRef}
+                className="vfr-layer"
+                style={{ clipPath: topClip }}
+              >
+                <img
+                  ref={topImgRef}
+                  src={topSrc}
+                  alt=""
+                  width={941}
+                  height={1672}
+                  draggable={false}
+                />
               </div>
+
+              {/* Gold laser scan beam */}
               <span ref={scanRef} aria-hidden="true" className="vfr-scan" />
-              <span ref={ringRef} aria-hidden="true" className="vfr-ring" />
+
               <div className="absolute top-4 left-4 z-10">
                 <Badge variant="dark" size="sm">
                   {set.base.badge}

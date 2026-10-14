@@ -21,3 +21,6 @@ export type { SizeGuideModalProps } from './SizeGuideModal';
 
 export { default as PaymentSimulationPanel } from './PaymentSimulationPanel';
 export type { PaymentSimulationPanelProps } from './PaymentSimulationPanel';
+
+export { default as VirtualFittingRoom } from './VirtualFittingRoom';
+export type { FittingAudience } from './VirtualFittingRoom';
