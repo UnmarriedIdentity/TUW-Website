@@ -246,26 +246,26 @@ export default function Header() {
             </div>
 
             {/* Right: 4 Action Icons matching Figma node 221:12633 */}
-            <div className="flex items-center gap-4 sm:gap-6 lg:gap-7">
+            <div className="flex items-center gap-1 sm:gap-2">
               {/* 1. Search */}
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 aria-label="Search catalog"
-                className="p-1.5 rounded-full text-store-text-primary hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
-                <Search size={21} />
+                <Search size={20} />
               </button>
 
               {/* 2. Wishlist */}
               <Link
                 href="/wishlist"
                 aria-label="View wishlist"
-                className="relative p-1.5 rounded-full text-store-text-primary hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
+                className="relative w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
-                <Heart size={21} />
+                <Heart size={20} />
                 {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-secondary-coral text-white text-2xs font-bold flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-secondary-coral text-white text-2xs font-bold flex items-center justify-center pointer-events-none">
                     {wishlist.length}
                   </span>
                 )}
@@ -275,9 +275,9 @@ export default function Header() {
               <Link
                 href="/login"
                 aria-label="My Account"
-                className="p-1.5 rounded-full text-store-text-primary hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
-                <User size={21} />
+                <User size={20} />
               </Link>
 
               {/* 4. Cart */}
@@ -285,11 +285,11 @@ export default function Header() {
                 type="button"
                 onClick={() => setIsCartDrawerOpen(true)}
                 aria-label="Open shopping cart"
-                className="relative p-1.5 rounded-full text-store-text-primary hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
+                className="relative w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
-                <ShoppingBag size={21} />
+                <ShoppingBag size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-dark text-white text-2xs font-bold flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-primary-dark text-white text-2xs font-bold flex items-center justify-center pointer-events-none">
                     {cartCount}
                   </span>
                 )}
