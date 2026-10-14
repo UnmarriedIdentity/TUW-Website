@@ -175,16 +175,14 @@ export default function Header() {
 
       {/* 2. Main Navigation Bar (73px, store-canvas) — Node 221:12623 */}
       <header
-        className={`sticky top-0 z-40 border-b border-store-border transition-all duration-300 ${
-          isScrolled
-            ? 'bg-store-canvas/95 backdrop-blur-md shadow-xs'
-            : 'bg-store-canvas'
+        className={`sticky top-0 z-40 border-b border-store-border bg-store-canvas transition-all duration-200 ${
+          isScrolled ? 'shadow-xs' : 'shadow-none'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between header-main-height">
+          <div className="flex items-center header-main-height">
             {/* Left: Mobile Hamburger & Desktop Navigation Links */}
-            <div className="flex items-center gap-6 lg:gap-8">
+            <div className="flex flex-1 items-center justify-start gap-6 lg:gap-8 min-w-0">
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -214,45 +212,28 @@ export default function Header() {
               </nav>
             </div>
 
-            {/* Center: Rolls-Royce Inspired Morphing Brand Wordmark & Emblem */}
-            <div className="relative flex items-center justify-center h-12 w-64 sm:w-72 lg:w-80">
-              {/* 1. Full Wordmark: "THE UNPLUGGED WEAR" (Visible at top) */}
+            {/* Center: Persistent Brand Lockup — always centered on all devices */}
+            <div className="flex shrink-0 items-center justify-center px-2">
               <Link
                 href="/"
                 aria-label="The Unplugged Wear - Homepage"
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
-                  isScrolled
-                    ? 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
-                    : 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-                }`}
+                className="flex items-center justify-center gap-1.5 sm:gap-2"
               >
-                <span className="font-heading font-medium text-lg sm:text-xl lg:text-2xl uppercase tracking-widest text-store-text-primary hover:text-black transition-colors whitespace-nowrap">
+                <TuwEmblem className="h-6 w-auto shrink-0 text-store-text-primary sm:h-8 lg:h-9" />
+                <span className="whitespace-nowrap font-heading font-medium uppercase tracking-widest text-store-text-primary text-xs sm:text-sm lg:text-xl">
                   The Unplugged Wear
                 </span>
-              </Link>
-
-              {/* 2. Signature Logo Emblem: TuwEmblem (Visible when scrolled) */}
-              <Link
-                href="/"
-                aria-label="The Unplugged Wear - Homepage"
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
-                  isScrolled
-                    ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-                    : 'opacity-0 translate-y-2 scale-90 pointer-events-none'
-                }`}
-              >
-                <TuwEmblem className="h-9 w-auto text-store-text-primary hover:text-black transition-transform duration-200 hover:scale-105" />
               </Link>
             </div>
 
             {/* Right: 4 Action Icons matching Figma node 221:12633 */}
-            <div className="flex items-center gap-1 sm:gap-2">
+            <div className="flex flex-1 items-center justify-end gap-0.5 sm:gap-2">
               {/* 1. Search */}
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 aria-label="Search catalog"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <Search size={20} />
               </button>
@@ -261,7 +242,7 @@ export default function Header() {
               <Link
                 href="/wishlist"
                 aria-label="View wishlist"
-                className="relative w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+                className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <Heart size={20} />
                 {wishlist.length > 0 && (
@@ -275,7 +256,7 @@ export default function Header() {
               <Link
                 href="/login"
                 aria-label="My Account"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <User size={20} />
               </Link>
@@ -285,7 +266,7 @@ export default function Header() {
                 type="button"
                 onClick={() => setIsCartDrawerOpen(true)}
                 aria-label="Open shopping cart"
-                className="relative w-9 h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+                className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <ShoppingBag size={20} />
                 {cartCount > 0 && (
