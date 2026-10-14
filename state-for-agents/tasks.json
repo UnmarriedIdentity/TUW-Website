@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 17,
-    "done": 17,
+    "total": 18,
+    "done": 18,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "ded0913",
+    "tip": "b276d06",
     "unpushed": [],
     "next_up": "All current tracks completed cleanly; ready for human browser verification and push",
     "pending_verifications": [],
@@ -322,6 +322,25 @@
         "Eliminate the excessive vertical space between subtitle and buttons, restoring cohesive luxury spacing (pt-4 sm:pt-6)",
         "Optimize hero scrim gradients so the upper 60% of the video is clear and luminous while bottom provides robust WCAG 2.1 AA contrast",
         "Validate across 360px, 768px, 1024px, 1440px breakpoints"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-018",
+      "title": "Replace Best Selling Product Images with Local Assets and Implement Interactive Hover State",
+      "status": "done",
+      "log": "b276d06",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Replace all 6 product collection cards in Section 2 with dedicated high-resolution local assets from public/images/images (image 1–6) and integrate smooth dual-image crossfade hover interactions with hoverImage assets.",
+      "key_decisions": [
+        "Update BestSellerItem interface to support optional hoverImage property",
+        "Replace Unsplash image URLs in BEST_SELLING_PRODUCTS with local asset paths /images/images/image 1–6 and corresponding hoverImage paths",
+        "Implement luxury dual-image hover transition with smooth opacity crossfade and subtle 105% scale",
+        "Preserve wishlist button and bestseller badge hit targets and z-index indexing over hover layer",
+        "Pass all verification gates: typecheck, unit tests, and production build"
       ],
       "follow_ups": []
     }

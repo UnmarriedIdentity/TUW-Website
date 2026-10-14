@@ -31,6 +31,7 @@ interface BestSellerItem {
   colorCount: number;
   priceINR: number;
   image: string;
+  hoverImage?: string;
   isBestseller?: boolean;
 }
 
@@ -42,7 +43,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'Long Sleeve',
     colorCount: 2,
     priceINR: 3099,
-    image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 1.avif',
+    hoverImage: '/images/images/image 1 hover.avif',
     isBestseller: true,
   },
   {
@@ -52,7 +54,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'Jacket',
     colorCount: 4,
     priceINR: 1805,
-    image: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 2.avif',
+    hoverImage: '/images/images/image 2 hover.avif',
     isBestseller: true,
   },
   {
@@ -62,7 +65,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'T-shirt',
     colorCount: 2,
     priceINR: 2099,
-    image: 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 3.webp',
+    hoverImage: '/images/images/image 3 hover.webp',
     isBestseller: true,
   },
   {
@@ -72,7 +76,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'Pullover',
     colorCount: 3,
     priceINR: 1100,
-    image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 4.webp',
+    hoverImage: '/images/images/image 4 hover.webp',
   },
   {
     id: 'bs-5',
@@ -81,7 +86,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'Pullover',
     colorCount: 3,
     priceINR: 1100,
-    image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 5.avif',
+    hoverImage: '/images/images/image 5 hover.avif',
   },
   {
     id: 'bs-6',
@@ -90,7 +96,8 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     category: 'Pullover',
     colorCount: 2,
     priceINR: 1150,
-    image: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=900&auto=format&fit=crop&q=80',
+    image: '/images/images/image 6.avif',
+    hoverImage: '/images/images/image 6 hover.avif',
     isBestseller: true,
   },
 ];
@@ -331,14 +338,25 @@ export default function HomePage() {
                   key={item.id}
                   className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-200 hover:shadow-md"
                 >
-                  {/* Image Container */}
+                  {/* Image Container with Smooth Dual-Image Crossfade on Hover */}
                   <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                    <Link href={`/products/${item.slug}`} className="block w-full h-full">
+                    <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        className={`w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+                          item.hoverImage ? 'group-hover:opacity-0' : ''
+                        }`}
                       />
+                      {item.hoverImage && (
+                        <img
+                          src={item.hoverImage}
+                          alt={`${item.title} alternate view`}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+                        />
+                      )}
                     </Link>
 
                     {/* Wishlist Heart Button */}
@@ -349,7 +367,7 @@ export default function HomePage() {
                         e.preventDefault();
                         toggleWishlist(item.id);
                       }}
-                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white active:scale-90 transition-transform cursor-pointer shadow-xs"
+                      className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white active:scale-90 transition-transform cursor-pointer shadow-xs"
                     >
                       <Heart
                         size={16}
@@ -358,7 +376,7 @@ export default function HomePage() {
                     </button>
 
                     {item.isBestseller && (
-                      <div className="absolute top-3 left-3">
+                      <div className="absolute top-3 left-3 z-10">
                         <Badge variant="dark" size="sm">
                           Bestseller
                         </Badge>
