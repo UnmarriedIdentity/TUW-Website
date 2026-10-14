@@ -91,7 +91,7 @@ function ShopContent() {
             { label: 'Shop Catalog' },
           ]}
         />
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1A1A1A] mt-2">
+        <h1 className="text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-[#1A1A1A] mt-2">
           {filters.category
             ? availableCategories.find((c) => c.value === filters.category)?.label || 'Apparel'
             : 'All Apparel'}

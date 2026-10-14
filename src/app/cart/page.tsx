@@ -50,7 +50,7 @@ export default function CartPage() {
         />
 
         <div className="my-6">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1A1A1A]">
+          <h1 className="text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-[#1A1A1A]">
             Your Shopping Bag
           </h1>
           <p className="text-sm text-[#666] mt-1">
