@@ -19,7 +19,13 @@ import { formatINR } from '@/lib/format';
 
 
 
-// 2. Best-Selling Products matching Figma specimen
+// 2. Best-Selling Products matching Figma & Blackout specimen
+interface ProductColorVariant {
+  name: string;
+  hex: string;
+  image: string;
+}
+
 interface BestSellerItem {
   id: string;
   slug: string;
@@ -27,75 +33,130 @@ interface BestSellerItem {
   category: string;
   colorCount: number;
   priceINR: number;
+  compareAtPriceINR?: number;
+  discountPercent?: number;
   image: string;
   hoverImage?: string;
   isBestseller?: boolean;
+  colors?: ProductColorVariant[];
+  sizes?: string[];
 }
 
 const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
   {
     id: 'bs-1',
-    slug: 'suede-classic-shirts',
-    title: 'Suede Classic Shirts',
-    category: 'Long Sleeve',
-    colorCount: 2,
+    slug: 'satin-finish-tailored-blazer',
+    title: 'Satin-Finish Tailored Blazer',
+    category: 'Jacket',
+    colorCount: 4,
+    discountPercent: 30,
     priceINR: 3099,
-    image: '/images/images/image%201.avif',
-    hoverImage: '/images/images/image%201%20hover.avif',
+    compareAtPriceINR: 4499,
+    image: '/images/products/satin-blazer/pink.png',
+    hoverImage: '/images/products/satin-blazer/red.png',
     isBestseller: true,
+    colors: [
+      { name: 'Rose', hex: '#D7A19E', image: '/images/products/satin-blazer/pink.png' },
+      { name: 'Crimson', hex: '#E60000', image: '/images/products/satin-blazer/red.png' },
+      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/satin-blazer/lime.png' },
+      { name: 'Onyx Black', hex: '#1B1B1B', image: '/images/products/satin-blazer/black.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-2',
-    slug: 'eolo-x-zip-shirt',
-    title: 'Eolo X Zip Shirt',
+    slug: 'linen-blend-two-piece-suit-set',
+    title: 'Linen-Blend Two-Piece Suit Set',
     category: 'Jacket',
     colorCount: 4,
+    discountPercent: 25,
     priceINR: 1805,
+    compareAtPriceINR: 2400,
     image: '/images/images/image%202.avif',
-    hoverImage: '/images/images/image%202%20hover.avif',
+    hoverImage: '/images/products/linen-suit/black.png',
     isBestseller: true,
+    colors: [
+      { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/images/image%202.avif' },
+      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/linen-suit/blue.png' },
+      { name: 'Crimson', hex: '#C21B26', image: '/images/products/linen-suit/red.png' },
+      { name: 'Black', hex: '#1C1C1E', image: '/images/products/linen-suit/black.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-3',
-    slug: 'suede-3d-shirt',
-    title: 'Suede 3D Shirt',
+    slug: 'oversized-logo-graphic-tee',
+    title: 'Oversized Logo Graphic Tee',
     category: 'T-shirt',
-    colorCount: 2,
+    colorCount: 3,
+    discountPercent: 20,
     priceINR: 2099,
+    compareAtPriceINR: 2600,
     image: '/images/images/image%203.webp',
-    hoverImage: '/images/images/image%203%20hover.webp',
+    hoverImage: '/images/products/graphic-tee/lime.png',
     isBestseller: true,
+    colors: [
+      { name: 'Cobalt Blue', hex: '#1D5BD8', image: '/images/images/image%203.webp' },
+      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/graphic-tee/lime.png' },
+      { name: 'Oatmeal Cream', hex: '#EFECE6', image: '/images/products/graphic-tee/cream.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-4',
-    slug: 'modern-crew-neck-plum',
-    title: 'Modern Crew Neck',
-    category: 'Pullover',
-    colorCount: 3,
-    priceINR: 1100,
+    slug: 'tailored-wide-leg-pantsuit',
+    title: 'Tailored Wide-Leg Pantsuit',
+    category: 'Pant',
+    colorCount: 4,
+    discountPercent: 30,
+    priceINR: 3499,
+    compareAtPriceINR: 4999,
     image: '/images/images/image%204.webp',
-    hoverImage: '/images/images/image%204%20hover.webp',
+    hoverImage: '/images/products/pantsuit/blue.png',
+    colors: [
+      { name: 'Magenta', hex: '#D81B9C', image: '/images/images/image%204.webp' },
+      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/pantsuit/blue.png' },
+      { name: 'Warm Camel', hex: '#C49760', image: '/images/products/pantsuit/camel.png' },
+      { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/pantsuit/black.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-5',
-    slug: 'modern-crew-neck-charcoal',
-    title: 'Modern Crew Neck',
-    category: 'Pullover',
+    slug: 'short-sleeve-relaxed-fit-shirt',
+    title: 'Short-Sleeve Relaxed Fit Shirt',
+    category: 'Long Sleeve',
     colorCount: 3,
-    priceINR: 1100,
+    discountPercent: 55,
+    priceINR: 1899,
+    compareAtPriceINR: 3999,
     image: '/images/images/image%205.avif',
-    hoverImage: '/images/images/image%205%20hover.avif',
+    hoverImage: '/images/products/relaxed-shirt/rust.png',
+    colors: [
+      { name: 'Cerulean', hex: '#4B79A1', image: '/images/images/image%205.avif' },
+      { name: 'Rust Sienna', hex: '#7D4427', image: '/images/products/relaxed-shirt/rust.png' },
+      { name: 'Ochre Gold', hex: '#E5A912', image: '/images/products/relaxed-shirt/gold.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
   {
     id: 'bs-6',
-    slug: 'sundero-zip-hoodie',
-    title: 'Sundero Hoodie',
-    category: 'Pullover',
-    colorCount: 2,
-    priceINR: 1150,
+    slug: 'corduroy-teddy-bomber-jacket',
+    title: 'Corduroy Teddy Bomber Jacket',
+    category: 'Jacket',
+    colorCount: 3,
+    discountPercent: 40,
+    priceINR: 3150,
+    compareAtPriceINR: 5250,
     image: '/images/images/image%206.avif',
-    hoverImage: '/images/images/image%206%20hover.avif',
+    hoverImage: '/images/products/bomber-jacket/red.png',
     isBestseller: true,
+    colors: [
+      { name: 'Saffron Gold', hex: '#E5A912', image: '/images/images/image%206.avif' },
+      { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/bomber-jacket/red.png' },
+      { name: 'Pitch Black', hex: '#1B1B1B', image: '/images/products/bomber-jacket/black.png' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
   },
 ];
 
@@ -136,6 +197,180 @@ const RECOMMENDATION_STORIES = [
     slug: 'minimal-performance',
   },
 ];
+
+// Interactive Best-Selling Card with Blackout-style Swatch Hover & Size Chips
+function BestSellingCard({
+  item,
+  isFav,
+  onToggleWishlist,
+}: {
+  item: BestSellerItem;
+  isFav: boolean;
+  onToggleWishlist: () => void;
+}) {
+  const [selectedColor, setSelectedColor] = useState<ProductColorVariant | null>(item.colors?.[0] || null);
+  const [hoveredColor, setHoveredColor] = useState<ProductColorVariant | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>('M');
+
+  // Active display image: hovered color if mouse is over a swatch, otherwise selected color image, otherwise base image
+  const displayImage = hoveredColor?.image || selectedColor?.image || item.image;
+  const activeColorName = hoveredColor?.name || selectedColor?.name || '';
+  const sizes = item.sizes || ['S', 'M', 'L', 'XL'];
+
+  return (
+    <div className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg">
+      {/* Image Container matching Blackout Template (Clean dual-image swap on hover) */}
+      <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
+        <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
+          {/* Default / Active Color Image */}
+          <img
+            src={displayImage}
+            alt={`${item.title} ${activeColorName}`}
+            loading="lazy"
+            className="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105"
+          />
+
+          {/* Hover Image (Reveals smoothly on card hover if user is not hovering a swatch) */}
+          {item.hoverImage && !hoveredColor && (
+            <img
+              src={item.hoverImage}
+              alt={`${item.title} hover view`}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+            />
+          )}
+        </Link>
+
+        {/* Discount Pill Badge (e.g. -30%, -25%) */}
+        {item.discountPercent ? (
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-red-600 shadow-xs">
+              -{item.discountPercent}%
+            </span>
+          </div>
+        ) : item.isBestseller ? (
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
+            <Badge variant="dark" size="sm">
+              Bestseller
+            </Badge>
+          </div>
+        ) : null}
+
+        {/* Wishlist Heart Button */}
+        <button
+          type="button"
+          aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleWishlist();
+          }}
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white hover:scale-110 active:scale-90 transition-all cursor-pointer shadow-xs"
+        >
+          <Heart
+            size={16}
+            className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
+          />
+        </button>
+
+        {/* Quick View Pill (Slides Up on Card Hover, Blackout style) */}
+        <Link
+          href={`/products/${item.slug}`}
+          aria-label={`Quick view ${item.title}`}
+          className="absolute inset-x-4 bottom-3 z-10 flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-white/60 text-store-text-primary font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-200"
+        >
+          <span>Quick View</span>
+          <ArrowRight size={12} />
+        </Link>
+      </div>
+
+      {/* Product Details matching Blackout Specimen */}
+      <div className="p-4 flex flex-col gap-2.5">
+        {/* Row 1: Title & Price */}
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-sans font-bold text-sm text-store-text-primary leading-tight">
+            <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
+              {item.title}
+            </Link>
+          </h3>
+          <div className="flex items-baseline gap-1.5 text-right shrink-0">
+            <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
+              {formatINR(item.priceINR * 100)}
+            </span>
+            {item.compareAtPriceINR && (
+              <span className="text-2xs text-store-text-secondary line-through tuw-tabular-nums">
+                {formatINR(item.compareAtPriceINR * 100)}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Row 2: View Details & Size Selector Buttons */}
+        <div className="flex items-center justify-between pt-0.5">
+          <Link
+            href={`/products/${item.slug}`}
+            className="text-xs text-store-text-secondary hover:text-store-text-primary underline underline-offset-2 transition-colors font-medium"
+          >
+            View details
+          </Link>
+
+          {/* Size Pills: [S] [M] [L] [XL] */}
+          <div className="flex items-center gap-1">
+            {sizes.map((s) => {
+              const isSelected = selectedSize === s;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSelectedSize(s)}
+                  className={`h-5 min-w-5 px-1 text-2xs font-semibold border rounded transition-all cursor-pointer flex items-center justify-center ${
+                    isSelected
+                      ? 'bg-store-text-primary text-white border-store-text-primary'
+                      : 'bg-white text-store-text-secondary border-store-border hover:border-store-text-primary hover:text-store-text-primary'
+                  }`}
+                  aria-label={`Select size ${s}`}
+                >
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Row 3: Color Swatches with Real-Time Hover Color Swap */}
+        {item.colors && item.colors.length > 0 && (
+          <div className="flex items-center justify-between pt-1.5 border-t border-store-border/60">
+            <div className="flex items-center gap-1.5">
+              {item.colors.map((color) => {
+                const isActive = (hoveredColor?.name || selectedColor?.name) === color.name;
+                return (
+                  <button
+                    key={color.name}
+                    type="button"
+                    title={color.name}
+                    aria-label={`View ${item.title} in ${color.name}`}
+                    onMouseEnter={() => setHoveredColor(color)}
+                    onMouseLeave={() => setHoveredColor(null)}
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-4 h-4 rounded-full border transition-all cursor-pointer ${
+                      isActive
+                        ? 'ring-2 ring-store-text-primary ring-offset-1 scale-110'
+                        : 'border-store-border hover:scale-105 opacity-80 hover:opacity-100'
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                  />
+                );
+              })}
+            </div>
+            <span className="text-2xs text-store-text-secondary font-medium lowercase first-letter:uppercase">
+              {hoveredColor ? hoveredColor.name : selectedColor?.name || `${item.colorCount} colors`}
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const { isInWishlist, toggleWishlist } = useStore();
@@ -282,82 +517,14 @@ export default function HomePage() {
 
           {/* 6 Product Cards Grid (3 columns x 2 rows) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProducts.map((item) => {
-              const isFav = isInWishlist(item.id);
-              return (
-                <div
-                  key={item.id}
-                  className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg"
-                >
-                  {/* Image Container matching Blackout Template (Clean dual-image swap on hover) */}
-                  <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                    <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
-                      {/* Default Simple Image */}
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-
-                      {/* Hover Image (Reveals smoothly on card hover, exact Blackout style) */}
-                      {item.hoverImage && (
-                        <img
-                          src={item.hoverImage}
-                          alt={`${item.title} hover view`}
-                          loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
-                        />
-                      )}
-                    </Link>
-
-                    {/* Wishlist Heart Button */}
-                    <button
-                      type="button"
-                      aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleWishlist(item.id);
-                      }}
-                      className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-xs border border-store-border flex items-center justify-center text-store-text-primary hover:bg-white hover:scale-110 active:scale-90 transition-all cursor-pointer shadow-xs"
-                    >
-                      <Heart
-                        size={16}
-                        className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
-                      />
-                    </button>
-
-                    {item.isBestseller && (
-                      <div className="absolute top-3 left-3 z-10">
-                        <Badge variant="dark" size="sm">
-                          Bestseller
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="p-4 flex items-center justify-between">
-                    <div>
-                      <h3 className="font-sans font-bold text-sm text-store-text-primary">
-                        <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
-                          {item.title}
-                        </Link>
-                      </h3>
-                      <p className="text-2xs text-store-text-secondary mt-0.5">
-                        {item.colorCount} Colors • {item.category}
-                      </p>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
-                        {formatINR(item.priceINR * 100)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {filteredProducts.map((item) => (
+              <BestSellingCard
+                key={item.id}
+                item={item}
+                isFav={isInWishlist(item.id)}
+                onToggleWishlist={() => toggleWishlist(item.id)}
+              />
+            ))}
           </div>
         </section>
 

@@ -16,12 +16,14 @@ export interface ProductCardProps {
 export default function ProductCard({ product, className = '' }: ProductCardProps) {
   const { isInWishlist, toggleWishlist, addToCart } = useStore();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]?.value || '');
+  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [quickAddSize, setQuickAddSize] = useState<string | null>(null);
 
+  const displayColor = hoveredColor || selectedColor;
   const activeImage =
-    product.images.find((img) => img.color === selectedColor)?.url ||
-    (isHovered && product.images[1] ? product.images[1].url : product.images[0]?.url);
+    product.images.find((img) => img.color === displayColor)?.url ||
+    (isHovered && !hoveredColor && product.images[1] ? product.images[1].url : product.images[0]?.url);
 
   const isFavorite = isInWishlist(product.id);
 
@@ -124,23 +126,28 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
         {/* Color Swatches */}
         {product.colors.length > 1 && (
           <div className="flex items-center gap-1.5 pb-1">
-            {product.colors.map((color) => (
-              <button
-                key={color.value}
-                type="button"
-                aria-label={`Select ${color.name}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedColor(color.value);
-                }}
-                className={`w-4 h-4 rounded-full border transition-all ${
-                  selectedColor === color.value
-                    ? 'ring-2 ring-offset-1 ring-[#1A1A1A] scale-110'
-                    : 'border-black/20 hover:scale-105'
-                }`}
-                style={{ backgroundColor: color.hex }}
-              />
-            ))}
+            {product.colors.map((color) => {
+              const isActive = (hoveredColor || selectedColor) === color.value;
+              return (
+                <button
+                  key={color.value}
+                  type="button"
+                  aria-label={`Select ${color.name}`}
+                  onMouseEnter={() => setHoveredColor(color.value)}
+                  onMouseLeave={() => setHoveredColor(null)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedColor(color.value);
+                  }}
+                  className={`w-4 h-4 rounded-full border transition-all ${
+                    isActive
+                      ? 'ring-2 ring-offset-1 ring-[#1A1A1A] scale-110'
+                      : 'border-black/20 hover:scale-105'
+                  }`}
+                  style={{ backgroundColor: color.hex }}
+                />
+              );
+            })}
           </div>
         )}
 
