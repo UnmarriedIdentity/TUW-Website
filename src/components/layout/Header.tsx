@@ -175,31 +175,33 @@ export default function Header() {
 
       {/* 2. Main Navigation Bar (73px, store-canvas) — Node 221:12623 */}
       <header
-        className={`sticky top-0 z-40 border-b border-store-border bg-store-canvas transition-all duration-200 ${
-          isScrolled ? 'shadow-xs' : 'shadow-none'
+        className={`sticky top-0 z-40 border-b border-store-border transition-all duration-300 ${
+          isScrolled
+            ? 'bg-store-canvas/95 backdrop-blur-md shadow-xs'
+            : 'bg-store-canvas'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center header-main-height">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative">
+          <div className="flex items-center justify-between header-main-height">
             {/* Left: Mobile Hamburger & Desktop Navigation Links */}
-            <div className="flex flex-1 items-center justify-start gap-6 lg:gap-8 min-w-0">
+            <div className="flex flex-1 items-center justify-start min-w-0 z-10">
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
                 aria-label="Open mobile menu"
-                className="lg:hidden p-2 rounded-xl text-store-text-primary hover:bg-black/5"
+                className="lg:hidden p-2 rounded-xl text-store-text-primary hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <Menu size={22} />
               </button>
 
-              <nav className="hidden lg:flex items-center gap-7" aria-label="Main Navigation">
+              <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Main Navigation">
                 {navLinks.map((link) => {
                   const isActive = pathname === link.href;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`text-sm font-medium tracking-wide transition-colors hover:text-black ${
+                      className={`text-sm font-medium tracking-wide transition-colors hover:text-black whitespace-nowrap ${
                         isActive
                           ? 'text-store-text-primary border-b-2 border-primary-dark pb-0.5'
                           : 'text-store-text-primary/80'
@@ -212,22 +214,41 @@ export default function Header() {
               </nav>
             </div>
 
-            {/* Center: Persistent Brand Lockup — always centered on all devices */}
-            <div className="flex shrink-0 items-center justify-center px-2">
-              <Link
-                href="/"
-                aria-label="The Unplugged Wear - Homepage"
-                className="flex items-center justify-center gap-1.5 sm:gap-2"
-              >
-                <TuwEmblem className="h-6 w-auto shrink-0 text-store-text-primary sm:h-8 lg:h-9" />
-                <span className="whitespace-nowrap font-heading font-medium uppercase tracking-widest text-store-text-primary text-xs sm:text-sm lg:text-xl">
-                  The Unplugged Wear
-                </span>
-              </Link>
+            {/* Center: Rolls-Royce Inspired Morphing Brand Wordmark & Emblem — True Viewport Centering */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none z-20">
+              <div className="relative flex items-center justify-center h-12 w-48 sm:w-64 lg:w-80 pointer-events-auto">
+                {/* 1. Full Wordmark: "THE UNPLUGGED WEAR" (Visible at top) */}
+                <Link
+                  href="/"
+                  aria-label="The Unplugged Wear - Homepage"
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
+                    isScrolled
+                      ? 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
+                      : 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                  }`}
+                >
+                  <span className="font-heading font-medium text-xs sm:text-base lg:text-xl xl:text-2xl uppercase tracking-wider sm:tracking-widest text-store-text-primary hover:text-black transition-colors whitespace-nowrap">
+                    The Unplugged Wear
+                  </span>
+                </Link>
+
+                {/* 2. Signature Logo Emblem: TuwEmblem (Visible when scrolled) */}
+                <Link
+                  href="/"
+                  aria-label="The Unplugged Wear - Homepage"
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
+                    isScrolled
+                      ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                      : 'opacity-0 translate-y-2 scale-90 pointer-events-none'
+                  }`}
+                >
+                  <TuwEmblem className="h-7 sm:h-8 lg:h-9 w-auto text-store-text-primary hover:text-black transition-transform duration-200 hover:scale-105" />
+                </Link>
+              </div>
             </div>
 
             {/* Right: 4 Action Icons matching Figma node 221:12633 */}
-            <div className="flex flex-1 items-center justify-end gap-0.5 sm:gap-2">
+            <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 z-10">
               {/* 1. Search */}
               <button
                 type="button"
@@ -256,7 +277,7 @@ export default function Header() {
               <Link
                 href="/login"
                 aria-label="My Account"
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+                className="hidden sm:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full items-center justify-center text-store-text-primary hover:text-black hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
               >
                 <User size={20} />
               </Link>
