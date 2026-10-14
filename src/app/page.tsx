@@ -200,7 +200,7 @@ export default function HomePage() {
             ========================================================================= */}
         <section
           aria-label="Hero Showcase"
-          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-center border-b border-store-border select-none"
+          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-end border-b border-store-border select-none"
         >
           {/* Background Video (Dedicated Benchmark Hero Video h1, full muted in continuous loop) */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -219,8 +219,8 @@ export default function HomePage() {
           <div className="absolute inset-0 hero-scrim-horizontal z-10 pointer-events-none" />
           <div className="absolute inset-0 hero-scrim-gradient z-10 pointer-events-none" />
 
-          {/* Quiet Luxury Minimal Editorial Presentation */}
-          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-12 flex-1 flex flex-col justify-center">
+          {/* Quiet Luxury Minimal Editorial Presentation (Bottom Anchored) */}
+          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20 flex-1 flex flex-col justify-end">
             <div className="max-w-xl space-y-4">
               {/* Delicate Architectural Eyebrow */}
               <div className="flex items-center gap-3 text-2xs uppercase tracking-editorial text-white/70 font-sans font-medium">

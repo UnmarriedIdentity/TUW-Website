@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 13,
-    "done": 13,
+    "total": 14,
+    "done": 14,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "5f182bf",
+    "tip": "b5da322",
     "unpushed": [],
     "next_up": "All current tracks completed cleanly; ready for human browser verification and push",
     "pending_verifications": [],
@@ -245,6 +245,25 @@
         "Aligned feature cards grid text to text-left across all breakpoints for visual consistency",
         "Zero hex codes and zero bracket arbitraries across all touched JSX lines",
         "Passed all verification gates: typecheck, tests, build"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-014",
+      "title": "Reposition Hero Content to Bottom of Viewport for Clear Video Visibility",
+      "status": "done",
+      "log": "b5da322",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Repositioned hero editorial content (eyebrow, title, subtitle, CTAs) from vertical center to bottom of viewport (justify-end pb-12 sm:pb-16 lg:pb-20), unveiling the center and top of the benchmark video (h1.mp4) with complete clarity.",
+      "key_decisions": [
+        "Changed hero section and container alignment from justify-center to justify-end with pb-12 sm:pb-16 lg:pb-20",
+        "Softened upper and middle scrim gradients to allow maximum video luminosity and clarity",
+        "Preserved WCAG 2.1 AA text contrast with smooth bottom gradient deepening under typography and buttons",
+        "Passed all verification gates: typecheck, tests, production build",
+        "Zero hex codes and zero bracket arbitraries across all touched lines"
       ],
       "follow_ups": []
     }
