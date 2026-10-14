@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 16,
-    "done": 16,
+    "total": 17,
+    "done": 17,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "12331e6",
+    "tip": "ded0913",
     "unpushed": [],
     "next_up": "All current tracks completed cleanly; ready for human browser verification and push",
     "pending_verifications": [],
@@ -304,6 +304,24 @@
         "Created expansive clear center viewing zone where the garment video loop plays with zero occlusion",
         "Balanced scrim gradients for clean contrast at top and bottom while keeping center video radiant and visible",
         "Passed all verification gates: typecheck, tests, production build"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-017",
+      "title": "Shift Full Hero Editorial Content to Bottom and Eliminate Vertical Gap (Unified Cohesive Bottom Grouping)",
+      "status": "done",
+      "log": "ded0913",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Unify the entire Hero editorial typography (eyebrow, headline, subtitle) together with the two CTA buttons ([Explore Collection ->] and [The Manifesto]) into a single cohesive bottom-anchored container, removing the large vertical gap between text and buttons. Leaves the entire upper and central hero viewport unobstructed for optimal video showcase.",
+      "key_decisions": [
+        "Shift headline block (eyebrow, 2-line title, subtitle) to bottom together with CTA buttons in a single flex flex-col justify-end container",
+        "Eliminate the excessive vertical space between subtitle and buttons, restoring cohesive luxury spacing (pt-4 sm:pt-6)",
+        "Optimize hero scrim gradients so the upper 60% of the video is clear and luminous while bottom provides robust WCAG 2.1 AA contrast",
+        "Validate across 360px, 768px, 1024px, 1440px breakpoints"
       ],
       "follow_ups": []
     }

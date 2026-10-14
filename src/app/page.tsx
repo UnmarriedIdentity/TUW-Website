@@ -200,7 +200,7 @@ export default function HomePage() {
             ========================================================================= */}
         <section
           aria-label="Hero Showcase"
-          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-between border-b border-store-border select-none"
+          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-end border-b border-store-border select-none"
         >
           {/* Background Video (Dedicated Benchmark Hero Video h1, full muted in continuous loop) */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -219,9 +219,8 @@ export default function HomePage() {
           <div className="absolute inset-0 hero-scrim-horizontal z-10 pointer-events-none" />
           <div className="absolute inset-0 hero-scrim-gradient z-10 pointer-events-none" />
 
-          {/* Quiet Luxury Minimal Editorial Presentation with End-Anchored Buttons */}
-          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-10 sm:pb-14 flex-1 flex flex-col justify-between">
-            {/* Top/Center: Minimal Editorial Headline */}
+          {/* Quiet Luxury Minimal Editorial Presentation (Bottom Anchored, Unified Cohesive Group) */}
+          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16 flex-1 flex flex-col justify-end">
             <div className="max-w-xl space-y-4">
               {/* Delicate Architectural Eyebrow */}
               <div className="flex items-center gap-3 text-2xs uppercase tracking-editorial text-white/70 font-sans font-medium">
@@ -243,24 +242,24 @@ export default function HomePage() {
               <p className="text-xs sm:text-sm text-white/75 font-sans font-light max-w-sm leading-relaxed tracking-wide">
                 Dense 500 GSM organic essentials, tailored on-demand.
               </p>
-            </div>
 
-            {/* End of Section: Refined Luxury Action Buttons */}
-            <div className="pt-8 flex flex-wrap gap-4 items-center">
-              <Link
-                href="/shop"
-                className="group inline-flex items-center gap-3 px-8 h-12 rounded-full bg-white text-primary-dark font-sans font-medium text-xs tracking-luxury uppercase hover:bg-store-cream active:scale-95 transition-all shadow-md"
-              >
-                <span>Explore Collection</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform text-primary-dark" />
-              </Link>
+              {/* Refined Luxury Action Buttons (Directly unified beneath subtitle, zero excessive gap) */}
+              <div className="pt-2 sm:pt-3 flex flex-wrap gap-4 items-center">
+                <Link
+                  href="/shop"
+                  className="group inline-flex items-center gap-3 px-8 h-12 rounded-full bg-white text-primary-dark font-sans font-medium text-xs tracking-luxury uppercase hover:bg-store-cream active:scale-95 transition-all shadow-md"
+                >
+                  <span>Explore Collection</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform text-primary-dark" />
+                </Link>
 
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 text-white font-sans font-medium text-xs tracking-luxury uppercase active:scale-95 transition-all"
-              >
-                <span>The Manifesto</span>
-              </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 text-white font-sans font-medium text-xs tracking-luxury uppercase active:scale-95 transition-all"
+                >
+                  <span>The Manifesto</span>
+                </Link>
+              </div>
             </div>
           </div>
 
