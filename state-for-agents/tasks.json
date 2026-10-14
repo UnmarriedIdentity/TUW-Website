@@ -9,19 +9,19 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 11,
-    "done": 11,
+    "total": 12,
+    "done": 12,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "236bff8",
+    "tip": "550c7cb",
     "unpushed": [],
-    "next_up": "All 5 industrial commits pushed cleanly to origin/preview (commit 236bff8); verified on http://localhost:3000",
+    "next_up": "TL-WEB-013: Realign Customer Experiences section header to left-aligned two-column layout matching explore section format",
     "pending_verifications": [],
-    "last_updated": "2026-10-13",
-    "updated_by": "agent"
+    "last_updated": "2026-10-14",
+    "updated_by": "Meet Rabadiya"
   },
   "workflow": {
     "how_to_close_a_task": "gates green → status done + log commit + design_match + verified + finished → recompute summary → refresh session → commit code + tracker together",
@@ -208,6 +208,23 @@
         "Constructed smooth upward shutter transition (translateY -120vh with cubic-bezier(0.76, 0, 0.24, 1)) and 20vh gradient lip unveiling the home page",
         "Maintained accessible escape/click skip handler, body scroll locking, and prefers-reduced-motion bypass",
         "Zero hex codes and zero arbitrary bracket classes across touched JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-012",
+      "title": "Purge Floating Quick Action Dock Bar from Footer and Cleanup Unused Dock State & Styles",
+      "status": "done",
+      "log": "550c7cb",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Completely purged floating quick action dock bar per user screenshot directive; cleaned up showDock state, scroll listeners, unused ShoppingBag icon import, and deleted .jitter-floating-dock CSS rules.",
+      "key_decisions": [
+        "Removed .jitter-floating-dock and .jitter-floating-dock-hidden rules from globals.css",
+        "Purged floating quick action dock JSX block from Footer.tsx",
+        "Cleaned up showDock state, scroll listener useEffect, and unused ShoppingBag icon import",
+        "Preserved architectural scooped-bottom footer and high-visibility brand under-layer reveal intact",
+        "Passed all verification gates: typecheck, tests, production build, CSS selector absence proof"
       ]
     }
   ]

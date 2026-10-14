@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
   CheckCircle2,
   Shield,
   RefreshCw,
-  ShoppingBag,
   Sparkles,
   PackageCheck,
   Mail,
@@ -17,22 +16,9 @@ import { useStore } from '@/mocks/store';
 import TuwEmblem from './TuwEmblem';
 
 export default function Footer() {
-  const { scenario, setScenario, resetStoreData, cartCount } = useStore();
+  const { scenario, setScenario, resetStoreData } = useStore();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
-  const [showDock, setShowDock] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Reveal dock when scrolled past initial hero
-      const scrolled = window.scrollY > 300;
-      setShowDock(scrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,64 +29,8 @@ export default function Footer() {
   };
 
   return (
-    <>
-      {/* Floating Action Dock matching Jitter.video standard */}
-      <div
-        className={`jitter-floating-dock hidden md:inline-flex items-center gap-5 px-5 py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-store-border text-xs font-sans text-store-text-primary ${
-          showDock ? '' : 'jitter-floating-dock-hidden'
-        }`}
-        aria-label="Quick Action Dock"
-      >
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <TuwEmblem className="h-5 w-auto text-primary-dark" />
-          <span className="font-heading font-bold text-xs uppercase tracking-wider text-store-text-primary">
-            The Unplugged Wear
-          </span>
-        </Link>
-
-        <span className="w-px h-4 bg-store-border" aria-hidden="true" />
-
-        <nav className="flex items-center gap-4 text-2xs uppercase tracking-wider font-medium text-store-text-secondary">
-          <Link href="/shop" className="hover:text-store-text-primary transition-colors">
-            All Apparel
-          </Link>
-          <Link href="/about" className="hover:text-store-text-primary transition-colors">
-            Ethos
-          </Link>
-          <Link href="/journal" className="hover:text-store-text-primary transition-colors">
-            Journal
-          </Link>
-        </nav>
-
-        <span className="w-px h-4 bg-store-border" aria-hidden="true" />
-
-        <div className="flex items-center gap-3">
-          <Link
-            href="/cart"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-store-canvas hover:bg-store-cream text-2xs font-semibold uppercase tracking-wider text-store-text-primary transition-colors"
-          >
-            <ShoppingBag size={13} />
-            <span>Bag</span>
-            {cartCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-primary-dark text-white text-3xs flex items-center justify-center font-bold">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-
-          <Link
-            href="/shop"
-            className="group flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-dark text-white hover:bg-store-action-hover text-2xs font-semibold uppercase tracking-wider transition-all"
-          >
-            <span>Explore</span>
-            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Signature Scooped-Bottom Footer Container */}
-      <footer aria-label="Site Footer" className="jitter-footer-shell pt-4 pb-0 select-none">
-        {/* Upper Card: Scooped Ivory Canvas with Primary Directory & Disclosures (Z-index 20) */}
+    <footer aria-label="Site Footer" className="jitter-footer-shell pt-4 pb-0 select-none">
+      {/* Upper Card: Scooped Ivory Canvas with Primary Directory & Disclosures (Z-index 20) */}
         <div className="jitter-footer-inner pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 border-t border-store-border">
           <div className="max-w-7xl mx-auto">
             {/* Top Grid: Brand Ethos + Navigation Directory */}
@@ -408,6 +338,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </>
   );
 }
