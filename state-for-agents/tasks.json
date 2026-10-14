@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 19,
-    "done": 19,
+    "total": 20,
+    "done": 20,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "754fa67",
+    "tip": "652bebf",
     "unpushed": [],
     "next_up": "All current tracks completed cleanly; ready for human browser verification and push",
     "pending_verifications": [],
@@ -361,6 +361,25 @@
         "Added non-displacing subtle border highlight and elevated shadow without violating motion rules",
         "Restarted dev server daemon on port 3000",
         "Passed all verification gates: typecheck, unit tests, and production build"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-020",
+      "title": "Match Blackout Framer Template Product Card Hover Transition",
+      "status": "done",
+      "log": "652bebf",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Implemented the clean dual-image hover transition matching https://blackoutt.framer.website/ where the base simple image remains crisp while the hover image reveals seamlessly over it with a smooth 500ms ease-out transition and subtle 105% image scale, without obstructing overlays or pills.",
+      "key_decisions": [
+        "Rendered default simple image as baseline layer with smooth scale-105 transition",
+        "Layered hoverImage as absolute inset-0 overlay with opacity-0 transition to group-hover:opacity-100",
+        "Removed obstructing quick view pill to mirror Blackout's clean editorial fashion aesthetic",
+        "Retained interactive wishlist heart button and bestseller badge with z-10 positioning",
+        "Passed all verification gates: typecheck, unit tests"
       ],
       "follow_ups": []
     }

@@ -9,15 +9,13 @@ import {
   ShieldCheck,
   Headphones,
   Users,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
+import VirtualFittingRoom from '@/components/commerce/VirtualFittingRoom';
 import { useStore } from '@/mocks/store';
 import { formatINR } from '@/lib/format';
-import { cn } from '@/lib/cn';
 
 
 
@@ -112,158 +110,7 @@ const CATEGORY_PILLS = [
   'Swim Shorts',
 ];
 
-// 3. New Collection — premium audience sets backed by local atelier imagery
-interface NewCollectionItem {
-  id: string;
-  slug: string;
-  title: string;
-  colors: string;
-  priceINR: number;
-  image: string;
-  badge?: string;
-}
-
-type CollectionKey = 'men' | 'women' | 'kids';
-
-const COLLECTION_ORDER: CollectionKey[] = ['men', 'women', 'kids'];
-
-const COLLECTION_LABELS: Record<CollectionKey, string> = {
-  men: 'Men',
-  women: 'Women',
-  kids: 'Kids',
-};
-
-const NEW_COLLECTION_SETS: Record<CollectionKey, NewCollectionItem[]> = {
-  men: [
-    {
-      id: 'nc-m1',
-      slug: 'men-tailored-ivory-oxford',
-      title: 'Tailored Ivory Oxford',
-      colors: '2 Colors',
-      priceINR: 1899,
-      image: '/images/section image/m1.png',
-    },
-    {
-      id: 'nc-m2',
-      slug: 'men-sandstone-camp-shirt',
-      title: 'Sandstone Camp Shirt',
-      colors: '2 Colors',
-      priceINR: 1450,
-      image: '/images/section image/m2.png',
-    },
-    {
-      id: 'nc-m3',
-      slug: 'men-atelier-signature-overshirt',
-      title: 'Atelier Signature Overshirt',
-      colors: '3 Colors',
-      priceINR: 2100,
-      image: '/images/section image/m3.png',
-      badge: 'Signature Drop',
-    },
-    {
-      id: 'nc-m4',
-      slug: 'men-canyon-twill-overshirt',
-      title: 'Canyon Twill Overshirt',
-      colors: '2 Colors',
-      priceINR: 1750,
-      image: '/images/section image/m4.png',
-    },
-    {
-      id: 'nc-m5',
-      slug: 'men-onyx-minimal-tee',
-      title: 'Onyx Minimal Tee',
-      colors: '3 Colors',
-      priceINR: 1299,
-      image: '/images/section image/m5.png',
-    },
-  ],
-  women: [
-    {
-      id: 'nc-w1',
-      slug: 'women-ivory-draped-blouse',
-      title: 'Ivory Draped Blouse',
-      colors: '2 Colors',
-      priceINR: 1799,
-      image: '/images/section image/w1.png',
-    },
-    {
-      id: 'nc-w2',
-      slug: 'women-rosewood-soft-knit',
-      title: 'Rosewood Soft Knit',
-      colors: '3 Colors',
-      priceINR: 1599,
-      image: '/images/section image/w2.png',
-    },
-    {
-      id: 'nc-w3',
-      slug: 'women-atelier-sculpted-dress',
-      title: 'Atelier Sculpted Dress',
-      colors: '3 Colors',
-      priceINR: 2299,
-      image: '/images/section image/w3.png',
-      badge: 'Signature Drop',
-    },
-    {
-      id: 'nc-w4',
-      slug: 'women-ecru-relaxed-shirt',
-      title: 'Ecru Relaxed Shirt',
-      colors: '2 Colors',
-      priceINR: 1499,
-      image: '/images/section image/w4.png',
-    },
-    {
-      id: 'nc-w5',
-      slug: 'women-noir-gallery-tee',
-      title: 'Noir Gallery Tee',
-      colors: '3 Colors',
-      priceINR: 1399,
-      image: '/images/section image/w5.png',
-    },
-  ],
-  kids: [
-    {
-      id: 'nc-k1',
-      slug: 'kids-mini-ivory-shirt',
-      title: 'Mini Ivory Shirt',
-      colors: '2 Colors',
-      priceINR: 999,
-      image: '/images/section image/k1.png',
-    },
-    {
-      id: 'nc-k2',
-      slug: 'kids-playdate-soft-set',
-      title: 'Playdate Soft Set',
-      colors: '3 Colors',
-      priceINR: 1199,
-      image: '/images/section image/k2.png',
-    },
-    {
-      id: 'nc-k3',
-      slug: 'kids-little-atelier-pinafore',
-      title: 'Little Atelier Pinafore',
-      colors: '3 Colors',
-      priceINR: 1299,
-      image: '/images/section image/k3.png',
-      badge: 'Signature Drop',
-    },
-    {
-      id: 'nc-k4',
-      slug: 'kids-dune-twill-shirt',
-      title: 'Dune Twill Shirt',
-      colors: '2 Colors',
-      priceINR: 1099,
-      image: '/images/section image/k4.png',
-    },
-    {
-      id: 'nc-k5',
-      slug: 'kids-cloud-soft-sweatshirt',
-      title: 'Cloud Soft Sweatshirt',
-      colors: '3 Colors',
-      priceINR: 899,
-      image: '/images/section image/k5.png',
-    },
-  ],
-};
+// 3. Virtual fitting room data + interaction live in @/components/commerce/VirtualFittingRoom.tsx
 
 // 4. Product Recommendations / Lookbook Stories
 const RECOMMENDATION_STORIES = [
@@ -294,19 +141,6 @@ export default function HomePage() {
   const { isInWishlist, toggleWishlist } = useStore();
 
   const [activeCategory, setActiveCategory] = useState('All Collection');
-  const [activeCollection, setActiveCollection] = useState<CollectionKey>('men');
-
-  const activeIndex = COLLECTION_ORDER.indexOf(activeCollection);
-  const activeItems = NEW_COLLECTION_SETS[activeCollection];
-  const leftCards = activeItems.slice(0, 2);
-  const centerCard = activeItems[2];
-  const rightCards = activeItems.slice(3, 5);
-
-  const goToCollection = (key: CollectionKey) => setActiveCollection(key);
-  const goPrevCollection = () =>
-    setActiveCollection(COLLECTION_ORDER[(activeIndex + COLLECTION_ORDER.length - 1) % COLLECTION_ORDER.length]);
-  const goNextCollection = () =>
-    setActiveCollection(COLLECTION_ORDER[(activeIndex + 1) % COLLECTION_ORDER.length]);
 
   // Filter best sellers
   const filteredProducts =
@@ -455,27 +289,26 @@ export default function HomePage() {
                   key={item.id}
                   className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg"
                 >
-                  {/* Image Container with Smooth Dual-Image Crossfade on Hover */}
+                  {/* Image Container matching Blackout Template (Clean dual-image swap on hover) */}
                   <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
                     <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
+                      {/* Default Simple Image */}
                       <img
                         src={item.image}
                         alt={item.title}
                         loading="lazy"
-                        className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
-                          item.hoverImage ? 'group-hover:opacity-0' : ''
-                        }`}
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       />
+
+                      {/* Hover Image (Reveals smoothly on card hover, exact Blackout style) */}
                       {item.hoverImage && (
                         <img
                           src={item.hoverImage}
-                          alt={`${item.title} alternate view`}
+                          alt={`${item.title} hover view`}
                           loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
                         />
                       )}
-                      {/* Subtle Luxury Ambient Vignette */}
-                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                     </Link>
 
                     {/* Wishlist Heart Button */}
@@ -501,14 +334,6 @@ export default function HomePage() {
                         </Badge>
                       </div>
                     )}
-
-                    {/* Floating Luxury Quick View Pill (Slides Up on Card Hover) */}
-                    <div className="absolute inset-x-4 bottom-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out z-10 pointer-events-none">
-                      <div className="w-full py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-white/60 text-store-text-primary text-center font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md flex items-center justify-center gap-1.5">
-                        <span>Quick View</span>
-                        <ArrowRight size={12} />
-                      </div>
-                    </div>
                   </div>
 
                   {/* Product Details */}
@@ -603,263 +428,10 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            SECTION 4: EXPLORE OUR NEW COLLECTION (Premium Audience Showcase)
+            SECTION 4: VIRTUAL FITTING ROOM
             ========================================================================= */}
-        <section
-          aria-label="Explore our new collection"
-          id="new-collection"
-          className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border"
-        >
-          {/* Header Row */}
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-8 sm:mb-10">
-            <div>
-              <span className="flex items-center gap-3 text-2xs font-bold uppercase tracking-widest text-store-text-secondary font-sans mb-2">
-                <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
-                Curated Aesthetics
-              </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-store-text-primary">
-                Explore Our New Collection
-              </h2>
-              <p className="text-sm text-store-text-secondary font-sans mt-2 max-w-lg">
-                Discover curated items with minimal aesthetics tailored for the modern daily spirit.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <p aria-live="polite" className="text-xs text-store-text-secondary font-sans tuw-tabular-nums">
-                {COLLECTION_LABELS[activeCollection]} • 0{activeIndex + 1} / 03
-              </p>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={goPrevCollection}
-                  aria-label="Previous collection"
-                  className="w-10 h-10 rounded-full border border-store-border bg-store-surface hover:bg-store-cream flex items-center justify-center text-store-text-primary transition-all duration-200 cursor-pointer"
-                >
-                  <ChevronLeft size={18} color="currentColor" className="text-store-text-primary" />
-                </button>
-                <button
-                  type="button"
-                  onClick={goNextCollection}
-                  aria-label="Next collection"
-                  className="w-10 h-10 rounded-full bg-store-action-primary text-white hover:bg-store-action-hover flex items-center justify-center transition-all duration-200 cursor-pointer"
-                >
-                  <ChevronRight size={18} color="currentColor" className="text-white" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Audience Tabs */}
-          <div role="tablist" aria-label="Shop new collection by audience" className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 mb-8 sm:mb-10">
-            {COLLECTION_ORDER.map((key) => {
-              const isActive = key === activeCollection;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => goToCollection(key)}
-                  className={cn(
-                    'px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer',
-                    isActive
-                      ? 'bg-store-action-primary text-white shadow-xs'
-                      : 'bg-transparent text-store-text-secondary border border-store-border hover:border-store-action-primary hover:text-store-text-primary'
-                  )}
-                >
-                  {COLLECTION_LABELS[key]}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Asymmetric 3-Column Grid */}
-          <div key={activeCollection} aria-live="polite" className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-            {/* Left Col: 2 Stacked Cards */}
-            <div className="flex flex-col gap-6 justify-between">
-              {leftCards.map((card) => {
-                const isFav = isInWishlist(card.id);
-                return (
-                  <article
-                    key={card.id}
-                    className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-200 hover:border-store-action-primary/30 hover:shadow-lg"
-                  >
-                    <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                      <Link href={`/products/${card.slug}`} aria-label={`View ${card.title}`} className="block w-full h-full">
-                        <img
-                          src={card.image}
-                          alt={card.title}
-                          width={900}
-                          height={1200}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                        />
-                      </Link>
-                      <button
-                        type="button"
-                        aria-label={isFav ? `Remove ${card.title} from wishlist` : `Save ${card.title} to wishlist`}
-                        aria-pressed={isFav}
-                        onClick={() => toggleWishlist(card.id)}
-                        className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 border border-store-border flex items-center justify-center transition-all duration-200 hover:bg-white shadow-xs cursor-pointer"
-                      >
-                        <Heart
-                          size={14}
-                          color="currentColor"
-                          className={cn(isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary')}
-                        />
-                      </button>
-                      <Link
-                        href={`/products/${card.slug}`}
-                        aria-label={`Quick view ${card.title}`}
-                        className="absolute inset-x-4 bottom-3 z-10 flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/95 border border-white/60 text-store-text-primary font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-200"
-                      >
-                        <span>Quick View</span>
-                        <ArrowRight size={12} color="currentColor" className="text-store-text-primary" />
-                      </Link>
-                    </div>
-                    <div className="p-4 flex items-center justify-between gap-3">
-                      <div>
-                        <h4 className="font-sans font-bold text-xs text-store-text-primary">
-                          <Link href={`/products/${card.slug}`} className="hover:text-store-action-primary transition-colors duration-200">
-                            {card.title}
-                          </Link>
-                        </h4>
-                        <p className="text-2xs text-store-text-secondary mt-0.5">
-                          {card.colors} • {COLLECTION_LABELS[activeCollection]}
-                        </p>
-                      </div>
-                      <span className="font-heading font-extrabold text-xs text-store-text-primary tuw-tabular-nums">
-                        {formatINR(card.priceINR * 100)}
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-
-            {/* Center Col: Tall Feature Hero Card */}
-            <article className="group bg-store-surface rounded-2xl border border-store-border overflow-hidden flex flex-col justify-between transition-all duration-200 hover:border-store-action-primary/30 hover:shadow-lg">
-              <div className="relative w-full flex-1 aspect-asymmetric-tall bg-store-cream overflow-hidden">
-                <Link href={`/products/${centerCard.slug}`} aria-label={`View ${centerCard.title}`} className="block w-full h-full">
-                  <img
-                    src={centerCard.image}
-                    alt={centerCard.title}
-                    width={1000}
-                    height={1400}
-                    loading="eager"
-                    className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                  />
-                </Link>
-                <button
-                  type="button"
-                  aria-label={isInWishlist(centerCard.id) ? `Remove ${centerCard.title} from wishlist` : `Save ${centerCard.title} to wishlist`}
-                  aria-pressed={isInWishlist(centerCard.id)}
-                  onClick={() => toggleWishlist(centerCard.id)}
-                  className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 border border-store-border flex items-center justify-center transition-all duration-200 hover:bg-white shadow-xs cursor-pointer"
-                >
-                  <Heart
-                    size={16}
-                    color="currentColor"
-                    className={cn(isInWishlist(centerCard.id) ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary')}
-                  />
-                </button>
-                {centerCard.badge ? (
-                  <div className="absolute top-4 left-4 z-10">
-                    <Badge variant="dark" size="sm">
-                      {centerCard.badge}
-                    </Badge>
-                  </div>
-                ) : null}
-                <Link
-                  href={`/products/${centerCard.slug}`}
-                  aria-label={`Quick view ${centerCard.title}`}
-                  className="absolute inset-x-5 bottom-4 z-10 flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/95 border border-white/60 text-store-text-primary font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-200"
-                >
-                  <span>Quick View</span>
-                  <ArrowRight size={12} color="currentColor" className="text-store-text-primary" />
-                </Link>
-              </div>
-
-              <div className="p-5 flex items-center justify-between gap-3 bg-white border-t border-store-border">
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-store-text-primary">
-                    <Link href={`/products/${centerCard.slug}`} className="hover:text-store-action-primary transition-colors duration-200">
-                      {centerCard.title}
-                    </Link>
-                  </h4>
-                  <p className="text-xs text-store-text-secondary mt-0.5">
-                    {centerCard.colors} • {COLLECTION_LABELS[activeCollection]} Atelier
-                  </p>
-                </div>
-                <span className="font-heading font-extrabold text-base text-store-text-primary tuw-tabular-nums">
-                  {formatINR(centerCard.priceINR * 100)}
-                </span>
-              </div>
-            </article>
-
-            {/* Right Col: 2 Stacked Cards */}
-            <div className="flex flex-col gap-6 justify-between">
-              {rightCards.map((card) => {
-                const isFav = isInWishlist(card.id);
-                return (
-                  <article
-                    key={card.id}
-                    className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-200 hover:border-store-action-primary/30 hover:shadow-lg"
-                  >
-                    <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-                      <Link href={`/products/${card.slug}`} aria-label={`View ${card.title}`} className="block w-full h-full">
-                        <img
-                          src={card.image}
-                          alt={card.title}
-                          width={900}
-                          height={1200}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
-                        />
-                      </Link>
-                      <button
-                        type="button"
-                        aria-label={isFav ? `Remove ${card.title} from wishlist` : `Save ${card.title} to wishlist`}
-                        aria-pressed={isFav}
-                        onClick={() => toggleWishlist(card.id)}
-                        className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 border border-store-border flex items-center justify-center transition-all duration-200 hover:bg-white shadow-xs cursor-pointer"
-                      >
-                        <Heart
-                          size={14}
-                          color="currentColor"
-                          className={cn(isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary')}
-                        />
-                      </button>
-                      <Link
-                        href={`/products/${card.slug}`}
-                        aria-label={`Quick view ${card.title}`}
-                        className="absolute inset-x-4 bottom-3 z-10 flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/95 border border-white/60 text-store-text-primary font-sans text-2xs font-semibold tracking-luxury uppercase shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-200"
-                      >
-                        <span>Quick View</span>
-                        <ArrowRight size={12} color="currentColor" className="text-store-text-primary" />
-                      </Link>
-                    </div>
-                    <div className="p-4 flex items-center justify-between gap-3">
-                      <div>
-                        <h4 className="font-sans font-bold text-xs text-store-text-primary">
-                          <Link href={`/products/${card.slug}`} className="hover:text-store-action-primary transition-colors duration-200">
-                            {card.title}
-                          </Link>
-                        </h4>
-                        <p className="text-2xs text-store-text-secondary mt-0.5">
-                          {card.colors} • {COLLECTION_LABELS[activeCollection]}
-                        </p>
-                      </div>
-                      <span className="font-heading font-extrabold text-xs text-store-text-primary tuw-tabular-nums">
-                        {formatINR(card.priceINR * 100)}
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
+        <section aria-label="Virtual fitting room" className="py-20 sm:py-28 border-b border-store-border">
+          <VirtualFittingRoom />
         </section>
 
         {/* =========================================================================
