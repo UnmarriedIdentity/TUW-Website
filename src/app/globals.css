@@ -321,11 +321,11 @@ h6,
 }
 
 .hero-scrim-gradient {
-  background: linear-gradient(180deg, rgba(15, 15, 15, 0.3) 0%, rgba(15, 15, 15, 0.05) 30%, rgba(15, 15, 15, 0.4) 65%, rgba(15, 15, 15, 0.85) 100%);
+  background: linear-gradient(180deg, rgba(15, 15, 15, 0.5) 0%, rgba(15, 15, 15, 0.3) 25%, rgba(15, 15, 15, 0.08) 50%, rgba(15, 15, 15, 0.3) 75%, rgba(15, 15, 15, 0.75) 100%);
 }
 
 .hero-scrim-horizontal {
-  background: linear-gradient(90deg, rgba(15, 15, 15, 0.45) 0%, rgba(15, 15, 15, 0.15) 50%, rgba(15, 15, 15, 0) 100%);
+  background: linear-gradient(90deg, rgba(15, 15, 15, 0.55) 0%, rgba(15, 15, 15, 0.2) 50%, rgba(15, 15, 15, 0) 100%);
 }
 
 
