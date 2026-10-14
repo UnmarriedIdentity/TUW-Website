@@ -39,7 +39,7 @@ export default function Footer() {
               <div className="lg:col-span-2 space-y-4">
                 <div className="flex items-center gap-2.5">
                   <TuwEmblem className="h-7 w-auto text-primary-dark" />
-                  <span className="font-heading font-extrabold text-2xl tracking-tighter uppercase text-store-text-primary">
+                  <span className="font-heading font-extrabold text-[clamp(1.25rem,2vw+0.5rem,1.5rem)] tracking-tighter uppercase text-store-text-primary">
                     The Unplugged Wear
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export default function Footer() {
             </div>
 
             {/* Interactive Demo Controls Ribbon per MOCK_DATA.md */}
-            <div className="pt-4 border-t border-store-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-store-text-secondary">
+            <div className="pt-4 border-t border-store-border flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-store-text-secondary">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-semibold text-store-text-primary uppercase tracking-wider text-2xs">
                   Demo Scenarios:
@@ -269,7 +269,7 @@ export default function Footer() {
                       Slow-Living Motion • Tiruppur
                     </span>
                   </div>
-                  <h3 className="font-heading font-medium text-xl sm:text-2xl text-white tracking-tight leading-snug">
+                  <h3 className="font-heading font-medium text-[clamp(1.125rem,2vw+0.5rem,1.5rem)] text-white tracking-tight leading-snug">
                     Crafted for Quiet Permanence.
                   </h3>
                   <p className="text-xs text-white/70 max-w-sm font-sans leading-relaxed">

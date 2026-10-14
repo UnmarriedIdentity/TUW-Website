@@ -408,10 +408,10 @@ export default function HomePage() {
 
               {/* Ultra-Refined Minimal Headline */}
               <h1 className="font-heading tracking-tight text-white leading-[1.04]">
-                <span className="block font-light text-4xl sm:text-6xl lg:text-7xl">
+                <span className="block font-light text-[clamp(2rem,5vw+0.5rem,4.5rem)]">
                   Architectural Form<span className="text-store-gold">.</span>
                 </span>
-                <span className="block font-normal text-2xl sm:text-4xl lg:text-5xl text-white/80 tracking-wide mt-1">
+                <span className="block font-normal text-[clamp(1.375rem,3vw+0.5rem,3rem)] text-white/80 tracking-wide mt-1">
                   Pure Permanence
                 </span>
               </h1>
@@ -453,10 +453,10 @@ export default function HomePage() {
               <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
                 Curated Bestsellers
               </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-store-text-primary">
                 Explore Our Best Selling
-                <br />
-                Product Collection
+                <br className="hidden sm:inline" />
+                {' '}Product Collection
               </h2>
             </div>
 
@@ -524,10 +524,10 @@ export default function HomePage() {
                 <span className="text-2xs font-bold uppercase tracking-widest text-store-gold block mb-2 font-sans">
                   Customer Experience
                 </span>
-                <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-white">
                   We Deliver Exceptional
-                  <br />
-                  Customer Experiences
+                  <br className="hidden sm:inline" />
+                  {' '}Customer Experiences
                 </h2>
               </div>
 
@@ -590,12 +590,12 @@ export default function HomePage() {
             SECTION 5: PRODUCT RECOMMENDATIONS (Figma Editorial Cards)
             ========================================================================= */}
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
-          <div className="flex items-end justify-between mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
               <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
                 Stories & Insights
               </span>
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
               <p className="text-sm text-store-text-secondary font-sans mt-1">
@@ -605,7 +605,7 @@ export default function HomePage() {
 
             <Link
               href="/journal"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-store-action-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-store-action-hover transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-store-action-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-store-action-hover transition-colors shrink-0 self-start sm:self-auto"
             >
               <span>2024 Trends</span>
               <ArrowRight size={14} />
@@ -668,10 +668,10 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] font-extrabold tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
-              <br />
-              The Stratosphere
+              <br className="hidden sm:inline" />
+              {' '}The Stratosphere
             </h2>
             <p className="text-base sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed font-sans">
               Ready to elevate your style journey? Step into our latest line crafted for every moment.
