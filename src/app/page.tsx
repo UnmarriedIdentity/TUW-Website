@@ -53,7 +53,7 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     priceINR: 3099,
     compareAtPriceINR: 4499,
     image: '/images/products/satin-blazer/pink.png',
-    hoverImage: '/images/products/satin-blazer/red.png',
+    hoverImage: '/images/products/satin-blazer/black.png',
     isBestseller: true,
     colors: [
       { name: 'Rose', hex: '#D7A19E', image: '/images/products/satin-blazer/pink.png' },
@@ -68,18 +68,16 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'linen-blend-two-piece-suit-set',
     title: 'Linen-Blend Two-Piece Suit Set',
     category: 'Jacket',
-    colorCount: 4,
+    colorCount: 2,
     discountPercent: 25,
     priceINR: 1805,
     compareAtPriceINR: 2400,
     image: '/images/images/image%202.avif',
-    hoverImage: '/images/products/linen-suit/black.png',
+    hoverImage: '/images/products/linen-suit/blue.png',
     isBestseller: true,
     colors: [
       { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/images/image%202.avif' },
       { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/linen-suit/blue.png' },
-      { name: 'Crimson', hex: '#C21B26', image: '/images/products/linen-suit/red.png' },
-      { name: 'Black', hex: '#1C1C1E', image: '/images/products/linen-suit/black.png' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
   },
@@ -98,7 +96,7 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     colors: [
       { name: 'Cobalt Blue', hex: '#1D5BD8', image: '/images/images/image%203.webp' },
       { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/graphic-tee/lime.png' },
-      { name: 'Oatmeal Cream', hex: '#EFECE6', image: '/images/products/graphic-tee/cream.png' },
+      { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/graphic-tee/black.webp' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
   },
@@ -107,7 +105,7 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     slug: 'tailored-wide-leg-pantsuit',
     title: 'Tailored Wide-Leg Pantsuit',
     category: 'Pant',
-    colorCount: 4,
+    colorCount: 3,
     discountPercent: 30,
     priceINR: 3499,
     compareAtPriceINR: 4999,
@@ -116,8 +114,7 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     colors: [
       { name: 'Magenta', hex: '#D81B9C', image: '/images/images/image%204.webp' },
       { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/pantsuit/blue.png' },
-      { name: 'Warm Camel', hex: '#C49760', image: '/images/products/pantsuit/camel.png' },
-      { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/pantsuit/black.png' },
+      { name: 'Espresso Brown', hex: '#4A3525', image: '/images/products/pantsuit/brown.webp' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
   },
@@ -131,11 +128,11 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     priceINR: 1899,
     compareAtPriceINR: 3999,
     image: '/images/images/image%205.avif',
-    hoverImage: '/images/products/relaxed-shirt/rust.png',
+    hoverImage: '/images/products/relaxed-shirt/red.png',
     colors: [
       { name: 'Cerulean', hex: '#4B79A1', image: '/images/images/image%205.avif' },
-      { name: 'Rust Sienna', hex: '#7D4427', image: '/images/products/relaxed-shirt/rust.png' },
-      { name: 'Ochre Gold', hex: '#E5A912', image: '/images/products/relaxed-shirt/gold.png' },
+      { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/relaxed-shirt/red.png' },
+      { name: 'Ecru Linen', hex: '#E8E2D5', image: '/images/products/relaxed-shirt/ecru.webp' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
   },
@@ -149,12 +146,12 @@ const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
     priceINR: 3150,
     compareAtPriceINR: 5250,
     image: '/images/images/image%206.avif',
-    hoverImage: '/images/products/bomber-jacket/red.png',
+    hoverImage: '/images/products/bomber-jacket/black.png',
     isBestseller: true,
     colors: [
       { name: 'Saffron Gold', hex: '#E5A912', image: '/images/images/image%206.avif' },
-      { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/bomber-jacket/red.png' },
       { name: 'Pitch Black', hex: '#1B1B1B', image: '/images/products/bomber-jacket/black.png' },
+      { name: 'Warm Camel', hex: '#C49760', image: '/images/products/bomber-jacket/camel.png' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
   },
@@ -222,12 +219,14 @@ function BestSellingCard({
       {/* Image Container matching Blackout Template (Clean dual-image swap on hover) */}
       <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
         <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
-          {/* Default / Active Color Image */}
+          {/* Default / Active Color Image (fades out on card hover only if card hover image is active) */}
           <img
             src={displayImage}
             alt={`${item.title} ${activeColorName}`}
             loading="lazy"
-            className="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105"
+            className={`w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+              item.hoverImage && !hoveredColor ? 'group-hover:opacity-0' : ''
+            }`}
           />
 
           {/* Hover Image (Reveals smoothly on card hover if user is not hovering a swatch) */}
