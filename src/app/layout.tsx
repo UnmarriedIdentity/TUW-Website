@@ -1,14 +1,25 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { Providers } from './providers';
 import BrandIntro from '@/components/layout/BrandIntro';
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+// Self-hosted Outfit (vendored from @fontsource/outfit, OFL licensed).
+// Replaces next/font/google to keep Turbopack production builds deterministic
+// with zero fonts.googleapis.com fetch at build/runtime (Vercel-safe).
+const outfit = localFont({
   variable: '--font-outfit',
   display: 'swap',
+  preload: true,
+  fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+  src: [
+    { path: './fonts/outfit-latin-300-normal.woff2', weight: '300', style: 'normal' },
+    { path: './fonts/outfit-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/outfit-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/outfit-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: './fonts/outfit-latin-700-normal.woff2', weight: '700', style: 'normal' },
+    { path: './fonts/outfit-latin-800-normal.woff2', weight: '800', style: 'normal' },
+  ],
 });
 
 export const metadata: Metadata = {
