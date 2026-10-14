@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 24,
-    "done": 24,
+    "total": 25,
+    "done": 25,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "7f182bb",
+    "tip": "8bca726",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -27,7 +27,8 @@
       "c84208c",
       "c9a8022",
       "f6fac6c",
-      "7f182bb"
+      "7f182bb",
+      "8bca726"
     ],
     "next_up": "Push preview branch commits to origin",
     "pending_verifications": [],
@@ -465,6 +466,25 @@
         "Arranged desktop navigation links with balanced flex-1 distribution and whitespace-nowrap",
         "Arranged mobile right cluster with compact tap targets and responsive drawer integration for account",
         "Zero hex codes and zero bracket arbitraries across all touched JSX lines"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-025",
+      "title": "Self-host Outfit via next/font/local to fix Turbopack Vercel build failure",
+      "status": "done",
+      "log": "8bca726",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-14",
+      "finished": "2026-10-14",
+      "verified": true,
+      "design_match": "Identical Outfit body typography via --font-outfit variable; same weights 300-800 latin, display swap, no visual delta",
+      "key_decisions": [
+        "Replaced next/font/google Outfit with next/font/local pointing at 6 vendored latin woff2 files (300-800) to remove build-time fonts.googleapis.com fetch",
+        "Vendored files from @fontsource/outfit 5.3.0 (OFL) into src/app/fonts so builds are deterministic offline and portable across hosts",
+        "Kept variable --font-outfit unchanged so globals.css token chain and font-sans/body/heading stacks render byte-identically",
+        "Added @fontsource/outfit ^5.3.0 dependency only; no version downgrades",
+        "Passed all verification gates: typecheck, tests (7 pass), Turbopack production build with 29 routes prerendered"
       ],
       "follow_ups": []
     }
