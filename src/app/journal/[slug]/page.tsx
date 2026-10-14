@@ -60,7 +60,7 @@ export default function JournalArticlePage({
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#1A1A1A] leading-[1.15]">
+          <h1 className="text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-[#1A1A1A] leading-[1.15]">
             {article.title}
           </h1>
 

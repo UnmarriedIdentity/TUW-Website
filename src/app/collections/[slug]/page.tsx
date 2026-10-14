@@ -63,7 +63,7 @@ export default function CollectionDetailPage({
             <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#C8A96A] mb-1">
               Capsule Series • {collection.productCount} Garments
             </span>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">{collection.title}</h1>
+            <h1 className="text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight">{collection.title}</h1>
             <p className="text-sm text-[#D1D5DB] mt-2 max-w-xl">{collection.description}</p>
           </div>
         </div>

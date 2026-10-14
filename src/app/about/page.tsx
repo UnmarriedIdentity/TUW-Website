@@ -25,7 +25,7 @@ export default function AboutPage() {
           <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#C8A96A] block">
             Brand Ethos
           </span>
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#1A1A1A] leading-tight">
+          <h1 className="text-[clamp(2rem,5vw+0.5rem,3.75rem)] font-extrabold tracking-tight text-[#1A1A1A] leading-tight">
             Quiet Apparel for an Overstimulated Era.
           </h1>
           <p className="text-base sm:text-lg text-[#666] leading-relaxed max-w-2xl">
