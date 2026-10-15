@@ -129,19 +129,22 @@ describe('Deterministic local fonts (Windows == macOS)', () => {
     assert.ok(layout.includes("variable: '--font-outfit'"), 'layout must keep --font-outfit variable');
   });
 
-  test('heading stack resolves Outfit first on every OS (no Futura-first divergence)', () => {
+  test('heading stack resolves Outfit first on every OS (no named-fallback divergence)', () => {
     const css = readFileSync(join(repoRoot, 'src/app/globals.css'), 'utf8');
     const headingDefs = [...css.matchAll(/--font-heading:\s*([^;]+);/g)].map((m) => m[1].trim());
     assert.ok(headingDefs.length >= 2, 'expected @theme and :root --font-heading definitions');
+    const banned = ['Futura', 'Trebuchet', 'Segoe', 'San Francisco', 'Helvetica', 'Arial', 'Tahoma', 'Verdana'];
     for (const def of headingDefs) {
       assert.ok(
         def.startsWith('var(--font-outfit)'),
         `heading stack must start with Outfit variable, got: ${def}`,
       );
-      assert.ok(
-        !def.startsWith('"Futura"') && !def.startsWith("'Futura'"),
-        `heading stack must not start with Futura (macOS-only): ${def}`,
-      );
+      for (const name of banned) {
+        assert.ok(
+          !def.includes(name),
+          `heading stack must not name OS-specific fallback ${name}: ${def}`,
+        );
+      }
     }
     assert.ok(css.includes('font-synthesis-weight: none'), 'css must disable faux-weight synthesis');
   });
