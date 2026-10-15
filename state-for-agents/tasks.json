@@ -10,13 +10,13 @@
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
     "total": 28,
-    "done": 27,
-    "in_progress": 1,
+    "done": 28,
+    "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "61f12be",
+    "tip": "a9c64e4",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -35,9 +35,11 @@
       "2870c01",
       "19acd2f",
       "375530e",
-      "61f12be"
+      "61f12be",
+      "13fc9cb",
+      "a9c64e4"
     ],
-    "next_up": "Jost headings for Futura look on all OS (TL-WEB-028)",
+    "next_up": "Push preview branch commits to origin, then human confirms Rendered Fonts = Jost headings on client Mac",
     "pending_verifications": [],
     "last_updated": "2026-10-15",
     "updated_by": "Muse Spark"
@@ -537,14 +539,21 @@
     {
       "id": "TL-WEB-028",
       "title": "Jost headings for Futura look on all OS (Outfit body untouched)",
-      "status": "in_progress",
+      "status": "done",
+      "log": "a9c64e4",
       "owner": "Muse Spark",
       "started": "2026-10-15",
-      "finished": null,
-      "verified": false,
-      "design_match": null,
-      "key_decisions": [],
-      "follow_ups": []
+      "finished": "2026-10-15",
+      "verified": true,
+      "design_match": "Jost headings 300-900 + Outfit body on all OS via --font-jost/--font-outfit first; zero named OS fonts in built CSS",
+      "key_decisions": [
+        "Added @fontsource/jost 5.3.0 and vendored jost-latin-300-900-normal.woff2 into src/app/fonts; registered --font-jost variable in src/app/layout.tsx alongside --font-outfit",
+        "Pointed both --font-heading definitions in src/app/globals.css at var(--font-jost), Jost with generic sans tail; body/sans/urbanist stay on Outfit",
+        "Extended regression test: Jost 300-900 files exist, heading starts with Jost variable, body starts with Outfit variable, 9 named fonts banned from heading",
+        "Updated design-system specimen copy to Jost headings wording",
+        "No version downgrades; zero hex codes and zero bracket arbitraries in touched JSX lines"
+      ],
+      "follow_ups": ["Human confirms DevTools Rendered Fonts = Jost on client Mac after push"]
     }
   ]
 }
