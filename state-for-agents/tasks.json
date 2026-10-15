@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 25,
-    "done": 25,
+    "total": 26,
+    "done": 26,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "8bca726",
+    "tip": "809646b",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -28,12 +28,15 @@
       "c9a8022",
       "f6fac6c",
       "7f182bb",
-      "8bca726"
+      "8bca726",
+      "d39ddf6",
+      "062fc6d",
+      "809646b"
     ],
-    "next_up": "Push preview branch commits to origin",
+    "next_up": "Push preview branch commits to origin, then human confirms Rendered Fonts = Outfit on client Mac",
     "pending_verifications": [],
-    "last_updated": "2026-10-14",
-    "updated_by": "Meet Rabadiya"
+    "last_updated": "2026-10-15",
+    "updated_by": "Muse Spark"
   },
   "workflow": {
     "how_to_close_a_task": "gates green → status done + log commit + design_match + verified + finished → recompute summary → refresh session → commit code + tracker together",
@@ -487,6 +490,26 @@
         "Passed all verification gates: typecheck, tests (7 pass), Turbopack production build with 29 routes prerendered"
       ],
       "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-026",
+      "title": "Deterministic Outfit headings for identical Windows/macOS rendering (future-proof local fonts)",
+      "status": "done",
+      "log": "809646b",
+      "owner": "Muse Spark",
+      "started": "2026-10-15",
+      "finished": "2026-10-15",
+      "verified": true,
+      "design_match": "Outfit headings + body on all OS via --font-outfit first; Futura/Trebuchet fallback only; weights 300-900 latin, display swap, zero Google fetch",
+      "key_decisions": [
+        "Flipped --font-heading in src/app/globals.css @theme and :root to start with var(--font-outfit), Outfit — Futura/Trebuchet kept as fallback tail only so macOS Futura no longer wins",
+        "Vendored outfit-latin-900-normal.woff2 from @fontsource/outfit 5.3.0 (OFL) into src/app/fonts and registered weight 900 in src/app/layout.tsx; existing font-black (900) usages no longer synthesize",
+        "Added -moz-osx-font-smoothing, font-synthesis-weight:none and text-rendering guard on html for consistent macOS/Windows weight rendering",
+        "Added node --test regression block asserting 300-900 files exist, heading stacks start with Outfit variable, and no next/font/google import",
+        "Updated design-system specimen copy to state Outfit headings runtime (Figma frame specimen labels untouched as history)",
+        "No dependency version changes; zero hex codes and zero bracket arbitraries in touched JSX lines"
+      ],
+      "follow_ups": ["Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"]
     }
   ]
 }

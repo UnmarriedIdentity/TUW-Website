@@ -1,5 +1,10 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 describe('Storefront Business Logic & Currency Rules', () => {
   // Minor units conversion
@@ -102,5 +107,42 @@ describe('Tracking Reference & Carrier Lookup', () => {
 
     const resUnknown = lookupOrder('UNKNOWN-999');
     assert.equal(resUnknown, null);
+  });
+});
+
+describe('Deterministic local fonts (Windows == macOS)', () => {
+  test('layout vendors Outfit 300-900 via next/font/local with zero Google fetch', () => {
+    const layout = readFileSync(join(repoRoot, 'src/app/layout.tsx'), 'utf8');
+    for (const weight of ['300', '400', '500', '600', '700', '800', '900']) {
+      assert.ok(
+        layout.includes(`outfit-latin-${weight}-normal.woff2`) && layout.includes(`weight: '${weight}'`),
+        `missing vendored Outfit weight ${weight} in src/app/layout.tsx`,
+      );
+      assert.ok(
+        existsSync(join(repoRoot, `src/app/fonts/outfit-latin-${weight}-normal.woff2`)),
+        `missing file src/app/fonts/outfit-latin-${weight}-normal.woff2`,
+      );
+    }
+    assert.ok(!layout.includes("from 'next/font/google'"), 'layout must not import next/font/google');
+    assert.ok(!layout.includes('from "next/font/google"'), 'layout must not import next/font/google');
+    assert.ok(!layout.includes('https://fonts.googleapis'), 'layout must not fetch Google Fonts at runtime');
+    assert.ok(layout.includes("variable: '--font-outfit'"), 'layout must keep --font-outfit variable');
+  });
+
+  test('heading stack resolves Outfit first on every OS (no Futura-first divergence)', () => {
+    const css = readFileSync(join(repoRoot, 'src/app/globals.css'), 'utf8');
+    const headingDefs = [...css.matchAll(/--font-heading:\s*([^;]+);/g)].map((m) => m[1].trim());
+    assert.ok(headingDefs.length >= 2, 'expected @theme and :root --font-heading definitions');
+    for (const def of headingDefs) {
+      assert.ok(
+        def.startsWith('var(--font-outfit)'),
+        `heading stack must start with Outfit variable, got: ${def}`,
+      );
+      assert.ok(
+        !def.startsWith('"Futura"') && !def.startsWith("'Futura'"),
+        `heading stack must not start with Futura (macOS-only): ${def}`,
+      );
+    }
+    assert.ok(css.includes('font-synthesis-weight: none'), 'css must disable faux-weight synthesis');
   });
 });
