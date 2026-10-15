@@ -10,7 +10,7 @@
 @theme {
   --font-sans: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Futura", "Trebuchet MS", var(--font-outfit), "Outfit", sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", "Futura", "Trebuchet MS", ui-sans-serif, system-ui, sans-serif;
   --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
   /* Figma Node 82:5702 Color Style Foundation */
@@ -69,12 +69,15 @@
 html {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
 }
 
 :root {
-  --font-heading: "Futura", "Trebuchet MS", var(--font-outfit), "Outfit", sans-serif;
-  --font-body: var(--font-outfit), "Outfit", sans-serif;
-  --font-urbanist: var(--font-outfit), "Outfit", sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", "Futura", "Trebuchet MS", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
   /* Figma Color Style Variables */
   --tuw-primary-dark: #002B3A;

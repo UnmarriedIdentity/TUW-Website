@@ -7,6 +7,8 @@ import BrandIntro from '@/components/layout/BrandIntro';
 // Self-hosted Outfit (vendored from @fontsource/outfit, OFL licensed).
 // Replaces next/font/google to keep Turbopack production builds deterministic
 // with zero fonts.googleapis.com fetch at build/runtime (Vercel-safe).
+// Headings and body both resolve to this variable first so Windows and macOS
+// render byte-identically; system fonts are fallback only.
 const outfit = localFont({
   variable: '--font-outfit',
   display: 'swap',
@@ -19,6 +21,7 @@ const outfit = localFont({
     { path: './fonts/outfit-latin-600-normal.woff2', weight: '600', style: 'normal' },
     { path: './fonts/outfit-latin-700-normal.woff2', weight: '700', style: 'normal' },
     { path: './fonts/outfit-latin-800-normal.woff2', weight: '800', style: 'normal' },
+    { path: './fonts/outfit-latin-900-normal.woff2', weight: '900', style: 'normal' },
   ],
 });
 
