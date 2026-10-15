@@ -10,13 +10,13 @@
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
     "total": 27,
-    "done": 26,
-    "in_progress": 1,
+    "done": 27,
+    "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "2870c01",
+    "tip": "375530e",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -32,9 +32,11 @@
       "d39ddf6",
       "062fc6d",
       "809646b",
-      "2870c01"
+      "2870c01",
+      "19acd2f",
+      "375530e"
     ],
-    "next_up": "Strip named fallback fonts from heading stack for permanent Win==Mac parity (TL-WEB-027)",
+    "next_up": "Push preview branch commits to origin, then human confirms Rendered Fonts = Outfit on client Mac",
     "pending_verifications": [],
     "last_updated": "2026-10-15",
     "updated_by": "Muse Spark"
@@ -515,14 +517,21 @@
     {
       "id": "TL-WEB-027",
       "title": "Strip named fallback fonts from heading stack for permanent Win==Mac parity",
-      "status": "in_progress",
+      "status": "done",
+      "log": "375530e",
       "owner": "Muse Spark",
       "started": "2026-10-15",
-      "finished": null,
-      "verified": false,
-      "design_match": null,
-      "key_decisions": [],
-      "follow_ups": []
+      "finished": "2026-10-15",
+      "verified": true,
+      "design_match": "Headings resolve Outfit variable with generic sans tail only; zero named OS fonts in built CSS; 7 weights 300-900 emitted",
+      "key_decisions": [
+        "Removed Outfit/Futura/Trebuchet names from both --font-heading definitions in src/app/globals.css leaving var(--font-outfit), ui-sans-serif, system-ui, sans-serif",
+        "Kept next/font/local self-hosting; no Google CDN (same OFL files, avoids runtime third-party dependency and prior Vercel build failure)",
+        "Hardened regression test to ban Futura/Trebuchet/Segoe/San Francisco/Helvetica/Arial/Tahoma/Verdana from any heading stack",
+        "Updated design-system specimen copy to generic-fallback wording",
+        "No dependency version changes; zero hex codes and zero bracket arbitraries in touched JSX lines"
+      ],
+      "follow_ups": ["Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"]
     }
   ]
 }
