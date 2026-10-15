@@ -127,22 +127,45 @@ describe('Deterministic local fonts (Windows == macOS)', () => {
     assert.ok(!layout.includes('from "next/font/google"'), 'layout must not import next/font/google');
     assert.ok(!layout.includes('https://fonts.googleapis'), 'layout must not fetch Google Fonts at runtime');
     assert.ok(layout.includes("variable: '--font-outfit'"), 'layout must keep --font-outfit variable');
+    assert.ok(layout.includes("variable: '--font-jost'"), 'layout must keep --font-jost variable');
+    for (const weight of ['300', '400', '500', '600', '700', '800', '900']) {
+      assert.ok(
+        layout.includes(`jost-latin-${weight}-normal.woff2`) && layout.includes(`weight: '${weight}'`),
+        `missing vendored Jost weight ${weight} in src/app/layout.tsx`,
+      );
+      assert.ok(
+        existsSync(join(repoRoot, `src/app/fonts/jost-latin-${weight}-normal.woff2`)),
+        `missing file src/app/fonts/jost-latin-${weight}-normal.woff2`,
+      );
+    }
   });
 
-  test('heading stack resolves Outfit first on every OS (no named-fallback divergence)', () => {
+  test('body stack resolves Outfit first on every OS', () => {
+    const css = readFileSync(join(repoRoot, 'src/app/globals.css'), 'utf8');
+    const bodyDefs = [...css.matchAll(/--font-body:\s*([^;]+);/g)].map((m) => m[1].trim());
+    assert.ok(bodyDefs.length >= 2, 'expected @theme and :root --font-body definitions');
+    for (const def of bodyDefs) {
+      assert.ok(
+        def.startsWith('var(--font-outfit)'),
+        `body stack must start with Outfit variable, got: ${def}`,
+      );
+    }
+  });
+
+  test('heading stack resolves Jost first on every OS (no named-fallback divergence)', () => {
     const css = readFileSync(join(repoRoot, 'src/app/globals.css'), 'utf8');
     const headingDefs = [...css.matchAll(/--font-heading:\s*([^;]+);/g)].map((m) => m[1].trim());
     assert.ok(headingDefs.length >= 2, 'expected @theme and :root --font-heading definitions');
-    const banned = ['Futura', 'Trebuchet', 'Segoe', 'San Francisco', 'Helvetica', 'Arial', 'Tahoma', 'Verdana'];
+    const banned = ['Futura', 'Trebuchet', 'Segoe', 'San Francisco', 'Helvetica', 'Arial', 'Tahoma', 'Verdana', 'Outfit'];
     for (const def of headingDefs) {
       assert.ok(
-        def.startsWith('var(--font-outfit)'),
-        `heading stack must start with Outfit variable, got: ${def}`,
+        def.startsWith('var(--font-jost)'),
+        `heading stack must start with Jost variable, got: ${def}`,
       );
       for (const name of banned) {
         assert.ok(
           !def.includes(name),
-          `heading stack must not name OS-specific fallback ${name}: ${def}`,
+          `heading stack must not name ${name}: ${def}`,
         );
       }
     }
