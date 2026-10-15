@@ -124,7 +124,7 @@ export default function StorefrontDesignSystemPage() {
             The Unplugged Wear Design System
           </h1>
           <p className="text-sm text-[#676767] max-w-2xl leading-relaxed font-sans">
-            Living specimen documenting Outfit headings and body text (generic sans fallback only), the 3-tier Figma Color Style foundation, and the 1612×529 Frame layout metrics.
+            Living specimen documenting Jost headings and Outfit body text (generic sans fallback only), the 3-tier Figma Color Style foundation, and the 1612×529 Frame layout metrics.
           </p>
         </div>
 
