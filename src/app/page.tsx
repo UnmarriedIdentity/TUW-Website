@@ -14,6 +14,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
 import VirtualFittingRoom from '@/components/commerce/VirtualFittingRoom';
+import CommunityPraise from '@/components/commerce/CommunityPraise';
+import OurPhilosophy from '@/components/commerce/OurPhilosophy';
 import { useStore } from '@/mocks/store';
 import { formatINR } from '@/lib/format';
 
@@ -444,6 +446,11 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
+            SECTION 1.5: OUR PHILOSOPHY (Editorial Slow-Living Fashion Manifesto)
+            ========================================================================= */}
+        <OurPhilosophy />
+
+        {/* =========================================================================
             SECTION 2: EXPLORE OUR BEST SELLING PRODUCT COLLECTION (Figma Specimen)
             ========================================================================= */}
         <section id="best-sellers" className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
@@ -578,6 +585,11 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* =========================================================================
+            SECTION 3.5: WORDS OF PRAISE FROM OTHERS (Single-Line Testimonial Marquee)
+            ========================================================================= */}
+        <CommunityPraise />
 
         {/* =========================================================================
             SECTION 4: VIRTUAL FITTING ROOM

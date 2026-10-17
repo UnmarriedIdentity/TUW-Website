@@ -47,6 +47,7 @@
   --color-store-cream: #F4F1EA;
   --color-store-card-border: #E2DDCF;
   --color-store-gold: #C8A96A;
+  --color-store-terracotta: #AD512F;
   --color-store-charcoal: #1A1A1A;
   --color-store-muted: #8A8A8A;
   --color-store-deep-teal: #002B3A;
@@ -503,7 +504,7 @@ h6,
   grid-template-columns: 1fr minmax(300px, 380px) 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 1.5rem 2.5rem;
-  align-items: center;
+  align-items: stretch;
 }
 
 .vfr-track {
@@ -511,28 +512,32 @@ h6,
 }
 
 .vfr-slot {
-  width: min(100%, 190px);
+  width: min(100%, 180px);
   will-change: transform;
 }
 
 .vfr-slot:nth-child(1) {
   grid-area: 1 / 1;
   justify-self: end;
+  align-self: start;
 }
 
 .vfr-slot:nth-child(2) {
   grid-area: 2 / 1;
   justify-self: end;
+  align-self: end;
 }
 
 .vfr-slot:nth-child(3) {
   grid-area: 1 / 3;
   justify-self: start;
+  align-self: start;
 }
 
 .vfr-slot:nth-child(4) {
   grid-area: 2 / 3;
   justify-self: start;
+  align-self: end;
 }
 
 .vfr-card {
@@ -599,6 +604,8 @@ h6,
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
   gap: 1.25rem;
 }
 
@@ -675,6 +682,7 @@ h6,
   .vfr-stage-col {
     order: -1;
     width: 100%;
+    justify-content: flex-start;
   }
 
   .vfr-stage-tilt {
@@ -699,6 +707,94 @@ h6,
 }
 
 /* --------------------------------------------------------------------------
+   Community Praise Marquee (Single Horizontal Line, Infinite Seamless Glide)
+   -------------------------------------------------------------------------- */
+@keyframes tuw-marquee-slide {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tuw-marquee-container {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: tuw-marquee-slide 38s linear infinite;
+}
+
+.tuw-marquee-container:hover {
+  animation-play-state: paused;
+}
+
+/* --------------------------------------------------------------------------
+   Editorial Philosophy Section (Slow-Living Luxury Specimen)
+   -------------------------------------------------------------------------- */
+.philosophy-headline {
+  font-family: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+}
+
+.philosophy-quote {
+  font-family: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.philosophy-visual-img {
+  width: 100%;
+  height: clamp(430px, 56vw, 710px);
+  object-fit: cover;
+  object-position: center 37%;
+}
+
+.philosophy-visual-frame {
+  position: absolute;
+  top: -1.125rem;
+  right: -1.125rem;
+  width: 42%;
+  height: 33%;
+  border: 1px solid var(--color-store-gold);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.philosophy-visual-note {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(320px, 72%);
+  background-color: var(--color-store-cream);
+  padding: 1.5rem;
+}
+
+.tuw-writing-vertical {
+  writing-mode: vertical-rl;
+}
+
+@media (max-width: 860px) {
+  .philosophy-visual-img {
+    height: min(112vw, 650px);
+  }
+}
+
+@media (max-width: 520px) {
+  .philosophy-visual-frame {
+    top: -0.625rem;
+    right: -0.5rem;
+  }
+  .philosophy-visual-note {
+    width: 82%;
+    padding: 1.125rem 1.25rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Accessibility: Reduced Motion Preference (WCAG 2.2 AA)
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -707,5 +803,10 @@ h6,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .tuw-marquee-container {
+    animation: none !important;
+    overflow-x: auto;
   }
 }

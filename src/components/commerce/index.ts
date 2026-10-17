@@ -24,3 +24,6 @@ export type { PaymentSimulationPanelProps } from './PaymentSimulationPanel';
 
 export { default as VirtualFittingRoom } from './VirtualFittingRoom';
 export type { FittingAudience } from './VirtualFittingRoom';
+
+export { default as CommunityPraise } from './CommunityPraise';
+export { default as OurPhilosophy } from './OurPhilosophy';
