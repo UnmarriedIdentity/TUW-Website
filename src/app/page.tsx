@@ -619,7 +619,7 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-medium tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
               <p className="text-lg text-store-text-secondary font-sans mt-1">
@@ -659,7 +659,7 @@ export default function HomePage() {
                   <div className="pt-2">
                     <Link
                       href={`/journal/${story.slug}`}
-                      className="text-lg font-semibold tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
+                      className="text-sm font-medium tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
                     >
                       <span>Read Story</span>
                       <ArrowRight size={12} />
