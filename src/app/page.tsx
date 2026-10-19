@@ -312,17 +312,17 @@ function BestSellingCard({
       <div className="p-4 flex flex-col gap-2.5">
         {/* Row 1: Title & Price */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans font-bold text-sm text-store-text-primary leading-tight">
+          <h3 className="font-sans text-store-text-primary leading-tight">
             <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
               {item.title}
             </Link>
           </h3>
           <div className="flex items-baseline gap-1.5 text-right shrink-0">
-            <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
+            <span className="font-heading font-bold text-base text-store-text-primary block tuw-tabular-nums">
               {formatINR(item.priceINR * 100)}
             </span>
             {item.compareAtPriceINR && (
-              <span className="text-2xs text-store-text-secondary line-through tuw-tabular-nums">
+              <span className="text-xs text-store-text-secondary line-through tuw-tabular-nums">
                 {formatINR(item.compareAtPriceINR * 100)}
               </span>
             )}
@@ -590,7 +590,7 @@ export default function HomePage() {
                     >
                       <Icon size={22} aria-hidden="true" />
                     </div>
-                    <h3 className="font-heading font-bold text-lg text-white">{feature.title}</h3>
+                    <h3 className="font-heading font-semibold text-lg text-white">{feature.title}</h3>
                     <p className="text-base text-white/70 leading-relaxed font-sans">
                       {feature.description}
                     </p>
@@ -622,7 +622,7 @@ export default function HomePage() {
               <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-medium tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
-              <p className="text-base text-store-text-secondary font-sans mt-1">
+              <p className="text-lg text-store-text-secondary font-sans mt-1">
                 Curated editorial content & stories behind every piece we create.
               </p>
             </div>
@@ -650,16 +650,16 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="p-6 space-y-2">
-                  <h3 className="font-heading font-bold text-base text-store-text-primary leading-snug group-hover:text-store-action-primary transition-colors">
+                  <h3 className="font-heading font-semibold text-lg text-store-text-primary leading-snug group-hover:text-store-action-primary transition-colors">
                     {story.title}
                   </h3>
-                  <p className="text-xs text-store-text-secondary leading-relaxed font-sans">
+                  <p className="text-base text-store-text-secondary leading-relaxed font-sans">
                     {story.subtitle}
                   </p>
                   <div className="pt-2">
                     <Link
                       href={`/journal/${story.slug}`}
-                      className="text-xs font-bold uppercase tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
+                      className="text-lg font-semibold tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
                     >
                       <span>Read Story</span>
                       <ArrowRight size={12} />
@@ -692,7 +692,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
               <br className="hidden sm:inline" />
               {' '}The Stratosphere

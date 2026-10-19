@@ -27,7 +27,7 @@ export default function OurPhilosophy() {
         {/* Left Column: Narrative, Typography & Principles */}
         <div className="lg:col-span-6 xl:col-span-6 space-y-7">
           {/* Eyebrow */}
-          <div className="flex items-center gap-3 text-2xs uppercase tracking-widest text-store-gold font-sans font-bold">
+          <div className="flex items-center gap-3 text-base uppercase tracking-widest text-store-gold font-sans font-bold">
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
             <span>Our Philosophy</span>
           </div>
@@ -59,10 +59,10 @@ export default function OurPhilosophy() {
             <div className="grid grid-cols-3 gap-3 sm:gap-6 divide-x divide-store-card-border">
               {PRINCIPLES.map((principle, index) => (
                 <div key={principle.number} className={`space-y-1.5 ${index > 0 ? 'pl-3 sm:pl-6' : ''}`}>
-                  <span className="text-2xs font-mono uppercase tracking-wider text-store-gold font-semibold block">
+                  <span className="text-xs font-mono uppercase tracking-wider text-store-gold font-semibold block">
                     {principle.number}
                   </span>
-                  <p className="font-heading font-semibold text-xs sm:text-sm text-store-text-primary leading-snug">
+                  <p className="font-heading font-semibold text-base text-store-text-primary leading-snug">
                     {principle.line1}
                     <br />
                     {principle.line2}

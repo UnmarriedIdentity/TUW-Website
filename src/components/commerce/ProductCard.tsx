@@ -153,7 +153,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
 
         {/* Title & Subtitle */}
         <Link href={`/products/${product.slug}`} className="block group-hover:underline">
-          <h3 className="text-sm font-semibold tracking-wide text-[#1A1A1A] leading-snug">
+          <h3 className="tracking-wide text-[#1A1A1A] leading-snug">
             {product.title}
           </h3>
         </Link>
