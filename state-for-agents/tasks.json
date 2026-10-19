@@ -10,13 +10,13 @@
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
     "total": 36,
-    "done": 35,
-    "in_progress": 1,
+    "done": 36,
+    "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "fbcbec2",
+    "tip": "5ae71da",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -60,9 +60,11 @@
       "0e23132",
       "80a0de8",
       "086fd14",
-      "fbcbec2"
+      "fbcbec2",
+      "9cb4df8",
+      "5ae71da"
     ],
-    "next_up": "Map-loop header social icons and mobile menu secondary links (TL-WEB-036)",
+    "next_up": "Human browser testing and push to origin preview",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -731,14 +733,26 @@
     {
       "id": "TL-WEB-036",
       "title": "Map-loop header social icons and mobile menu secondary links",
-      "status": "in_progress",
+      "status": "done",
+      "log": "5ae71da",
       "owner": "Muse Spark",
       "started": "2026-10-19",
-      "finished": null,
-      "verified": false,
-      "design_match": null,
-      "key_decisions": [],
-      "follow_ups": []
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Header renders the same four social anchors in the same order with identical href, aria-label, target, rel and inline SVG path data; MobileMenu renders the same four secondary links with identical order, classes and Lucide icons",
+      "key_decisions": [
+        "Added a typed SOCIAL_LINKS array at module scope holding id, label, href and the 24x24 inline SVG path, replacing four near-identical anchor blocks in the top bar",
+        "Replaced the four hard-coded secondary Links in MobileMenu with a SECONDARY_LINKS array typed with LucideIcon, keeping onClick={onClose} and every class on the looped link",
+        "Moved currencies, navLinks and topBarLinks out of the component body into module-scope CURRENCIES, NAV_LINKS and TOP_BAR_LINKS so they are not rebuilt on every render and match the FOOTER_COLUMNS pattern",
+        "Verified the prerendered homepage HTML still emits all four social anchors in original order with all four SVG path strings intact and the svg attributes unchanged",
+        "Deliberately left the four right-side action icons un-mapped because they mix buttons with links, different handlers, a mobile-hidden item and two count badges, so a map would add complexity rather than remove it",
+        "Left the wordmark/emblem scroll pair un-mapped as it is a two-state animation rather than a repeated pattern",
+        "Noted but did not remove the pre-existing unused X import in MobileMenu",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean"
+      ],
+      "follow_ups": [
+        "Social hrefs still point to placeholder profiles such as pinterest.com, x.com, facebook.com and instagram.com and need the real handles before they can be used in any structured data"
+      ]
     }
   ]
 }
