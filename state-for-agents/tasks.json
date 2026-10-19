@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 30,
+    "total": 31,
     "done": 30,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "0c34865",
+    "tip": "f68364e",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -39,9 +39,11 @@
       "13fc9cb",
       "a9c64e4",
       "39b5017",
-      "0c34865"
+      "0c34865",
+      "e1be9ef",
+      "f68364e"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "Remove Curated Bestsellers eyebrow and set Explore heading to weight 500 (TL-WEB-031)",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -595,6 +597,18 @@
         "Committed CommunityPraise single-line infinite testimonial marquee component and exported via commerce index",
         "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean"
       ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-031",
+      "title": "Remove Curated Bestsellers eyebrow and set Explore heading weight to 500",
+      "status": "in_progress",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": null,
+      "verified": false,
+      "design_match": null,
+      "key_decisions": [],
       "follow_ups": []
     }
   ]
