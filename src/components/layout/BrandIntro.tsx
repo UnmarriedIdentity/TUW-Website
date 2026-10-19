@@ -118,8 +118,10 @@ export default function BrandIntro() {
           <TuwEmblem className="w-16 h-16 sm:w-20 sm:h-20 text-white drop-shadow-2xl" />
         </div>
 
-        {/* Brand Text Wrapper with Staggered Letter-by-Letter Masks */}
-        <h1 className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 intro-brand-typography font-heading font-extrabold text-white tracking-tight">
+        {/* Brand Text Wrapper with Staggered Letter-by-Letter Masks.
+            Rendered as <p> rather than <h1> so the page keeps exactly one
+            content heading (the hero) for crawlers and screen readers. */}
+        <p className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 intro-brand-typography font-heading font-medium text-white tracking-tight">
           {BRAND_WORDS.map((item, wordIdx) => (
             <span key={wordIdx} className="inline-flex items-center whitespace-nowrap">
               {item.chars.map((char, charIdx) => {
@@ -145,7 +147,7 @@ export default function BrandIntro() {
               })}
             </span>
           ))}
-        </h1>
+        </p>
 
         {/* Architectural Subtitle & Refined Gold Accent Rule */}
         <div

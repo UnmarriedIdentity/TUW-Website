@@ -110,7 +110,7 @@ export default function CommunityPraise() {
                 <div className="text-store-gold mb-3.5">
                   <Quote size={24} className="fill-store-gold/20 text-store-gold rotate-180" />
                 </div>
-                <p className="text-lg sm:text-sm text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
+                <p className="text-base sm:text-lg text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
                   {item.quote}
                 </p>
               </div>

@@ -455,7 +455,7 @@ export default function VirtualFittingRoom() {
       {/* Header with right-aligned audience tabs */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
         <div>
-          <span className="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-store-text-secondary font-sans mb-2">
+          <span className="flex items-center gap-3 text-base font-semibold uppercase tracking-widest text-store-text-secondary font-sans mb-2">
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
             Virtual Fitting Room
           </span>
