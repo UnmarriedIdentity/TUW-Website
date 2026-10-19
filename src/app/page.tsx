@@ -10,6 +10,7 @@ import {
   Headphones,
   Users,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
@@ -190,6 +191,42 @@ const RECOMMENDATION_STORIES = [
     subtitle: 'Architectural cuts that hold their shape over years without synthetic polyester blends.',
     image: 'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=900&auto=format&fit=crop&q=80',
     slug: 'minimal-performance',
+  },
+];
+
+// 5. Customer Experience feature pillars (Section 3)
+interface ExperienceFeature {
+  id: string;
+  icon: LucideIcon;
+  iconClassName: string;
+  title: string;
+  description: string;
+}
+
+const EXPERIENCE_FEATURES: ExperienceFeature[] = [
+  {
+    id: 'support',
+    icon: Headphones,
+    iconClassName: 'text-secondary-mint',
+    title: 'Quick and Friendly Support',
+    description:
+      'Our support team is always ready to assist you quickly and efficiently, resolving your issues in no time with human care.',
+  },
+  {
+    id: 'collection',
+    icon: Users,
+    iconClassName: 'text-secondary-blue',
+    title: 'New Collection Everyday',
+    description:
+      'Explore our new arrivals and trendiest additions added to our store daily. Stay ahead of fashion and refreshed styles.',
+  },
+  {
+    id: 'satisfaction',
+    icon: ShieldCheck,
+    iconClassName: 'text-store-gold',
+    title: 'Satisfaction Guaranteed',
+    description:
+      'We guarantee your complete satisfaction with every purchase. Enjoy high-quality products and customer care you can rely on.',
   },
 ];
 
@@ -533,7 +570,7 @@ export default function HomePage() {
               </div>
 
               <div className="max-w-md">
-                <p className="text-base text-white/70 font-sans leading-relaxed">
+                <p className="text-xl text-white/70 font-sans leading-relaxed">
                   Take advantage of our dedicated customer service team ready to assist with any
                   questions or issues you may encounter.
                 </p>
@@ -541,41 +578,25 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              {/* Feature 1 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-mint">
-                  <Headphones size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">Quick and Friendly Support</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  Our support team is always ready to assist you quickly and efficiently, resolving your
-                  issues in no time with human care.
-                </p>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-blue">
-                  <Users size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">New Collection Everyday</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  Explore our new arrivals and trendiest additions added to our store daily. Stay ahead of
-                  fashion and refreshed styles.
-                </p>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-store-gold">
-                  <ShieldCheck size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">Satisfaction Guaranteed</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  We guarantee your complete satisfaction with every purchase. Enjoy high-quality
-                  products and customer care you can rely on.
-                </p>
-              </div>
+              {EXPERIENCE_FEATURES.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <div
+                    key={feature.id}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4"
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full bg-white/10 flex items-center justify-center ${feature.iconClassName}`}
+                    >
+                      <Icon size={22} aria-hidden="true" />
+                    </div>
+                    <h3 className="font-heading font-bold text-lg text-white">{feature.title}</h3>
+                    <p className="text-base text-white/70 leading-relaxed font-sans">
+                      {feature.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
