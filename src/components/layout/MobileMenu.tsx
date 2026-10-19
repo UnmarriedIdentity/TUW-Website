@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { X, Search, Heart, User, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Drawer from '../ui/Drawer';
 
 export interface MobileMenuProps {
@@ -10,6 +11,15 @@ export interface MobileMenuProps {
   onClose: () => void;
   links: { label: string; href: string }[];
 }
+
+// Secondary account & tracking shortcuts shown below the primary nav list.
+// Module scope so the array is stable across renders.
+const SECONDARY_LINKS: { label: string; href: string; icon: LucideIcon }[] = [
+  { label: 'Search Catalog', href: '/search', icon: Search },
+  { label: 'My Account & Orders', href: '/account', icon: User },
+  { label: 'Saved Wishlist', href: '/wishlist', icon: Heart },
+  { label: 'Track My Order', href: '/track-order', icon: RefreshCw },
+];
 
 export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
   return (
@@ -39,38 +49,20 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
 
         {/* Secondary Account & Tracking Links */}
         <div className="flex flex-col gap-3 pt-6 border-t border-[#E2DDCF]">
-          <Link
-            href="/search"
-            onClick={onClose}
-            className="flex items-center gap-3 text-sm font-medium text-[#5A5A5A] hover:text-[#1A1A1A]"
-          >
-            <Search size={18} />
-            <span>Search Catalog</span>
-          </Link>
-          <Link
-            href="/account"
-            onClick={onClose}
-            className="flex items-center gap-3 text-sm font-medium text-[#5A5A5A] hover:text-[#1A1A1A]"
-          >
-            <User size={18} />
-            <span>My Account & Orders</span>
-          </Link>
-          <Link
-            href="/wishlist"
-            onClick={onClose}
-            className="flex items-center gap-3 text-sm font-medium text-[#5A5A5A] hover:text-[#1A1A1A]"
-          >
-            <Heart size={18} />
-            <span>Saved Wishlist</span>
-          </Link>
-          <Link
-            href="/track-order"
-            onClick={onClose}
-            className="flex items-center gap-3 text-sm font-medium text-[#5A5A5A] hover:text-[#1A1A1A]"
-          >
-            <RefreshCw size={18} />
-            <span>Track My Order</span>
-          </Link>
+          {SECONDARY_LINKS.map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={onClose}
+                className="flex items-center gap-3 text-sm font-medium text-[#5A5A5A] hover:text-[#1A1A1A]"
+              >
+                <Icon size={18} />
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Footer Brand Notes */}

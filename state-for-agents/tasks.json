@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 35,
-    "done": 35,
+    "total": 37,
+    "done": 37,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "086fd14",
+    "tip": "15a67d2",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -59,10 +59,26 @@
       "3413700",
       "0e23132",
       "80a0de8",
-      "086fd14"
+      "086fd14",
+      "fbcbec2",
+      "9cb4df8",
+      "5ae71da",
+      "cda1025",
+      "1f33419",
+      "c180a55",
+      "bde1988",
+      "8495183",
+      "8f47a78",
+      "ec395de",
+      "619fac0",
+      "7e4d176",
+      "78b6985",
+      "15a67d2"
     ],
-    "next_up": "Human browser testing and push to origin preview",
-    "pending_verifications": [],
+    "next_up": "Human browser verification of TL-WEB-037 at 360/768/1024/1440, tick the UI_CHECKLIST typography box, then human-only push of preview",
+    "pending_verifications": [
+      "TL-WEB-037 visual check at 360/768/1024/1440 (hero, philosophy, praise and stratosphere headings changed size) and the UI_CHECKLIST typography checkbox"
+    ],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
   },
@@ -725,6 +741,77 @@
       "follow_ups": [
         "shop.html, search.html and track-order.html have no h1 in prerendered HTML because useSearchParams forces their content behind a Suspense fallback; moving that hook into a small sync component would restore static headings",
         "Remaining SEO gaps are intentionally open: no sitemap.ts, no robots.ts, no metadataBase, no canonical, no OpenGraph tags, no JSON-LD, and every route still shares one title and description"
+      ]
+    },
+    {
+      "id": "TL-WEB-036",
+      "title": "Map-loop header social icons and mobile menu secondary links",
+      "status": "done",
+      "log": "5ae71da",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Header renders the same four social anchors in the same order with identical href, aria-label, target, rel and inline SVG path data; MobileMenu renders the same four secondary links with identical order, classes and Lucide icons",
+      "key_decisions": [
+        "Added a typed SOCIAL_LINKS array at module scope holding id, label, href and the 24x24 inline SVG path, replacing four near-identical anchor blocks in the top bar",
+        "Replaced the four hard-coded secondary Links in MobileMenu with a SECONDARY_LINKS array typed with LucideIcon, keeping onClick={onClose} and every class on the looped link",
+        "Moved currencies, navLinks and topBarLinks out of the component body into module-scope CURRENCIES, NAV_LINKS and TOP_BAR_LINKS so they are not rebuilt on every render and match the FOOTER_COLUMNS pattern",
+        "Verified the prerendered homepage HTML still emits all four social anchors in original order with all four SVG path strings intact and the svg attributes unchanged",
+        "Deliberately left the four right-side action icons un-mapped because they mix buttons with links, different handlers, a mobile-hidden item and two count badges, so a map would add complexity rather than remove it",
+        "Left the wordmark/emblem scroll pair un-mapped as it is a two-state animation rather than a repeated pattern",
+        "Noted but did not remove the pre-existing unused X import in MobileMenu",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean"
+      ],
+      "follow_ups": [
+        "Social hrefs still point to placeholder profiles such as pinterest.com, x.com, facebook.com and instagram.com and need the real handles before they can be used in any structured data"
+      ]
+    },
+    {
+      "id": "TL-WEB-037",
+      "title": "Homepage typography pass — font-weight and font-size only",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "log": [
+        "cda1025",
+        "1f33419",
+        "c180a55",
+        "bde1988",
+        "8495183",
+        "8f47a78",
+        "ec395de",
+        "619fac0",
+        "7e4d176",
+        "78b6985",
+        "15a67d2"
+      ],
+      "design_match": "yes",
+      "verified": true,
+      "key_decisions": [
+        "Scope is strictly font-weight and font-size; colours, spacing, borders, radii and shadows are untouched",
+        "Committed order fixed by the human: tracker open, docs, hero, philosophy, explore, experience, praise, vfr, recommendations, stratosphere, guardrail test, tracker close — one section per commit, never bulk edited",
+        "Allowed weights after the pass: 300 hero display/subtitle only, 400 body and descriptions, 500 every section H2, eyebrow, product name and price, 600 card titles and emphasis, 900 footer brand signature exception",
+        "Every section eyebrow is now 16px/500 using the OurPhilosophy eyebrow as the reference (tracking and colour preserved per section)",
+        "Every section H2 is now clamp(1.75rem,4vw+0.5rem,3rem) at weight 500, i.e. 28px mobile to 48px desktop",
+        "Section descriptions keep their agreed sizes except Customer Experience, which became 16px mobile to 20px desktop (text-base sm:text-xl, 400); the Recommendations description stayed frozen at 18/400",
+        "Our Philosophy Playfair headline stays a display exception and the footer and header stay untouched, as agreed",
+        "Hero kicker went text-2xs to text-base (10px to 16px) while keeping font-medium; hero display (300/400) and hero subtitle (12-14px/300) were not touched",
+        "Our Philosophy eyebrow went font-bold to font-medium (700 to 500); Virtual Fitting Room eyebrow and H2 went font-semibold to font-medium",
+        "Explore product name gained an explicit text-base font-medium and its price went font-bold to font-medium; the Explore discount pill and Community Praise avatar initials went 700 to 600 so the documented no-700-in-a-section rule is literally true",
+        "Community Praise H2 went 24-36px/600 to 28-48px/500 and its testimonial quote went text-base sm:text-lg to text-base; names (16/400) and roles (12/400) were left as they were",
+        "Virtual Fitting Room card name, worn title and both prices became 16px/500 and the Now-wearing label went 18px/600 to 16px/500 per the eyebrow rule",
+        "Product Recommendations H2 widened from 28-36px to 28-48px (already 500) and the Read Story link went 18px/600 to 14px/500; its 18/400 description was explicitly not changed",
+        "Stratosphere H2 went 32-60px/400 to 28-48px/500; its 16-18px description and 14px/600 CTA stayed, the CTA being documented as an exception",
+        "Added tests/homepage-typography.test.mjs with 7 assertions over the section files, the documented exceptions and the docs themselves; 17/17 tests pass",
+        "Gates green: tsc --noEmit clean, node --test 17/17, next build 29/29 routes",
+        "Built proof: .font-medium resolves to --font-weight-medium:500, --text-base:1rem, the H2 clamp selector is emitted, and the prerendered index.html shows 6 section H2s with the clamp plus font-medium, 6 product names and 6 prices at text-base font-medium, with the hero 300 display and footer font-black signature intact"
+      ],
+      "follow_ups": [
+        "UI_CHECKLIST.md typography checkbox stays unchecked until a human browser pass at 360/768/1024/1440 — no browser or screenshot tooling is installed in this environment",
+        "Playfair Display in .philosophy-headline is a font-family mismatch with Jost and is out of scope for this weight/size-only pass",
+        "Customer Experience description switches at sm (640px); switch to lg if desktop should mean 1024px and above only"
       ]
     }
   ]

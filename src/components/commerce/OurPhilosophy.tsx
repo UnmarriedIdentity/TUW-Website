@@ -27,7 +27,7 @@ export default function OurPhilosophy() {
         {/* Left Column: Narrative, Typography & Principles */}
         <div className="lg:col-span-6 xl:col-span-6 space-y-7">
           {/* Eyebrow */}
-          <div className="flex items-center gap-3 text-base uppercase tracking-widest text-store-gold font-sans font-bold">
+          <div className="flex items-center gap-3 text-base uppercase tracking-widest text-store-gold font-sans font-medium">
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
             <span>Our Philosophy</span>
           </div>

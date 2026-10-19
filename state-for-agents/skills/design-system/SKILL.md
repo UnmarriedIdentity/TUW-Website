@@ -24,6 +24,32 @@ Global authority for look-and-feel sources of truth in `tuw-website`.
   suffixed tokens until Figma rules.
 - Fictitious demo identities only (`@example.com`, Indian mobiles).
 
+## Homepage type roles (size and weight only)
+
+Authority: `docs/DESIGN_SYSTEM.md` → "Storefront homepage type roles". Weight
+and size only — colour, letter spacing, spacing, borders and radii never move
+under this heading.
+
+| Role | Size | Weight |
+|---|---|---|
+| Section H2 | `text-[clamp(1.75rem,4vw+0.5rem,3rem)]` (28–48px) | 500 |
+| Section eyebrow | `text-base` (16px) | 500 |
+| Product name | `text-base` | 500 |
+| Product price | `text-base` + `tuw-tabular-nums` | 500 |
+| Editorial card title | `text-lg` | 600 |
+| Card body | `text-base` | 400 |
+| Section description | 16px, 18px or 16→20px as chosen per section | 400 |
+| CTA label | `text-xs` (14px Stratosphere CTA) | 500 (600 emphasis/Stratosphere) |
+| Meta | `text-xs` | 400 |
+| Hero display / subtitle | 32–72px, 22–48px, 12–14px | 300 / 400 / 300 |
+| Footer signature | brand mark | 900 exception |
+
+- Allowed weights are 300, 400, 500, 600 and 900 (signature only). Homepage
+  sections contain no `font-bold` or `font-extrabold`.
+- `.philosophy-headline` (Playfair Display, 40–80px/400) is a display
+  exception pending a font-family decision.
+- Guarded by `tests/homepage-typography.test.mjs`.
+
 ## Good / bad
 
 - ✅ Sourcing a new radius from the Figma frame, then tokenizing it.

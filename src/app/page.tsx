@@ -278,7 +278,7 @@ function BestSellingCard({
         {/* Discount Pill Badge (e.g. -30%, -25%) */}
         {item.discountPercent ? (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-red-600 shadow-xs">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold text-white bg-red-600 shadow-xs">
               -{item.discountPercent}%
             </span>
           </div>
@@ -312,13 +312,13 @@ function BestSellingCard({
       <div className="p-4 flex flex-col gap-2.5">
         {/* Row 1: Title & Price */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans text-store-text-primary leading-tight">
+          <h3 className="font-sans text-base font-medium text-store-text-primary leading-tight">
             <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
               {item.title}
             </Link>
           </h3>
           <div className="flex items-baseline gap-1.5 text-right shrink-0">
-            <span className="font-heading font-bold text-base text-store-text-primary block tuw-tabular-nums">
+            <span className="font-heading font-medium text-base text-store-text-primary block tuw-tabular-nums">
               {formatINR(item.priceINR * 100)}
             </span>
             {item.compareAtPriceINR && (
@@ -440,7 +440,7 @@ export default function HomePage() {
           <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16 flex-1 flex flex-col justify-end">
             <div className="max-w-xl space-y-4">
               {/* Delicate Architectural Eyebrow */}
-              <div className="flex items-center gap-3 text-2xs uppercase tracking-editorial text-white/70 font-sans font-medium">
+              <div className="flex items-center gap-3 text-base uppercase tracking-editorial text-white/70 font-sans font-medium">
                 <span className="w-7 h-px bg-store-gold" />
                 <span>SS26 • Slow-Living Atelier</span>
               </div>
@@ -570,7 +570,7 @@ export default function HomePage() {
               </div>
 
               <div className="max-w-md">
-                <p className="text-xl text-white/70 font-sans leading-relaxed">
+                <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed">
                   Take advantage of our dedicated customer service team ready to assist with any
                   questions or issues you may encounter.
                 </p>
@@ -619,7 +619,7 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-medium tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
               <p className="text-lg text-store-text-secondary font-sans mt-1">
@@ -659,7 +659,7 @@ export default function HomePage() {
                   <div className="pt-2">
                     <Link
                       href={`/journal/${story.slug}`}
-                      className="text-lg font-semibold tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
+                      className="text-sm font-medium tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
                     >
                       <span>Read Story</span>
                       <ArrowRight size={12} />
@@ -692,7 +692,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
               <br className="hidden sm:inline" />
               {' '}The Stratosphere
