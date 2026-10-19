@@ -83,7 +83,7 @@ export default function CommunityPraise() {
         </div>
 
         {/* Section Heading matching benchmark video */}
-        <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-store-text-primary">
+        <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
           Words of praise from others
           <br className="hidden sm:inline" />
           {' '}about our presence.
@@ -110,14 +110,14 @@ export default function CommunityPraise() {
                 <div className="text-store-gold mb-3.5">
                   <Quote size={24} className="fill-store-gold/20 text-store-gold rotate-180" />
                 </div>
-                <p className="text-base sm:text-lg text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
+                <p className="text-base text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
                   {item.quote}
                 </p>
               </div>
 
               <div className="flex items-center gap-3 pt-4 border-t border-store-border/60">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-xs shrink-0 ${item.avatarBg}`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-heading font-semibold text-xs shrink-0 ${item.avatarBg}`}
                 >
                   {item.avatarText}
                 </div>
