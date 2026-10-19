@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 30,
-    "done": 30,
+    "total": 34,
+    "done": 34,
     "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "0c34865",
+    "tip": "3413700",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -39,7 +39,24 @@
       "13fc9cb",
       "a9c64e4",
       "39b5017",
-      "0c34865"
+      "0c34865",
+      "e1be9ef",
+      "f68364e",
+      "4c2e19b",
+      "a69dd64",
+      "aff9d79",
+      "436eca4",
+      "57c0cce",
+      "18152fb",
+      "7ccb32c",
+      "c13a188",
+      "70d03f5",
+      "0f9bc12",
+      "2738b99",
+      "96e696d",
+      "bcbbf33",
+      "1a5bc4d",
+      "3413700"
     ],
     "next_up": "Human browser testing and push to origin preview",
     "pending_verifications": [],
@@ -596,6 +613,92 @@
         "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean"
       ],
       "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-031",
+      "title": "Remove Curated Bestsellers eyebrow and set Explore heading weight to 500",
+      "status": "done",
+      "log": "a69dd64",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Explore Our Best Selling Product Collection header keeps only the h2 at Jost weight 500; eyebrow span removed; right column and filter pills unchanged",
+      "key_decisions": [
+        "Removed the Curated Bestsellers eyebrow span only; wrapper div and h2 retained because the div also contains the heading",
+        "Replaced font-extrabold with font-medium (500) on the Explore h2, keeping font-heading clamp size, tracking-tight and text-store-text-primary",
+        "Bootstrap utility classes not used: Bootstrap is not a dependency in tuw-website and adding it would duplicate Tailwind v4 utilities and violate the single-stylesheet/theme-token architecture",
+        "Left uncommitted local package.json port change (3000 to 3007) untouched as unrelated user work",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with font-medium selector proven in built CSS"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-032",
+      "title": "Section header consistency: remove Customer Experience and Product Recommendations eyebrows, weight 500 headings, 16px descriptions",
+      "status": "done",
+      "log": "57c0cce",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "All three homepage section headers now share no eyebrow, Jost weight 500 headings, and text-base descriptions matching the Explore section treatment",
+      "key_decisions": [
+        "Removed Customer Experience eyebrow span (gold) and Stories & Insights eyebrow span, keeping their wrapper divs and headings intact",
+        "Replaced font-extrabold with font-medium (500) on both headings, preserving each section clamp size and text color token",
+        "Raised all three section description paragraphs from text-sm to text-base (14px to 16px); text-md does not exist in Tailwind v4 so text-base was used per user decision",
+        "Applied the same text-base change to the Explore section paragraph for cross-section consistency",
+        "Left uncommitted local package.json port change (3000 to 3007) untouched as unrelated user work",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with text-base and font-medium selectors proven and zero text-md selectors"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-033",
+      "title": "Refactor Customer Experience feature cards into a data-driven map loop",
+      "status": "done",
+      "log": "c13a188",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Section 3 renders three feature cards from EXPERIENCE_FEATURES with identical markup, order, copy, icon colors (mint/blue/gold) and grid classes as the previous hard-coded blocks",
+      "key_decisions": [
+        "Added ExperienceFeature interface and EXPERIENCE_FEATURES const following the existing CATEGORY_PILLS/RECOMMENDATION_STORIES data-driven pattern",
+        "Typed icon field as LucideIcon imported as a type-only import, so no new runtime dependency was added",
+        "Replaced three duplicated card blocks with a single map loop that preserves every class, copy string and icon color token byte-identically",
+        "Added aria-hidden to the decorative feature icons for cleaner screen reader output with zero visual change",
+        "Preserved the user's uncommitted text size edits (text-xl intro paragraph, text-base card paragraphs) inside the refactor",
+        "Audited the rest of the homepage: best sellers, praise marquee, virtual fitting room, recommendations, philosophy, header and brand intro already use map loops; footer link columns remain duplicated and are deferred to a follow-up task",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with grid, card and icon color selectors proven present"
+      ],
+      "follow_ups": ["Footer.tsx columns 2-4 still hand-written; candidate for the same map treatment"]
+    },
+    {
+      "id": "TL-WEB-034",
+      "title": "Map-loop footer directory with crawlable semantic nav",
+      "status": "done",
+      "log": "2738b99",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Footer renders the same 3 columns, 17 links, labels, order and classes as before; only the markup source changed to FOOTER_COLUMNS plus semantic nav/h3 wrappers",
+      "key_decisions": [
+        "Added FooterLink and FooterColumn interfaces with FOOTER_COLUMNS (Catalog, Ethos, Policies) and FOOTER_LEGAL_LINKS constants at module scope in Footer.tsx",
+        "Rendered the three directory columns from a single map loop wrapped in nav aria-labelledby with h3 headings, fixing the previous h2 to h4 heading-level skip",
+        "Converted the bottom legal link row to a nav aria-label Legal with aria-hidden bullet separators for cleaner screen reader output",
+        "Kept all directory data static at module scope so every footer anchor stays in the prerendered HTML; no client state or lazy mounting gates the links",
+        "Verified the production HTML contains all 17 footer hrefs, 3 column nav landmarks, the legal nav, 4 footer h3 and zero footer h4",
+        "Preserved the user's typography edits in the footer brand column (font-semibold, text-base) inside the same commit",
+        "Committed the user's separate storefront type-scale pass and the port 3007 change as their own exact-path commits, and synced README and DESIGN_SYSTEM_USAGE port references",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean"
+      ],
+      "follow_ups": [
+        "Organization JSON-LD is still absent and needs verified social URLs plus confirmed address/phone before it can be added truthfully",
+        "Site-wide SEO gaps remain: no sitemap.ts or robots.ts, no metadataBase/canonical/OpenGraph, and two h1 elements on the homepage",
+        "Review the type pass for two suspected typos: CommunityPraise quote uses text-lg sm:text-sm (mobile larger than desktop) and VirtualFittingRoom status label uses text-lg uppercase tracking-widest"
+      ]
     }
   ]
 }

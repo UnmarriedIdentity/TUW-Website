@@ -10,6 +10,7 @@ import {
   Headphones,
   Users,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
@@ -193,6 +194,42 @@ const RECOMMENDATION_STORIES = [
   },
 ];
 
+// 5. Customer Experience feature pillars (Section 3)
+interface ExperienceFeature {
+  id: string;
+  icon: LucideIcon;
+  iconClassName: string;
+  title: string;
+  description: string;
+}
+
+const EXPERIENCE_FEATURES: ExperienceFeature[] = [
+  {
+    id: 'support',
+    icon: Headphones,
+    iconClassName: 'text-secondary-mint',
+    title: 'Quick and Friendly Support',
+    description:
+      'Our support team is always ready to assist you quickly and efficiently, resolving your issues in no time with human care.',
+  },
+  {
+    id: 'collection',
+    icon: Users,
+    iconClassName: 'text-secondary-blue',
+    title: 'New Collection Everyday',
+    description:
+      'Explore our new arrivals and trendiest additions added to our store daily. Stay ahead of fashion and refreshed styles.',
+  },
+  {
+    id: 'satisfaction',
+    icon: ShieldCheck,
+    iconClassName: 'text-store-gold',
+    title: 'Satisfaction Guaranteed',
+    description:
+      'We guarantee your complete satisfaction with every purchase. Enjoy high-quality products and customer care you can rely on.',
+  },
+];
+
 // Interactive Best-Selling Card with Blackout-style Swatch Hover & Size Chips
 function BestSellingCard({
   item,
@@ -275,17 +312,17 @@ function BestSellingCard({
       <div className="p-4 flex flex-col gap-2.5">
         {/* Row 1: Title & Price */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans font-bold text-sm text-store-text-primary leading-tight">
+          <h3 className="font-sans text-store-text-primary leading-tight">
             <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
               {item.title}
             </Link>
           </h3>
           <div className="flex items-baseline gap-1.5 text-right shrink-0">
-            <span className="font-heading font-extrabold text-sm text-store-text-primary block tuw-tabular-nums">
+            <span className="font-heading font-bold text-base text-store-text-primary block tuw-tabular-nums">
               {formatINR(item.priceINR * 100)}
             </span>
             {item.compareAtPriceINR && (
-              <span className="text-2xs text-store-text-secondary line-through tuw-tabular-nums">
+              <span className="text-xs text-store-text-secondary line-through tuw-tabular-nums">
                 {formatINR(item.compareAtPriceINR * 100)}
               </span>
             )}
@@ -457,10 +494,7 @@ export default function HomePage() {
           {/* Header Row */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
-                Curated Bestsellers
-              </span>
-              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
                 Explore Our Best Selling
                 <br className="hidden sm:inline" />
                 {' '}Product Collection
@@ -468,7 +502,7 @@ export default function HomePage() {
             </div>
 
             <div className="max-w-md space-y-4">
-              <p className="text-sm text-store-text-secondary font-sans leading-relaxed">
+              <p className="text-base text-store-text-secondary font-sans leading-relaxed">
                 Discover a curated selection of our most popular and best-selling styles, chosen for
                 quality and modern appeal.
               </p>
@@ -528,10 +562,7 @@ export default function HomePage() {
             {/* Header Row matching Explore section format */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
               <div>
-                <span className="text-2xs font-bold uppercase tracking-widest text-store-gold block mb-2 font-sans">
-                  Customer Experience
-                </span>
-                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-white">
+                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white">
                   We Deliver Exceptional
                   <br className="hidden sm:inline" />
                   {' '}Customer Experiences
@@ -539,7 +570,7 @@ export default function HomePage() {
               </div>
 
               <div className="max-w-md">
-                <p className="text-sm text-white/70 font-sans leading-relaxed">
+                <p className="text-xl text-white/70 font-sans leading-relaxed">
                   Take advantage of our dedicated customer service team ready to assist with any
                   questions or issues you may encounter.
                 </p>
@@ -547,41 +578,25 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              {/* Feature 1 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-mint">
-                  <Headphones size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">Quick and Friendly Support</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  Our support team is always ready to assist you quickly and efficiently, resolving your
-                  issues in no time with human care.
-                </p>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-secondary-blue">
-                  <Users size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">New Collection Everyday</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  Explore our new arrivals and trendiest additions added to our store daily. Stay ahead of
-                  fashion and refreshed styles.
-                </p>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-store-gold">
-                  <ShieldCheck size={22} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white">Satisfaction Guaranteed</h3>
-                <p className="text-xs text-white/70 leading-relaxed font-sans">
-                  We guarantee your complete satisfaction with every purchase. Enjoy high-quality
-                  products and customer care you can rely on.
-                </p>
-              </div>
+              {EXPERIENCE_FEATURES.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <div
+                    key={feature.id}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4"
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full bg-white/10 flex items-center justify-center ${feature.iconClassName}`}
+                    >
+                      <Icon size={22} aria-hidden="true" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-lg text-white">{feature.title}</h3>
+                    <p className="text-base text-white/70 leading-relaxed font-sans">
+                      {feature.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -604,13 +619,10 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
-                Stories & Insights
-              </span>
-              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-medium tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
-              <p className="text-sm text-store-text-secondary font-sans mt-1">
+              <p className="text-lg text-store-text-secondary font-sans mt-1">
                 Curated editorial content & stories behind every piece we create.
               </p>
             </div>
@@ -638,16 +650,16 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="p-6 space-y-2">
-                  <h3 className="font-heading font-bold text-base text-store-text-primary leading-snug group-hover:text-store-action-primary transition-colors">
+                  <h3 className="font-heading font-semibold text-lg text-store-text-primary leading-snug group-hover:text-store-action-primary transition-colors">
                     {story.title}
                   </h3>
-                  <p className="text-xs text-store-text-secondary leading-relaxed font-sans">
+                  <p className="text-base text-store-text-secondary leading-relaxed font-sans">
                     {story.subtitle}
                   </p>
                   <div className="pt-2">
                     <Link
                       href={`/journal/${story.slug}`}
-                      className="text-xs font-bold uppercase tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
+                      className="text-lg font-semibold tracking-wider text-store-text-primary hover:text-store-action-primary inline-flex items-center gap-1 transition-colors"
                     >
                       <span>Read Story</span>
                       <ArrowRight size={12} />
@@ -680,7 +692,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
               <br className="hidden sm:inline" />
               {' '}The Stratosphere

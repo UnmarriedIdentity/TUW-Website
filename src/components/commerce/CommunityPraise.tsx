@@ -83,12 +83,12 @@ export default function CommunityPraise() {
         </div>
 
         {/* Section Heading matching benchmark video */}
-        <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-store-text-primary">
+        <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-store-text-primary">
           Words of praise from others
           <br className="hidden sm:inline" />
           {' '}about our presence.
         </h2>
-        <p className="text-xs sm:text-sm text-store-text-secondary max-w-lg mx-auto font-sans mt-3 leading-relaxed">
+        <p className="text-lg text-store-text-secondary max-w-lg mx-auto font-sans mt-3 leading-relaxed">
           Unfiltered reflections on tactile permanence, architectural fit, and zero-deadstock Tiruppur tailoring.
         </p>
       </div>
@@ -110,7 +110,7 @@ export default function CommunityPraise() {
                 <div className="text-store-gold mb-3.5">
                   <Quote size={24} className="fill-store-gold/20 text-store-gold rotate-180" />
                 </div>
-                <p className="text-xs sm:text-sm text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
+                <p className="text-lg sm:text-sm text-store-text-primary font-sans leading-relaxed mb-6 font-normal">
                   {item.quote}
                 </p>
               </div>
@@ -122,10 +122,10 @@ export default function CommunityPraise() {
                   {item.avatarText}
                 </div>
                 <div>
-                  <h4 className="text-xs font-heading font-bold text-store-text-primary tracking-tight">
+                  <h4 className="text-base font-heading text-store-text-primary tracking-tight">
                     {item.name}
                   </h4>
-                  <p className="text-2xs text-store-text-secondary font-sans mt-0.5">
+                  <p className="text-xs text-store-text-secondary font-sans mt-0.5">
                     {item.role}
                   </p>
                 </div>
