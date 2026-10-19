@@ -9,9 +9,9 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 36,
+    "total": 37,
     "done": 36,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
@@ -64,7 +64,7 @@
       "9cb4df8",
       "5ae71da"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "TL-WEB-037 commit 1: write homepage size and weight roles into the design system docs",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -752,6 +752,29 @@
       ],
       "follow_ups": [
         "Social hrefs still point to placeholder profiles such as pinterest.com, x.com, facebook.com and instagram.com and need the real handles before they can be used in any structured data"
+      ]
+    },
+    {
+      "id": "TL-WEB-037",
+      "title": "Homepage typography pass — font-weight and font-size only",
+      "status": "in_progress",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-19",
+      "finished": null,
+      "log": [],
+      "design_match": null,
+      "verified": false,
+      "key_decisions": [
+        "Scope is strictly font-weight and font-size; colours, spacing, borders, radii and shadows are untouched",
+        "Committed order fixed by the human: tracker open, docs, hero, philosophy, explore, experience, praise, vfr, recommendations, stratosphere, guardrail test, tracker close — one section per commit, never bulk edited",
+        "Allowed weights after the pass: 300 hero display/subtitle only, 400 body and descriptions, 500 every section H2, eyebrow, product name and price, 600 card titles and emphasis, 900 footer brand signature exception",
+        "Every section eyebrow becomes 16px/500 using the OurPhilosophy eyebrow as the reference (tracking and colour preserved per section)",
+        "Every section H2 becomes clamp(1.75rem,4vw+0.5rem,3rem) at weight 500, i.e. 28px mobile to 48px desktop",
+        "Section descriptions keep their current sizes except Customer Experience, which becomes 16px mobile to 20px desktop; the Recommendations description is explicitly frozen at 18/400",
+        "Our Philosophy Playfair headline stays a display exception and the footer and header stay untouched, as agreed"
+      ],
+      "follow_ups": [
+        "Playfair Display in .philosophy-headline is a font-family mismatch with Jost and is out of scope for this weight/size-only pass"
       ]
     }
   ]
