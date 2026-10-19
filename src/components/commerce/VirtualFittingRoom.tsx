@@ -455,11 +455,11 @@ export default function VirtualFittingRoom() {
       {/* Header with right-aligned audience tabs */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
         <div>
-          <span className="flex items-center gap-3 text-base font-semibold uppercase tracking-widest text-store-text-secondary font-sans mb-2">
+          <span className="flex items-center gap-3 text-base font-medium uppercase tracking-widest text-store-text-secondary font-sans mb-2">
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
             Virtual Fitting Room
           </span>
-          <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-semibold tracking-tight text-store-text-primary">
+          <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
             Choose a piece. Watch it get worn.
           </h2>
           <p className="text-lg text-store-text-secondary font-sans mt-2 max-w-lg">
@@ -531,11 +531,11 @@ export default function VirtualFittingRoom() {
                 </button>
                 <div className="flex items-start justify-between gap-2 px-1 pt-2">
                   <div>
-                    <p className="font-sans text-base text-store-text-primary">{look.title}</p>
+                    <p className="font-sans text-base font-medium text-store-text-primary">{look.title}</p>
                     <p className="text-xs text-store-text-secondary mt-0.5">
                       {isOn ? 'ON THE MODEL' : `0${i + 1} / ${look.cat} · TAP TO WEAR`}
                     </p>
-                    <p className="font-heading font-semibold text-base text-store-text-primary tuw-tabular-nums mt-1">
+                    <p className="font-heading font-medium text-base text-store-text-primary tuw-tabular-nums mt-1">
                       {formatINR(look.priceINR * 100)}
                     </p>
                   </div>
@@ -607,13 +607,13 @@ export default function VirtualFittingRoom() {
           </div>
 
           <div className="text-center">
-            <p className="text-lg font-semibold uppercase tracking-widest text-store-text-secondary font-sans">
+            <p className="text-base font-medium uppercase tracking-widest text-store-text-secondary font-sans">
               {worn ? 'Now wearing' : 'Base look'} • {AUDIENCE_LABELS[audience]}
             </p>
-            <p className="font-heading text-base text-store-text-primary mt-1">
+            <p className="font-heading text-base font-medium text-store-text-primary mt-1">
               {worn ? worn.title : set.base.title}
               <br /> 
-              <span className="tuw-tabular-nums font-semibold">{formatINR((worn ? worn.priceINR : set.base.priceINR) * 100)}</span>
+              <span className="tuw-tabular-nums font-medium">{formatINR((worn ? worn.priceINR : set.base.priceINR) * 100)}</span>
             </p>
           </div>
 
