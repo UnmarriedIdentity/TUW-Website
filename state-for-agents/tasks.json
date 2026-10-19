@@ -10,13 +10,13 @@
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
     "total": 35,
-    "done": 34,
-    "in_progress": 1,
+    "done": 35,
+    "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "3413700",
+    "tip": "086fd14",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -56,9 +56,12 @@
       "96e696d",
       "bcbbf33",
       "1a5bc4d",
-      "3413700"
+      "3413700",
+      "0e23132",
+      "80a0de8",
+      "086fd14"
     ],
-    "next_up": "SEO single-H1 fix + type scale alignment (TL-WEB-035)",
+    "next_up": "Human browser testing and push to origin preview",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -703,14 +706,26 @@
     {
       "id": "TL-WEB-035",
       "title": "Demote BrandIntro h1 to paragraph and align intro/quote/eyebrow type scale",
-      "status": "in_progress",
+      "status": "done",
+      "log": "086fd14",
       "owner": "Muse Spark",
       "started": "2026-10-19",
-      "finished": null,
-      "verified": false,
-      "design_match": null,
-      "key_decisions": [],
-      "follow_ups": []
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Intro brand wordmark renders from a paragraph element with the same flex, intro-brand-typography, font-heading and tracking-tight classes plus font-medium weight; CommunityPraise quote grows text-base to sm:text-lg; Virtual Fitting Room eyebrow matches OurPhilosophy at text-base",
+      "key_decisions": [
+        "Swapped the BrandIntro h1 for a p element carrying every prior class unchanged so the letter-by-letter animation, Jost heading family, clamp size and centering stay pixel identical",
+        "Changed the intro wordmark weight from font-extrabold to font-medium as requested; Tailwind preflight resets h1 font-size and font-weight to inherit and the universal margin reset zeroes p margins, so no layout shift occurs",
+        "Verified in the production build that no route emits more than one h1; shop, search and track-order show h1=0 in static HTML only because their own h1 sits behind a useSearchParams Suspense fallback, which is out of scope for this task",
+        "Fixed the inverted CommunityPraise quote scale to text-base sm:text-lg so testimonial copy grows from 16px to 18px on larger screens instead of shrinking",
+        "Raised the Virtual Fitting Room eyebrow from text-xs to text-base so both homepage section eyebrows share one size",
+        "Deferred every other SEO item (sitemap, robots, metadataBase, canonical, OpenGraph, JSON-LD, CSR bailout) per explicit user direction to keep this change minimal",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with single-h1 proof"
+      ],
+      "follow_ups": [
+        "shop.html, search.html and track-order.html have no h1 in prerendered HTML because useSearchParams forces their content behind a Suspense fallback; moving that hook into a small sync component would restore static headings",
+        "Remaining SEO gaps are intentionally open: no sitemap.ts, no robots.ts, no metadataBase, no canonical, no OpenGraph tags, no JSON-LD, and every route still shares one title and description"
+      ]
     }
   ]
 }
