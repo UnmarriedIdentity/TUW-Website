@@ -1,7 +1,7 @@
 # The Unplugged Wear Design System Guide (Figma V2 Canonical)
 
 > **Design Source**: [Figma TUW File (Node 82:5702)](https://www.figma.com/design/WmpPcdGcXerVgqNpgr6Q6S/TUW?node-id=82-5702&p=f&t=HO2xZibML1C7lpHe-0)  
-> **Interactive Live Specimen**: [`/design-system`](http://localhost:3000/design-system)
+> **Interactive Live Specimen**: [`/design-system`](http://localhost:3007/design-system)
 
 ---
 

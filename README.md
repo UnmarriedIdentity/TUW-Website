@@ -88,13 +88,13 @@ Every storefront route is deployed live, pre-rendered with zero runtime external
 # Install dependencies
 pnpm install
 
-# Start local Turbopack dev server on port 3000
+# Start local Turbopack dev server on port 3007
 pnpm run dev
 
 # Validate TypeScript (strict mode, zero errors)
 pnpm run typecheck
 
-# Execute unit test suites (7/7 green)
+# Execute unit test suites (10/10 green)
 pnpm run test
 
 # Run production build (all 29 routes prerendered)
