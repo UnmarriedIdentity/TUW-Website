@@ -51,23 +51,25 @@ export default function OurPhilosophy() {
             every trend. We&apos;re here for personal style, everyday confidence, and clothes you&apos;ll keep reaching for.
           </p>
 
-          {/* Architectural Divider */}
-          <div className="w-full max-w-lg h-px bg-store-border" aria-hidden="true" />
-
-          {/* 3 Principles Grid */}
-          <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-1 max-w-lg" aria-label="Our principles">
-            {PRINCIPLES.map((principle) => (
-              <div key={principle.number} className="space-y-1.5">
-                <span className="text-2xs font-mono uppercase tracking-wider text-store-gold font-semibold block">
-                  {principle.number}
-                </span>
-                <p className="font-heading font-semibold text-xs sm:text-sm text-store-text-primary leading-snug">
-                  {principle.line1}
-                  <br />
-                  {principle.line2}
-                </p>
-              </div>
-            ))}
+          {/* 3 Principles Card */}
+          <div
+            className="w-full max-w-lg bg-store-cream border border-store-card-border rounded-2xl p-5 sm:p-6 shadow-xs"
+            aria-label="Our principles"
+          >
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 divide-x divide-store-card-border">
+              {PRINCIPLES.map((principle, index) => (
+                <div key={principle.number} className={`space-y-1.5 ${index > 0 ? 'pl-3 sm:pl-6' : ''}`}>
+                  <span className="text-2xs font-mono uppercase tracking-wider text-store-gold font-semibold block">
+                    {principle.number}
+                  </span>
+                  <p className="font-heading font-semibold text-xs sm:text-sm text-store-text-primary leading-snug">
+                    {principle.line1}
+                    <br />
+                    {principle.line2}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Call-to-Action Row */}
@@ -95,8 +97,8 @@ export default function OurPhilosophy() {
         </div>
 
         {/* Right Column: Layered Editorial Visual Collage */}
-        <div className="lg:col-span-6 xl:col-span-6 relative min-w-0 pb-10 sm:pb-8">
-          <div className="relative pl-4 sm:pl-8 pb-10 sm:pb-8">
+        <div className="lg:col-span-6 xl:col-span-6 relative min-w-0">
+          <div className="relative pl-4 sm:pl-8">
             {/* Architectural Outline Frame Accent */}
             <div className="philosophy-visual-frame" aria-hidden="true" />
 
@@ -108,18 +110,6 @@ export default function OurPhilosophy() {
                 className="philosophy-visual-img transition-transform duration-700 hover:scale-102"
                 loading="lazy"
               />
-            </div>
-
-            {/* Floating Note Card: The feeling we dress for */}
-            <div className="philosophy-visual-note border border-store-card-border shadow-sm">
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-gold font-sans block mb-2">
-                The feeling we dress for
-              </span>
-              <p className="philosophy-quote text-store-text-primary">
-                Comfort in your own skin.
-                <br />
-                Confidence in your own style.
-              </p>
             </div>
 
             {/* Vertical Running Editorial Caption */}

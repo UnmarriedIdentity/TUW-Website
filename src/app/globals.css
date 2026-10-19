@@ -512,31 +512,31 @@ h6,
 }
 
 .vfr-slot {
-  width: min(100%, 180px);
+  width: min(100%, 220px);
   will-change: transform;
 }
 
 .vfr-slot:nth-child(1) {
   grid-area: 1 / 1;
-  justify-self: end;
+  justify-self: start;
   align-self: start;
 }
 
 .vfr-slot:nth-child(2) {
   grid-area: 2 / 1;
-  justify-self: end;
+  justify-self: start;
   align-self: end;
 }
 
 .vfr-slot:nth-child(3) {
   grid-area: 1 / 3;
-  justify-self: start;
+  justify-self: end;
   align-self: start;
 }
 
 .vfr-slot:nth-child(4) {
   grid-area: 2 / 3;
-  justify-self: start;
+  justify-self: end;
   align-self: end;
 }
 
@@ -739,13 +739,6 @@ h6,
   font-size: clamp(2.5rem, 5.5vw, 5rem);
 }
 
-.philosophy-quote {
-  font-family: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
-  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-}
-
 .philosophy-visual-img {
   width: 100%;
   height: clamp(430px, 56vw, 710px);
@@ -764,15 +757,6 @@ h6,
   pointer-events: none;
 }
 
-.philosophy-visual-note {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: min(320px, 72%);
-  background-color: var(--color-store-cream);
-  padding: 1.5rem;
-}
-
 .tuw-writing-vertical {
   writing-mode: vertical-rl;
 }
@@ -787,10 +771,6 @@ h6,
   .philosophy-visual-frame {
     top: -0.625rem;
     right: -0.5rem;
-  }
-  .philosophy-visual-note {
-    width: 82%;
-    padding: 1.125rem 1.25rem;
   }
 }
 

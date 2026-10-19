@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Heart, RotateCcw } from 'lucide-react';
+import { Heart, RotateCcw } from 'lucide-react';
 import Badge from '@/components/ui/Badge';
 import { useStore } from '@/mocks/store';
 import { formatINR } from '@/lib/format';
@@ -411,14 +411,6 @@ export default function VirtualFittingRoom() {
     [enqueue]
   );
 
-  const stepLook = useCallback(
-    (dir: 1 | -1) => {
-      const base = currentRef.current;
-      const next = base < 0 ? (dir > 0 ? 0 : 3) : (base + dir + 4) % 4;
-      enqueue(next);
-    },
-    [enqueue]
-  );
 
   const switchAudience = useCallback((key: FittingAudience) => {
     if (key === audienceRef.current) return;
@@ -460,8 +452,8 @@ export default function VirtualFittingRoom() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-8 sm:mb-10">
+      {/* Header with right-aligned audience tabs */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
         <div>
           <span className="flex items-center gap-3 text-2xs font-bold uppercase tracking-widest text-store-text-secondary font-sans mb-2">
             <span aria-hidden="true" className="w-7 h-px bg-store-gold" />
@@ -475,57 +467,33 @@ export default function VirtualFittingRoom() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <p aria-live="polite" className="text-xs text-store-text-secondary font-sans tuw-tabular-nums">
-            {AUDIENCE_LABELS[audience]} • {current >= 0 ? `0${current + 1} / 04` : 'Base / 04'}
-          </p>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => stepLook(-1)}
-              aria-label="Wear previous look"
-              className="w-10 h-10 rounded-full border border-store-border bg-store-surface hover:bg-store-cream flex items-center justify-center text-store-text-primary transition-all duration-200 cursor-pointer"
-            >
-              <ChevronLeft size={18} color="currentColor" className="text-store-text-primary" />
-            </button>
-            <button
-              type="button"
-              onClick={() => stepLook(1)}
-              aria-label="Wear next look"
-              className="w-10 h-10 rounded-full bg-store-action-primary text-white hover:bg-store-action-hover flex items-center justify-center transition-all duration-200 cursor-pointer"
-            >
-              <ChevronRight size={18} color="currentColor" className="text-white" />
-            </button>
-          </div>
+        {/* Audience tabs aligned to the right */}
+        <div
+          role="tablist"
+          aria-label="Fitting room audience"
+          className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 shrink-0 self-start md:self-auto"
+        >
+          {AUDIENCE_ORDER.map((key) => {
+            const isActive = key === audience;
+            return (
+              <button
+                key={key}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => switchAudience(key)}
+                className={cn(
+                  'px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer',
+                  isActive
+                    ? 'bg-store-action-primary text-white shadow-xs'
+                    : 'bg-transparent text-store-text-secondary border border-store-border hover:border-store-action-primary hover:text-store-text-primary'
+                )}
+              >
+                {AUDIENCE_LABELS[key]}
+              </button>
+            );
+          })}
         </div>
-      </div>
-
-      {/* Audience tabs */}
-      <div
-        role="tablist"
-        aria-label="Fitting room audience"
-        className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 mb-8 sm:mb-10"
-      >
-        {AUDIENCE_ORDER.map((key) => {
-          const isActive = key === audience;
-          return (
-            <button
-              key={key}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              onClick={() => switchAudience(key)}
-              className={cn(
-                'px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer',
-                isActive
-                  ? 'bg-store-action-primary text-white shadow-xs'
-                  : 'bg-transparent text-store-text-secondary border border-store-border hover:border-store-action-primary hover:text-store-text-primary'
-              )}
-            >
-              {AUDIENCE_LABELS[key]}
-            </button>
-          );
-        })}
       </div>
 
       {/* Fitting room layout */}

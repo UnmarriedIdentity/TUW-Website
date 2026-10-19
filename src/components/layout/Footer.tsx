@@ -29,9 +29,9 @@ export default function Footer() {
   };
 
   return (
-    <footer aria-label="Site Footer" className="jitter-footer-shell pt-4 pb-0 select-none">
+    <footer aria-label="Site Footer" className="jitter-footer-shell pb-0 select-none">
       {/* Upper Card: Scooped Ivory Canvas with Primary Directory & Disclosures (Z-index 20) */}
-        <div className="jitter-footer-inner pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 border-t border-store-border">
+        <div className="jitter-footer-inner pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Top Grid: Brand Ethos + Navigation Directory */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-store-border">
