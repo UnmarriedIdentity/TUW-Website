@@ -278,7 +278,7 @@ function BestSellingCard({
         {/* Discount Pill Badge (e.g. -30%, -25%) */}
         {item.discountPercent ? (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-red-600 shadow-xs">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold text-white bg-red-600 shadow-xs">
               -{item.discountPercent}%
             </span>
           </div>
@@ -312,13 +312,13 @@ function BestSellingCard({
       <div className="p-4 flex flex-col gap-2.5">
         {/* Row 1: Title & Price */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans text-store-text-primary leading-tight">
+          <h3 className="font-sans text-base font-medium text-store-text-primary leading-tight">
             <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
               {item.title}
             </Link>
           </h3>
           <div className="flex items-baseline gap-1.5 text-right shrink-0">
-            <span className="font-heading font-bold text-base text-store-text-primary block tuw-tabular-nums">
+            <span className="font-heading font-medium text-base text-store-text-primary block tuw-tabular-nums">
               {formatINR(item.priceINR * 100)}
             </span>
             {item.compareAtPriceINR && (
