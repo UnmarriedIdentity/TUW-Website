@@ -126,11 +126,11 @@ export default function Footer() {
                 >
                   <h3
                     id={`footer-${column.id}-heading`}
-                    className="text-xs font-heading font-bold uppercase tracking-wider text-store-text-primary"
+                    className="font-heading font-medium uppercase tracking-wider text-store-text-primary"
                   >
                     {column.title}
                   </h3>
-                  <ul className="space-y-2.5 text-xs text-store-text-secondary">
+                  <ul className="space-y-2.5 text-base text-store-text-secondary">
                     {column.links.map((link) => (
                       <li key={link.href}>
                         <Link href={link.href} className="hover:text-store-text-primary transition-colors">
