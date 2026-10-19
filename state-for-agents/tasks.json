@@ -16,7 +16,7 @@
   },
   "session": {
     "branch": "preview",
-    "tip": "96e696d",
+    "tip": "3413700",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -53,7 +53,10 @@
       "70d03f5",
       "0f9bc12",
       "2738b99",
-      "96e696d"
+      "96e696d",
+      "bcbbf33",
+      "1a5bc4d",
+      "3413700"
     ],
     "next_up": "Human browser testing and push to origin preview",
     "pending_verifications": [],
