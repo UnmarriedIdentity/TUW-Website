@@ -440,7 +440,7 @@ export default function HomePage() {
           <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16 flex-1 flex flex-col justify-end">
             <div className="max-w-xl space-y-4">
               {/* Delicate Architectural Eyebrow */}
-              <div className="flex items-center gap-3 text-2xs uppercase tracking-editorial text-white/70 font-sans font-medium">
+              <div className="flex items-center gap-3 text-base uppercase tracking-editorial text-white/70 font-sans font-medium">
                 <span className="w-7 h-px bg-store-gold" />
                 <span>SS26 • Slow-Living Atelier</span>
               </div>
