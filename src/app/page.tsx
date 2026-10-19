@@ -465,7 +465,7 @@ export default function HomePage() {
             </div>
 
             <div className="max-w-md space-y-4">
-              <p className="text-sm text-store-text-secondary font-sans leading-relaxed">
+              <p className="text-base text-store-text-secondary font-sans leading-relaxed">
                 Discover a curated selection of our most popular and best-selling styles, chosen for
                 quality and modern appeal.
               </p>
@@ -525,10 +525,7 @@ export default function HomePage() {
             {/* Header Row matching Explore section format */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
               <div>
-                <span className="text-2xs font-bold uppercase tracking-widest text-store-gold block mb-2 font-sans">
-                  Customer Experience
-                </span>
-                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-white">
+                <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white">
                   We Deliver Exceptional
                   <br className="hidden sm:inline" />
                   {' '}Customer Experiences
@@ -536,7 +533,7 @@ export default function HomePage() {
               </div>
 
               <div className="max-w-md">
-                <p className="text-sm text-white/70 font-sans leading-relaxed">
+                <p className="text-base text-white/70 font-sans leading-relaxed">
                   Take advantage of our dedicated customer service team ready to assist with any
                   questions or issues you may encounter.
                 </p>
@@ -601,13 +598,10 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
-                Stories & Insights
-              </span>
-              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,3vw+0.5rem,2.25rem)] font-medium tracking-tight text-store-text-primary">
                 Product Recommendations
               </h2>
-              <p className="text-sm text-store-text-secondary font-sans mt-1">
+              <p className="text-base text-store-text-secondary font-sans mt-1">
                 Curated editorial content & stories behind every piece we create.
               </p>
             </div>
