@@ -10,13 +10,13 @@
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
     "total": 31,
-    "done": 30,
-    "in_progress": 1,
+    "done": 31,
+    "in_progress": 0,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "f68364e",
+    "tip": "a69dd64",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -41,9 +41,11 @@
       "39b5017",
       "0c34865",
       "e1be9ef",
-      "f68364e"
+      "f68364e",
+      "4c2e19b",
+      "a69dd64"
     ],
-    "next_up": "Remove Curated Bestsellers eyebrow and set Explore heading to weight 500 (TL-WEB-031)",
+    "next_up": "Human browser testing and push to origin preview",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -602,13 +604,20 @@
     {
       "id": "TL-WEB-031",
       "title": "Remove Curated Bestsellers eyebrow and set Explore heading weight to 500",
-      "status": "in_progress",
+      "status": "done",
+      "log": "a69dd64",
       "owner": "Muse Spark",
       "started": "2026-10-19",
-      "finished": null,
-      "verified": false,
-      "design_match": null,
-      "key_decisions": [],
+      "finished": "2026-10-19",
+      "verified": true,
+      "design_match": "Explore Our Best Selling Product Collection header keeps only the h2 at Jost weight 500; eyebrow span removed; right column and filter pills unchanged",
+      "key_decisions": [
+        "Removed the Curated Bestsellers eyebrow span only; wrapper div and h2 retained because the div also contains the heading",
+        "Replaced font-extrabold with font-medium (500) on the Explore h2, keeping font-heading clamp size, tracking-tight and text-store-text-primary",
+        "Bootstrap utility classes not used: Bootstrap is not a dependency in tuw-website and adding it would duplicate Tailwind v4 utilities and violate the single-stylesheet/theme-token architecture",
+        "Left uncommitted local package.json port change (3000 to 3007) untouched as unrelated user work",
+        "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with font-medium selector proven in built CSS"
+      ],
       "follow_ups": []
     }
   ]
