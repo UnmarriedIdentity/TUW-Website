@@ -570,7 +570,7 @@ export default function HomePage() {
               </div>
 
               <div className="max-w-md">
-                <p className="text-xl text-white/70 font-sans leading-relaxed">
+                <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed">
                   Take advantage of our dedicated customer service team ready to assist with any
                   questions or issues you may encounter.
                 </p>
