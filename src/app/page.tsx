@@ -457,10 +457,7 @@ export default function HomePage() {
           {/* Header Row */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
-              <span className="text-2xs font-bold uppercase tracking-widest text-store-text-secondary block mb-2 font-sans">
-                Curated Bestsellers
-              </span>
-              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-extrabold tracking-tight text-store-text-primary">
+              <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
                 Explore Our Best Selling
                 <br className="hidden sm:inline" />
                 {' '}Product Collection
