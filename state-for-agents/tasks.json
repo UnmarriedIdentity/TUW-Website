@@ -9,9 +9,9 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 33,
+    "total": 34,
     "done": 33,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
@@ -51,7 +51,7 @@
       "7ccb32c",
       "c13a188"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "Map-loop footer directory with crawlable semantic nav (TL-WEB-034)",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -666,6 +666,18 @@
         "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with grid, card and icon color selectors proven present"
       ],
       "follow_ups": ["Footer.tsx columns 2-4 still hand-written; candidate for the same map treatment"]
+    },
+    {
+      "id": "TL-WEB-034",
+      "title": "Map-loop footer directory with crawlable semantic nav",
+      "status": "in_progress",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": null,
+      "verified": false,
+      "design_match": null,
+      "key_decisions": [],
+      "follow_ups": []
     }
   ]
 }
