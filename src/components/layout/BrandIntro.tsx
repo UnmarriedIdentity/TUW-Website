@@ -156,7 +156,7 @@ export default function BrandIntro() {
           }`}
         >
           <div className="w-16 h-px bg-store-gold opacity-80" />
-          <p className="font-sans font-medium text-2xs sm:text-xs uppercase tracking-widest text-white/70">
+          <p className="font-sans font-medium text-sm  uppercase tracking-widest text-white/70">
             Slow-Living Luxury • Architectural Form
           </p>
         </div>
