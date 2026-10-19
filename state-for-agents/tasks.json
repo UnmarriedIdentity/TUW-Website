@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 35,
+    "total": 36,
     "done": 35,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "086fd14",
+    "tip": "fbcbec2",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -59,9 +59,10 @@
       "3413700",
       "0e23132",
       "80a0de8",
-      "086fd14"
+      "086fd14",
+      "fbcbec2"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "Map-loop header social icons and mobile menu secondary links (TL-WEB-036)",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -726,6 +727,18 @@
         "shop.html, search.html and track-order.html have no h1 in prerendered HTML because useSearchParams forces their content behind a Suspense fallback; moving that hook into a small sync component would restore static headings",
         "Remaining SEO gaps are intentionally open: no sitemap.ts, no robots.ts, no metadataBase, no canonical, no OpenGraph tags, no JSON-LD, and every route still shares one title and description"
       ]
+    },
+    {
+      "id": "TL-WEB-036",
+      "title": "Map-loop header social icons and mobile menu secondary links",
+      "status": "in_progress",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": null,
+      "verified": false,
+      "design_match": null,
+      "key_decisions": [],
+      "follow_ups": []
     }
   ]
 }
