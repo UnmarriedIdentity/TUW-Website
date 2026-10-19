@@ -9,9 +9,9 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 34,
+    "total": 35,
     "done": 34,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
@@ -58,7 +58,7 @@
       "1a5bc4d",
       "3413700"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "SEO single-H1 fix + type scale alignment (TL-WEB-035)",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -699,6 +699,18 @@
         "Site-wide SEO gaps remain: no sitemap.ts or robots.ts, no metadataBase/canonical/OpenGraph, and two h1 elements on the homepage",
         "Review the type pass for two suspected typos: CommunityPraise quote uses text-lg sm:text-sm (mobile larger than desktop) and VirtualFittingRoom status label uses text-lg uppercase tracking-widest"
       ]
+    },
+    {
+      "id": "TL-WEB-035",
+      "title": "Demote BrandIntro h1 to paragraph and align intro/quote/eyebrow type scale",
+      "status": "in_progress",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": null,
+      "verified": false,
+      "design_match": null,
+      "key_decisions": [],
+      "follow_ups": []
     }
   ]
 }
