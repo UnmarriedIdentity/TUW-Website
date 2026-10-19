@@ -9,14 +9,14 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 31,
+    "total": 32,
     "done": 31,
-    "in_progress": 0,
+    "in_progress": 1,
     "backlog": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "a69dd64",
+    "tip": "aff9d79",
     "unpushed": [
       "210d104",
       "e61ba43",
@@ -43,9 +43,10 @@
       "e1be9ef",
       "f68364e",
       "4c2e19b",
-      "a69dd64"
+      "a69dd64",
+      "aff9d79"
     ],
-    "next_up": "Human browser testing and push to origin preview",
+    "next_up": "Section header consistency: remove eyebrows, weight 500, 16px descriptions (TL-WEB-032)",
     "pending_verifications": [],
     "last_updated": "2026-10-19",
     "updated_by": "Meet Rabadiya"
@@ -618,6 +619,18 @@
         "Left uncommitted local package.json port change (3000 to 3007) untouched as unrelated user work",
         "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with font-medium selector proven in built CSS"
       ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-032",
+      "title": "Section header consistency: remove Customer Experience and Product Recommendations eyebrows, weight 500 headings, 16px descriptions",
+      "status": "in_progress",
+      "owner": "Muse Spark",
+      "started": "2026-10-19",
+      "finished": null,
+      "verified": false,
+      "design_match": null,
+      "key_decisions": [],
       "follow_ups": []
     }
   ]
