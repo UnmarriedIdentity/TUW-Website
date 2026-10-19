@@ -692,7 +692,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-primary-dark/65 hero-scrim-gradient z-1 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <h2 className="font-heading text-[clamp(2rem,4.5vw+0.5rem,3.75rem)] tracking-tight text-white leading-tight">
+            <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white leading-tight">
               Let&apos;s Take Your Fashion to
               <br className="hidden sm:inline" />
               {' '}The Stratosphere
