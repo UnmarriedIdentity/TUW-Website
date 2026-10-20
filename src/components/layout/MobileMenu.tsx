@@ -39,7 +39,7 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
               key={link.href}
               href={link.href}
               onClick={onClose}
-              className="flex items-center justify-between py-3 text-base font-semibold tracking-wide text-[#1A1A1A] hover:text-[#7539FF] border-b border-[#F4F1EA] transition-colors"
+              className="flex items-center justify-between py-3 text-base font-semibold tracking-wide text-store-text-primary hover:text-store-accent border-b border-store-border transition-colors"
             >
               <span>{link.label}</span>
               <ArrowRight size={14} className="text-[#8A8A8A]" />

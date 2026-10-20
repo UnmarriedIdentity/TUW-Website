@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Breadcrumb from '@/components/ui/Breadcrumb';
@@ -14,6 +15,7 @@ import { Address, Order } from '@/lib/types';
 import { CheckCircle2, ShieldCheck, Truck, ArrowLeft, RefreshCw, ShoppingBag, PackageCheck } from 'lucide-react';
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const {
     cart,
     cartSubtotal,
@@ -90,6 +92,7 @@ export default function CheckoutPage() {
 
     setCompletedOrder(newOrder);
     setStep(4);
+    router.push(`/checkout/success?order=${encodeURIComponent(newOrder.orderNumber)}`);
   };
 
   // If cart is empty and not completed
