@@ -26,13 +26,13 @@ const NAV_LINKS = [
   { label: 'Women', href: '/shop?category=women' },
   { label: 'Kids', href: '/shop?category=kids' },
   { label: 'New Collection', href: '/collections' },
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/our-story' },
 ];
 
 // Top bar utility links matching Figma node 221:12602
 const TOP_BAR_LINKS = [
-  { label: 'Blogs', href: '/journal' },
-  { label: "FAQ's", href: '/faq' },
+  { label: 'Blogs', href: '/blog' },
+  { label: "FAQ's", href: '/faqs' },
   { label: 'Support', href: '/contact' },
 ];
 

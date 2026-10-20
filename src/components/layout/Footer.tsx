@@ -46,9 +46,9 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     id: 'ethos',
     title: 'Ethos',
     links: [
-      { label: 'About The Unplugged Wear', href: '/about' },
+      { label: 'About The Unplugged Wear', href: '/our-story' },
       { label: 'Sustainability Manifesto', href: '/about/sustainability' },
-      { label: 'Editorial Journal', href: '/journal' },
+      { label: 'Editorial Journal', href: '/blog' },
       { label: 'Fit & Sizing Architecture', href: '/size-guide' },
       { label: 'Track Shipment', href: '/track-order' },
       { label: 'Contact Studio Concierge', href: '/contact' },
@@ -58,19 +58,19 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     id: 'policies',
     title: 'Policies',
     links: [
-      { label: 'Disclosures & FAQ', href: '/faq' },
-      { label: 'Returns & Exchanges', href: '/policies/returns' },
-      { label: 'Shipping & Delivery', href: '/policies/shipping' },
-      { label: 'Privacy Policy', href: '/policies/privacy' },
-      { label: 'Terms of Service', href: '/policies/terms' },
+      { label: 'Disclosures & FAQ', href: '/faqs' },
+      { label: 'Returns & Exchanges', href: '/returns-refunds' },
+      { label: 'Shipping & Delivery', href: '/shipping-policy' },
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms of Service', href: '/terms' },
     ],
   },
 ];
 
 const FOOTER_LEGAL_LINKS: FooterLink[] = [
-  { label: 'Tiruppur Atelier', href: '/about' },
-  { label: 'Privacy', href: '/policies/privacy' },
-  { label: 'Terms', href: '/policies/terms' },
+  { label: 'Tiruppur Atelier', href: '/our-story' },
+  { label: 'Privacy', href: '/privacy-policy' },
+  { label: 'Terms', href: '/terms' },
 ];
 
 export default function Footer() {
