@@ -9,8 +9,8 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 38,
-    "done": 38,
+    "total": 41,
+    "done": 41,
     "in_progress": 0,
     "backlog": 0
   },
@@ -20,7 +20,7 @@
     "unpushed": [],
     "next_up": "Browser-level visual testing and user verification",
     "pending_verifications": [],
-    "last_updated": "2026-10-20",
+    "last_updated": "2026-10-24",
     "updated_by": "Meet Rabadiya"
   },
   "workflow": {
@@ -777,6 +777,81 @@
         "Added 26 new integration tests in tests/api-and-integrations.test.mjs; all 43 tests pass cleanly",
         "Prerendered all 42 static and dynamic routes cleanly with Next.js 16.3.8 Turbopack build"
       ]
+    },
+    {
+      "id": "TL-WEB-039",
+      "title": "Fit Login and Register pages to 100% viewport width and height with all content visible simultaneously without scrolling",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-24",
+      "finished": "2026-10-24",
+      "verified": true,
+      "design_match": "Login and Register pages fit 100% viewport height and width on desktop and mobile without scrolling; all inputs, CTA, links, and social buttons visible at once in single view",
+      "key_decisions": [
+        "Updated .auth-desktop-frame in globals.css from rigid min-height: 64rem (1024px) to dynamic 100% height with lg:max-h-[calc(100dvh-2rem)], enabling two-column layout to fit any desktop window seamlessly without window scrolling",
+        "Replaced arbitrary bracket clamp headings text-[clamp(1.5rem,3vw+0.5rem,2.5rem)] with design-system scale-native text-xl sm:text-2xl lg:text-3xl font-heading uppercase",
+        "Tightened vertical spacing to space-y-3 sm:space-y-3.5 and field heights to standard h-10 and CTA buttons to h-11, ensuring all form elements, disclaimer links, and social buttons sit comfortably within the viewport fold",
+        "Configured .auth-form-card with mx-auto lg:mx-0, rounded-3xl, and h-full min-h-0 overflow-y-auto so content centers cleanly on tablet/mobile with accessible fallback on very short screens",
+        "Removed redundant duplicate mobile bottom image blocks that were forcing 250px+ vertical overflow on smaller viewports",
+        "Verified across breakpoints (375x812, 768x1024, 1024x768, 1440x900) via browser subagent screenshots confirming zero window scrollbars and 100% simultaneous visibility",
+        "Passed all verification gates: tsc --noEmit clean, 43 unit tests passing, Next.js 16.3.8 Turbopack build cleanly prerendering all 42 routes"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-040",
+      "title": "Synchronize Login and Register pages with Figma Node 82:5702 / 233:11587 / 233:11647 specifications ensuring 100vw/100vh fit with uncorrupted design components",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-24",
+      "finished": "2026-10-24",
+      "verified": true,
+      "design_match": "Byte-identical layout matching Figma node 233:11587 (Login Desktop), 233:11617 (Login Mobile), 233:11647 (Register Desktop), 233:11676 (Register Mobile) with 100vw/100vh full-page coverage and uncorrupted design components",
+      "key_decisions": [
+        "Identified Figma MCP access token expiration (403 Forbidden: Token expired) and leveraged verified local Figma foundation specs and assets (Node 82:5702 and Node 233:11587/11647)",
+        "Restored full canonical Figma typography and exact copy: 'JOIN THE UNPLUGGED WEAR AND ELEVATE YOUR STYLE' on Register and 'WELCOME TO THE UNPLUGGED WEAR' on Login with Futura font-heading uppercase",
+        "Preserved 100% of all Figma design components: all input fields, accessible password eye toggles, terms disclaimer, remember me checkbox, primary CTA buttons, Google/Apple/Facebook social sign-in buttons, and lifestyle hero imagery",
+        "Ensured 100vw and 100vh responsive coverage: two-column side-by-side desktop layout and responsive centered mobile/tablet view (tested at 502x718, 375x812, 1440x900) with zero window scrollbars",
+        "Verified all gates green: tsc --noEmit clean, 43 unit tests passing, Next.js 16.3.8 Turbopack build clean"
+      ],
+    },
+    {
+      "id": "TL-WEB-041",
+      "title": "Elevate Login and Register pages to true full-bleed 100vw and 100vh split layout with brand emblem, zero dead whitespace, and zero scrollbars",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-24",
+      "finished": "2026-10-24",
+      "verified": true,
+      "design_match": "True 100vw and 100vh full-bleed edge-to-edge split screen on desktop with lifestyle hero imagery on left pane and luxury atelier form on right pane; all elements visible simultaneously without window or panel scrolling; mobile and tablet fully responsive",
+      "key_decisions": [
+        "Eliminated boxed island container margins and awkward dead whitespace by establishing a true 100vw x 100vh split-screen architecture (w-screen h-screen overflow-hidden)",
+        "Added official leaping deer TuwEmblem and 'The Unplugged Wear' luxury brand mark to both desktop hero overlay and mobile navigation header",
+        "Added clean 'Return to store' navigation action back to home page with ArrowLeft icon",
+        "Balanced vertical typography and input control metrics (Futura/Jost font-heading uppercase, h-10/h-11 input fields, h-11 CTAs) to guarantee zero scrollbars on 1426x788 and similar viewports",
+        "Added atelier slow-living editorial caption and subtle bottom policy footer (Privacy, Terms, Atelier Help)",
+        "Verified all gates green: tsc --noEmit clean, 43 unit tests passing, Next.js 16.3.8 Turbopack build cleanly prerendering all 42 routes, zero hex codes and zero bracket arbitraries in touched JSX lines",
+        "Verified across breakpoints (1426x788, 375x812) via browser subagent with visual confirmation and screenshot proof"
+      ],
+      "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-042",
+      "title": "Apply 80px desktop container padding and 24px vertical Figma spacing to Login and Register pages",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-26",
+      "finished": "2026-10-26",
+      "verified": true,
+      "design_match": "Exact 80px horizontal padding on desktop form container (lg:px-20) and 24px vertical rhythm around submit CTA, divider, and social buttons matching Figma Node 233:11587 and 233:11647",
+      "key_decisions": [
+        "Increased right form container horizontal desktop padding from ~50px (p-12 = 48px) to exact 80px (lg:px-20) on both /login and /register pages",
+        "Applied exact 24px vertical spacing (my-6) between primary submit button and Or divider, and 24px between Or divider and Google sign-in button matching pink Figma guide indicators",
+        "Applied 24px bottom spacing (mb-6) below Apple sign-in button matching Figma bottom boundary guide",
+        "Matched primary CTA height to h-12 with rounded-xl and subtle shadow-xs on both login and register forms",
+        "Verified all gates green: tsc --noEmit clean, 43 unit tests passing, HTTP 200 on both /login and /register"
+      ],
+      "follow_ups": []
     }
   ]
 }

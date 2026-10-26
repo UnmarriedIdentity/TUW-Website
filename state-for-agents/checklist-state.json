@@ -1,0 +1,366 @@
+{
+  "items": [
+    {
+      "index": 1,
+      "id": "1-home",
+      "area": "Core",
+      "name": "Home Page",
+      "route": "/",
+      "purpose": "Editorial landing page with hero, brand values, selected essentials, capsule series, and the Rolls-Royce scroll-morph navbar.",
+      "status": "pending"
+    },
+    {
+      "index": 2,
+      "id": "2-shop",
+      "area": "Shopping",
+      "name": "Catalog & Shop",
+      "route": "/shop",
+      "purpose": "Complete product browsing with desktop FilterBar, mobile slide-over filter drawer, sort dropdown, and active filter pills.",
+      "status": "pending"
+    },
+    {
+      "index": 3,
+      "id": "3-collections",
+      "area": "Shopping",
+      "name": "Capsule Collections",
+      "route": "/collections",
+      "purpose": "Seasonal slow-fashion capsule overview with high-res lookbook banners and garment counts.",
+      "status": "pending"
+    },
+    {
+      "index": 4,
+      "id": "4-collections-detail",
+      "area": "Shopping",
+      "name": "Capsule Detail",
+      "route": "/collections/winter-monolith",
+      "purpose": "Dedicated capsule collection view with curated matching product grid.",
+      "status": "pending"
+    },
+    {
+      "index": 5,
+      "id": "5-products-detail",
+      "area": "Shopping",
+      "name": "Product Detail Page (PDP)",
+      "route": "/products/monolith-heavyweight-hoodie-vintage-black",
+      "purpose": "Architectural PDP with thumbnail gallery, interactive color/size selectors, stock counters, accordions, and customer reviews.",
+      "status": "pending"
+    },
+    {
+      "index": 6,
+      "id": "6-cart",
+      "area": "Purchase",
+      "name": "Shopping Bag",
+      "route": "/cart",
+      "purpose": "Full-page shopping cart with free-shipping threshold tracker (₹3,000 threshold), item quantity controls, and coupon code entry.",
+      "status": "pending"
+    },
+    {
+      "index": 7,
+      "id": "7-checkout",
+      "area": "Purchase",
+      "name": "Checkout & Simulation",
+      "route": "/checkout",
+      "purpose": "Multi-step checkout with address selection and interactive Payment Simulation Panel (UPI QR, Card, COD).",
+      "status": "pending"
+    },
+    {
+      "index": 8,
+      "id": "8-checkout-success",
+      "area": "Purchase",
+      "name": "Order Confirmation & Receipt",
+      "route": "/checkout/success",
+      "purpose": "Post-purchase order confirmation screen with order summary and shipment tracking seam.",
+      "status": "pending"
+    },
+    {
+      "index": 9,
+      "id": "9-wishlist",
+      "area": "Discovery",
+      "name": "Saved Garments",
+      "route": "/wishlist",
+      "purpose": "Customer wishlist with real-time counter in header and one-click add to cart.",
+      "status": "pending"
+    },
+    {
+      "index": 10,
+      "id": "10-search",
+      "area": "Discovery",
+      "name": "Catalog Search",
+      "route": "/search?q=hoodie",
+      "purpose": "Instant product and collection search overlay and dedicated results page.",
+      "status": "pending"
+    },
+    {
+      "index": 11,
+      "id": "11-track-order",
+      "area": "Support",
+      "name": "Order Tracking",
+      "route": "/track-order",
+      "purpose": "Real-time shipment tracker supporting reference lookups (e.g. TUW-98214-DEL) with chronological checkpoint milestones.",
+      "status": "pending"
+    },
+    {
+      "index": 12,
+      "id": "12-size-guide",
+      "area": "Support",
+      "name": "Interactive Size Guide",
+      "route": "/size-guide",
+      "purpose": "Sizing tables with dynamic centimeter/inch unit toggles across Chest, Length, Sleeve, and Shoulder.",
+      "status": "pending"
+    },
+    {
+      "index": 13,
+      "id": "13-about",
+      "area": "Brand",
+      "name": "Brand Philosophy",
+      "route": "/about",
+      "purpose": "The Unplugged Wear founding story, slow-living philosophy, and Tiruppur craft manifesto.",
+      "status": "pending"
+    },
+    {
+      "index": 14,
+      "id": "14-about-sustainability",
+      "area": "Brand",
+      "name": "Sustainability & POD",
+      "route": "/about/sustainability",
+      "purpose": "Zero-deadstock on-demand manufacturing manifesto, 500 GSM loopback cotton sourcing, and eco-certified water dyes.",
+      "status": "pending"
+    },
+    {
+      "index": 15,
+      "id": "15-our-story",
+      "area": "Brand",
+      "name": "Our Story",
+      "route": "/our-story",
+      "purpose": "The founding journey of The Unplugged Wear and tactile design ethos.",
+      "status": "pending"
+    },
+    {
+      "index": 16,
+      "id": "16-journal",
+      "area": "Brand",
+      "name": "Editorial Journal",
+      "route": "/journal",
+      "purpose": "Slow-living publications, design essays, and behind-the-scenes craft stories.",
+      "status": "pending"
+    },
+    {
+      "index": 17,
+      "id": "17-journal-article",
+      "area": "Brand",
+      "name": "Journal Article View",
+      "route": "/journal/the-anatomy-of-500-gsm-cotton",
+      "purpose": "Rich editorial article with typographic hierarchy, pull quotes, and author info.",
+      "status": "pending"
+    },
+    {
+      "index": 18,
+      "id": "18-blog",
+      "area": "Brand",
+      "name": "Blog Index",
+      "route": "/blog",
+      "purpose": "Canonical blog index (aliases Journal entries).",
+      "status": "pending"
+    },
+    {
+      "index": 19,
+      "id": "19-blog-article",
+      "area": "Brand",
+      "name": "Blog Article View",
+      "route": "/blog/zero-deadstock-print-on-demand",
+      "purpose": "Individual blog post view with related stories and share metadata.",
+      "status": "pending"
+    },
+    {
+      "index": 20,
+      "id": "20-contact",
+      "area": "Support",
+      "name": "Concierge & Inquiries",
+      "route": "/contact",
+      "purpose": "Concierge inquiries form, studio hours, and client support channels.",
+      "status": "pending"
+    },
+    {
+      "index": 21,
+      "id": "21-faq",
+      "area": "Support",
+      "name": "Frequently Asked Questions",
+      "route": "/faq",
+      "purpose": "Accordion FAQ addressing sizing, shipping timelines, fabrics, and care.",
+      "status": "pending"
+    },
+    {
+      "index": 22,
+      "id": "22-account",
+      "area": "Account",
+      "name": "Customer Account Portal",
+      "route": "/account",
+      "purpose": "Customer profile dashboard, saved addresses, preferences, and quick links.",
+      "status": "pending"
+    },
+    {
+      "index": 23,
+      "id": "23-account-orders",
+      "area": "Account",
+      "name": "Account Order History",
+      "route": "/account/orders",
+      "purpose": "Order history listing with status badges (shipped, delivered, queued).",
+      "status": "pending"
+    },
+    {
+      "index": 24,
+      "id": "24-account-order-details",
+      "area": "Account",
+      "name": "Account Order Details",
+      "route": "/account/orders/ord-9042",
+      "purpose": "Detailed invoice, fulfillment milestone breadcrumbs, and return request seam.",
+      "status": "pending"
+    },
+    {
+      "index": 25,
+      "id": "25-login",
+      "area": "Auth",
+      "name": "Customer Login",
+      "route": "/login",
+      "purpose": "Customer sign in with email and password.",
+      "status": "pending"
+    },
+    {
+      "index": 26,
+      "id": "26-register",
+      "area": "Auth",
+      "name": "Customer Registration",
+      "route": "/register",
+      "purpose": "New client account creation with lifestyle hero imagery.",
+      "status": "pending"
+    },
+    {
+      "index": 27,
+      "id": "27-forgot-password",
+      "area": "Auth",
+      "name": "Forgot Password",
+      "route": "/forgot-password",
+      "purpose": "Password reset request with email recovery link dispatch.",
+      "status": "pending"
+    },
+    {
+      "index": 28,
+      "id": "28-reset-password",
+      "area": "Auth",
+      "name": "Reset Password",
+      "route": "/reset-password",
+      "purpose": "Password reset confirmation with new credential entry.",
+      "status": "pending"
+    },
+    {
+      "index": 29,
+      "id": "29-policies",
+      "area": "Policies",
+      "name": "Policy Hub",
+      "route": "/policies",
+      "purpose": "Policy directory and customer protection overview.",
+      "status": "pending"
+    },
+    {
+      "index": 30,
+      "id": "30-policies-privacy",
+      "area": "Policies",
+      "name": "Privacy Policy",
+      "route": "/policies/privacy",
+      "purpose": "Full privacy notice and data processing disclosure.",
+      "status": "pending"
+    },
+    {
+      "index": 31,
+      "id": "31-privacy-policy",
+      "area": "Policies",
+      "name": "Privacy Policy (Direct URL)",
+      "route": "/privacy-policy",
+      "purpose": "Vanity alias route to Privacy Policy.",
+      "status": "pending"
+    },
+    {
+      "index": 32,
+      "id": "32-policies-returns",
+      "area": "Policies",
+      "name": "Returns & Refunds Policy",
+      "route": "/policies/returns",
+      "purpose": "7-day exchange window, conditions, and return guidelines.",
+      "status": "pending"
+    },
+    {
+      "index": 33,
+      "id": "33-returns-refunds",
+      "area": "Policies",
+      "name": "Returns & Refunds (Direct URL)",
+      "route": "/returns-refunds",
+      "purpose": "Vanity alias route to Returns & Refunds Policy.",
+      "status": "pending"
+    },
+    {
+      "index": 34,
+      "id": "34-policies-shipping",
+      "area": "Policies",
+      "name": "Shipping Policy",
+      "route": "/policies/shipping",
+      "purpose": "Pan-India shipping timelines (5–8 business days) and carrier details.",
+      "status": "pending"
+    },
+    {
+      "index": 35,
+      "id": "35-shipping-policy",
+      "area": "Policies",
+      "name": "Shipping Policy (Direct URL)",
+      "route": "/shipping-policy",
+      "purpose": "Vanity alias route to Shipping Policy.",
+      "status": "pending"
+    },
+    {
+      "index": 36,
+      "id": "36-policies-terms",
+      "area": "Policies",
+      "name": "Terms & Conditions",
+      "route": "/policies/terms",
+      "purpose": "Store terms of service, intellectual property, and governing law.",
+      "status": "pending"
+    },
+    {
+      "index": 37,
+      "id": "37-terms",
+      "area": "Policies",
+      "name": "Terms (Direct URL)",
+      "route": "/terms",
+      "purpose": "Vanity alias route to Terms & Conditions.",
+      "status": "pending"
+    },
+    {
+      "index": 38,
+      "id": "38-checklist",
+      "area": "System",
+      "name": "Storefront Checklist & Tracker",
+      "route": "/checklist",
+      "purpose": "Interactive page progress tracker: toggle Done/Not Done, add custom pages, edit review notes, and save.",
+      "status": "pending"
+    },
+    {
+      "index": 39,
+      "id": "39-design-system",
+      "area": "System",
+      "name": "Design System Specimen",
+      "route": "/design-system",
+      "purpose": "Live UI component library: color palettes, typography scale, buttons, badges, drawers, and form controls.",
+      "status": "pending"
+    },
+    {
+      "index": 40,
+      "id": "40-not-found",
+      "area": "System",
+      "name": "Custom 404 Experience",
+      "route": "/non-existent-page-demo",
+      "purpose": "Architectural slow-fashion 404 page with quick recovery links back to the catalog.",
+      "status": "pending"
+    }
+  ],
+  "lastSavedAt": "2026-10-26T08:25:27.283Z",
+  "updatedBy": "user"
+}
