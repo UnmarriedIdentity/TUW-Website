@@ -18,25 +18,25 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
   return (
     <nav
       aria-label="Breadcrumbs"
-      className={`flex items-center gap-2 text-xs uppercase tracking-wider text-[#8A8A8A] font-medium ${className}`}
+      className={`flex items-center gap-2 text-xs uppercase tracking-wider text-store-muted font-medium ${className}`}
     >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
 
         return (
           <React.Fragment key={index}>
-            {index > 0 && <ChevronRight size={12} className="text-[#B5AEA1]" />}
+            {index > 0 && <ChevronRight size={12} className="text-store-card-border" />}
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="hover:text-[#1A1A1A] transition-colors"
+                className="hover:text-store-charcoal transition-colors"
               >
                 {item.label}
               </Link>
             ) : (
               <span
                 aria-current={isLast ? 'page' : undefined}
-                className={isLast ? 'text-[#1A1A1A] font-semibold' : ''}
+                className={isLast ? 'text-store-charcoal font-semibold' : ''}
               >
                 {item.label}
               </span>

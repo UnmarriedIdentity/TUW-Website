@@ -549,6 +549,137 @@ export const STORE_PRODUCTS: Product[] = [
     composition: '100% Recycled Micro-Ripstop',
     sustainabilityBadge: 'PFC-Free DWR',
   },
+  {
+    id: 'prod-13',
+    slug: 'stoneware-emblem-ceramic-mug',
+    title: 'Stoneware Emblem Ceramic Mug',
+    subtitle: 'Matte Charcoal High-Fire Stoneware',
+    category: 'accessories',
+    priceINR: 1290,
+    priceMinorINR: 129000,
+    compareAtPriceINR: 1590,
+    compareAtPriceMinorINR: 159000,
+    publicationStatus: 'published',
+    partnerProvider: 'Custom Atelier',
+    partnerAvailability: 'ready_to_print',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Stoneware Emblem Ceramic Mug front view with leaping stag emblem',
+        color: 'matte-charcoal',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Ergonomic two-finger pulled handle angle and tactile glaze',
+        color: 'matte-charcoal',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Top-down ceramic vessel rim and smooth interior wall',
+        color: 'matte-charcoal',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Minimalist studio desk lifestyle setting with coffee',
+        color: 'matte-charcoal',
+      },
+    ],
+    colors: [
+      { name: 'Matte Charcoal', hex: '#1C1C1E', value: 'matte-charcoal' },
+      { name: 'Bone White', hex: '#F3EFE6', value: 'bone-white' },
+      { name: 'Raw Terracotta', hex: '#A0522D', value: 'raw-terracotta' },
+    ],
+    sizes: [
+      { size: '350 ml (12 oz)', inStock: true, stockCount: 24 },
+      { size: '450 ml (15 oz)', inStock: true, stockCount: 18 },
+    ],
+    description:
+      'Wheel-thrown and kiln-fired high-density stoneware ceramic mug featuring The Unplugged Wear leaping stag emblem in subtle low-relief tone-on-tone. Finished with a food-grade, lead-free satin matte glaze and an unglazed tactile raw stoneware foot.',
+    details: [
+      'High-fire stoneware fired at 1,240°C for exceptional durability and thermal retention',
+      'Available in 350 ml (12 oz) standard and 450 ml (15 oz) studio grande capacity',
+      'Food-grade, lead-free, and cadmium-free satin matte glaze',
+      'Ergonomic pulled handle engineered for a balanced, fatigue-free two-finger grip',
+      'Unglazed raw stoneware foot with debossed TUW studio maker mark',
+    ],
+    careInstructions: [
+      '100% Dishwasher safe on upper or lower rack',
+      'Microwave safe — stable mineral glaze will not overheat or leach',
+      'Avoid sudden extreme thermal shock (boiling water directly into freezing vessel)',
+      'Hand-wash with mild detergent to preserve matte patina over decades',
+    ],
+    composition: '100% High-Fire Natural Stoneware Clay & Non-Toxic Mineral Glaze',
+    sustainabilityBadge: 'Zero Plastic & Non-Toxic',
+    isNew: true,
+  },
+  {
+    id: 'prod-14',
+    slug: 'kids-organic-cotton-emblem-tee',
+    title: 'Kids Organic Cotton Emblem Tee',
+    subtitle: 'Ultra-Soft 220 GSM Long-Staple Cotton',
+    category: 'tees',
+    priceINR: 1490,
+    priceMinorINR: 149000,
+    compareAtPriceINR: 1790,
+    compareAtPriceMinorINR: 179000,
+    publicationStatus: 'published',
+    partnerProvider: 'Printrove Hub',
+    partnerAvailability: 'ready_to_print',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Kids Organic Cotton Emblem Tee in Royal Blue with leaping stag graphic',
+        color: 'royal-blue',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Kids organic cotton tee flatlay showcasing ultra-soft combed texture',
+        color: 'royal-blue',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1543854589-ab99450a8a65?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Anti-chafe flatlock collar seams and soft interior brand print',
+        color: 'royal-blue',
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1471286174890-9c112ffca56a?w=1200&auto=format&fit=crop&q=80',
+        alt: 'Outdoor playful lifestyle view in natural daylight',
+        color: 'royal-blue',
+      },
+    ],
+    colors: [
+      { name: 'Royal Blue', hex: '#1E3A8A', value: 'royal-blue' },
+      { name: 'Bone White', hex: '#F3EFE6', value: 'bone-white' },
+      { name: 'Sage Mist', hex: '#9CA3AF', value: 'sage-mist' },
+      { name: 'Soft Heather', hex: '#E5E7EB', value: 'soft-heather' },
+    ],
+    sizes: [
+      { size: '2-3Y (92-98cm)', inStock: true, stockCount: 15 },
+      { size: '4-5Y (104-110cm)', inStock: true, stockCount: 22 },
+      { size: '6-7Y (116-122cm)', inStock: true, stockCount: 18 },
+      { size: '8-9Y (128-134cm)', inStock: true, stockCount: 12 },
+      { size: '10-11Y (140-146cm)', inStock: true, stockCount: 7 },
+    ],
+    description:
+      'Designed for joyful movement and all-day ease. Cut from 220 GSM ultra-soft combed organic cotton that is exceptionally gentle on delicate young skin. Printed with certified non-toxic water-based inks and crafted with flatlock anti-chafe seams that never itch or scratch.',
+    details: [
+      '220 GSM 100% GOTS certified combed organic cotton',
+      'Hypoallergenic & skin-safe: zero harmful azo dyes, phthalates, or formaldehyde',
+      'Soft flatlock interior seams to eliminate itching at collar and armholes',
+      'Stretch-rib crew neck that effortlessly slips over the head without tears',
+      'Water-based discharge screenprint that breathes and softens with each wash',
+    ],
+    careInstructions: [
+      'Machine wash warm with like colors on gentle cycle',
+      'Tumble dry low or air dry in shade',
+      'Warm iron on reverse side if desired',
+      'Pre-shrunk fabric ensures no unexpected shrinkage',
+    ],
+    composition: '100% GOTS Certified Organic Combed Cotton',
+    sustainabilityBadge: 'GOTS Organic & Child Safe',
+    isNew: true,
+  }
+
 ];
 
 export const STORE_COLLECTIONS: Collection[] = [
