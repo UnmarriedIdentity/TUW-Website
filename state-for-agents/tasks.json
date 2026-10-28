@@ -9,18 +9,18 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 46,
-    "done": 47,
+    "total": 48,
+    "done": 48,
     "in_progress": 0,
     "backlog": 0,
-    "total_tasks": 47,
+    "total_tasks": 48,
     "pending": 0
   },
   "session": {
     "branch": "preview",
     "tip": "d6acf00",
     "unpushed": [],
-    "next_up": "Storefront PDP category templates completed and verified. Awaiting human developer review and commit.",
+    "next_up": "Ready for human review and commit",
     "pending_verifications": [],
     "last_updated": "2026-10-28",
     "updated_by": "Meet Rabadiya"
@@ -964,6 +964,43 @@
       "design_match": "Figma Node 354:24651 FINAL PDP (PDP For Shirt, PDP For Mug, PDP For Kids)",
       "verified": true,
       "key_decisions": "Implemented category-aware PDP architecture matching the 3 Figma FINAL PDP frames: 1) PDP For Shirt (quad apparel gallery, XS-XXL sizing, flat measurement table with CM/IN toggle, 4.6★ reviews, 4-card outfit builder), 2) PDP For Mug (quad stoneware ceramic gallery, volume/capacity selector with 350ml / 450ml chips, craft dimensions table with height/diameter/kiln-firing/dishwasher specs, 4.8★ reviews, studio tableware builder), 3) PDP For Kids (quad kids tee gallery, age/growth chips 2-3Y to 10-11Y, kids growth chart table with CM/IN toggle, GOTS child-safe disclosures, 4.8★ reviews, kids collection builder). Enforced zero hex codes and zero arbitrary bracket classes in JSX."
+    },
+    {
+      "id": "TL-WEB-048",
+      "category": "pdp",
+      "title": "Modular & Dynamic Data-Driven PDP Architecture (Swatches, Pills, Radio Options, Polymorphic Tables, FAQs)",
+      "status": "done",
+      "files": [
+        "src/lib/types.ts",
+        "src/components/commerce/ColorSwatchSelector.tsx",
+        "src/components/commerce/VariantPillSelector.tsx",
+        "src/components/commerce/RadioOptionSelector.tsx",
+        "src/components/commerce/DynamicDataTable.tsx",
+        "src/components/commerce/DynamicAccordionFaq.tsx",
+        "src/components/commerce/index.ts",
+        "src/components/commerce/VariantSelector.tsx",
+        "src/app/products/[slug]/page.tsx",
+        "src/mocks/fixtures.ts"
+      ],
+      "description": "Decompose PDP into atomic commerce components: ColorSwatchSelector, VariantPillSelector, RadioOptionSelector (with priceDeltaINR support), DynamicDataTable (polymorphic for sizes, cloth textures, ceramic specs), and DynamicAccordionFaq. Strictly omit sections when data is null or empty. Wire price adjustments into cart payload.",
+      "log": [
+        "2026-10-28T21:05:00Z: Opened task TL-WEB-048 in_progress following user plan approval.",
+        "2026-10-28T21:28:00Z: Verification gates passed (typecheck, 43/43 tests, next build 44/44 static pages, CSS proof, multi-breakpoint HTTP 200). Task TL-WEB-048 marked done."
+      ],
+      "verified": true,
+      "finished": "2026-10-28",
+      "design_match": "Modular PDP atomic commerce components (ColorSwatchSelector, VariantPillSelector, RadioOptionSelector, DynamicDataTable, DynamicAccordionFaq) matching Figma Node 354:24651 and user-approved specification with strict conditional omission law.",
+      "key_decisions": [
+        "Created atomic ColorSwatchSelector component with data guard (if (!colors.length) return null)",
+        "Created atomic VariantPillSelector component with data guard (if (!sizes.length) return null)",
+        "Created atomic RadioOptionSelector component supporting optional priceDeltaINR for real-time subtotal calculation and cart payload retention",
+        "Created polymorphic DynamicDataTable component supporting arbitrary column/row schemas (garment measurements, textile integrity/cloth textures, ceramic vessel craft specs) with unit toggles and side scale",
+        "Created DynamicAccordionFaq component with single-expand state and accessible chevron animation",
+        "Enforced strict conditional omission law across all components: when specTable, sizes, radioGroups, or faqs are null/empty, the section is completely omitted from the DOM without empty containers or phantom gaps",
+        "Integrated cumulative radio option delta calculations into VariantSelector and CartDrawer",
+        "Guaranteed zero hex codes and zero bracket arbitraries across all touched/created JSX lines",
+        "All verification gates green: typecheck exit 0, 43 unit tests passing, Next.js 16 production build 44/44 routes clean"
+      ]
     }
   ]
 }

@@ -168,7 +168,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const addToCart = useCallback((item: Omit<CartItem, 'id'>) => {
     setCart((prev) => {
       const existingIndex = prev.findIndex(
-        (i) => i.productId === item.productId && i.color === item.color && i.size === item.size
+        (i) => i.productId === item.productId && i.color === item.color && i.size === item.size && JSON.stringify(i.selectedRadioOptions || []) === JSON.stringify(item.selectedRadioOptions || [])
       );
 
       if (existingIndex > -1) {

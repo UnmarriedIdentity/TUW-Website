@@ -2,11 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShoppingBag, Heart, Ruler, Check, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { ShoppingBag, Heart, ShieldCheck } from 'lucide-react';
 import { Product, ProductColor, ProductSize } from '@/lib/types';
 import { useStore } from '@/mocks/store';
 import Button from '../ui/Button';
 import SizeGuideModal from './SizeGuideModal';
+import ColorSwatchSelector from './ColorSwatchSelector';
+import VariantPillSelector from './VariantPillSelector';
+import RadioOptionSelector from './RadioOptionSelector';
 
 export interface VariantSelectorProps {
   product: Product;
@@ -29,25 +32,53 @@ export default function VariantSelector({
   const isMug =
     product.slug.includes('mug') ||
     product.slug.includes('cup') ||
-    (product.category === 'accessories' && product.sizes.some((s) => s.size.includes('ml')));
+    (product.category === 'accessories' &&
+      (product.sizes?.some((s) => s.size.includes('ml')) || false));
   const isKids =
     product.category === 'kids' ||
     product.slug.includes('kids') ||
-    product.sizes.some((s) => s.size.includes('Y'));
+    (product.sizes?.some((s) => s.size.includes('Y')) || false);
 
-  const [internalColor, setInternalColor] = useState<ProductColor>(product.colors[0]);
+  const hasColors = Boolean(product.colors && product.colors.length > 0);
+  const hasSizes = Boolean(product.sizes && product.sizes.length > 0);
+  const hasRadioGroups = Boolean(product.radioGroups && product.radioGroups.length > 0);
+
+  const [internalColor, setInternalColor] = useState<ProductColor | undefined>(
+    hasColors ? product.colors![0] : undefined
+  );
   const [internalSize, setInternalSize] = useState<ProductSize | null>(
-    product.sizes.find((s) => s.inStock) || null
+    hasSizes ? product.sizes!.find((s) => s.inStock) || null : null
   );
 
   const selectedColor = controlledColor !== undefined ? controlledColor : internalColor;
   const selectedSize = controlledSize !== undefined ? controlledSize : internalSize;
+
+  // Track active radio option selections per group
+  const [selectedRadioValues, setSelectedRadioValues] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+    if (product.radioGroups) {
+      product.radioGroups.forEach((g) => {
+        initial[g.groupKey] = g.defaultValue || g.options[0]?.id || '';
+      });
+    }
+    return initial;
+  });
 
   const [quantity, setQuantity] = useState(1);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const isFavorite = isInWishlist(product.id);
+
+  // Calculate cumulative price delta from selected radio options
+  const radioDeltaINR = (product.radioGroups || []).reduce((acc, group) => {
+    const selectedOptionId =
+      selectedRadioValues[group.groupKey] || group.defaultValue || group.options[0]?.id;
+    const option = group.options.find((o) => o.id === selectedOptionId);
+    return acc + (option?.priceDeltaINR || 0);
+  }, 0);
+
+  const effectiveUnitPriceINR = product.priceINR + radioDeltaINR;
 
   const handleColorSelect = (color: ProductColor) => {
     if (onColorChange) {
@@ -66,38 +97,63 @@ export default function VariantSelector({
     }
   };
 
+  const handleRadioSelect = (groupKey: string, optionId: string) => {
+    setSelectedRadioValues((prev) => ({
+      ...prev,
+      [groupKey]: optionId,
+    }));
+  };
+
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      setValidationError(
-        isMug ? 'Please choose a capacity to continue.' : 'Please choose a size to continue.'
-      );
-      return;
-    }
-    if (!selectedSize.inStock) {
-      setValidationError(
-        isMug ? 'This capacity is currently sold out.' : 'This size is currently sold out.'
-      );
-      return;
+    // Only enforce size validation if the product actually declares sizes
+    if (hasSizes) {
+      if (!selectedSize) {
+        setValidationError(
+          isMug ? 'Please choose a capacity to continue.' : 'Please choose a size to continue.'
+        );
+        return;
+      }
+      if (!selectedSize.inStock) {
+        setValidationError(
+          isMug ? 'This capacity is currently sold out.' : 'This size is currently sold out.'
+        );
+        return;
+      }
     }
 
     setValidationError(null);
     const activeImage =
-      product.images.find((img) => img.color === selectedColor.value)?.url ||
-      product.images[0]?.url;
+      (selectedColor && product.images.find((img) => img.color === selectedColor.value)?.url) ||
+      product.images[0]?.url ||
+      '';
+
+    const chosenRadioOptions = (product.radioGroups || []).map((group) => {
+      const optionId =
+        selectedRadioValues[group.groupKey] || group.defaultValue || group.options[0]?.id;
+      const option = group.options.find((o) => o.id === optionId);
+      return {
+        groupKey: group.groupKey,
+        groupLabel: group.label,
+        optionId: option?.id || '',
+        optionLabel: option?.label || '',
+        priceDeltaINR: option?.priceDeltaINR,
+      };
+    });
 
     addToCart({
       productId: product.id,
       title: product.title,
-      color: selectedColor.name,
-      size: selectedSize.size,
-      priceINR: product.priceINR,
+      color: selectedColor ? selectedColor.name : 'Standard',
+      size: selectedSize ? selectedSize.size : 'One Size',
+      priceINR: effectiveUnitPriceINR,
       quantity,
       image: activeImage,
+      selectedRadioOptions: chosenRadioOptions.length > 0 ? chosenRadioOptions : undefined,
     });
   };
 
   const handleBuyNow = () => {
-    if (!selectedSize) {
+    if (hasSizes && !selectedSize) {
       setValidationError(
         isMug ? 'Please choose a capacity to continue.' : 'Please choose a size to continue.'
       );
@@ -107,15 +163,6 @@ export default function VariantSelector({
     router.push('/checkout');
   };
 
-  // Determine grid layout for size/capacity chips
-  const sizeGridClass = isMug
-    ? 'grid grid-cols-2 gap-3'
-    : isKids
-    ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2'
-    : product.sizes.length <= 4
-    ? 'grid grid-cols-2 sm:grid-cols-4 gap-2'
-    : 'grid grid-cols-6 gap-2';
-
   const sizeLabel = isMug
     ? 'Capacity / Volume:'
     : isKids
@@ -124,130 +171,44 @@ export default function VariantSelector({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* 1. Color / Glaze Selection */}
-      <div>
-        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider mb-2.5">
-          <span className="text-store-text-secondary">
-            {isMug ? 'Glaze Finish:' : 'Dye / Shade:'}{' '}
-            <strong className="text-store-text-primary font-bold">
-              {selectedColor.name}
-            </strong>
-          </span>
+      {/* 1. Dynamic Color Swatch Selector (Omitted if no colors defined) */}
+      {hasColors && (
+        <ColorSwatchSelector
+          colors={product.colors}
+          selectedColor={selectedColor}
+          onSelect={handleColorSelect}
+          label={isMug ? 'Glaze Finish:' : 'Dye / Shade:'}
+        />
+      )}
+
+      {/* 2. Dynamic Variant Pill Selector (Omitted if no sizes defined) */}
+      {hasSizes && (
+        <VariantPillSelector
+          sizes={product.sizes}
+          selectedSize={selectedSize}
+          onSelect={handleSizeSelect}
+          label={sizeLabel}
+          onSizeGuideClick={!isMug ? () => setIsSizeGuideOpen(true) : undefined}
+          sizeGuideLabel={isKids ? 'Kids Growth Guide' : 'Size Guide'}
+          validationError={validationError}
+        />
+      )}
+
+      {/* 3. Dynamic Radio Option Selectors (Omitted if no radioGroups defined) */}
+      {hasRadioGroups && (
+        <div className="space-y-4 pt-1">
+          {product.radioGroups!.map((group) => (
+            <RadioOptionSelector
+              key={group.groupKey}
+              group={group}
+              selectedValue={selectedRadioValues[group.groupKey]}
+              onSelect={(optId) => handleRadioSelect(group.groupKey, optId)}
+            />
+          ))}
         </div>
+      )}
 
-        <div className="flex items-center gap-3">
-          {product.colors.map((color) => {
-            const isSelected = selectedColor.value === color.value;
-            return (
-              <button
-                key={color.value}
-                type="button"
-                onClick={() => handleColorSelect(color)}
-                aria-label={`Select shade ${color.name}`}
-                className={`relative w-8 h-8 rounded-full border transition-all cursor-pointer ${
-                  isSelected
-                    ? 'ring-2 ring-store-charcoal ring-offset-2 scale-105'
-                    : 'border-black/20 hover:scale-105'
-                }`}
-                style={{ backgroundColor: color.hex }}
-              >
-                {isSelected && (
-                  <Check
-                    size={13}
-                    className={`absolute inset-0 m-auto ${
-                      color.value === 'bone-white' ||
-                      color.value === 'raw-sand' ||
-                      color.value === 'raw-ecru' ||
-                      color.value === 'soft-heather'
-                        ? 'text-black'
-                        : 'text-white'
-                    }`}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 2. Size / Capacity Selection */}
-      <div>
-        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider mb-2.5">
-          <span className="text-store-text-secondary">
-            {sizeLabel}{' '}
-            <strong className="text-store-text-primary font-bold">
-              {selectedSize ? selectedSize.size : isMug ? 'Select capacity' : 'Select a size'}
-            </strong>
-          </span>
-
-          {!isMug && (
-            <button
-              type="button"
-              onClick={() => setIsSizeGuideOpen(true)}
-              className="flex items-center gap-1.5 text-xs font-medium text-store-action-primary hover:text-store-gold transition-colors cursor-pointer lowercase first-letter:uppercase"
-            >
-              <Ruler size={13} />
-              <span>{isKids ? 'Kids Growth Guide' : 'Size Guide'}</span>
-            </button>
-          )}
-        </div>
-
-        <div className={sizeGridClass}>
-          {product.sizes.map((s) => {
-            const isSelected = selectedSize?.size === s.size;
-            return (
-              <button
-                key={s.size}
-                type="button"
-                disabled={!s.inStock}
-                onClick={() => handleSizeSelect(s)}
-                className={`${
-                  isMug ? 'h-13 px-4 py-2' : isKids ? 'h-12 px-2 py-1' : 'h-11'
-                } rounded-xl text-xs font-bold uppercase transition-all flex flex-col items-center justify-center cursor-pointer border ${
-                  !s.inStock
-                    ? 'opacity-40 cursor-not-allowed bg-store-canvas border-store-card-border line-through text-store-muted'
-                    : isSelected
-                    ? 'border-store-charcoal bg-store-charcoal text-white shadow-xs'
-                    : 'border-store-card-border bg-store-surface text-store-text-primary hover:border-store-charcoal'
-                }`}
-              >
-                <span className="text-center truncate w-full">{s.size}</span>
-                {s.inStock && s.stockCount <= 3 && (
-                  <span className="text-xs font-normal text-store-terracotta leading-none -mt-0.5">
-                    {s.stockCount} left
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Real-time stock availability message */}
-        {selectedSize && (
-          <div className="mt-2 text-xs flex items-center gap-1.5">
-            {selectedSize.inStock ? (
-              <span className="text-emerald-700 font-medium flex items-center gap-1">
-                <Check size={13} />
-                In stock for next-day dispatch • {selectedSize.stockCount} {isMug ? 'vessels' : 'pieces'} allocated
-              </span>
-            ) : (
-              <span className="text-red-700 font-medium flex items-center gap-1">
-                <AlertCircle size={13} />
-                Out of stock in {selectedSize.size}
-              </span>
-            )}
-          </div>
-        )}
-
-        {validationError && (
-          <div className="mt-2 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 flex items-center gap-2">
-            <AlertCircle size={14} />
-            <span>{validationError}</span>
-          </div>
-        )}
-      </div>
-
-      {/* 3. Quantity & Purchase Actions */}
+      {/* 4. Quantity & Purchase Actions */}
       <div className="space-y-3 pt-2">
         <div className="flex gap-3">
           {/* Quantity Selector */}
@@ -285,7 +246,7 @@ export default function VariantSelector({
             onClick={handleAddToCart}
             icon={<ShoppingBag size={18} />}
           >
-            Add to Bag • ₹{(product.priceINR * quantity).toLocaleString()}
+            Add to Bag • ₹{(effectiveUnitPriceINR * quantity).toLocaleString()}
           </Button>
 
           {/* Wishlist Button */}
@@ -302,7 +263,7 @@ export default function VariantSelector({
           </button>
         </div>
 
-        {/* Buy Now Instant Action */}
+        {/* Express Checkout */}
         <Button
           variant="secondary"
           size="lg"
@@ -342,8 +303,8 @@ export default function VariantSelector({
         </ul>
       </div>
 
-      {/* Size Guide Modal */}
-      {!isMug && (
+      {/* Size Guide Modal (only if sizes exist and not mug) */}
+      {hasSizes && !isMug && (
         <SizeGuideModal
           isOpen={isSizeGuideOpen}
           onClose={() => setIsSizeGuideOpen(false)}
