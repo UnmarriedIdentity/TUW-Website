@@ -1,9 +1,264 @@
-import { Product, Collection, Order, JournalArticle, FaqItem, Address } from '../lib/types';
+import { Product, ProductSpecTable, ProductRadioGroup, Collection, Order, JournalArticle, FaqItem, Address } from '../lib/types';
+
+
+
+// 1. Garment Sizing Table Template
+const GARMENT_SIZING_TABLE: ProductSpecTable = {
+  title: 'Flat Garment Dimensions',
+  description: 'All dimensions reflect garment measurements laid completely flat.',
+  columns: [
+    { key: 'size', label: 'Size', align: 'left' },
+    { key: 'chest', label: 'Chest Circumference', align: 'left' },
+    { key: 'length', label: 'Body Length', align: 'left' },
+    { key: 'shoulder', label: 'Shoulder Width', align: 'left' },
+    { key: 'sleeve', label: 'Sleeve Length', align: 'left' },
+  ],
+  rows: [
+    { size: 'XS', chest: '108 cm', length: '66 cm', shoulder: '54 cm', sleeve: '59 cm' },
+    { size: 'S', chest: '114 cm', length: '69 cm', shoulder: '57 cm', sleeve: '61 cm' },
+    { size: 'M', chest: '120 cm', length: '72 cm', shoulder: '60 cm', sleeve: '63 cm' },
+    { size: 'L', chest: '126 cm', length: '74 cm', shoulder: '63 cm', sleeve: '64 cm' },
+    { size: 'XL', chest: '132 cm', length: '76 cm', shoulder: '66 cm', sleeve: '65 cm' },
+    { size: 'XXL', chest: '138 cm', length: '78 cm', shoulder: '69 cm', sleeve: '66 cm' },
+  ],
+  unitToggle: {
+    units: [
+      { id: 'cm', label: 'Centimeters (CM)' },
+      { id: 'in', label: 'Inches (IN)' },
+    ],
+    metricRows: [
+      { size: 'XS', chest: '108 cm', length: '66 cm', shoulder: '54 cm', sleeve: '59 cm' },
+      { size: 'S', chest: '114 cm', length: '69 cm', shoulder: '57 cm', sleeve: '61 cm' },
+      { size: 'M', chest: '120 cm', length: '72 cm', shoulder: '60 cm', sleeve: '63 cm' },
+      { size: 'L', chest: '126 cm', length: '74 cm', shoulder: '63 cm', sleeve: '64 cm' },
+      { size: 'XL', chest: '132 cm', length: '76 cm', shoulder: '66 cm', sleeve: '65 cm' },
+      { size: 'XXL', chest: '138 cm', length: '78 cm', shoulder: '69 cm', sleeve: '66 cm' },
+    ],
+    imperialRows: [
+      { size: 'XS', chest: '42.5"', length: '26.0"', shoulder: '21.3"', sleeve: '23.2"' },
+      { size: 'S', chest: '44.9"', length: '27.2"', shoulder: '22.4"', sleeve: '24.0"' },
+      { size: 'M', chest: '47.2"', length: '28.3"', shoulder: '23.6"', sleeve: '24.8"' },
+      { size: 'L', chest: '49.6"', length: '29.1"', shoulder: '24.8"', sleeve: '25.2"' },
+      { size: 'XL', chest: '52.0"', length: '29.9"', shoulder: '26.0"', sleeve: '25.6"' },
+      { size: 'XXL', chest: '54.3"', length: '30.7"', shoulder: '27.2"', sleeve: '26.0"' },
+    ],
+  },
+  sideScale: {
+    eyebrow: 'Fit Guide',
+    title: 'Regular Fit, True to Size',
+    description: 'Engineered with a relaxed, architectural drape. Cut true to standard international sizing with generous chest room.',
+    minLabel: 'Runs Small',
+    midLabel: 'True to Size',
+    maxLabel: 'Runs Large',
+    indicatorPosition: 'center',
+    footerNote: 'Model is 185cm / 6\'1" wearing size L',
+  },
+};
+
+// 2. Cloth Textures & Fiber Integrity Table Template
+const CLOTH_TEXTURES_TABLE: ProductSpecTable = {
+  title: 'Textile Integrity & Fiber Characteristics',
+  description: 'Technical comparison of our custom-milled organic long-staple cotton versus standard commercial knitwear.',
+  columns: [
+    { key: 'property', label: 'Fabric Characteristic', align: 'left' },
+    { key: 'atelier', label: 'The Unplugged Wear', align: 'left' },
+    { key: 'standard', label: 'Conventional Apparel', align: 'left' },
+    { key: 'impact', label: 'Wearer & Care Impact', align: 'left' },
+  ],
+  rows: [
+    {
+      property: 'Fabric Weight & Weave',
+      atelier: '280 GSM Single-Origin Combed Jersey',
+      standard: '140 - 160 GSM Carded Poly-Blend',
+      impact: 'Maintains architectural silhouette without bagging out after wash',
+    },
+    {
+      property: 'Cotton Staple Fiber',
+      atelier: 'Extra-Long Staple (ELS) GOTS Organic',
+      standard: 'Short-Staple Open-End Recycled Blend',
+      impact: 'Silky tactile handfeel with zero surface fuzz or pilling over time',
+    },
+    {
+      property: 'Pre-Shrunk Sanitization',
+      atelier: '< 1.2% Controlled Low-Tension Preshrunk',
+      standard: '6% - 8% Unpredictable Shrinkage',
+      impact: 'Zero side-seam twisting or unexpected body shrinkage in wash',
+    },
+    {
+      property: 'Color Pigment Chemistry',
+      atelier: 'Water-Based Low-Impact Reactive Dye',
+      standard: 'Azo Chemical Salts & Toxic Fixers',
+      impact: '100% Hypoallergenic and gentle on skin with zero chemical fumes',
+    },
+    {
+      property: 'Breathability Index',
+      atelier: 'Micro-Porous High Air Permeability',
+      standard: 'Synthetic Moisture-Lock Layer',
+      impact: 'Natural thermal regulation keeping you cool during movement',
+    },
+  ],
+  sideScale: {
+    eyebrow: 'Texture Guide',
+    title: 'Substantial 280 GSM Drape',
+    description: 'Custom-milled with high-twist combed cotton yarn for quiet permanence and tactile luxury.',
+    minLabel: 'Featherweight',
+    midLabel: 'Midweight 280 GSM',
+    maxLabel: 'Heavyweight',
+    indicatorPosition: 'center',
+    footerNote: 'Tested to withstand over 50 wash cycles without surface degradation.',
+  },
+};
+
+// 3. Ceramic Stoneware Specs Table
+const CERAMIC_SPECS_TABLE: ProductSpecTable = {
+  title: 'Dimensions & Vessel Specifications',
+  description: 'Every vessel is wheel-thrown and hand-finished in small studio batches.',
+  columns: [
+    { key: 'spec', label: 'Specification', align: 'left' },
+    { key: 'metric', label: 'Metric', align: 'left' },
+    { key: 'imperial', label: 'Imperial', align: 'left' },
+    { key: 'note', label: 'Verification Note', align: 'left' },
+  ],
+  rows: [
+    { spec: 'Standard Brim Volume', metric: '350 ml', imperial: '12 fl oz', note: 'Ideal for espresso flat white & drip' },
+    { spec: 'Grande Brim Volume', metric: '450 ml', imperial: '15 fl oz', note: 'Generous morning pour-over volume' },
+    { spec: 'Vessel Height', metric: '9.5 cm', imperial: '3.7 inches', note: 'Fits under standard portafilters' },
+    { spec: 'Upper Rim Diameter', metric: '8.2 cm', imperial: '3.2 inches', note: 'Ergonomic smooth drinking lip' },
+    { spec: 'Unladen Dry Weight', metric: '380 grams', imperial: '13.4 oz', note: 'Grounded weighted bottom stability' },
+    { spec: 'Kiln Firing Temperature', metric: '1,240°C', imperial: '2,264°F', note: 'Fully vitrified non-porous ceramic' },
+    { spec: 'Care Certification', metric: 'Dishwasher & Microwave', imperial: '100% Certified Safe', note: 'Lead-free & cadmium-free food glaze' },
+  ],
+  sideScale: {
+    eyebrow: 'Craft Guide',
+    title: 'High-Fire Stoneware Ceramic',
+    description: 'Wheel-thrown and kiln-fired at 1,240°C for exceptional density and non-porous permanence.',
+    minLabel: 'Lightweight',
+    midLabel: 'Substantial (380g)',
+    maxLabel: 'Heavy',
+    indicatorPosition: 'center',
+    footerNote: 'Handcrafted in verified small studio batches. Dishwasher & microwave tested.',
+  },
+};
+
+// 4. Kids Growth Table
+const KIDS_GROWTH_TABLE: ProductSpecTable = {
+  title: 'Age & Height Growth Chart',
+  description: 'Designed with room to play, crawl, and grow without restrictive armholes.',
+  columns: [
+    { key: 'age', label: 'Age Bracket', align: 'left' },
+    { key: 'height', label: 'Child Height', align: 'left' },
+    { key: 'chest', label: 'Chest Width', align: 'left' },
+    { key: 'waist', label: 'Waist', align: 'left' },
+    { key: 'weight', label: 'Typical Weight', align: 'left' },
+  ],
+  rows: [
+    { age: '2-3 Years', height: '92 - 98 cm', chest: '54 cm', waist: '51 cm', weight: '12 - 14.5 kg' },
+    { age: '4-5 Years', height: '104 - 110 cm', chest: '58 cm', waist: '53 cm', weight: '15 - 18.5 kg' },
+    { age: '6-7 Years', height: '116 - 122 cm', chest: '62 cm', waist: '56 cm', weight: '19 - 22.5 kg' },
+    { age: '8-9 Years', height: '128 - 134 cm', chest: '66 cm', waist: '59 cm', weight: '23 - 28 kg' },
+    { age: '10-11 Years', height: '140 - 146 cm', chest: '71 cm', waist: '62 cm', weight: '29 - 35 kg' },
+  ],
+  sideScale: {
+    eyebrow: 'Fit Guide',
+    title: 'True to Age & Height',
+    description: 'Generous cut through chest and neckline for tear-free dressing.',
+    minLabel: 'Slim Fit',
+    midLabel: 'Room to Grow',
+    maxLabel: 'Oversized',
+    indicatorPosition: 'center',
+    footerNote: 'Tip: If between age brackets, we recommend choosing the larger size for extended wear.',
+  },
+};
+
+const STANDARD_APPAREL_FAQS = [
+  {
+    id: 'faq-1',
+    question: 'How does The Unplugged Wear sizing compare to standard streetwear?',
+    answer: 'Our garments are tailored with relaxed, architectural proportions. If you prefer a neat tailored fit, select your true size. For a more slouchy, dropped-shoulder silhouette, size up one bracket.'
+  },
+  {
+    id: 'faq-2',
+    question: 'What is the recommended laundering procedure for organic heavyweight cotton?',
+    answer: 'Machine wash inside-out on cold gentle cycle. Lay flat or hang to air dry in shaded breeze. Do not tumble dry to maintain dense terry loops and zero fiber warping.'
+  },
+  {
+    id: 'faq-3',
+    question: 'What does Zero-Deadstock Print-On-Demand (POD) mean for my order?',
+    answer: 'Every piece is custom-milled and printed upon your order confirmation in verified Tiruppur manufacturing ateliers. This eliminates the fashion industry graveyard of unsold inventory.'
+  },
+  {
+    id: 'faq-4',
+    question: 'What is your doorstep return and exchange policy?',
+    answer: 'We provide complimentary 14-day doorstep exchange and reverse collection across all serviceable pin codes in India for unworn garments with original tags intact.'
+  }
+];
+
+const CERAMIC_FAQS = [
+  {
+    id: 'faq-c1',
+    question: 'Are the stoneware glazes completely food-safe and lead-free?',
+    answer: 'Yes. Every batch is kiln-fired at 1,240°C with certified non-toxic, lead-free, and cadmium-free glazes. Completely safe for boiling liquids and daily microwave warming.'
+  },
+  {
+    id: 'faq-c2',
+    question: 'What happens if a ceramic vessel chips or breaks during transit?',
+    answer: 'Every piece is enveloped in custom molded paper pulp cushioning. In the rare event of transit damage, we dispatch an immediate replacement at zero cost upon photo verification.'
+  },
+  {
+    id: 'faq-c3',
+    question: 'Can the mug be washed on the bottom rack of modern dishwashers?',
+    answer: 'Yes. The fully vitrified ceramic body and satin matte glaze withstand high dishwasher water pressure and thermal drying on both upper and lower racks.'
+  }
+];
+
+const KIDS_FAQS = [
+  {
+    id: 'faq-k1',
+    question: 'Are the inks and dyes safe for eczema and sensitive skin?',
+    answer: '100%. We exclusively use GOTS-certified water-based pigment inks and zero harsh chemical fixatives, formaldehyde, or heavy metal salts. Completely hypoallergenic for direct skin contact.'
+  },
+  {
+    id: 'faq-k2',
+    question: 'How do the flatlock seams prevent neck and underarm itching?',
+    answer: 'Unlike standard overlock stitching which leaves a raised ridge of thread against the skin, our flatlock seams lie completely level and smooth, eliminating seam friction during active play.'
+  },
+  {
+    id: 'faq-k3',
+    question: 'What if my child experiences a growth spurt before the shirt arrives?',
+    answer: 'We offer free, seamless 14-day doorstep exchanges for the next size up. A courier collects the original piece directly from your home.'
+  }
+];
 
 export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-1',
     slug: 'monolith-heavyweight-hoodie-vintage-black',
+    radioGroups: [
+      {
+        groupKey: 'packaging',
+        label: 'Packaging & Presentation',
+        description: 'Select your preferred studio unboxing experience',
+        defaultValue: 'eco-kraft',
+        options: [
+          {
+            id: 'eco-kraft',
+            label: 'Minimalist Kraft Envelope',
+            description: '100% Recycled post-consumer kraft paper buffer (zero plastic)',
+            priceDeltaINR: 0,
+            badge: 'Standard',
+          },
+          {
+            id: 'keepsake-box',
+            label: 'Rigid Studio Keepsake Box',
+            description: 'Architectural magnetic closure presentation box with debossed seal',
+            priceDeltaINR: 250,
+            badge: 'Gifting (+₹250)',
+          },
+        ],
+      },
+    ],
+    specTable: GARMENT_SIZING_TABLE,
+    faqs: STANDARD_APPAREL_FAQS,
     title: 'Tailored Double-Breasted Blazer Suit',
     subtitle: 'Architectural Wool-Blend Gabardine',
     category: 'hoodies',
@@ -68,6 +323,8 @@ export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-2',
     slug: 'atelier-raw-edge-relaxed-tee',
+    specTable: CLOTH_TEXTURES_TABLE,
+    faqs: STANDARD_APPAREL_FAQS,
     title: 'Oversized Boyfriend Poplin Shirt',
     subtitle: '100% Crisp Long-Staple Combed Cotton',
     category: 'tees',
@@ -224,6 +481,48 @@ export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-5',
     slug: 'heavy-canvas-utility-carryall-tote',
+    sizes: [],
+    radioGroups: [
+      {
+        groupKey: 'strap',
+        label: 'Strap Configuration',
+        description: 'Choose your carrying ergonomics',
+        defaultValue: 'shoulder',
+        options: [
+          {
+            id: 'shoulder',
+            label: 'Standard Shoulder Drop (30 cm)',
+            description: 'Comfortable underarm carry for studio and daily market visits',
+            priceDeltaINR: 0,
+            badge: 'Standard',
+          },
+          {
+            id: 'crossbody',
+            label: 'Adjustable Crossbody Webbing (55 cm)',
+            description: 'Reinforced military-spec cotton webbing for hands-free commuting',
+            priceDeltaINR: 150,
+            badge: '+₹150',
+          },
+        ],
+      },
+    ],
+    specTable: {
+      title: 'Utilitarian Specifications & Dimensions',
+      description: 'Crafted from 18oz unwashed duck canvas with reinforced stress points.',
+      columns: [
+        { key: 'param', label: 'Parameter', align: 'left' },
+        { key: 'val', label: 'Metric Value', align: 'left' },
+        { key: 'note', label: 'Functional Note', align: 'left' },
+      ],
+      rows: [
+        { param: 'Main Volume Capacity', val: '24 Litres', note: 'Fits 16-inch laptop, water bottle, and sketchbook' },
+        { param: 'Dimensions (H x W x D)', val: '40cm x 38cm x 15cm', note: 'Reinforced flat rectangular base' },
+        { param: 'Canvas Fabric Weight', val: '18 oz (510 GSM)', note: 'Dense organic cotton duck weave' },
+        { param: 'Interior Pockets', val: '2 Drop Pockets + 1 Zip', note: 'Solid brass YKK zipper with canvas pull' },
+        { param: 'Stitching Tension', val: 'Heavy-Duty Bartacked', note: 'Handles loads up to 18 kilograms safely' },
+      ],
+    },
+    faqs: STANDARD_APPAREL_FAQS,
     title: 'Monograph Heavy Canvas Carryall',
     subtitle: '18oz Unbleached Cotton Canvas',
     category: 'accessories',
@@ -248,7 +547,6 @@ export const STORE_PRODUCTS: Product[] = [
       { name: 'Raw Ecru', hex: '#EAE5D9', value: 'raw-ecru' },
       { name: 'Pitch Black', hex: '#1C1C1E', value: 'pitch-black' },
     ],
-    sizes: [{ size: 'M', inStock: true, stockCount: 30 }],
     description:
       'Built for daily transit. Cut from indestructible 18oz natural unbleached cotton duck with dual-length webbing handles for hand or shoulder carry. Includes an internal padded sleeve fitting up to a 16-inch laptop.',
     details: [
@@ -480,6 +778,21 @@ export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-11',
     slug: 'brushed-cashmere-ribbed-studio-blanket',
+    sizes: [],
+    radioGroups: [],
+    specTable: null,
+    faqs: [
+      {
+        id: 'faq-b1',
+        question: 'What is the recommended cleaning care for cashmere blankets?',
+        answer: 'Dry clean recommended once a season. For minor spot cleaning, dab gently with cold water and mild wool detergent. Air in shaded breeze.'
+      },
+      {
+        id: 'faq-b2',
+        question: 'Does the cashmere shed on clothing or furniture?',
+        answer: 'Our Mongolian cashmere fibers are long-staple combed and tightly interlocked with recycled wool, resulting in virtually zero shedding or surface fuzz.'
+      }
+    ],
     title: 'Brushed Cashmere Studio Blanket',
     subtitle: '600 GSM Wool & Mongolian Cashmere',
     category: 'accessories',
@@ -499,7 +812,6 @@ export const STORE_PRODUCTS: Product[] = [
       { name: 'Oatmeal', hex: '#DDD6CA', value: 'oatmeal' },
       { name: 'Charcoal Shadow', hex: '#2A2C30', value: 'charcoal-shadow' },
     ],
-    sizes: [{ size: 'M', inStock: true, stockCount: 15 }],
     description:
       'Architectural warmth for the creative workspace. Generously proportioned at 150cm x 200cm with a deep rib border and whisper-soft brushed handfeel.',
     details: [
@@ -552,6 +864,8 @@ export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-13',
     slug: 'stoneware-emblem-ceramic-mug',
+    specTable: CERAMIC_SPECS_TABLE,
+    faqs: CERAMIC_FAQS,
     title: 'Stoneware Emblem Ceramic Mug',
     subtitle: 'Matte Charcoal High-Fire Stoneware',
     category: 'accessories',
@@ -615,6 +929,8 @@ export const STORE_PRODUCTS: Product[] = [
   {
     id: 'prod-14',
     slug: 'kids-organic-cotton-emblem-tee',
+    specTable: KIDS_GROWTH_TABLE,
+    faqs: KIDS_FAQS,
     title: 'Kids Organic Cotton Emblem Tee',
     subtitle: 'Ultra-Soft 220 GSM Long-Staple Cotton',
     category: 'tees',

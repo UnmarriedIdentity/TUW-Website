@@ -12,6 +12,61 @@ export type ProductSize = {
   stockCount: number;
 };
 
+
+// Polymorphic Table Types
+export interface TableColumn {
+  key: string;
+  label: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+export interface ProductSpecTable {
+  title: string;
+  eyebrow?: string;
+  description?: string;
+  columns: TableColumn[];
+  rows: Record<string, string | number>[];
+  unitToggle?: {
+    units: { id: string; label: string }[];
+    metricRows?: Record<string, string | number>[];
+    imperialRows?: Record<string, string | number>[];
+  };
+  sideScale?: {
+    eyebrow?: string;
+    title: string;
+    description?: string;
+    minLabel: string;
+    midLabel: string;
+    maxLabel: string;
+    indicatorPosition?: 'left' | 'center' | 'right';
+    footerNote?: string;
+  };
+}
+
+// Dynamic Radio Option Types
+export interface ProductRadioOption {
+  id: string;
+  label: string;
+  description?: string;
+  priceDeltaINR?: number;
+  badge?: string;
+}
+
+export interface ProductRadioGroup {
+  groupKey: string;
+  label: string;
+  description?: string;
+  options: ProductRadioOption[];
+  defaultValue?: string;
+}
+
+// Dynamic FAQ Types
+export interface ProductFaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
 export type Product = {
   id: string;
   slug: string;
@@ -29,6 +84,9 @@ export type Product = {
   }[];
   colors: ProductColor[];
   sizes: ProductSize[];
+  radioGroups?: ProductRadioGroup[];
+  specTable?: ProductSpecTable | null;
+  faqs?: ProductFaqItem[];
   description: string;
   details: string[];
   careInstructions: string[];
@@ -62,6 +120,13 @@ export type CartItem = {
   priceMinorINR?: number;
   quantity: number;
   image: string;
+  selectedRadioOptions?: {
+    groupKey: string;
+    groupLabel: string;
+    optionId: string;
+    optionLabel: string;
+    priceDeltaINR?: number;
+  }[];
 };
 
 export type Address = {

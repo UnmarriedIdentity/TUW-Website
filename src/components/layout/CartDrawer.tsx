@@ -123,6 +123,16 @@ export default function CartDrawer() {
                       <span>•</span>
                       <span>Size {item.size}</span>
                     </div>
+                    {item.selectedRadioOptions && item.selectedRadioOptions.length > 0 && (
+                      <div className="text-xs text-store-muted mt-1 space-y-0.5">
+                        {item.selectedRadioOptions.map((opt) => (
+                          <div key={opt.groupKey} className="flex items-center gap-1">
+                            <span>{opt.groupLabel}:</span>
+                            <span className="font-medium text-store-charcoal">{opt.optionLabel}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Quantity & Price */}

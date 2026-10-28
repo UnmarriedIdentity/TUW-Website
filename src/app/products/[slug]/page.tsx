@@ -2,7 +2,6 @@
 
 import React, { use, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Breadcrumb from '@/components/ui/Breadcrumb';
@@ -12,20 +11,15 @@ import Button from '@/components/ui/Button';
 import ProductGallery from '@/components/commerce/ProductGallery';
 import VariantSelector from '@/components/commerce/VariantSelector';
 import ProductCard from '@/components/commerce/ProductCard';
+import DynamicDataTable from '@/components/commerce/DynamicDataTable';
+import DynamicAccordionFaq from '@/components/commerce/DynamicAccordionFaq';
 import { useStore } from '@/mocks/store';
 import { ProductColor } from '@/lib/types';
 import {
-  Truck,
-  RefreshCw,
   CheckCircle,
   ChevronDown,
-  Star,
   MessageSquare,
   ArrowRight,
-  ShieldCheck,
-  Sparkles,
-  Coffee,
-  HeartHandshake,
 } from 'lucide-react';
 
 interface ReviewItem {
@@ -196,69 +190,6 @@ const KIDS_REVIEWS: ReviewItem[] = [
   },
 ];
 
-// Sizing Charts
-const SHIRT_MEASUREMENTS = [
-  { size: 'XS', chest: 108, length: 66, shoulder: 54, sleeve: 59 },
-  { size: 'S', chest: 114, length: 69, shoulder: 57, sleeve: 61 },
-  { size: 'M', chest: 120, length: 72, shoulder: 60, sleeve: 63 },
-  { size: 'L', chest: 126, length: 74, shoulder: 63, sleeve: 64 },
-  { size: 'XL', chest: 132, length: 76, shoulder: 66, sleeve: 65 },
-  { size: 'XXL', chest: 138, length: 78, shoulder: 69, sleeve: 66 },
-];
-
-const KIDS_MEASUREMENTS = [
-  { age: '2-3 Years', height: '92 - 98', chest: 54, waist: 51, weight: '12 - 14.5 kg' },
-  { age: '4-5 Years', height: '104 - 110', chest: 58, waist: 53, weight: '15 - 18.5 kg' },
-  { age: '6-7 Years', height: '116 - 122', chest: 62, waist: 56, weight: '19 - 22.5 kg' },
-  { age: '8-9 Years', height: '128 - 134', chest: 66, waist: 59, weight: '23 - 28 kg' },
-  { age: '10-11 Years', height: '140 - 146', chest: 71, waist: 62, weight: '29 - 35 kg' },
-];
-
-const MUG_SPECS = [
-  {
-    label: 'Standard Brim Volume',
-    metric: '350 ml',
-    imperial: '12 fl oz',
-    note: 'Ideal for espresso flat white & drip',
-  },
-  {
-    label: 'Grande Brim Volume',
-    metric: '450 ml',
-    imperial: '15 fl oz',
-    note: 'Generous morning pour-over volume',
-  },
-  {
-    label: 'Vessel Height',
-    metric: '9.5 cm',
-    imperial: '3.7 inches',
-    note: 'Fits under standard portafilters',
-  },
-  {
-    label: 'Upper Rim Diameter',
-    metric: '8.2 cm',
-    imperial: '3.2 inches',
-    note: 'Ergonomic smooth drinking lip',
-  },
-  {
-    label: 'Unladen Dry Weight',
-    metric: '380 grams',
-    imperial: '13.4 oz',
-    note: 'Grounded weighted bottom stability',
-  },
-  {
-    label: 'Kiln Firing Temperature',
-    metric: '1,240°C',
-    imperial: '2,264°F',
-    note: 'Fully vitrified non-porous ceramic',
-  },
-  {
-    label: 'Care Certification',
-    metric: 'Dishwasher & Microwave',
-    imperial: '100% Certified Safe',
-    note: 'Lead-free & cadmium-free food glaze',
-  },
-];
-
 export default function ProductDetailPage({
   params,
 }: {
@@ -271,14 +202,8 @@ export default function ProductDetailPage({
 
   // Maintain active color selection synchronized with gallery
   const [selectedColor, setSelectedColor] = useState<ProductColor | undefined>(
-    product ? product.colors[0] : undefined
+    product?.colors && product.colors.length > 0 ? product.colors[0] : undefined
   );
-
-  // Measurement unit toggle (CM vs Inches / Metric vs Imperial)
-  const [measurementUnit, setMeasurementUnit] = useState<'cm' | 'in'>('cm');
-
-  // FAQ expanded state
-  const [activeFaq, setActiveFaq] = useState<number>(2);
 
   // Accordion state for product details
   const [openAccordion, setOpenAccordion] = useState<string | null>('details');
@@ -312,16 +237,17 @@ export default function ProductDetailPage({
     );
   }
 
-  // 1. Template Classification (Matching Figma Node 354:24651 FINAL PDP)
+  // 1. Template Classification
   const isKids =
     product.category === 'kids' ||
     product.slug.includes('kids') ||
-    product.sizes.some((s) => s.size.includes('Y'));
+    Boolean(product.sizes?.some((s) => s.size.includes('Y')));
 
   const isMug =
     product.slug.includes('mug') ||
     product.slug.includes('cup') ||
-    (product.category === 'accessories' && product.sizes.some((s) => s.size.includes('ml')));
+    (product.category === 'accessories' &&
+      Boolean(product.sizes?.some((s) => s.size.includes('ml'))));
 
   const templateType: 'shirt' | 'mug' | 'kids' = isKids ? 'kids' : isMug ? 'mug' : 'shirt';
 
@@ -351,7 +277,7 @@ export default function ProductDetailPage({
     })
     .slice(0, 4);
 
-  const activeColor = selectedColor || product.colors[0];
+  const activeColor = selectedColor || (product.colors && product.colors[0]);
 
   const discountPercent =
     product.compareAtPriceINR && product.compareAtPriceINR > product.priceINR
@@ -359,8 +285,6 @@ export default function ProductDetailPage({
           ((product.compareAtPriceINR - product.priceINR) / product.compareAtPriceINR) * 100
         )
       : null;
-
-  const toInches = (cm: number) => (cm / 2.54).toFixed(1);
 
   const toggleAccordion = (name: string) => {
     setOpenAccordion(openAccordion === name ? null : name);
@@ -402,7 +326,7 @@ export default function ProductDetailPage({
               images={product.images}
               title={product.title}
               videoUrl={product.videoUrl}
-              selectedColorValue={activeColor.value}
+              selectedColorValue={activeColor?.value}
             />
           </div>
 
@@ -479,7 +403,7 @@ export default function ProductDetailPage({
               {product.description}
             </p>
 
-            {/* Interactive Variant Selector (Color, Size/Capacity, Qty, Add to Bag) */}
+            {/* Interactive Variant Selector (Color, Size/Capacity, Radio Groups, Qty, Add to Bag) */}
             <div className="pt-2 border-t border-store-card-border">
               <VariantSelector
                 product={product}
@@ -488,7 +412,7 @@ export default function ProductDetailPage({
               />
             </div>
 
-            {/* Product Accordion Disclosures (Figma Hero Right Column) */}
+            {/* Product Accordion Disclosures */}
             <div className="pt-4 border-t border-store-card-border space-y-2">
               {/* Accordion 1: Details */}
               <div className="border border-store-card-border rounded-xl bg-store-surface overflow-hidden">
@@ -626,282 +550,17 @@ export default function ProductDetailPage({
         </div>
 
         {/* ======================================================== */}
-        {/* 2. SPECIFIC MID-SECTION: SHIRT VS MUG VS KIDS FIT GUIDE */}
+        {/* 2. DYNAMIC SPECIFICATION / MEASUREMENT / TEXTURE TABLE */}
+        {/* User Invariant: If specTable is null, the entire section is omitted */}
         {/* ======================================================== */}
-
-        {/* 2A. PDP FOR SHIRT: Garment Measurement Table & Fit Guide */}
-        {templateType === 'shirt' && (
+        {product.specTable && (
           <section className="my-16 pt-8 border-t border-store-card-border">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-6">
-              {/* Left: Fit Guide Description & Fit Scale */}
-              <div className="lg:col-span-4 space-y-4">
-                <span className="text-xs uppercase tracking-widest text-store-gold font-semibold block">
-                  Fit Guide
-                </span>
-                <h2 className="text-xl sm:text-2xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                  Regular Fit, True to Size
-                </h2>
-                <p className="text-xs text-store-text-secondary leading-relaxed">
-                  Engineered with a relaxed, architectural drape. Cut true to standard international sizing with generous chest room.
-                </p>
-
-                {/* Visual Fit Scale (Figma Node 354:24651) */}
-                <div className="p-4 rounded-xl bg-store-cream border border-store-card-border space-y-2">
-                  <div className="flex justify-between text-xs text-store-muted font-medium">
-                    <span>Runs Small</span>
-                    <span className="font-bold text-store-charcoal">True to Size</span>
-                    <span>Runs Large</span>
-                  </div>
-                  <div className="relative h-2 rounded-full bg-store-card-border">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-store-charcoal border-2 border-white shadow-xs" />
-                  </div>
-                </div>
-
-                <div className="text-xs text-store-muted">
-                  Model is 185cm / 6&apos;1&quot; wearing size L
-                </div>
-              </div>
-
-              {/* Right: Dimension Table with CM/IN Toggle */}
-              <div className="lg:col-span-8 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-store-text-primary">
-                    Flat Garment Dimensions
-                  </h3>
-                  {/* Unit Toggle */}
-                  <div className="flex items-center p-1 rounded-xl bg-store-cream border border-store-card-border shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setMeasurementUnit('cm')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        measurementUnit === 'cm'
-                          ? 'bg-store-surface text-store-charcoal shadow-xs'
-                          : 'text-store-muted hover:text-store-charcoal'
-                      }`}
-                    >
-                      Centimeters (CM)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMeasurementUnit('in')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        measurementUnit === 'in'
-                          ? 'bg-store-surface text-store-charcoal shadow-xs'
-                          : 'text-store-muted hover:text-store-charcoal'
-                      }`}
-                    >
-                      Inches (IN)
-                    </button>
-                  </div>
-                </div>
-
-                <div className="overflow-x-auto rounded-2xl border border-store-card-border bg-store-surface shadow-xs">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-store-cream border-b border-store-card-border font-bold text-store-charcoal uppercase tracking-wider">
-                      <tr>
-                        <th className="p-3.5">Size</th>
-                        <th className="p-3.5">Chest Circumference</th>
-                        <th className="p-3.5">Body Length</th>
-                        <th className="p-3.5">Shoulder Width</th>
-                        <th className="p-3.5">Sleeve Length</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-store-card-border font-medium text-store-text-secondary">
-                      {SHIRT_MEASUREMENTS.map((row) => (
-                        <tr key={row.size} className="hover:bg-store-canvas transition-colors">
-                          <td className="p-3.5 font-bold text-store-charcoal">{row.size}</td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.chest} cm` : `${toInches(row.chest)}"`}
-                          </td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.length} cm` : `${toInches(row.length)}"`}
-                          </td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.shoulder} cm` : `${toInches(row.shoulder)}"`}
-                          </td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.sleeve} cm` : `${toInches(row.sleeve)}"`}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* 2B. PDP FOR MUG: Stoneware Ceramic Specifications Table */}
-        {templateType === 'mug' && (
-          <section className="my-16 pt-8 border-t border-store-card-border">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-6">
-              {/* Left: Craft Guide & Handfeel Scale */}
-              <div className="lg:col-span-4 space-y-4">
-                <span className="text-xs uppercase tracking-widest text-store-gold font-semibold block">
-                  Craft Guide
-                </span>
-                <h2 className="text-xl sm:text-2xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                  High-Fire Stoneware Ceramic
-                </h2>
-                <p className="text-xs text-store-text-secondary leading-relaxed">
-                  Wheel-thrown and kiln-fired at 1,240°C for exceptional density and non-porous permanence. Ergonomic pulled handle and satin matte finish.
-                </p>
-
-                {/* Handfeel Weight Scale */}
-                <div className="p-4 rounded-xl bg-store-cream border border-store-card-border space-y-2">
-                  <div className="flex justify-between text-xs text-store-muted font-medium">
-                    <span>Lightweight</span>
-                    <span className="font-bold text-store-charcoal">Substantial (380g)</span>
-                    <span>Heavy</span>
-                  </div>
-                  <div className="relative h-2 rounded-full bg-store-card-border">
-                    <div className="absolute top-1/2 left-3/5 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-store-charcoal border-2 border-white shadow-xs" />
-                  </div>
-                </div>
-
-                <div className="text-xs text-store-muted">
-                  Handcrafted in verified small studio batches. Dishwasher & microwave tested.
-                </div>
-              </div>
-
-              {/* Right: Object Specs Table */}
-              <div className="lg:col-span-8 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-store-text-primary">
-                    Dimensions & Vessel Specifications
-                  </h3>
-                  <Badge variant="outline">Kiln-Fired 1,240°C</Badge>
-                </div>
-
-                <div className="overflow-x-auto rounded-2xl border border-store-card-border bg-store-surface shadow-xs">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-store-cream border-b border-store-card-border font-bold text-store-charcoal uppercase tracking-wider">
-                      <tr>
-                        <th className="p-3.5">Specification</th>
-                        <th className="p-3.5">Metric</th>
-                        <th className="p-3.5">Imperial</th>
-                        <th className="p-3.5">Verification Note</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-store-card-border font-medium text-store-text-secondary">
-                      {MUG_SPECS.map((spec) => (
-                        <tr key={spec.label} className="hover:bg-store-canvas transition-colors">
-                          <td className="p-3.5 font-bold text-store-charcoal">{spec.label}</td>
-                          <td className="p-3.5">{spec.metric}</td>
-                          <td className="p-3.5">{spec.imperial}</td>
-                          <td className="p-3.5 text-store-muted">{spec.note}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* 2C. PDP FOR KIDS: Kids Growth Chart & Age Bracket Table */}
-        {templateType === 'kids' && (
-          <section className="my-16 pt-8 border-t border-store-card-border">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-6">
-              {/* Left: Fit Guide Description & Growth Scale */}
-              <div className="lg:col-span-4 space-y-4">
-                <span className="text-xs uppercase tracking-widest text-store-gold font-semibold block">
-                  Fit Guide
-                </span>
-                <h2 className="text-xl sm:text-2xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                  True to Age & Height
-                </h2>
-                <p className="text-xs text-store-text-secondary leading-relaxed">
-                  Designed with room to play, crawl, and grow. Generous cut through chest and neckline for tear-free dressing.
-                </p>
-
-                {/* Kids Fit Scale */}
-                <div className="p-4 rounded-xl bg-store-cream border border-store-card-border space-y-2">
-                  <div className="flex justify-between text-xs text-store-muted font-medium">
-                    <span>Slim Fit</span>
-                    <span className="font-bold text-store-charcoal">Room to Grow</span>
-                    <span>Oversized</span>
-                  </div>
-                  <div className="relative h-2 rounded-full bg-store-card-border">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-store-charcoal border-2 border-white shadow-xs" />
-                  </div>
-                </div>
-
-                <div className="text-xs text-store-muted">
-                  Tip: If between age brackets, we recommend choosing the larger size for extended wear.
-                </div>
-              </div>
-
-              {/* Right: Kids Growth Table */}
-              <div className="lg:col-span-8 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-store-text-primary">
-                    Age & Height Growth Chart
-                  </h3>
-                  {/* Unit Toggle */}
-                  <div className="flex items-center p-1 rounded-xl bg-store-cream border border-store-card-border shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setMeasurementUnit('cm')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        measurementUnit === 'cm'
-                          ? 'bg-store-surface text-store-charcoal shadow-xs'
-                          : 'text-store-muted hover:text-store-charcoal'
-                      }`}
-                    >
-                      Centimeters (CM)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMeasurementUnit('in')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        measurementUnit === 'in'
-                          ? 'bg-store-surface text-store-charcoal shadow-xs'
-                          : 'text-store-muted hover:text-store-charcoal'
-                      }`}
-                    >
-                      Inches (IN)
-                    </button>
-                  </div>
-                </div>
-
-                <div className="overflow-x-auto rounded-2xl border border-store-card-border bg-store-surface shadow-xs">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-store-cream border-b border-store-card-border font-bold text-store-charcoal uppercase tracking-wider">
-                      <tr>
-                        <th className="p-3.5">Age Bracket</th>
-                        <th className="p-3.5">Child Height</th>
-                        <th className="p-3.5">Chest Width</th>
-                        <th className="p-3.5">Waist</th>
-                        <th className="p-3.5">Typical Weight</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-store-card-border font-medium text-store-text-secondary">
-                      {KIDS_MEASUREMENTS.map((row) => (
-                        <tr key={row.age} className="hover:bg-store-canvas transition-colors">
-                          <td className="p-3.5 font-bold text-store-charcoal">{row.age}</td>
-                          <td className="p-3.5">{row.height} cm</td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.chest} cm` : `${toInches(row.chest)}"`}
-                          </td>
-                          <td className="p-3.5">
-                            {measurementUnit === 'cm' ? `${row.waist} cm` : `${toInches(row.waist)}"`}
-                          </td>
-                          <td className="p-3.5 text-store-muted">{row.weight}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+            <DynamicDataTable table={product.specTable} />
           </section>
         )}
 
         {/* ======================================================== */}
-        {/* 3. CUSTOMER REVIEWS & RATINGS BREAKDOWN (Figma Specimen) */}
+        {/* 3. CUSTOMER REVIEWS & RATINGS BREAKDOWN */}
         {/* ======================================================== */}
         <section id="reviews" className="my-16 pt-12 border-t border-store-card-border">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -944,7 +603,7 @@ export default function ProductDetailPage({
                 </div>
               </div>
 
-              {/* Progress bars matching Figma */}
+              {/* Progress bars */}
               <div className="space-y-2.5 text-xs text-store-text-secondary">
                 <div className="flex items-center gap-2">
                   <span className="w-12 shrink-0">5 Stars</span>
@@ -989,7 +648,7 @@ export default function ProductDetailPage({
               </div>
             </div>
 
-            {/* Review Cards Grid (8 cols on lg: 4 cards in 2x2 grid matching Figma) */}
+            {/* Review Cards Grid (8 cols on lg: 4 cards in 2x2 grid) */}
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {activeReviews.map((rev) => (
                 <div
@@ -1031,7 +690,7 @@ export default function ProductDetailPage({
         </section>
 
         {/* ======================================================== */}
-        {/* 4. "PAIRS WELL WITH" (4-Card Row matching Figma Node 354:24651) */}
+        {/* 4. "PAIRS WELL WITH" (4-Card Row) */}
         {/* ======================================================== */}
         {relatedProducts.length > 0 && (
           <section className="my-16 pt-12 border-t border-store-card-border">
@@ -1065,177 +724,20 @@ export default function ProductDetailPage({
         )}
 
         {/* ======================================================== */}
-        {/* 5. FREQUENTLY ASKED QUESTIONS (Matching Figma Specimen) */}
+        {/* 5. DYNAMIC FREQUENTLY ASKED QUESTIONS */}
+        {/* User Invariant: strictly omitted if faqs is null or empty */}
         {/* ======================================================== */}
-        <section className="my-16 pt-12 border-t border-store-card-border">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left title & context (5 cols) */}
-            <div className="lg:col-span-5 space-y-3">
-              <span className="text-xs uppercase tracking-widest text-store-gold font-semibold block">
-                Atelier Specifications
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-sm text-store-text-secondary leading-relaxed">
-                Clear transparency on how our slow-living garments and studio objects are milled, crafted, and delivered to your doorstep.
-              </p>
-            </div>
-
-            {/* Right Accordion List (7 cols) */}
-            <div className="lg:col-span-7 space-y-3">
-              {/* FAQ 1 */}
-              <div
-                className={`rounded-2xl transition-all border ${
-                  activeFaq === 0
-                    ? 'bg-store-deep-teal text-white border-store-deep-teal p-6 shadow-xs'
-                    : 'bg-store-surface border-store-card-border p-5 text-store-text-primary hover:border-store-charcoal'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveFaq(activeFaq === 0 ? -1 : 0)}
-                  className="w-full flex items-center justify-between text-left cursor-pointer focus:outline-none"
-                >
-                  <span className="text-sm font-bold tracking-wide">
-                    {templateType === 'mug'
-                      ? 'Are the glazes 100% lead-free and food-safe?'
-                      : 'How does TUW sizing compare to standard brands?'}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-200 shrink-0 ${
-                      activeFaq === 0 ? 'rotate-180 text-store-gold' : 'text-store-muted'
-                    }`}
-                  />
-                </button>
-                {activeFaq === 0 && (
-                  <div className="mt-3 text-xs leading-relaxed opacity-90 space-y-1.5">
-                    {templateType === 'mug' ? (
-                      <p>
-                        Yes. Every batch is kiln-fired at 1,240°C with certified non-toxic, lead-free, and cadmium-free glazes. Completely safe for boiling liquids and daily microwave warming.
-                      </p>
-                    ) : (
-                      <p>
-                        Our garments are tailored with relaxed architectural proportions. If you prefer a tailored look, order your true size; for a statement slouchy silhouette, size up.
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* FAQ 2 */}
-              <div
-                className={`rounded-2xl transition-all border ${
-                  activeFaq === 1
-                    ? 'bg-store-deep-teal text-white border-store-deep-teal p-6 shadow-xs'
-                    : 'bg-store-surface border-store-card-border p-5 text-store-text-primary hover:border-store-charcoal'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveFaq(activeFaq === 1 ? -1 : 1)}
-                  className="w-full flex items-center justify-between text-left cursor-pointer focus:outline-none"
-                >
-                  <span className="text-sm font-bold tracking-wide">
-                    {templateType === 'mug'
-                      ? 'What happens if a ceramic piece chips in transit?'
-                      : 'Laundering and preserving natural cotton handfeel'}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-200 shrink-0 ${
-                      activeFaq === 1 ? 'rotate-180 text-store-gold' : 'text-store-muted'
-                    }`}
-                  />
-                </button>
-                {activeFaq === 1 && (
-                  <div className="mt-3 text-xs leading-relaxed opacity-90 space-y-1.5">
-                    {templateType === 'mug' ? (
-                      <p>
-                        Every piece is enveloped in custom molded paper pulp cushioning. In the rare event of transit damage, we dispatch an immediate replacement at zero cost upon photo verification.
-                      </p>
-                    ) : (
-                      <p>
-                        Machine wash inside-out in cold water on gentle cycle. Hang or lay flat to dry in shade to preserve deep natural pigments and dense loopback fibers.
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* FAQ 3 (Active Item in Deep Teal) */}
-              <div
-                className={`rounded-2xl transition-all border ${
-                  activeFaq === 2
-                    ? 'bg-store-deep-teal text-white border-store-deep-teal p-6 shadow-xs'
-                    : 'bg-store-surface border-store-card-border p-5 text-store-text-primary hover:border-store-charcoal'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveFaq(activeFaq === 2 ? -1 : 2)}
-                  className="w-full flex items-center justify-between text-left cursor-pointer focus:outline-none"
-                >
-                  <span className="text-sm font-bold tracking-wide">
-                    Zero-Deadstock Sustainable Production Protocol
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-200 shrink-0 ${
-                      activeFaq === 2 ? 'rotate-180 text-store-gold' : 'text-store-muted'
-                    }`}
-                  />
-                </button>
-                {activeFaq === 2 && (
-                  <div className="mt-3 text-xs leading-relaxed opacity-90 space-y-2">
-                    <p>
-                      The Unplugged Wear operates on purposeful small-batch and zero-deadstock production. Every piece is custom-prepared upon order placement to eliminate overproduction waste.
-                    </p>
-                    <p>
-                      <strong>Dispatch Window:</strong> Orders are cured, inspected, and dispatched within 24 to 48 hours via Delhivery surface express.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* FAQ 4 */}
-              <div
-                className={`rounded-2xl transition-all border ${
-                  activeFaq === 3
-                    ? 'bg-store-deep-teal text-white border-store-deep-teal p-6 shadow-xs'
-                    : 'bg-store-surface border-store-card-border p-5 text-store-text-primary hover:border-store-charcoal'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveFaq(activeFaq === 3 ? -1 : 3)}
-                  className="w-full flex items-center justify-between text-left cursor-pointer focus:outline-none"
-                >
-                  <span className="text-sm font-bold tracking-wide">
-                    14-Day Doorstep Reverse Collection & Exchanges
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-200 shrink-0 ${
-                      activeFaq === 3 ? 'rotate-180 text-store-gold' : 'text-store-muted'
-                    }`}
-                  />
-                </button>
-                {activeFaq === 3 && (
-                  <div className="mt-3 text-xs leading-relaxed opacity-90 space-y-1.5">
-                    <p>
-                      We provide complimentary 14-day doorstep exchange and reverse collection across all serviceable pin codes in India.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+        {product.faqs && product.faqs.length > 0 && (
+          <DynamicAccordionFaq
+            faqs={product.faqs}
+            eyebrow="Atelier Specifications"
+            title="Frequently Asked Questions"
+            description="Clear transparency on how our slow-living garments and studio objects are milled, crafted, and delivered to your doorstep."
+          />
+        )}
 
         {/* ======================================================== */}
-        {/* 6. FULL-BLEED OUTDOOR LIFESTYLE BANNER (Figma Specimen) */}
+        {/* 6. FULL-BLEED OUTDOOR LIFESTYLE BANNER */}
         {/* ======================================================== */}
         <section className="relative my-16 rounded-3xl overflow-hidden bg-store-deep-teal text-white min-h-72 flex items-center justify-center text-center p-8 sm:p-14 shadow-xs">
           <div className="relative z-10 max-w-2xl space-y-4">
