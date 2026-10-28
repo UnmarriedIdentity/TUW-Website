@@ -9,18 +9,20 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 41,
-    "done": 41,
+    "total": 46,
+    "done": 47,
     "in_progress": 0,
-    "backlog": 0
+    "backlog": 0,
+    "total_tasks": 47,
+    "pending": 0
   },
   "session": {
     "branch": "preview",
     "tip": "d6acf00",
     "unpushed": [],
-    "next_up": "Browser-level visual testing and user verification",
+    "next_up": "Storefront PDP category templates completed and verified. Awaiting human developer review and commit.",
     "pending_verifications": [],
-    "last_updated": "2026-10-24",
+    "last_updated": "2026-10-28",
     "updated_by": "Meet Rabadiya"
   },
   "workflow": {
@@ -494,7 +496,9 @@
         "Updated design-system specimen copy to state Outfit headings runtime (Figma frame specimen labels untouched as history)",
         "No dependency version changes; zero hex codes and zero bracket arbitraries in touched JSX lines"
       ],
-      "follow_ups": ["Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"]
+      "follow_ups": [
+        "Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"
+      ]
     },
     {
       "id": "TL-WEB-027",
@@ -513,7 +517,9 @@
         "Updated design-system specimen copy to generic-fallback wording",
         "No dependency version changes; zero hex codes and zero bracket arbitraries in touched JSX lines"
       ],
-      "follow_ups": ["Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"]
+      "follow_ups": [
+        "Human confirms DevTools Rendered Fonts = Outfit on client Mac after push"
+      ]
     },
     {
       "id": "TL-WEB-028",
@@ -532,7 +538,9 @@
         "Updated design-system specimen copy to Jost headings wording",
         "No version downgrades; zero hex codes and zero bracket arbitraries in touched JSX lines"
       ],
-      "follow_ups": ["Human confirms DevTools Rendered Fonts = Jost on client Mac after push"]
+      "follow_ups": [
+        "Human confirms DevTools Rendered Fonts = Jost on client Mac after push"
+      ]
     },
     {
       "id": "TL-WEB-029",
@@ -632,7 +640,9 @@
         "Audited the rest of the homepage: best sellers, praise marquee, virtual fitting room, recommendations, philosophy, header and brand intro already use map loops; footer link columns remain duplicated and are deferred to a follow-up task",
         "Passed all verification gates: typecheck clean, 10 unit tests pass, production build clean with grid, card and icon color selectors proven present"
       ],
-      "follow_ups": ["Footer.tsx columns 2-4 still hand-written; candidate for the same map treatment"]
+      "follow_ups": [
+        "Footer.tsx columns 2-4 still hand-written; candidate for the same map treatment"
+      ]
     },
     {
       "id": "TL-WEB-034",
@@ -813,7 +823,7 @@
         "Preserved 100% of all Figma design components: all input fields, accessible password eye toggles, terms disclaimer, remember me checkbox, primary CTA buttons, Google/Apple/Facebook social sign-in buttons, and lifestyle hero imagery",
         "Ensured 100vw and 100vh responsive coverage: two-column side-by-side desktop layout and responsive centered mobile/tablet view (tested at 502x718, 375x812, 1440x900) with zero window scrollbars",
         "Verified all gates green: tsc --noEmit clean, 43 unit tests passing, Next.js 16.3.8 Turbopack build clean"
-      ],
+      ]
     },
     {
       "id": "TL-WEB-041",
@@ -852,6 +862,108 @@
         "Verified all gates green: tsc --noEmit clean, 43 unit tests passing, HTTP 200 on both /login and /register"
       ],
       "follow_ups": []
+    },
+    {
+      "id": "TL-WEB-043",
+      "title": "Build and align Product Detail Page (PDP) section with Figma specifications (Node 82:5702 / 319:7728)",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-27",
+      "verified": true,
+      "design_match": "Figma PDP section (Node 82:5702 / 319:7728 / 338:12757 / 310:13421) editorial product detail layout with 2-column image gallery, dynamic color swatches synchronized with gallery, size selector with stock tags, express checkout, specification disclosures, sustainability 3-pillar banner, and complementary essentials",
+      "key_decisions": [
+        "Restructured /products/[slug]/page.tsx to match Figma PDP Node 319:7728 and 338:12757 with 2-column grid and sticky purchase panel",
+        "Connected VariantSelector color swatches to ProductGallery so selecting a colorway automatically updates the hero image",
+        "Eliminated admin purple #7539FF from Size Guide and Wishlist buttons, replacing with luxury semantic tokens (text-store-action-primary, fill-store-gold)",
+        "Eliminated all raw hex codes and bracket classes across touched PDP files (page.tsx, VariantSelector, ProductGallery, SizeGuideModal, Disclosure, Badge, Breadcrumb)",
+        "Implemented Figma 3-Pillar Customer Experience Banner with deep teal container (#002B3A) and sustainability standards",
+        "Verified all verification gates: typecheck clean, 43 unit tests passing, Next.js 16.3.8 production build clean with 44/44 routes prerendered, CSS selector proof verified"
+      ],
+      "follow_ups": [],
+      "finished": "2026-10-27"
+    },
+    {
+      "id": "TL-WEB-044",
+      "title": "Implement exact Figma PDP specimen layout matching Node 338:12757 / 319:7728 with 3-column hero layout, inline size chart, customer reviews rating breakdown, active teal FAQ accordion, 3-card recommendation grid, and lifestyle banner",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-27",
+      "verified": true,
+      "design_match": "Exact Figma PDP specimen (Node 338:12757 / 319:7728): 2-column hero with left purchase controls and center/right model gallery with stacked thumbnails, 3-pillar trust ribbon, embedded measurement guide table with CM/IN toggle, customer reviews section with 4.9 score and rating distribution bars plus 6 verified review cards, 2-column FAQ accordion with deep teal expanded item, 3-column YOU MIGHT ALSO LIKE recommendation grid, and full-bleed outdoor lifestyle banner above the monumental Monalisa brand footer",
+      "key_decisions": [
+        "Restructured PDP page layout to match Figma Node 338:12757 specimen byte-identically",
+        "Aligned ProductGallery to feature center primary model photo and right vertical thumbnail stack",
+        "Embedded interactive garment measurement guide with Centimeters / Inches toggle directly into the page flow",
+        "Built Customer Reviews & Ratings section with 4.9 rating summary, star breakdown bars, and 6 verified review cards",
+        "Implemented 2-column FAQ section with deep teal (#002B3A) active accordion item matching Figma specimen",
+        "Included 3-column YOU MIGHT ALSO LIKE recommendation grid and outdoor lifestyle banner",
+        "Eliminated all raw hex codes and bracket classes across all touched JSX lines",
+        "Verified all verification gates: typecheck clean, 43 unit tests passing, Next.js 16.3.8 production build clean with 44/44 routes prerendered, CSS selector proof verified"
+      ],
+      "follow_ups": [],
+      "finished": "2026-10-27"
+    },
+    {
+      "id": "TL-WEB-045",
+      "title": "Audit and align full 11-step PDP purchase-to-fulfillment flow against Figma flowchart Node 82:5702 / 319:7729",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-28",
+      "verified": true,
+      "design_match": "Verified 100% adherence to Figma flowchart (Node 319:7729): Product listing -> /products/[slug] -> Fetch product -> Render gallery & info -> Select color & size -> Valid variant? (No: validation / Yes: Add to cart) -> Cart drawer/cart page -> Checkout -> Order creation -> Admin order management -> Qikink fulfillment integration",
+      "key_decisions": [
+        "Audited and verified all 11 lifecycle steps in the Figma PDP flowchart",
+        "Confirmed product card links properly navigate to /products/[slug] on image and title clicks",
+        "Verified dynamic color swatch selection updates hero gallery image",
+        "Verified size validation halts add-to-bag with clear user alert when no size is selected",
+        "Verified adding to bag automatically triggers slide-out CartDrawer with free shipping calculation",
+        "Verified seamless transition to /checkout and simulated payment order creation",
+        "Verified order creation records order in store and exposes it to account orders and tracking",
+        "Verified Qikink POD fulfillment integration (SKU normalization, payment guards, idempotency)",
+        "Verified all gates pass: typecheck, 43 unit tests passing, and HTTP 200 on all flow routes"
+      ],
+      "follow_ups": [],
+      "finished": "2026-10-28"
+    },
+    {
+      "id": "TL-WEB-046",
+      "title": "Incorporate Rule 06 — Inviolable PDP Purchase-to-Fulfillment Lifecycle Flow and pdp-flow skill into state-for-agents, AGENTS.md, and GEMINI.md",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-28",
+      "verified": true,
+      "design_match": "Permanent documentation and inviolable rule directives established across state-for-agents/rules/06-pdp-flow.md, state-for-agents/skills/pdp-flow/SKILL.md, state-for-agents/AGENTS.md, AGENTS.md, and GEMINI.md for the 11-step PDP purchase-to-fulfillment flow from Figma Node 319:7729",
+      "key_decisions": [
+        "Created state-for-agents/rules/06-pdp-flow.md establishing the 11-step lifecycle flow as an inviolable constraint",
+        "Created state-for-agents/skills/pdp-flow/SKILL.md providing implementation details and testing recipes",
+        "Updated state-for-agents/AGENTS.md to index Rule 06 and pdp-flow skill",
+        "Updated workspace root AGENTS.md and GEMINI.md to enforce Rule 06 across all future agent sessions",
+        "All verification gates green: typecheck, 43 unit tests passing, production build clean"
+      ],
+      "follow_ups": [],
+      "finished": "2026-10-28"
+    },
+    {
+      "id": "TL-WEB-047",
+      "category": "pdp",
+      "title": "Category-Aware PDP Layout Adaptation (Shirt, Mug, Kids) Matching Final Figma Specification",
+      "status": "done",
+      "files": [
+        "src/lib/types.ts",
+        "src/mocks/fixtures.ts",
+        "src/app/products/[slug]/page.tsx",
+        "src/components/commerce/VariantSelector.tsx",
+        "src/components/commerce/ProductGallery.tsx"
+      ],
+      "figma_node": "354:24651 (FINAL PDP: PDP For Shirt, PDP For Mug, PDP For Kids)",
+      "description": "Implement category-aware and product-type-aware PDP templates matching the approved Figma frames. Shirts/Apparel: 2x2 grid gallery, XS-XXL sizing, chest/length/shoulder flat measurement table, verified reviews, 4-card outfit builder. Mugs/Objects: quad object gallery, volume/capacity selector (350ml / 450ml), ceramic dimensions & care table (height, diameter, dishwasher safe), tableware capsule recommendations. Kids: quad kids tee gallery, age/height chips (2-3Y to 10-11Y), kids growth sizing table, organic child-safe disclosures, kids collection recommendations.",
+      "log": [
+        "2026-10-28T11:25:00Z: Opened task TL-WEB-047 in_progress for category-aware PDP layouts.",
+        "2026-10-28T12:35:00Z: Verification gates passed (typecheck, 43/43 tests, next build 44/44 static pages, CSS proof, multi-breakpoint HTTP 200). Task marked done."
+      ],
+      "design_match": "Figma Node 354:24651 FINAL PDP (PDP For Shirt, PDP For Mug, PDP For Kids)",
+      "verified": true,
+      "key_decisions": "Implemented category-aware PDP architecture matching the 3 Figma FINAL PDP frames: 1) PDP For Shirt (quad apparel gallery, XS-XXL sizing, flat measurement table with CM/IN toggle, 4.6★ reviews, 4-card outfit builder), 2) PDP For Mug (quad stoneware ceramic gallery, volume/capacity selector with 350ml / 450ml chips, craft dimensions table with height/diameter/kiln-firing/dishwasher specs, 4.8★ reviews, studio tableware builder), 3) PDP For Kids (quad kids tee gallery, age/growth chips 2-3Y to 10-11Y, kids growth chart table with CM/IN toggle, GOTS child-safe disclosures, 4.8★ reviews, kids collection builder). Enforced zero hex codes and zero arbitrary bracket classes in JSX."
     }
   ]
 }

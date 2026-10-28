@@ -9,13 +9,13 @@ work stopped — without ever opening the admin app. Start here, in this order:
 2. `TRACKER_GUIDE.md` → how to read and update the tracker.
 3. `rules/` (in numeric order) → **inviolable constraints**. Rules are
    permissions, not techniques: pixel-perfect tolerance, git hygiene, gates,
-   and never-push. Every report quotes rule compliance.
+   never-push, task discipline, branch hygiene, PDP lifecycle flow, and never-commit. Every report quotes rule compliance.
 4. `skills/` → capabilities, loaded per task: `theme-tokens`,
    `utility-first-jsx`, `cascade-layers`, `stylesheet-anatomy`,
    `design-system`, `motion`, `decorative-graphics`, `debug-frontend`,
    `responsive-system`, `code-standards`, `component-scalability`,
    `component-creation`, `folder-structure`, `hooks`, `routes`,
-   `backend-readiness`, `performance-budgets`, `skill-maintenance`.
+   `pdp-flow`, `backend-readiness`, `performance-budgets`, `skill-maintenance`.
 
 ## Rules vs skills (the split — never confuse them)
 

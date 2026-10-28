@@ -7,7 +7,7 @@ export type ProductColor = {
 };
 
 export type ProductSize = {
-  size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  size: string;
   inStock: boolean;
   stockCount: number;
 };
@@ -17,7 +17,7 @@ export type Product = {
   slug: string;
   title: string;
   subtitle: string;
-  category: 'hoodies' | 'tees' | 'jackets' | 'pants' | 'accessories' | 'capsules';
+  category: 'hoodies' | 'tees' | 'jackets' | 'pants' | 'accessories' | 'capsules' | 'mugs' | 'kids';
   priceINR: number;
   priceMinorINR?: number; // Integer minor-unit INR paise (e.g. 389900 = ₹3,899)
   compareAtPriceINR?: number;
