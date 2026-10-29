@@ -60,6 +60,36 @@ Every storefront route is deployed live, pre-rendered with zero runtime external
 
 ---
 
+## 🛍️ Dynamic Product Detail Page (PDP) Directory
+
+Every product detail page adapts dynamically to the product's attributes — rendering custom tables (sizing charts, textile fiber integrity, or ceramic specs), radio selectors with real-time price adjustments, capacity or age pills, or strictly omitting empty sections:
+
+### 🌟 Dynamic Showcase Scenarios
+
+| Product Piece | Category | Live Hosted URL (Vercel) | Local Dev URL | Dynamic Features & Verification |
+|---|---|---|---|---|
+| **Monolith Heavyweight Hoodie** | Hoodies | [View on Hosted Site](https://tuw-storefront.vercel.app/products/monolith-heavyweight-hoodie-vintage-black) | [`:3007/products/...`](http://localhost:3007/products/monolith-heavyweight-hoodie-vintage-black) | • Colorway gallery swaps<br>• XS–XXL size pills with stock counters<br>• **Packaging Radio Group** (Kraft ₹0 vs Keepsake Box **+₹250**)<br>• Sizing Table with CM / IN toggle<br>• Apparel FAQs |
+| **Atelier Raw-Edge Boxy Tee** | Tees | [View on Hosted Site](https://tuw-storefront.vercel.app/products/atelier-raw-edge-relaxed-tee) | [`:3007/products/...`](http://localhost:3007/products/atelier-raw-edge-relaxed-tee) | • **Dynamic Cloth Textures Table**: switches from sizing to **Textile Integrity & Fiber Characteristics** (4 comparison columns)<br>• 240 GSM organic cotton specs<br>• Apparel FAQs |
+| **Heavy Canvas Utility Tote** | Accessories | [View on Hosted Site](https://tuw-storefront.vercel.app/products/heavy-canvas-utility-carryall-tote) | [`:3007/products/...`](http://localhost:3007/products/heavy-canvas-utility-carryall-tote) | • **Size pills strictly hidden** (`sizes: []`)<br>• **Strap Radio Group** (Shoulder Drop ₹0 vs Padded Crossbody **+₹150**)<br>• Utilitarian Bag Dimensions & 28L volume specs |
+| **Stoneware Emblem Ceramic Mug** | Living Objects | [View on Hosted Site](https://tuw-storefront.vercel.app/products/stoneware-emblem-ceramic-mug) | [`:3007/products/...`](http://localhost:3007/products/stoneware-emblem-ceramic-mug) | • **Capacity pills** (**350ml / 450ml**) instead of apparel sizes<br>• Glaze finish swatches (Matte Obsidian, Raw Bone, Celadon)<br>• 1,240°C kiln-firing & craft specs table<br>• Lead-free food-safe FAQs |
+| **Kids Organic Cotton Emblem Tee** | Kids | [View on Hosted Site](https://tuw-storefront.vercel.app/products/kids-organic-cotton-emblem-tee) | [`:3007/products/...`](http://localhost:3007/products/kids-organic-cotton-emblem-tee) | • **Age & growth chips** (**2-3Y, 4-5Y, 6-7Y, 8-9Y, 10-11Y**)<br>• Kids Growth Chart (Height, Chest, Waist, Weight)<br>• Anti-chafe flatlock seams & organic dye disclosures |
+| **Brushed Cashmere Studio Blanket** | Living Objects | [View on Hosted Site](https://tuw-storefront.vercel.app/products/brushed-cashmere-ribbed-studio-blanket) | [`:3007/products/...`](http://localhost:3007/products/brushed-cashmere-ribbed-studio-blanket) | • **Strict Omission Law**: `specTable: null` completely omits the table section from the DOM (zero empty containers or gaps)<br>• Size pills hidden<br>• Edge finish radio options (**+₹300**) |
+
+### 🧥 Complete Storefront Apparel & Outerwear Catalog
+
+| Product Piece | Category | Price | Live Hosted URL (Vercel) | Local Dev URL |
+|---|---|---|---|---|
+| **Wide-Leg Canvas Trousers** | Pants | ₹4,299 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/solitude-wide-leg-canvas-trousers) | [`:3007/products/...`](http://localhost:3007/products/solitude-wide-leg-canvas-trousers) |
+| **Kinetic Heavy Fleece Crewneck** | Hoodies | ₹3,499 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/unplugged-oversized-crewneck-slate) | [`:3007/products/...`](http://localhost:3007/products/unplugged-oversized-crewneck-slate) |
+| **Architectural Drop-Shoulder Zip Hoodie** | Hoodies | ₹4,499 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/oversized-architectural-heavyweight-french-terry-drop-shoulder-zip-hoodie) | [`:3007/products/...`](http://localhost:3007/products/oversized-architectural-heavyweight-french-terry-drop-shoulder-zip-hoodie) |
+| **Technical Shell Modular Bomber Jacket** | Jackets | ₹5,899 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/technical-shell-modular-bomber-jacket) | [`:3007/products/...`](http://localhost:3007/products/technical-shell-modular-bomber-jacket) |
+| **Raw Hem Thermal Waffle Tee** | Tees | ₹2,699 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/raw-hem-heavyweight-thermal-waffle-tee) | [`:3007/products/...`](http://localhost:3007/products/raw-hem-heavyweight-thermal-waffle-tee) |
+| **Japanese Selvedge Chore Coat** | Jackets | ₹6,499 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/japanese-selvedge-cotton-chore-coat) | [`:3007/products/...`](http://localhost:3007/products/japanese-selvedge-cotton-chore-coat) |
+| **Minimalist Modular Ripstop Windbreaker** | Jackets | ₹4,199 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/modular-lightweight-ripstop-windbreaker) | [`:3007/products/...`](http://localhost:3007/products/modular-lightweight-ripstop-windbreaker) |
+| **Low-Profile Distressed Dad Cap** | Accessories | ₹1,499 | [View on Hosted Site](https://tuw-storefront.vercel.app/products/washed-cotton-dad-cap-minimal) | [`:3007/products/...`](http://localhost:3007/products/washed-cotton-dad-cap-minimal) |
+
+---
+
 ## 🎨 Visual Identity & Navigation Invariants
 
 1. **Brand Aesthetics**:

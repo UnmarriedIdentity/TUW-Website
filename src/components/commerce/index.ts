@@ -43,3 +43,9 @@ export type { DynamicDataTableProps } from './DynamicDataTable';
 
 export { default as DynamicAccordionFaq } from './DynamicAccordionFaq';
 export type { DynamicAccordionFaqProps } from './DynamicAccordionFaq';
+
+export { default as ProductReviews } from './ProductReviews';
+export type { ProductReviewsProps } from './ProductReviews';
+
+export { default as RelatedProductsSection } from './RelatedProductsSection';
+export type { RelatedProductsSectionProps } from './RelatedProductsSection';

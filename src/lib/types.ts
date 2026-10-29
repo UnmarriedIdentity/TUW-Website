@@ -206,3 +206,15 @@ export type FaqItem = {
   question: string;
   answer: string;
 };
+
+export interface ReviewItem {
+  id: string;
+  author: string;
+  role: string;
+  verified: boolean;
+  rating: number;
+  date: string;
+  title: string;
+  content: string;
+  variant: string;
+}
