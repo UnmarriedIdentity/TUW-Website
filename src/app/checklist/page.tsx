@@ -38,384 +38,507 @@ export interface ChecklistItem {
   status: PageStatus;
   notes?: string;
   isCustom?: boolean;
+  image?: string;
 }
 
 export const HOSTED_BASE_URL = 'https://tuw-storefront.vercel.app';
 
 // Exactly matches all routes listed in ENDPOINTS.md (1 to 40)
 export const DEFAULT_CHECKLIST: ChecklistItem[] = [
-  // 1. Storefront & Customer Navigation Pages
   {
-    index: 1,
-    id: '1-home',
-    area: 'Core',
-    name: 'Home Page',
-    route: '/',
-    purpose: 'Storefront editorial homepage with hero, featured drops, ethos, and latest arrivals.',
-    status: 'pending',
+    "index": 1,
+    "id": "1-home",
+    "area": "Core",
+    "name": "Home Page",
+    "route": "/",
+    "purpose": "Editorial landing page with hero, brand values, selected essentials, capsule series, and the Rolls-Royce scroll-morph navbar.",
+    "status": "pending"
   },
   {
-    index: 2,
-    id: '2-shop',
-    area: 'Shopping',
-    name: 'Catalog & Shop',
-    route: '/shop',
-    purpose: 'Full catalog browsing with category filters, sorting, price range, and stock indicators.',
-    status: 'pending',
+    "index": 2,
+    "id": "2-shop",
+    "area": "Shopping",
+    "name": "Catalog & Shop",
+    "route": "/shop",
+    "purpose": "Complete product browsing with desktop FilterBar, mobile slide-over filter drawer, sort dropdown, and active filter pills.",
+    "status": "pending"
   },
   {
-    index: 3,
-    id: '3-collections',
-    area: 'Shopping',
-    name: 'Capsule Collections',
-    route: '/collections',
-    purpose: 'Collections index and curated lookbook directory.',
-    status: 'pending',
+    "index": 3,
+    "id": "3-collections",
+    "area": "Shopping",
+    "name": "Capsule Collections",
+    "route": "/collections",
+    "purpose": "Seasonal slow-fashion capsule overview with high-res lookbook banners and garment counts.",
+    "status": "pending"
   },
   {
-    index: 4,
-    id: '4-collections-detail',
-    area: 'Shopping',
-    name: 'Capsule Detail',
-    route: '/collections/winter-monolith',
-    purpose: 'Dynamic collection gallery with curated garments and editorial copy.',
-    status: 'pending',
+    "index": 4,
+    "id": "4-collections-detail",
+    "area": "Shopping",
+    "name": "Capsule Detail",
+    "route": "/collections/winter-monolith",
+    "purpose": "Dedicated capsule collection view with curated matching product grid.",
+    "status": "pending"
   },
   {
-    index: 5,
-    id: '5-products-detail',
-    area: 'Shopping',
-    name: 'Product Detail Page (PDP)',
-    route: '/products/monolith-heavyweight-hoodie-vintage-black',
-    purpose: 'Product Detail Page (PDP): color/size matrix, minor unit pricing, gallery, and bag actions.',
-    status: 'pending',
+    "id": "pdp-monolith-hoodie",
+    "area": "Shopping",
+    "name": "PDP: Monolith Heavyweight Hoodie",
+    "route": "/products/monolith-heavyweight-hoodie-vintage-black",
+    "image": "/products/2.jpeg",
+    "purpose": "500 GSM architectural loopback French terry hoodie, packaging unboxing radio (+₹250), CM/IN sizing table, and customer reviews.",
+    "status": "done",
+    "index": 5
   },
   {
-    index: 6,
-    id: '6-cart',
-    area: 'Purchase',
-    name: 'Shopping Bag',
-    route: '/cart',
-    purpose: 'Full shopping bag with line totals, quantity controls, promo validation, and checkout CTA.',
-    status: 'pending',
+    "id": "pdp-atelier-tee",
+    "area": "Shopping",
+    "name": "PDP: Atelier Raw-Edge Relaxed Tee",
+    "route": "/products/atelier-raw-edge-relaxed-tee",
+    "image": "/products/1.jpeg",
+    "purpose": "280 GSM single-origin combed organic cotton tee with dynamic Textile Integrity & Fiber Characteristics table (4 comparison columns).",
+    "status": "done",
+    "index": 6
   },
   {
-    index: 7,
-    id: '7-checkout',
-    area: 'Purchase',
-    name: 'Checkout & Simulation',
-    route: '/checkout',
-    purpose: 'Multi-step simulated checkout (contact, shipping address, Razorpay sandbox payment).',
-    status: 'pending',
+    "id": "pdp-solitude-trousers",
+    "area": "Shopping",
+    "name": "PDP: Solitude Wide-Leg Canvas Trousers",
+    "route": "/products/solitude-wide-leg-canvas-trousers",
+    "image": "/products/3.jpeg",
+    "purpose": "Heavyweight duck canvas pleated trousers with waist/inseam sizing matrix and utilitarian pockets.",
+    "status": "done",
+    "index": 7
   },
   {
-    index: 8,
-    id: '8-checkout-success',
-    area: 'Purchase',
-    name: 'Order Confirmation & Receipt',
-    route: '/checkout/success',
-    purpose: 'Post-purchase order confirmation with order summary and shipment tracking seam.',
-    status: 'pending',
+    "id": "pdp-crewneck-slate",
+    "area": "Shopping",
+    "name": "PDP: Kinetic Heavy Fleece Crewneck",
+    "route": "/products/unplugged-oversized-crewneck-slate",
+    "image": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "Heavy fleece crewneck with drop-shoulder silhouette, sizing table with CM/IN toggles, and apparel FAQs.",
+    "status": "done",
+    "index": 8
   },
   {
-    index: 9,
-    id: '9-wishlist',
-    area: 'Discovery',
-    name: 'Saved Garments',
-    route: '/wishlist',
-    purpose: 'Customer wishlist with real-time counter in header and one-click add to cart.',
-    status: 'pending',
+    "id": "pdp-carryall-tote",
+    "area": "Shopping",
+    "name": "PDP: Heavy Canvas Utility Carryall Tote",
+    "route": "/products/heavy-canvas-utility-carryall-tote",
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "28L utilitarian carryall tote bag. Size pills strictly hidden; strap radio options (Shoulder Drop ₹0 vs Padded Crossbody +₹150).",
+    "status": "done",
+    "index": 9
   },
   {
-    index: 10,
-    id: '10-search',
-    area: 'Discovery',
-    name: 'Catalog Search',
-    route: '/search?q=hoodie',
-    purpose: 'Instant full-text search across titles, fabric compositions, tags, and categories.',
-    status: 'pending',
+    "id": "pdp-dad-cap",
+    "area": "Shopping",
+    "name": "PDP: Low-Profile Distressed Dad Cap",
+    "route": "/products/washed-cotton-dad-cap-minimal",
+    "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "Low-profile 6-panel washed cotton cap with debossed antique brass buckle closure. Size pills hidden; strict table omission.",
+    "status": "done",
+    "index": 10
   },
   {
-    index: 11,
-    id: '11-track-order',
-    area: 'Support',
-    name: 'Order Tracking',
-    route: '/track-order',
-    purpose: 'Public order & fulfillment tracker with carrier timeline and live status.',
-    status: 'pending',
+    "id": "pdp-zip-hoodie",
+    "area": "Shopping",
+    "name": "PDP: Architectural Drop-Shoulder Zip Hoodie",
+    "route": "/products/architectural-zip-hoodie",
+    "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "520 GSM extra-dense combed organic terry with two-way matte gunmetal zipper and sizing chart.",
+    "status": "done",
+    "index": 11
   },
   {
-    index: 12,
-    id: '12-size-guide',
-    area: 'Support',
-    name: 'Interactive Size Guide',
-    route: '/size-guide',
-    purpose: 'Architectural sizing charts (chest, length, sleeve) and measurement methodology.',
-    status: 'pending',
-  },
-
-  // 2. Editorial, Story & Journal Pages
-  {
-    index: 13,
-    id: '13-about',
-    area: 'Brand',
-    name: 'Brand Philosophy',
-    route: '/about',
-    purpose: 'Studio philosophy, minimalist craftsmanship, and slow-living narrative.',
-    status: 'pending',
+    "id": "pdp-bomber-jacket",
+    "area": "Shopping",
+    "name": "PDP: Technical Shell Modular Bomber Jacket",
+    "route": "/products/technical-shell-modular-bomber-jacket",
+    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "3-layer waterproof breathable membrane with Aquaguard zippers, interior shoulder carry strap, and outerwear sizing specs.",
+    "status": "done",
+    "index": 12
   },
   {
-    index: 14,
-    id: '14-about-sustainability',
-    area: 'Brand',
-    name: 'Sustainability & POD',
-    route: '/about/sustainability',
-    purpose: 'Zero-deadstock commitment, GOTS organic cottons, and on-demand manufacturing.',
-    status: 'pending',
+    "id": "pdp-waffle-tee",
+    "area": "Shopping",
+    "name": "PDP: Raw Hem Heavyweight Thermal Waffle Tee",
+    "route": "/products/raw-hem-heavyweight-thermal-waffle-tee",
+    "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "360 GSM honeycomb knitted cotton with raw-cut hem, graceful image fallback handling, and sizing guide.",
+    "status": "done",
+    "index": 13
   },
   {
-    index: 15,
-    id: '15-our-story',
-    area: 'Brand',
-    name: 'Our Story',
-    route: '/our-story',
-    purpose: 'The founding journey of The Unplugged Wear and tactile design ethos.',
-    status: 'pending',
+    "id": "pdp-chore-coat",
+    "area": "Shopping",
+    "name": "PDP: Japanese Selvedge Chore Coat",
+    "route": "/products/japanese-selvedge-cotton-chore-coat",
+    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "14.5 oz shuttle-loomed selvedge denim chore coat with copper rivet reinforcements and sizing table.",
+    "status": "done",
+    "index": 14
   },
   {
-    index: 16,
-    id: '16-journal',
-    area: 'Brand',
-    name: 'Editorial Journal',
-    route: '/journal',
-    purpose: 'Slow Living Journal index with editorial features and essays.',
-    status: 'pending',
+    "id": "pdp-studio-blanket",
+    "area": "Shopping",
+    "name": "PDP: Brushed Cashmere Studio Blanket",
+    "route": "/products/brushed-cashmere-ribbed-studio-blanket",
+    "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "100% Grade-A Mongolian cashmere throw. Strict table omission (specTable: null); edge finish radio options (+₹300).",
+    "status": "done",
+    "index": 15
   },
   {
-    index: 17,
-    id: '17-journal-article',
-    area: 'Brand',
-    name: 'Journal Article View',
-    route: '/journal/the-anatomy-of-500-gsm-cotton',
-    purpose: 'Rich editorial article with typographic hierarchy, pull quotes, and author info.',
-    status: 'pending',
+    "id": "pdp-windbreaker",
+    "area": "Shopping",
+    "name": "PDP: Minimalist Modular Ripstop Windbreaker",
+    "route": "/products/modular-lightweight-ripstop-windbreaker",
+    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "Diamond micro-ripstop windbreaker with packable self-stow hood and sizing table.",
+    "status": "done",
+    "index": 16
   },
   {
-    index: 18,
-    id: '18-blog',
-    area: 'Brand',
-    name: 'Blog Index',
-    route: '/blog',
-    purpose: 'Canonical blog index (aliases Journal entries).',
-    status: 'pending',
+    "id": "pdp-ceramic-mug",
+    "area": "Shopping",
+    "name": "PDP: Stoneware Emblem Ceramic Mug",
+    "route": "/products/stoneware-emblem-ceramic-mug",
+    "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "Wheel-thrown stoneware ceramic mug. Capacity chips (350ml / 450ml), 1,240°C kiln-firing ceramic specs table, and food-safe FAQs.",
+    "status": "done",
+    "index": 17
   },
   {
-    index: 19,
-    id: '19-blog-article',
-    area: 'Brand',
-    name: 'Blog Article View',
-    route: '/blog/zero-deadstock-print-on-demand',
-    purpose: 'Individual blog post view with related stories and share metadata.',
-    status: 'pending',
+    "id": "pdp-kids-tee",
+    "area": "Shopping",
+    "name": "PDP: Kids Organic Cotton Emblem Tee",
+    "route": "/products/kids-organic-cotton-emblem-tee",
+    "image": "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=1200&auto=format&fit=crop&q=80",
+    "purpose": "Little Atelier kids organic tee with age/height growth chart table (2-3Y to 10-11Y), anti-chafe flatlock seams, and child-safe FAQs.",
+    "status": "done",
+    "index": 18
   },
   {
-    index: 20,
-    id: '20-contact',
-    area: 'Support',
-    name: 'Concierge & Inquiries',
-    route: '/contact',
-    purpose: 'Concierge inquiries form, studio hours, and client support channels.',
-    status: 'pending',
+    "index": 19,
+    "id": "6-cart",
+    "area": "Purchase",
+    "name": "Shopping Bag",
+    "route": "/cart",
+    "purpose": "Full-page shopping cart with free-shipping threshold tracker (₹3,000 threshold), item quantity controls, and coupon code entry.",
+    "status": "pending"
   },
   {
-    index: 21,
-    id: '21-faq',
-    area: 'Support',
-    name: 'Frequently Asked Questions',
-    route: '/faq',
-    purpose: 'Accordion FAQ addressing sizing, shipping timelines, fabrics, and care.',
-    status: 'pending',
-  },
-
-  // 3. Account & Authentication Pages
-  {
-    index: 22,
-    id: '22-account',
-    area: 'Account',
-    name: 'Customer Account Portal',
-    route: '/account',
-    purpose: 'Customer profile dashboard, saved addresses, preferences, and quick links.',
-    status: 'pending',
+    "index": 20,
+    "id": "7-checkout",
+    "area": "Purchase",
+    "name": "Checkout & Simulation",
+    "route": "/checkout",
+    "purpose": "Multi-step checkout with address selection and interactive Payment Simulation Panel (UPI QR, Card, COD).",
+    "status": "pending"
   },
   {
-    index: 23,
-    id: '23-account-orders',
-    area: 'Account',
-    name: 'Account Order History',
-    route: '/account/orders',
-    purpose: 'Order history listing with status badges (shipped, delivered, queued).',
-    status: 'pending',
+    "index": 21,
+    "id": "8-checkout-success",
+    "area": "Purchase",
+    "name": "Order Confirmation & Receipt",
+    "route": "/checkout/success",
+    "purpose": "Post-purchase order confirmation screen with order summary and shipment tracking seam.",
+    "status": "pending"
   },
   {
-    index: 24,
-    id: '24-account-order-details',
-    area: 'Account',
-    name: 'Account Order Details',
-    route: '/account/orders/ord-9042',
-    purpose: 'Detailed invoice, fulfillment milestone breadcrumbs, and return request seam.',
-    status: 'pending',
+    "index": 22,
+    "id": "9-wishlist",
+    "area": "Discovery",
+    "name": "Saved Garments",
+    "route": "/wishlist",
+    "purpose": "Customer wishlist with real-time counter in header and one-click add to cart.",
+    "status": "pending"
   },
   {
-    index: 25,
-    id: '25-login',
-    area: 'Auth',
-    name: 'Customer Login',
-    route: '/login',
-    purpose: 'Customer sign in with email and password.',
-    status: 'pending',
+    "index": 23,
+    "id": "10-search",
+    "area": "Discovery",
+    "name": "Catalog Search",
+    "route": "/search?q=hoodie",
+    "purpose": "Instant product and collection search overlay and dedicated results page.",
+    "status": "pending"
   },
   {
-    index: 26,
-    id: '26-register',
-    area: 'Auth',
-    name: 'Customer Registration',
-    route: '/register',
-    purpose: 'New client account creation with lifestyle hero imagery.',
-    status: 'pending',
+    "index": 24,
+    "id": "11-track-order",
+    "area": "Support",
+    "name": "Order Tracking",
+    "route": "/track-order",
+    "purpose": "Real-time shipment tracker supporting reference lookups (e.g. TUW-98214-DEL) with chronological checkpoint milestones.",
+    "status": "pending"
   },
   {
-    index: 27,
-    id: '27-forgot-password',
-    area: 'Auth',
-    name: 'Forgot Password',
-    route: '/forgot-password',
-    purpose: 'Password reset request with email recovery link dispatch.',
-    status: 'pending',
+    "index": 25,
+    "id": "12-size-guide",
+    "area": "Support",
+    "name": "Interactive Size Guide",
+    "route": "/size-guide",
+    "purpose": "Sizing tables with dynamic centimeter/inch unit toggles across Chest, Length, Sleeve, and Shoulder.",
+    "status": "pending"
   },
   {
-    index: 28,
-    id: '28-reset-password',
-    area: 'Auth',
-    name: 'Reset Password',
-    route: '/reset-password',
-    purpose: 'Password reset confirmation with new credential entry.',
-    status: 'pending',
-  },
-
-  // 4. Legal & Policy Pages
-  {
-    index: 29,
-    id: '29-policies',
-    area: 'Policies',
-    name: 'Policy Hub',
-    route: '/policies',
-    purpose: 'Policy directory and customer protection overview.',
-    status: 'pending',
+    "index": 26,
+    "id": "13-about",
+    "area": "Brand",
+    "name": "Brand Philosophy",
+    "route": "/about",
+    "purpose": "The Unplugged Wear founding story, slow-living philosophy, and Tiruppur craft manifesto.",
+    "status": "pending"
   },
   {
-    index: 30,
-    id: '30-policies-privacy',
-    area: 'Policies',
-    name: 'Privacy Policy',
-    route: '/policies/privacy',
-    purpose: 'Full privacy notice and data processing disclosure.',
-    status: 'pending',
+    "index": 27,
+    "id": "14-about-sustainability",
+    "area": "Brand",
+    "name": "Sustainability & POD",
+    "route": "/about/sustainability",
+    "purpose": "Zero-deadstock on-demand manufacturing manifesto, 500 GSM loopback cotton sourcing, and eco-certified water dyes.",
+    "status": "pending"
   },
   {
-    index: 31,
-    id: '31-privacy-policy',
-    area: 'Policies',
-    name: 'Privacy Policy (Direct URL)',
-    route: '/privacy-policy',
-    purpose: 'Vanity alias route to Privacy Policy.',
-    status: 'pending',
+    "index": 28,
+    "id": "15-our-story",
+    "area": "Brand",
+    "name": "Our Story",
+    "route": "/our-story",
+    "purpose": "The founding journey of The Unplugged Wear and tactile design ethos.",
+    "status": "pending"
   },
   {
-    index: 32,
-    id: '32-policies-returns',
-    area: 'Policies',
-    name: 'Returns & Refunds Policy',
-    route: '/policies/returns',
-    purpose: '7-day exchange window, conditions, and return guidelines.',
-    status: 'pending',
+    "index": 29,
+    "id": "16-journal",
+    "area": "Brand",
+    "name": "Editorial Journal",
+    "route": "/journal",
+    "purpose": "Slow-living publications, design essays, and behind-the-scenes craft stories.",
+    "status": "pending"
   },
   {
-    index: 33,
-    id: '33-returns-refunds',
-    area: 'Policies',
-    name: 'Returns & Refunds (Direct URL)',
-    route: '/returns-refunds',
-    purpose: 'Vanity alias route to Returns & Refunds Policy.',
-    status: 'pending',
+    "index": 30,
+    "id": "17-journal-article",
+    "area": "Brand",
+    "name": "Journal Article View",
+    "route": "/journal/the-anatomy-of-500-gsm-cotton",
+    "purpose": "Rich editorial article with typographic hierarchy, pull quotes, and author info.",
+    "status": "pending"
   },
   {
-    index: 34,
-    id: '34-policies-shipping',
-    area: 'Policies',
-    name: 'Shipping Policy',
-    route: '/policies/shipping',
-    purpose: 'Pan-India shipping timelines (5–8 business days) and carrier details.',
-    status: 'pending',
+    "index": 31,
+    "id": "18-blog",
+    "area": "Brand",
+    "name": "Blog Index",
+    "route": "/blog",
+    "purpose": "Canonical blog index (aliases Journal entries).",
+    "status": "pending"
   },
   {
-    index: 35,
-    id: '35-shipping-policy',
-    area: 'Policies',
-    name: 'Shipping Policy (Direct URL)',
-    route: '/shipping-policy',
-    purpose: 'Vanity alias route to Shipping Policy.',
-    status: 'pending',
+    "index": 32,
+    "id": "19-blog-article",
+    "area": "Brand",
+    "name": "Blog Article View",
+    "route": "/blog/zero-deadstock-print-on-demand",
+    "purpose": "Individual blog post view with related stories and share metadata.",
+    "status": "pending"
   },
   {
-    index: 36,
-    id: '36-policies-terms',
-    area: 'Policies',
-    name: 'Terms & Conditions',
-    route: '/policies/terms',
-    purpose: 'Store terms of service, intellectual property, and governing law.',
-    status: 'pending',
+    "index": 33,
+    "id": "20-contact",
+    "area": "Support",
+    "name": "Concierge & Inquiries",
+    "route": "/contact",
+    "purpose": "Concierge inquiries form, studio hours, and client support channels.",
+    "status": "pending"
   },
   {
-    index: 37,
-    id: '37-terms',
-    area: 'Policies',
-    name: 'Terms (Direct URL)',
-    route: '/terms',
-    purpose: 'Vanity alias route to Terms & Conditions.',
-    status: 'pending',
-  },
-
-  // 5. Developer & System Tools
-  {
-    index: 38,
-    id: '38-checklist',
-    area: 'System',
-    name: 'Storefront Checklist & Tracker',
-    route: '/checklist',
-    purpose: 'Interactive page progress tracker: toggle Done/Not Done, add custom pages, edit review notes, and save.',
-    status: 'pending',
+    "index": 34,
+    "id": "21-faq",
+    "area": "Support",
+    "name": "Frequently Asked Questions",
+    "route": "/faq",
+    "purpose": "Accordion FAQ addressing sizing, shipping timelines, fabrics, and care.",
+    "status": "pending"
   },
   {
-    index: 39,
-    id: '39-design-system',
-    area: 'System',
-    name: 'Design System Specimen',
-    route: '/design-system',
-    purpose: 'Live UI component library: color palettes, typography scale, buttons, badges, drawers, and form controls.',
-    status: 'pending',
+    "index": 35,
+    "id": "22-account",
+    "area": "Account",
+    "name": "Customer Account Portal",
+    "route": "/account",
+    "purpose": "Customer profile dashboard, saved addresses, preferences, and quick links.",
+    "status": "pending"
   },
   {
-    index: 40,
-    id: '40-not-found',
-    area: 'System',
-    name: 'Custom 404 Experience',
-    route: '/non-existent-page-demo',
-    purpose: 'Architectural slow-fashion 404 page with quick recovery links back to the catalog.',
-    status: 'pending',
+    "index": 36,
+    "id": "23-account-orders",
+    "area": "Account",
+    "name": "Account Order History",
+    "route": "/account/orders",
+    "purpose": "Order history listing with status badges (shipped, delivered, queued).",
+    "status": "pending"
   },
+  {
+    "index": 37,
+    "id": "24-account-order-details",
+    "area": "Account",
+    "name": "Account Order Details",
+    "route": "/account/orders/ord-9042",
+    "purpose": "Detailed invoice, fulfillment milestone breadcrumbs, and return request seam.",
+    "status": "pending"
+  },
+  {
+    "index": 38,
+    "id": "25-login",
+    "area": "Auth",
+    "name": "Customer Login",
+    "route": "/login",
+    "purpose": "Customer sign in with email and password.",
+    "status": "pending"
+  },
+  {
+    "index": 39,
+    "id": "26-register",
+    "area": "Auth",
+    "name": "Customer Registration",
+    "route": "/register",
+    "purpose": "New client account creation with lifestyle hero imagery.",
+    "status": "pending"
+  },
+  {
+    "index": 40,
+    "id": "27-forgot-password",
+    "area": "Auth",
+    "name": "Forgot Password",
+    "route": "/forgot-password",
+    "purpose": "Password reset request with email recovery link dispatch.",
+    "status": "pending"
+  },
+  {
+    "index": 41,
+    "id": "28-reset-password",
+    "area": "Auth",
+    "name": "Reset Password",
+    "route": "/reset-password",
+    "purpose": "Password reset confirmation with new credential entry.",
+    "status": "pending"
+  },
+  {
+    "index": 42,
+    "id": "29-policies",
+    "area": "Policies",
+    "name": "Policy Hub",
+    "route": "/policies",
+    "purpose": "Policy directory and customer protection overview.",
+    "status": "pending"
+  },
+  {
+    "index": 43,
+    "id": "30-policies-privacy",
+    "area": "Policies",
+    "name": "Privacy Policy",
+    "route": "/policies/privacy",
+    "purpose": "Full privacy notice and data processing disclosure.",
+    "status": "pending"
+  },
+  {
+    "index": 44,
+    "id": "31-privacy-policy",
+    "area": "Policies",
+    "name": "Privacy Policy (Direct URL)",
+    "route": "/privacy-policy",
+    "purpose": "Vanity alias route to Privacy Policy.",
+    "status": "pending"
+  },
+  {
+    "index": 45,
+    "id": "32-policies-returns",
+    "area": "Policies",
+    "name": "Returns & Refunds Policy",
+    "route": "/policies/returns",
+    "purpose": "7-day exchange window, conditions, and return guidelines.",
+    "status": "pending"
+  },
+  {
+    "index": 46,
+    "id": "33-returns-refunds",
+    "area": "Policies",
+    "name": "Returns & Refunds (Direct URL)",
+    "route": "/returns-refunds",
+    "purpose": "Vanity alias route to Returns & Refunds Policy.",
+    "status": "pending"
+  },
+  {
+    "index": 47,
+    "id": "34-policies-shipping",
+    "area": "Policies",
+    "name": "Shipping Policy",
+    "route": "/policies/shipping",
+    "purpose": "Pan-India shipping timelines (5–8 business days) and carrier details.",
+    "status": "pending"
+  },
+  {
+    "index": 48,
+    "id": "35-shipping-policy",
+    "area": "Policies",
+    "name": "Shipping Policy (Direct URL)",
+    "route": "/shipping-policy",
+    "purpose": "Vanity alias route to Shipping Policy.",
+    "status": "pending"
+  },
+  {
+    "index": 49,
+    "id": "36-policies-terms",
+    "area": "Policies",
+    "name": "Terms & Conditions",
+    "route": "/policies/terms",
+    "purpose": "Store terms of service, intellectual property, and governing law.",
+    "status": "pending"
+  },
+  {
+    "index": 50,
+    "id": "37-terms",
+    "area": "Policies",
+    "name": "Terms (Direct URL)",
+    "route": "/terms",
+    "purpose": "Vanity alias route to Terms & Conditions.",
+    "status": "pending"
+  },
+  {
+    "index": 51,
+    "id": "38-checklist",
+    "area": "System",
+    "name": "Storefront Checklist & Tracker",
+    "route": "/checklist",
+    "purpose": "Interactive page progress tracker: toggle Done/Not Done, add custom pages, edit review notes, and save.",
+    "status": "pending"
+  },
+  {
+    "index": 52,
+    "id": "39-design-system",
+    "area": "System",
+    "name": "Design System Specimen",
+    "route": "/design-system",
+    "purpose": "Live UI component library: color palettes, typography scale, buttons, badges, drawers, and form controls.",
+    "status": "pending"
+  },
+  {
+    "index": 53,
+    "id": "40-not-found",
+    "area": "System",
+    "name": "Custom 404 Experience",
+    "route": "/non-existent-page-demo",
+    "purpose": "Architectural slow-fashion 404 page with quick recovery links back to the catalog.",
+    "status": "pending"
+  }
 ];
 
-const STORAGE_KEY = 'tuw_website_v2_roadmap_checklist_v5';
+const STORAGE_KEY = 'tuw_website_v2_roadmap_checklist_v6';
 
 export default function ChecklistPage() {
   const [items, setItems] = useState<ChecklistItem[]>(DEFAULT_CHECKLIST);
@@ -448,13 +571,24 @@ export default function ChecklistPage() {
   // Load checklist on mount from API or LocalStorage
   useEffect(() => {
     async function loadChecklist() {
-      // 1. Try local storage first (instant browser persistence on any domain or host)
+      // Helper to merge images into loaded items
+      const mergeWithDefaults = (loadedItems: ChecklistItem[]) => {
+        return loadedItems.map((item) => {
+          if (!item.image) {
+            const def = DEFAULT_CHECKLIST.find((d) => d.id === item.id || d.route === item.route);
+            if (def?.image) return { ...item, image: def.image };
+          }
+          return item;
+        });
+      };
+
+      // 1. Try local storage first
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length >= 38) {
-            setItems(parsed);
+          if (Array.isArray(parsed) && parsed.length >= 45) {
+            setItems(mergeWithDefaults(parsed));
             setLoading(false);
             return;
           }
@@ -468,8 +602,8 @@ export default function ChecklistPage() {
         const res = await fetch('/api/checklist');
         if (res.ok) {
           const json = await res.json();
-          if (json.data && Array.isArray(json.data.items) && json.data.items.length >= 38) {
-            setItems(json.data.items);
+          if (json.data && Array.isArray(json.data.items) && json.data.items.length >= 45) {
+            setItems(mergeWithDefaults(json.data.items));
             if (json.data.lastSavedAt) {
               setLastSavedAt(new Date(json.data.lastSavedAt).toLocaleTimeString());
             }
@@ -839,7 +973,7 @@ export default function ChecklistPage() {
               ) : (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  All 40 pages stored and synced
+                  All {items.length} pages stored and synced
                 </span>
               )}
               {lastSavedAt && <span className="text-[#888]">Last saved: {lastSavedAt}</span>}
@@ -1086,27 +1220,45 @@ export default function ChecklistPage() {
                           </select>
                         </td>
 
-                        {/* Route & Page Title */}
+                        {/* Route & Page Title with Thumbnail Image */}
                         <td className="py-4 px-4 sm:px-6">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`font-bold text-[#1A1A1A] ${
-                                isDone ? 'text-emerald-950' : ''
-                              }`}
-                            >
-                              {item.name}
-                            </span>
-                            {item.isCustom && (
-                              <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-[#C8A96A]/20 text-[#8E7035]">
-                                Custom
-                              </span>
+                          <div className="flex items-center gap-3">
+                            {item.image ? (
+                              <div className="relative w-12 h-14 rounded-lg overflow-hidden border border-store-card-border bg-store-canvas shrink-0 shadow-2xs">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            ) : (
+                              <div className="w-12 h-14 rounded-lg border border-dashed border-[#D1CBC1] bg-store-canvas flex items-center justify-center shrink-0 text-store-muted">
+                                <span className="text-[10px] font-mono font-bold uppercase">{item.area.slice(0, 3)}</span>
+                              </div>
                             )}
-                          </div>
-                          <code className="text-xs text-[#666] font-mono block mt-0.5 font-semibold">
-                            {item.route}
-                          </code>
-                          <div className="sm:hidden text-xs text-[#888] mt-1">
-                            <span className="font-semibold text-[#555]">{item.area}</span> • {item.purpose}
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`font-bold text-store-charcoal truncate ${
+                                    isDone ? 'text-emerald-950' : ''
+                                  }`}
+                                >
+                                  {item.name}
+                                </span>
+                                {item.isCustom && (
+                                  <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 shrink-0">
+                                    Custom
+                                  </span>
+                                )}
+                              </div>
+                              <code className="text-xs text-[#666] font-mono block mt-0.5 font-semibold truncate">
+                                {item.route}
+                              </code>
+                              <div className="sm:hidden text-xs text-[#888] mt-1">
+                                <span className="font-semibold text-[#555]">{item.area}</span> • {item.purpose}
+                              </div>
+                            </div>
                           </div>
                         </td>
 

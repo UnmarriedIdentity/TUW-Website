@@ -70,6 +70,7 @@ export interface ProductFaqItem {
 export type Product = {
   id: string;
   slug: string;
+  aliases?: string[];
   title: string;
   subtitle: string;
   category: 'hoodies' | 'tees' | 'jackets' | 'pants' | 'accessories' | 'capsules' | 'mugs' | 'kids';
@@ -81,6 +82,7 @@ export type Product = {
     url: string;
     alt: string;
     color?: string;
+    label?: string;
   }[];
   colors: ProductColor[];
   sizes: ProductSize[];

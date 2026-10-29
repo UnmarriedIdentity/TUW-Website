@@ -13,7 +13,6 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Badge from '@/components/ui/Badge';
 import VirtualFittingRoom from '@/components/commerce/VirtualFittingRoom';
 import CommunityPraise from '@/components/commerce/CommunityPraise';
 import OurPhilosophy from '@/components/commerce/OurPhilosophy';
@@ -274,21 +273,6 @@ function BestSellingCard({
             />
           )}
         </Link>
-
-        {/* Discount Pill Badge (e.g. -30%, -25%) */}
-        {item.discountPercent ? (
-          <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold text-white bg-red-600 shadow-xs">
-              -{item.discountPercent}%
-            </span>
-          </div>
-        ) : item.isBestseller ? (
-          <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <Badge variant="dark" size="sm">
-              Bestseller
-            </Badge>
-          </div>
-        ) : null}
 
         {/* Wishlist Heart Button (Clean, crisp, no blur) */}
         <button

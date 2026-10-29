@@ -178,6 +178,89 @@ const KIDS_REVIEWS: ReviewItem[] = [
   },
 ];
 
+
+// Exact Figma Pairs Well With Datasets (Figma Node 354:24651 FINAL PDP)
+const APPAREL_PAIRS_ITEMS = [
+  {
+    id: 'pairs-apparel-1',
+    title: 'Everyday Heavy Tee',
+    priceText: '$80 · 4 colours',
+    image: '/images/pdp-figma/pairs/apparel-heavy-tee.png',
+  },
+  {
+    id: 'pairs-apparel-2',
+    title: 'Pleated Wide Trouser',
+    priceText: '$220 · 3 colours',
+    image: '/images/pdp-figma/pairs/apparel-wide-trouser.png',
+  },
+  {
+    id: 'pairs-apparel-3',
+    title: 'Norsbro Crew Neck',
+    priceText: '$250 · 3 colours',
+    image: '/images/pdp-figma/pairs/apparel-crewneck.png',
+  },
+  {
+    id: 'pairs-apparel-4',
+    title: 'Sadie Jeans Sheets',
+    priceText: '$250 · 2 colours',
+    image: '/images/pdp-figma/pairs/apparel-jeans-sheets.png',
+  },
+];
+
+const MUG_PAIRS_ITEMS = [
+  {
+    id: 'pairs-mug-1',
+    title: 'Tumbler Bottle, 20 oz',
+    priceText: 'from ₹1,199',
+    image: '/images/pdp-figma/pairs/living-tumbler-bottle.png',
+  },
+  {
+    id: 'pairs-mug-2',
+    title: 'Steel Water Bottle',
+    priceText: 'from ₹699',
+    image: '/images/pdp-figma/pairs/living-steel-bottle.png',
+  },
+  {
+    id: 'pairs-mug-3',
+    title: 'Coasters',
+    priceText: 'from ₹199',
+    image: '/images/pdp-figma/pairs/living-coasters.png',
+  },
+  {
+    id: 'pairs-mug-4',
+    title: 'Sipper Bottle',
+    priceText: 'from ₹699',
+    image: '/images/pdp-figma/pairs/living-sipper-bottle.png',
+  },
+];
+
+const KIDS_PAIRS_ITEMS = [
+  {
+    id: 'pairs-kids-1',
+    title: 'Kids Hoodie',
+    priceText: 'from ₹899',
+    image: '/images/pdp-figma/pairs/kids-kids-hoodie.png',
+  },
+  {
+    id: 'pairs-kids-2',
+    title: 'Rompers',
+    priceText: 'from ₹299',
+    image: '/images/pdp-figma/pairs/kids-rompers.png',
+  },
+  {
+    id: 'pairs-kids-3',
+    title: 'Kids AOP Sweatshirt',
+    priceText: 'from ₹899',
+    image: '/images/pdp-figma/pairs/kids-kids-sweatshirt.png',
+  },
+  {
+    id: 'pairs-kids-4',
+    title: 'Kids AOP Sports Shorts',
+    priceText: 'from ₹799',
+    image: '/images/pdp-figma/pairs/kids-kids-shorts.png',
+  },
+];
+
 export default function ProductDetailPage({
   params,
 }: {
@@ -279,7 +362,7 @@ export default function ProductDetailPage({
     <div className="min-h-screen flex flex-col bg-store-canvas">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      <main className="flex-1 w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-10">
         {/* Breadcrumb Trail */}
         <div className="mb-6">
           <Breadcrumb
@@ -574,19 +657,18 @@ export default function ProductDetailPage({
         {/* ======================================================== */}
         {/* 5. REUSABLE 'PAIRS WELL WITH' (Figma Recommendation Row) */}
         {/* ======================================================== */}
-        {relatedProducts.length > 0 && (
-          <RelatedProductsSection
-            products={relatedProducts}
-            title="Pairs Well With"
-            eyebrow={
-              templateType === 'kids'
-                ? 'Kids Wardrobe Essentials'
-                : templateType === 'mug'
-                ? 'Studio Tableware Capsule'
-                : 'Complete The Outfit'
-            }
-          />
-        )}
+        <RelatedProductsSection
+          pairsItems={
+            templateType === 'kids'
+              ? KIDS_PAIRS_ITEMS
+              : templateType === 'mug'
+              ? MUG_PAIRS_ITEMS
+              : APPAREL_PAIRS_ITEMS
+          }
+          title="Pairs well with"
+          catalogLink="/shop"
+          catalogLabel="SHOP ALL"
+        />
 
         {/* ======================================================== */}
         {/* 6. REUSABLE SPLIT FEATURE STORY (Figma Node 197:17352) */}

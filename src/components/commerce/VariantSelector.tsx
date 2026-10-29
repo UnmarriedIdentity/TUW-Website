@@ -239,15 +239,19 @@ export default function VariantSelector({
           </div>
 
           {/* Add to Bag Button */}
-          <Button
-            variant="dark"
-            size="lg"
-            fullWidth
+          <button
+            type="button"
             onClick={handleAddToCart}
-            icon={<ShoppingBag size={18} />}
+            className="w-full h-14 px-6 rounded-full bg-store-charcoal text-white hover:bg-black transition-all flex items-center justify-between font-bold text-xs uppercase tracking-wider shadow-sm cursor-pointer active:scale-98"
           >
-            Add to Bag • ₹{(effectiveUnitPriceINR * quantity).toLocaleString()}
-          </Button>
+            <span className="flex items-center gap-2">
+              <ShoppingBag size={18} />
+              <span>Add to Bag</span>
+            </span>
+            <span className="font-mono text-sm tracking-normal">
+              ₹{(effectiveUnitPriceINR * quantity).toLocaleString()}
+            </span>
+          </button>
 
           {/* Wishlist Button */}
           <button
