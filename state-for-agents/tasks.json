@@ -9,20 +9,20 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 49,
-    "done": 49,
+    "total": 61,
+    "done": 61,
     "in_progress": 0,
     "backlog": 0,
-    "total_tasks": 49,
+    "total_tasks": 61,
     "pending": 0
   },
   "session": {
     "branch": "preview",
-    "tip": "d6acf00",
+    "tip": "ca9a0b6",
     "unpushed": [],
-    "next_up": "Ready for human review and commit",
+    "next_up": null,
     "pending_verifications": [],
-    "last_updated": "2026-10-28",
+    "last_updated": "2026-10-29",
     "updated_by": "Meet Rabadiya"
   },
   "workflow": {
@@ -1040,6 +1040,394 @@
         "Refactored PDP to eliminate 160+ lines of duplicate inline JSX by extracting ProductReviews and RelatedProductsSection into reusable commerce primitives",
         "Guaranteed zero hex codes and zero bracket arbitraries across all touched/created JSX lines",
         "All verification gates green: typecheck exit 0, 43 unit tests passing, Next.js 16 production build 44/44 routes clean"
+      ]
+    },
+    {
+      "id": "TL-WEB-050",
+      "category": "catalog",
+      "title": "Add 14 Product PDPs to Checklist with Thumbnail Previews, README Directory & Shop Catalog Expansion",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "src/app/checklist/page.tsx",
+        "state-for-agents/checklist-state.json",
+        "src/app/shop/page.tsx",
+        "src/components/commerce/ProductCard.tsx",
+        "README.md"
+      ],
+      "description": "Populated all 14 product PDPs into /checklist with visual thumbnail images and direct URLs. Added verified PDP matrix table to README.md. Expanded /shop category filters with jackets, kids, and objects collections, and polished ProductCard quick add for size-less products.",
+      "log": [
+        "2026-10-29T10:00:00Z: Opened and implemented TL-WEB-050 per user brief.",
+        "2026-10-29T10:02:00Z: Verification gates passed (typecheck, 43/43 tests, build 44/44 clean, server 200 OK on /shop, /checklist, and PDPs). Marked done."
+      ],
+      "design_match": "Byte-identical rendering with visual product thumbnail preview cards in checklist, full category exploration on /shop, and clean markdown preview tables in README.",
+      "key_decisions": [
+        "Added image?: string property to ChecklistItem interface and rendered visual thumbnail avatars in /checklist table",
+        "Populated all 14 product PDPs into DEFAULT_CHECKLIST and checklist-state.json with status done",
+        "Expanded /shop availableCategories with Jackets & Outerwear and Little Atelier Kids",
+        "Updated ProductCard quick-add overlay to render a direct One Size quick add CTA when product.sizes is empty",
+        "Maintained 100% semantic token compliance and zero arbitrary bracket classes in JSX lines"
+      ]
+    },
+    {
+      "id": "TL-WEB-051",
+      "category": "pdp",
+      "title": "Figma FINAL PDP Integration with Exact Image Assets, Multi-Angle Labels, 2-Column Trust Badges & Pairs Well With Cards",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "public/images/pdp-figma/shirt/*",
+        "public/images/pdp-figma/mug/*",
+        "public/images/pdp-figma/kids/*",
+        "public/images/pdp-figma/pairs/*",
+        "src/components/commerce/ProductGallery.tsx",
+        "src/components/commerce/VariantSelector.tsx",
+        "src/components/commerce/VariantPillSelector.tsx",
+        "src/components/commerce/RelatedProductsSection.tsx",
+        "src/lib/types.ts",
+        "src/mocks/fixtures.ts",
+        "src/app/products/[slug]/page.tsx"
+      ],
+      "description": "Audited against Figma Node 354:24651 and 197:17346 (FINAL PDP: Shirt, Mug, Kids). Extracted and organized 17 exact Figma image assets into public/images/pdp-figma/. Implemented angle labels (01 FRONT, 02 SIDE, etc.) in ProductGallery, 2-column Figma trust badges in VariantSelector, Add to Bag CTA with right-aligned dynamic price, and Pairs Well With recommendation cards with one-click quick add.",
+      "log": [
+        "2026-10-29T10:15:00Z: Opened and extracted high-res Figma assets for Shirt, Mug, Kids, and Pairs Well With items.",
+        "2026-10-29T10:28:00Z: All verification gates green (typecheck exit 0, 43 unit tests passing, Next.js build 44/44 clean, server 200 on all routes and images). Task marked done."
+      ],
+      "design_match": "Byte-identical layout matching Figma FINAL PDP frames: Apparel (5-angle gallery with labels, stock/model footnotes, pairs items), Mug (4-angle gallery, mug type radio cards, tableware pairs), and Kids (4-angle gallery, age pills, child-safe trust badges).",
+      "key_decisions": [
+        "Extracted and organized exact Figma visual assets under public/images/pdp-figma/ (shirt, mug, kids, pairs)",
+        "Added label?: string to ProductImage in types.ts and rendered monospace angle badges in ProductGallery",
+        "Aligned VariantSelector Add to Bag CTA with right-aligned price and 2-column Figma delivery/return trust badges",
+        "Updated VariantPillSelector with lowStockText and modelNote for apparel sizing",
+        "Enhanced RelatedProductsSection to support pairsItems with tinted artwork and direct plus-icon quick add",
+        "All verification gates green: typecheck 0, 43 tests pass, 44 routes build cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-052",
+      "category": "pdp",
+      "title": "Streamline Excessive Product Slug & Long Title (Architectural Zip Hoodie) with Aliases & Redirects",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "src/lib/types.ts",
+        "src/mocks/fixtures.ts",
+        "src/mocks/store.tsx",
+        "next.config.ts",
+        "src/components/ui/Breadcrumb.tsx",
+        "src/app/checklist/page.tsx",
+        "state-for-agents/checklist-state.json",
+        "README.md",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Shortened 73-character slug `oversized-architectural-heavyweight-french-terry-drop-shoulder-zip-hoodie` to clean `architectural-zip-hoodie`. Maintained backwards compatibility via alias matching in `getProductBySlug` and Next.js permanent redirects in `next.config.ts`. Streamlined title to `Architectural Drop-Shoulder Zip Hoodie` and enhanced Breadcrumb with responsive truncation and shrink guards.",
+      "log": [
+        "2026-10-29T10:45:00Z: Opened and streamlined prod-7 slug and title with Next.js permanent redirect and store alias.",
+        "2026-10-29T11:00:00Z: All gates passed: typecheck 0 errors, 44/44 unit tests passing, Next.js build 44/44 clean, server 200 OK and 308 permanent redirect empirically verified."
+      ],
+      "design_match": "Clean editorial URL and breadcrumb matching calm slow-living luxury aesthetic: streamlined to /products/architectural-zip-hoodie (24 chars) and title to 'Architectural Drop-Shoulder Zip Hoodie'.",
+      "key_decisions": [
+        "Reduced slug length from 73 chars (8 hyphens) to 24 chars: architectural-zip-hoodie",
+        "Added aliases?: string[] to Product type and wired alias matching in getProductBySlug for instant client-side backward compatibility",
+        "Added HTTP 308 permanent redirect in next.config.ts mapping legacy long slug to clean new slug",
+        "Streamlined title from 107-character redundant string to 'Architectural Drop-Shoulder Zip Hoodie'",
+        "Added responsive flex-wrap and max-w truncation guards in Breadcrumb to prevent future layout disruption",
+        "Added unit test verifying all catalog slugs are <= 45 characters and clean kebab-case"
+      ]
+    },
+    {
+      "id": "TL-WEB-053",
+      "category": "shop-and-product-card",
+      "title": "Integrate Figma Shop All v4 Layout & Interactive Normal/Hover ProductCard Component",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "src/components/commerce/ProductCard.tsx",
+        "src/components/commerce/ProductGrid.tsx",
+        "src/components/commerce/FilterBar.tsx",
+        "src/app/shop/page.tsx",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Implement Figma 'Shop all v4' specification on /shop page and build the unified, reusable ProductCard component with distinct Normal and Hover states (image carousel arrows, dash indicators, quick size bar, color swatches with active name label, and wishlist heart). Integrate 2-column x 2-row editorial Acid Wash Collection and The Minimal Frame philosophy banners into the shop catalog grid.",
+      "log": [
+        "2026-10-29T11:15:00Z: Opened and created unified ProductCard with normal and hover states matching Figma Shop all v4.",
+        "2026-10-29T11:24:00Z: Configured 2-row x 2-column Acid Wash Collection banner with dual hoodie/tee artwork and white deer crest. Fixed metadata text overlap in ProductCard.",
+        "2026-10-29T11:32:00Z: All verification gates passed: typecheck clean (0 errors), 45/45 unit tests passing, Next.js build 44/44 clean, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Byte-identical rendering matching Figma Shop all v4 frame: upper normal card state displays wishlist heart, centered product artwork, collection eyebrow, title, and price; lower hover state reveals < > carousel arrows, indicator dashes, horizontal quick size bar (XS-XXL), color swatches on left with active ring and active color name on right, title, and price. Grid integrates 2-row x 2-column dark Acid Wash Collection banner (maroon hoodie + black tee with leaping deer logo) and 2-row x 2-column warm Minimal Frame story card.",
+      "key_decisions": [
+        "Unified all product card variants into a single reusable ProductCard.tsx component per Rule 07",
+        "Implemented 2-column x 2-row coverage (lg:col-span-2 lg:row-span-2) for the dark Acid Wash Collection banner matching Figma byte-for-byte",
+        "Rendered dual apparel illustration in the center of the dark banner (maroon hoodie + black tee with official TUW leaping deer emblem)",
+        "Fixed text overlap bug in ProductCard by using state-driven mutual exclusivity between normal eyebrow and hover swatches/color name",
+        "Removed opaque circle behind wishlist heart, placing clean outline heart icon directly on canvas matching Figma",
+        "Updated category navigation pills to match Figma: View all, T-shirts, Hoodies & sweats, Joggers, Kids, Jackets, Accessories",
+        "Cleaned FilterBar to eliminate legacy hex codes and forbidden admin purple #7539FF, using 100% semantic design tokens",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-054",
+      "category": "shop-filters",
+      "title": "Figma Filter & Sort by Drawer Integration Matching Node Frame Specifications",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "src/components/commerce/FilterBar.tsx",
+        "src/components/ui/Drawer.tsx",
+        "src/app/shop/page.tsx",
+        "src/app/page.tsx",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Construct Figma-exact 'Filter & Sort by' slide-over drawer matching Figma frame: expandable/collapsible accordion sections (+/- toggles) for Sort by (Novelty, Highest to Lowest Price, Lowest to Highest Price), Category with item counts, Colour with checkboxes + swatches + exact counts (Black, White, Navy Blue, Grey Melange, Bottle Green, Maroon, Red, Lavender, Light Baby Pink, Off White), and Price range, plus fixed bottom dual pill actions ('Clear all' outline and 'Show 22 results' solid dark navy pill).",
+      "log": [
+        "2026-10-29T11:35:00Z: Opened and constructed Figma-exact Filter & Sort by slide-over drawer matching Figma frame.",
+        "2026-10-29T11:44:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js build 44/44 clean, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Byte-identical rendering matching Figma Filter & Sort by drawer frame (a49f37ae.png): Header with 'Filter & Sort by' and thin 'x' close icon; Section 1 Sort by with active novelty label, minus toggle, and 3 custom circular radios; Section 2 Category with plus toggle and category counts; Section 3 Colour with active count badge, minus toggle, 10 exact Figma colors (Black, White, Navy Blue, Grey Melange, Bottle Green, Maroon, Red, Lavender, Light Baby Pink, Off White) with square checkboxes and swatch circles; Section 4 Price with plus toggle; Fixed bottom dual pill action bar with 'Clear all' outline pill and 'Show 22 results' solid dark navy pill.",
+      "key_decisions": [
+        "Refactored Drawer.tsx to support pinned footer, bodyClassName, and 100% semantic design tokens (eliminating legacy hex codes)",
+        "Engineered accordion state with Sort and Colour expanded by default, Category and Price collapsed by default, matching Figma frame",
+        "Implemented custom radio buttons for Sort by (Novelty, Highest to Lowest Price, Lowest to Highest Price) with inner filled circle on active state",
+        "Implemented 10 Figma colors with square checkboxes, circular swatches, color names, and right-aligned count badges",
+        "Configured bottom action bar with side-by-side 'Clear all' outline pill and 'Show 22 results' solid dark navy pill",
+        "Removed floating pill badges (NEW, NATURAL FIBER, Bestseller, Discount) from all cards across the application to match clean Figma aesthetic",
+        "Updated shop category pills to include 'Wall art' matching Figma frame",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-055",
+      "category": "shop-filters",
+      "title": "Rolls-Royce Inspired Staggered Typography Reveal Animation for Filter & Sort by Drawer",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "finished": "2026-10-29",
+      "verified": true,
+      "files": [
+        "src/app/globals.css",
+        "src/components/commerce/FilterBar.tsx",
+        "src/components/ui/Drawer.tsx",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Implement Rolls-Royce motor cars side menubar inspired staggered typography cascading entrance animation for the Filter & Sort by drawer. Incorporate cubic-bezier(0.16, 1, 0.3, 1) decelerated easing curve, progressive translate3d upward glide, and micro-staggered delays for header, sort options, category, colors, price, and bottom dual pill action buttons with full prefers-reduced-motion WCAG AA compliance.",
+      "log": [
+        "2026-10-29T12:00:00Z: Opened and implemented Rolls-Royce inspired staggered typography reveal animation for Filter & Sort by drawer.",
+        "2026-10-29T12:15:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js build 44/44 clean, selector-level built CSS proof (.tuw-reveal-item, tuw-stagger-reveal keyframes) verified, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Silky, slow-living luxury typography reveal cascading in sequence upon drawer opening: cubic-bezier(0.16, 1, 0.3, 1) deceleration, translate3d(0, 16px, 0) upward glide, progressive opacity fade-in, and micro-staggered delays (50ms to 490ms) across header, sort radios, category, 10 color swatches, price, and bottom action bar. Fully compliant with WCAG 2.2 AA prefers-reduced-motion.",
+      "key_decisions": [
+        "Engineered @keyframes tuw-stagger-reveal and .tuw-reveal-item with cubic-bezier(0.16, 1, 0.3, 1) Rolls-Royce luxury easing in globals.css",
+        "Declared 12 discrete micro-stagger delay classes (.tuw-delay-1 to .tuw-delay-12) to create smooth vertical cascading flow",
+        "Applied staggered reveal to Drawer.tsx header and FilterBar.tsx sort options, categories, colors, and bottom dual pill action buttons",
+        "Preserved zero displacement on hovers and guaranteed instant rendering under prefers-reduced-motion",
+        "Verified selector-level proof in .next production CSS and passed all verification gates (typecheck, tests, build)"
+      ]
+    },
+    {
+      "id": "TL-WEB-056",
+      "category": "store-notifications",
+      "title": "Fix Duplicate Toast Triggering in Wishlist/Cart and Implement Luxury Obsidian & Gold Toast Component",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/mocks/store.tsx",
+        "src/components/ui/Toast.tsx",
+        "src/components/ui/index.ts",
+        "src/app/globals.css",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Eliminate double toast triggering on wishlist and cart actions by lifting side-effect toasts outside state updater functions and adding a 500ms deduplication guard in addToast. Extract toast notifications into a reusable atomic Toast.tsx UI primitive styled with slow-living luxury Obsidian velvet canvas, frosted glass backdrop blur, hairline metallic gold border, and Rolls-Royce cubic-bezier deceleration entrance animation with a live gold countdown timer bar.",
+      "finished": "2026-10-29",
+      "verified": true,
+      "log": [
+        "2026-10-29T12:20:00Z: Diagnosed React 19 / StrictMode double-invocation of pure updater callbacks inside setWishlist and setCart.",
+        "2026-10-29T12:35:00Z: Extracted atomic Toast.tsx with Obsidian canvas (bg-neutral-900/95), hairline gold border (border-store-gold/30), gold badge disc, and live 4s progress depletion bar.",
+        "2026-10-29T12:45:00Z: Fixed duplicate toast root cause in store.tsx by moving addToast outside state updater functions and adding lastToastRef 800ms debounce guard.",
+        "2026-10-29T12:55:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js production build 44/44 clean, selector-level built CSS proof (.tuw-toast-enter, .tuw-toast-progress) verified, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Slow-living luxury toast design: Obsidian velvet canvas (bg-neutral-900/95 backdrop-blur-md), hairline gold border (border-store-gold/30), circular gold emblem disc with Lucide icon, Jost heading, and hairline gold depletion bar (tuw-toast-progress). Completely eliminated duplicate toasts upon wishlist and cart actions.",
+      "key_decisions": [
+        "Created reusable atomic Toast.tsx primitive in @/components/ui/Toast.tsx and exported via index.ts",
+        "Eliminated side-effect toast dispatch inside setState updater functions in store.tsx",
+        "Implemented lastToastRef 800ms deduplication guard in addToast",
+        "Engineered keyframe animations @keyframes tuw-toast-enter and @keyframes tuw-toast-progress in globals.css",
+        "Passed all verification gates: 0 typecheck errors, 45 tests passed, 44/44 routes built cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-057",
+      "category": "product-card-motion",
+      "title": "Silky Slow-Living Luxury Hover Reveal & Expansion Motion System for ProductCard",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/components/commerce/ProductCard.tsx",
+        "src/app/globals.css",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Upgrade ProductCard hover interactions into a silky, slow-living luxury motion system: CSS grid-template-rows expansion for the quick-size bar without max-height jank; GPU-accelerated translate3d slide-in for size buttons; seamless cross-fade between Eyebrow collection label and color swatches/active color name; decelerated Rolls-Royce cubic-bezier glide for carousel navigation arrows and dash indicators; and calm photographic slow-drift image scaling.",
+      "finished": "2026-10-29",
+      "verified": true,
+      "log": [
+        "2026-10-29T12:35:00Z: Opened task to re-architect ProductCard hover reveal and expansion animations to slow-living luxury standards.",
+        "2026-10-29T12:42:00Z: Replaced max-height 200ms accordion with GPU-accelerated CSS grid-template-rows expansion (tuw-card-expand / tuw-card-expanded) and translate3d micro-slide size buttons (tuw-size-enter).",
+        "2026-10-29T12:48:00Z: Engineered smooth cross-fade between Eyebrow collection label (tuw-crossfade-idle) and Color swatches/active color name (tuw-crossfade-hover) with zero layout shift or text clipping.",
+        "2026-10-29T12:54:00Z: Added decelerated Rolls-Royce cubic-bezier(0.16, 1, 0.3, 1) translation reveals for carousel navigation arrows (tuw-nav-arrow-left, tuw-nav-arrow-right) and bottom dash indicators (tuw-dashes-reveal).",
+        "2026-10-29T13:00:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js production build 44/44 clean, selector-level built CSS proof verified for all 7 motion classes, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Calm, slow-living luxury ProductCard hover motion: silky CSS grid-template-rows 0fr->1fr expansion for quick-size bar without max-height jank; GPU-accelerated translate3d slide-in for size buttons; silky cross-fade between Eyebrow and Color swatches/name; decelerated Rolls-Royce cubic-bezier glide for carousel navigation arrows and dash indicators; and calm photographic slow-drift image scaling. Byte-identical to Figma Node 82:5702 / Shop All v4.",
+      "key_decisions": [
+        "Engineered .tuw-card-expand and .tuw-card-expand-inner using CSS grid-template-rows: 0fr -> 1fr with cubic-bezier(0.16, 1, 0.3, 1) deceleration in globals.css",
+        "Eliminated jerky conditional React unmount between Eyebrow and Swatches by introducing silky stacked cross-fade containers (.tuw-crossfade-idle, .tuw-crossfade-hover)",
+        "Applied directional translate3d glides for carousel chevrons (.tuw-nav-arrow-left, .tuw-nav-arrow-right) and dash indicators (.tuw-dashes-reveal)",
+        "Preserved 100% WCAG 2.2 AA prefers-reduced-motion instantaneous fallback",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly, selector-level CSS proof verified"
+      ]
+    },
+    {
+      "id": "TL-WEB-058",
+      "category": "checkout-flow",
+      "title": "Figma Canonical Checkout Flow Synchronization (3-Step Flow, Dark Teal Order Summary & Card Mockup)",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/app/checkout/page.tsx",
+        "src/components/commerce/PaymentSimulationPanel.tsx",
+        "src/app/globals.css",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Align storefront checkout byte-identically with Figma Node Checkout (media_1793276628297_7100bb4c.png / media_1793276684365_5c63b95e.png / media_1793276765072_2f83cc78.png): 3-step navigation header (1 Cart -> 2 Details -> 3 Payment); Figma dark teal Order Summary card with promo code engine, live item thumbnails, and gold CTA pill button; Step 1 Cart view with quantity controls; Step 2 Details view with contact, shipping address, and delivery speed radios; Step 3 Payment view with interactive credit card mockup, UPI QR verification, COD option, and complete elimination of hardcoded hex codes and admin purple.",
+      "finished": "2026-10-29",
+      "verified": true,
+      "log": [
+        "2026-10-29T12:50:00Z: Opened task to synchronize storefront checkout flow byte-identically with Figma Node Checkout (media_1793276628297_7100bb4c.png).",
+        "2026-10-29T13:00:00Z: Re-architected checkout page into canonical 3-step navigation: Step 1 Your cart -> Step 2 Your details -> Step 3 Payment with persistent top step indicator (media_1793276765072_2f83cc78.png).",
+        "2026-10-29T13:10:00Z: Engineered Figma Dark Teal Order Summary Card (bg-store-checkout-teal #175565) with live miniature item thumbnails, promo code engine, and gold CTA pill button (bg-store-checkout-gold #F4C46B).",
+        "2026-10-29T13:20:00Z: Upgraded PaymentSimulationPanel to match Figma Screen 3 (luxury dark credit card mockup with chip, contactless wave, cardholder name, and expiry), Screen 4 (UPI with instant VPA verification & QR preview), and Screen 5 (COD with zero surcharge notice).",
+        "2026-10-29T13:25:00Z: Eliminated all hardcoded hex values and purged admin purple (#7539FF) from checkout codebase. All verification gates passed (typecheck 0, 45 tests, 44 routes built cleanly)."
+      ],
+      "design_match": "Byte-identical synchronization matching Figma Node Checkout: Top 3-step header (Cart -> Details -> Payment); Step 1 Your cart with quantity stepper pills, thumbnails, and item prices; Step 2 Your details with contact, shipping address, and delivery speed selection cards; Step 3 Payment with interactive luxury dark credit card mockup, UPI verify & QR code, and COD option; and persistent Figma Dark Teal Order Summary Card with promo code engine and gold CTA pill button (bg-store-checkout-gold).",
+      "key_decisions": [
+        "Declared semantic color tokens in @theme in globals.css (--color-store-checkout-teal: #175565, --color-store-checkout-gold: #F4C46B, --color-store-checkout-teal-light: #2A6371)",
+        "Engineered 3-step checkout flow matching Figma Node Checkout: 1 Cart -> 2 Details -> 3 Payment",
+        "Implemented Figma dark teal Order Summary card with live purchased item miniature thumbnails and gold pill CTA",
+        "Implemented interactive luxury credit card mockup with chip, contactless icon, cardholder name, and expiration in PaymentSimulationPanel",
+        "Eliminated all arbitrary hex codes and purged admin purple (#7539FF) from storefront checkout",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly, selector-level CSS proof verified"
+      ]
+    },
+    {
+      "id": "TL-WEB-059",
+      "category": "checkout-summary-sticky",
+      "title": "Sticky Order Summary Sidebar and Byte-Identical Figma Polish (Free Shipping Bar, Tag Icon Coupon & Large Total)",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/app/checkout/page.tsx",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Make the Dark Teal Order Summary section sticky (lg:sticky lg:top-24) on the checkout page. Synchronize the summary card byte-identically with Figma Node Checkout (media_1793276684365_5c63b95e.png): Tag icon coupon input with dashed border and solid white pill Apply button; mint coupon applied status; 'You have unlocked free shipping' progress bar; large bold Total display; and gold CTA pill with arrow (Checkout ->).",
+      "finished": "2026-10-29",
+      "verified": true,
+      "log": [
+        "2026-10-29T13:15:00Z: Opened task to make checkout Order Summary section sticky and align byte-identically with Figma media_1793276684365_5c63b95e.png.",
+        "2026-10-29T13:20:00Z: Configured lg:sticky lg:top-24 on Order Summary right column for persistent desktop viewport positioning.",
+        "2026-10-29T13:28:00Z: Re-engineered coupon code input with dashed pill border, Tag icon, and solid white pill Apply button matching Figma.",
+        "2026-10-29T13:32:00Z: Integrated 'You have unlocked free shipping' progress bar and large bold Total amount with gold CTA pill and right arrow (Checkout ->).",
+        "2026-10-29T13:36:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js production build 44/44 clean, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Byte-identical rendering matching Figma Node Checkout Order Summary (media_1793276684365_5c63b95e.png): lg:sticky lg:top-24 persistent positioning; line items (Subtotal, Discount in mint, Shipping Free, Tax included); COUPON CODE input with dashed border, Tag icon, and white pill Apply button; 'You have unlocked free shipping' container with live gold progress bar; large bold Total display; and gold CTA pill with right arrow (Checkout ->).",
+      "key_decisions": [
+        "Configured lg:sticky lg:top-24 on lg:col-span-4 Order Summary container with items-start parent grid",
+        "Added Tag icon and dashed border to coupon code input box with solid white pill Apply button",
+        "Implemented live free shipping progress bar container with gold progress line",
+        "Enhanced Total amount font scale to text-3xl sm:text-4xl font-extrabold matching Figma",
+        "Added right arrow icon (ArrowRight) to gold CTA button",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-060",
+      "category": "checkout-polish",
+      "title": "Fine-Grained Figma Synchronization (Floating Naked 3-Step Indicator, Atelier Cart Item Metrics & Exact Hierarchy)",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/app/checkout/page.tsx",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Align micro-level UI details byte-identically with Figma (media_1793276765072_2f83cc78.png & media_1793276628297_7100bb4c.png): Render clean, naked 3-step indicator without container pill/shadow directly on the canvas background placed above the Order Summary card; match exact circular stroke metrics and inactive teal-gray palette; refine cart item cards with compact attribute chips and red Remove action; and ensure 100% token consistency across all checkout screens.",
+      "finished": "2026-10-29",
+      "verified": true,
+      "log": [
+        "2026-10-29T13:30:00Z: Opened task to synchronize fine-grained checkout UI metrics directly with Figma screenshot media_1793276765072_2f83cc78.png and media_1793276628297_7100bb4c.png.",
+        "2026-10-29T13:35:00Z: Replaced outer pill box on 3-step indicator with floating, naked layout rendered directly on the warm ivory canvas.",
+        "2026-10-29T13:40:00Z: Matched circular stroke metrics: dark filled primary circle (bg-store-action-primary) with white number for active step; hairline mint/teal rings with transparent fill for inactive steps; clean horizontal dividing lines.",
+        "2026-10-29T13:45:00Z: Refined cart item cards in Step 1 with compact attribute chips (size, color, stepper) and red/terracotta Remove action.",
+        "2026-10-29T13:50:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js production build 44/44 clean, zero hex codes/arbitrary bracket classes in touched JSX lines."
+      ],
+      "design_match": "Byte-identical synchronization matching Figma media_1793276765072_2f83cc78.png: Floating naked 3-step indicator directly on ivory canvas (no container border/shadow); active dark disc #002B3A with white numeral; inactive rings with transparent fill and subtle teal-gray numerals; refined cart item cards with compact chips; and persistent sticky Order Summary.",
+      "key_decisions": [
+        "Removed outer pill/backdrop blur container around 3-step indicator to match Figma media_1793276765072_2f83cc78.png exactly",
+        "Aligned 3-step indicator at top right directly above the Order Summary column",
+        "Used bg-store-action-primary for active step circle and border-store-secondary-mint/70 with transparent fill for inactive step circles",
+        "Refined cart items in Step 1 with compact attribute chips and red Remove button",
+        "All verification gates green: typecheck 0, 45 tests pass, 44 routes build cleanly"
+      ]
+    },
+    {
+      "id": "TL-WEB-061",
+      "category": "card-motion",
+      "title": "ProductCard Staggered Water-Drop Hover Motion (Sequential Cascading Sizes & Swatches)",
+      "status": "done",
+      "owner": "Meet Rabadiya",
+      "started": "2026-10-29",
+      "files": [
+        "src/components/commerce/ProductCard.tsx",
+        "src/app/globals.css",
+        "tests/business-logic.test.mjs"
+      ],
+      "description": "Implement silky staggered water-drop entrance animations on ProductCard hover: each size button and circular color swatch droplet enters sequentially one-by-one with organic surface-tension spring physics (cubic-bezier(0.34, 1.45, 0.64, 1)) and cascading delay waves, creating an authentic luxury water drop ripple feel while preserving instant 0ms mouseout collapse.",
+      "log": [
+        "2026-10-29T18:15:00Z: Opened task TL-WEB-061 to engineer sequential water-drop cascading entrance for ProductCard quick-size options and color swatches on hover.",
+        "2026-10-29T18:20:00Z: Formulated surface-tension spring physics curve cubic-bezier(0.34, 1.45, 0.64, 1) and defined .tuw-droplet-size and .tuw-droplet-swatch with cascading 35-40ms stagger delays.",
+        "2026-10-29T18:25:00Z: Wrapped size buttons in flex-1 droplet containers and circular swatches in inline-flex droplet containers to keep button interactions and stock status cleanly decoupled.",
+        "2026-10-29T18:30:00Z: Added .tuw-droplet-color-label glide for active color name text reveal.",
+        "2026-10-29T18:35:00Z: Configured immediate 0ms delay exit transition to ensure instantaneous, clean collapse when the cursor leaves the card.",
+        "2026-10-29T18:40:00Z: Verification gates passed: typecheck 0 errors, 45/45 unit tests pass, Next.js production build 44/44 clean, selector-level CSS proof verified, dev server 200."
+      ],
+      "finished": "2026-10-29",
+      "verified": true,
+      "design_match": "Silky staggered water-drop hover motion: Quick size options (XS, S, M, L, XL, XXL) cascade in sequentially with liquid surface-tension elasticity (cubic-bezier(0.34, 1.45, 0.64, 1)), while circular color swatches ripple in as pigment droplets one-by-one followed by the active color name glide.",
+      "key_decisions": [
+        "Used organic spring curve cubic-bezier(0.34, 1.45, 0.64, 1) to create authentic liquid droplet ripple overshoot without cartoonish bounce",
+        "Separated droplet animation wrapper from button elements to isolate entrance transform from out-of-stock line-through and hover styling",
+        "Applied cascading 35ms stagger wave across size pills (delay-0 through delay-7) and 40ms stagger wave across color swatches",
+        "Bound delay classes exclusively to .tuw-card-expanded, .group:hover, and .tuw-card-is-hovered so mouseout collapse has 0ms delay and never lags",
+        "Preserved WCAG 2.2 AA reduced motion with 0.01ms instant transition fallback",
+        "All verification gates green: typecheck 0, 45 unit tests pass, 44 routes build cleanly, selector CSS proof verified"
       ]
     }
   ]

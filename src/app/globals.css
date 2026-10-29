@@ -52,6 +52,10 @@
   --color-store-muted: #8A8A8A;
   --color-store-deep-teal: #002B3A;
   --color-store-dark-card: #001F2B;
+  --color-store-checkout-teal: #175565;
+  --color-store-checkout-gold: #F4C46B;
+  --color-store-checkout-gold-hover: #E5B55A;
+  --color-store-checkout-teal-light: #2A6371;
 
   /* Figma Auto Layout Dimensions (Sidebar Details: W 1612, H 529, Gap 150) */
   --width-figma-frame: 1612px;
@@ -779,6 +783,255 @@ h6,
     top: -0.625rem;
     right: -0.5rem;
   }
+}
+
+
+/* --------------------------------------------------------------------------
+   Rolls-Royce Inspired Luxury Reveal Animation (Staggered Drawer Typography)
+   -------------------------------------------------------------------------- */
+@keyframes tuw-stagger-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.tuw-reveal-item {
+  opacity: 0;
+  animation: tuw-stagger-reveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.tuw-delay-1 { animation-delay: 50ms; }
+.tuw-delay-2 { animation-delay: 90ms; }
+.tuw-delay-3 { animation-delay: 130ms; }
+.tuw-delay-4 { animation-delay: 170ms; }
+.tuw-delay-5 { animation-delay: 210ms; }
+.tuw-delay-6 { animation-delay: 250ms; }
+.tuw-delay-7 { animation-delay: 290ms; }
+.tuw-delay-8 { animation-delay: 330ms; }
+.tuw-delay-9 { animation-delay: 370ms; }
+.tuw-delay-10 { animation-delay: 410ms; }
+.tuw-delay-11 { animation-delay: 450ms; }
+.tuw-delay-12 { animation-delay: 490ms; }
+
+
+/* --------------------------------------------------------------------------
+   Luxury Toast Notification Animations (Rolls-Royce Slow-Living Deceleration)
+   -------------------------------------------------------------------------- */
+@keyframes tuw-toast-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(24px, 16px, 0) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes tuw-toast-progress {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+.tuw-toast-enter {
+  animation: tuw-toast-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.tuw-toast-progress {
+  animation: tuw-toast-progress 4s linear forwards;
+  will-change: width;
+}
+
+/* --------------------------------------------------------------------------
+   ProductCard: Silky Slow-Living Luxury Hover Reveal & Expansion Motion
+   -------------------------------------------------------------------------- */
+.tuw-card-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: grid-template-rows, opacity;
+}
+
+.tuw-card-expand.tuw-card-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.tuw-card-expand-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tuw-size-enter {
+  transform: translate3d(0, 8px, 0);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.04s, opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
+  will-change: transform, opacity;
+}
+
+.tuw-card-expanded .tuw-size-enter {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+.tuw-nav-arrow-left {
+  transform: translate3d(-10px, -50%, 0);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+  will-change: transform, opacity;
+}
+
+.group:hover .tuw-nav-arrow-left {
+  transform: translate3d(0, -50%, 0);
+  opacity: 1;
+}
+
+.tuw-nav-arrow-right {
+  transform: translate3d(10px, -50%, 0);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+  will-change: transform, opacity;
+}
+
+.group:hover .tuw-nav-arrow-right {
+  transform: translate3d(0, -50%, 0);
+  opacity: 1;
+}
+
+.tuw-dashes-reveal {
+  transform: translate3d(-50%, 8px, 0);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.group:hover .tuw-dashes-reveal {
+  transform: translate3d(-50%, 0, 0);
+  opacity: 1;
+}
+
+.tuw-crossfade-idle {
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.tuw-crossfade-hover {
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   ProductCard: Staggered Water-Drop Hover Entrance Motion
+   Surface-tension spring curve cubic-bezier(0.34, 1.45, 0.64, 1) creates
+   an organic droplet drop-in ripple for quick sizes and color swatches.
+   -------------------------------------------------------------------------- */
+.tuw-droplet-size {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(0.75);
+  transition: transform 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.tuw-card-expanded .tuw-droplet-size,
+.group:hover .tuw-droplet-size,
+.tuw-card-is-hovered .tuw-droplet-size {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.tuw-card-expanded .tuw-droplet-delay-0,
+.group:hover .tuw-droplet-delay-0,
+.tuw-card-is-hovered .tuw-droplet-delay-0 { transition-delay: 35ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-1,
+.group:hover .tuw-droplet-delay-1,
+.tuw-card-is-hovered .tuw-droplet-delay-1 { transition-delay: 70ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-2,
+.group:hover .tuw-droplet-delay-2,
+.tuw-card-is-hovered .tuw-droplet-delay-2 { transition-delay: 105ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-3,
+.group:hover .tuw-droplet-delay-3,
+.tuw-card-is-hovered .tuw-droplet-delay-3 { transition-delay: 140ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-4,
+.group:hover .tuw-droplet-delay-4,
+.tuw-card-is-hovered .tuw-droplet-delay-4 { transition-delay: 175ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-5,
+.group:hover .tuw-droplet-delay-5,
+.tuw-card-is-hovered .tuw-droplet-delay-5 { transition-delay: 210ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-6,
+.group:hover .tuw-droplet-delay-6,
+.tuw-card-is-hovered .tuw-droplet-delay-6 { transition-delay: 245ms; }
+
+.tuw-card-expanded .tuw-droplet-delay-7,
+.group:hover .tuw-droplet-delay-7,
+.tuw-card-is-hovered .tuw-droplet-delay-7 { transition-delay: 280ms; }
+
+.tuw-droplet-swatch {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0) scale(0.35);
+  transition: transform 0.38s cubic-bezier(0.34, 1.5, 0.64, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.group:hover .tuw-droplet-swatch,
+.tuw-card-is-hovered .tuw-droplet-swatch {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.group:hover .tuw-swatch-delay-0,
+.tuw-card-is-hovered .tuw-swatch-delay-0 { transition-delay: 45ms; }
+
+.group:hover .tuw-swatch-delay-1,
+.tuw-card-is-hovered .tuw-swatch-delay-1 { transition-delay: 85ms; }
+
+.group:hover .tuw-swatch-delay-2,
+.tuw-card-is-hovered .tuw-swatch-delay-2 { transition-delay: 125ms; }
+
+.group:hover .tuw-swatch-delay-3,
+.tuw-card-is-hovered .tuw-swatch-delay-3 { transition-delay: 165ms; }
+
+.group:hover .tuw-swatch-delay-4,
+.tuw-card-is-hovered .tuw-swatch-delay-4 { transition-delay: 205ms; }
+
+.group:hover .tuw-swatch-delay-5,
+.tuw-card-is-hovered .tuw-swatch-delay-5 { transition-delay: 245ms; }
+
+.group:hover .tuw-swatch-delay-6,
+.tuw-card-is-hovered .tuw-swatch-delay-6 { transition-delay: 285ms; }
+
+.group:hover .tuw-swatch-delay-7,
+.tuw-card-is-hovered .tuw-swatch-delay-7 { transition-delay: 325ms; }
+
+.tuw-droplet-color-label {
+  opacity: 0;
+  transform: translate3d(6px, 0, 0);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.group:hover .tuw-droplet-color-label,
+.tuw-card-is-hovered .tuw-droplet-color-label {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 190ms;
 }
 
 /* --------------------------------------------------------------------------

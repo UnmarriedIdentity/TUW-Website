@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import Toast from '@/components/ui/Toast';
 import {
   Product,
   CartItem,
@@ -151,8 +152,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }
   }, [cart, wishlist, orders, returns, addresses, hasLoadedStorage]);
 
+  const lastToastRef = useRef<{ key: string; time: number } | null>(null);
+
   const addToast = useCallback((toast: Omit<ToastMessage, 'id'>) => {
-    const id = `toast-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+    const key = `${toast.title}:${toast.description || ''}`;
+    const now = Date.now();
+    if (lastToastRef.current && lastToastRef.current.key === key && now - lastToastRef.current.time < 800) {
+      return;
+    }
+    lastToastRef.current = { key, time: now };
+
+    const id = `toast-${now}-${Math.random().toString(36).substring(2, 6)}`;
     const newToast: ToastMessage = { ...toast, id };
     setToasts((prev) => [...prev, newToast]);
     setTimeout(() => {
@@ -203,18 +213,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
-    setCart((prev) => {
-      const item = prev.find((i) => i.id === id);
-      if (item) {
-        addToast({
-          type: 'info',
-          title: 'Removed from Bag',
-          description: `${item.title} was removed.`,
-        });
-      }
-      return prev.filter((i) => i.id !== id);
-    });
-  }, [addToast]);
+    const item = cart.find((i) => i.id === id);
+    setCart((prev) => prev.filter((i) => i.id !== id));
+    if (item) {
+      addToast({
+        type: 'info',
+        title: 'Removed from Bag',
+        description: `${item.title} was removed.`,
+      });
+    }
+  }, [cart, addToast]);
 
   const clearCart = useCallback(() => {
     setCart([]);
@@ -254,26 +262,31 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Wishlist operations
   const toggleWishlist = useCallback((productId: string) => {
+    const isCurrentlySaved = wishlist.includes(productId);
+    const product = products.find((p) => p.id === productId);
+
     setWishlist((prev) => {
-      const exists = prev.includes(productId);
-      const product = products.find((p) => p.id === productId);
-      if (exists) {
-        addToast({
-          type: 'info',
-          title: 'Removed from Wishlist',
-          description: product ? `${product.title} removed.` : undefined,
-        });
+      if (isCurrentlySaved) {
         return prev.filter((id) => id !== productId);
       } else {
-        addToast({
-          type: 'success',
-          title: 'Saved to Wishlist',
-          description: product ? `${product.title} saved to your wishlist.` : undefined,
-        });
         return [...prev, productId];
       }
     });
-  }, [products, addToast]);
+
+    if (isCurrentlySaved) {
+      addToast({
+        type: 'info',
+        title: 'Removed from Wishlist',
+        description: product ? `${product.title} removed.` : undefined,
+      });
+    } else {
+      addToast({
+        type: 'success',
+        title: 'Saved to Wishlist',
+        description: product ? `${product.title} saved to your wishlist.` : undefined,
+      });
+    }
+  }, [wishlist, products, addToast]);
 
   const isInWishlist = useCallback(
     (productId: string) => wishlist.includes(productId),
@@ -362,7 +375,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const getProductBySlug = (slug: string) =>
-    products.find((p) => p.slug.toLowerCase() === slug.toLowerCase());
+    products.find(
+      (p) =>
+        p.slug.toLowerCase() === slug.toLowerCase() ||
+        p.aliases?.some((a) => a.toLowerCase() === slug.toLowerCase())
+    );
 
   const setScenario = (sc: DemoScenario) => {
     setScenarioState(sc);
@@ -492,69 +509,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
 
-      {/* Floating Storefront Toast Notifications */}
-      {toasts.length > 0 && (
-        <div
-          role="region"
-          aria-label="Notifications"
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            zIndex: 9999,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            pointerEvents: 'none',
-            maxWidth: '380px',
-          }}
-        >
-          {toasts.map((toast) => (
-            <div
-              key={toast.id}
-              role="alert"
-              style={{
-                pointerEvents: 'auto',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '12px',
-                padding: '14px 18px',
-                backgroundColor: '#1A1A1A',
-                color: '#FFFFFF',
-                borderRadius: '10px',
-                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                animation: 'slideInRight 0.2s ease',
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', fontWeight: 600 }}>{toast.title}</div>
-                {toast.description && (
-                  <div style={{ fontSize: '13px', color: '#A0AEC0', marginTop: '2px', lineHeight: '18px' }}>
-                    {toast.description}
-                  </div>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() => dismissToast(toast.id)}
-                aria-label="Dismiss toast"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#A0AEC0',
-                  cursor: 'pointer',
-                  fontSize: '18px',
-                  lineHeight: '1',
-                  padding: '2px',
-                }}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Floating Luxury Storefront Toast Notifications */}
+      <Toast toasts={toasts} onDismiss={dismissToast} />
     </StoreContext.Provider>
   );
 }

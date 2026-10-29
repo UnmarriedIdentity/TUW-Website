@@ -10,6 +10,7 @@ export interface ProductGalleryProps {
     url: string;
     alt: string;
     color?: string;
+    label?: string;
   }[];
   title: string;
   videoUrl?: string;
@@ -71,6 +72,13 @@ export default function ProductGallery({
             />
           )}
 
+          {/* Angle Label matching Figma */}
+          {activeImage.label && (
+            <span className="absolute top-4 left-4 text-[11px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+              {activeImage.label}
+            </span>
+          )}
+
           {/* Enlarge button */}
           <button
             type="button"
@@ -125,6 +133,11 @@ export default function ProductGallery({
                   >
                     <Maximize2 size={14} />
                   </button>
+                  {img.label && (
+                    <span className="absolute top-3 left-3 text-[10px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+                      {img.label}
+                    </span>
+                  )}
                 </div>
               );
             })}
@@ -149,6 +162,13 @@ export default function ProductGallery({
             alt={activeImage.alt}
             className="w-full h-full object-cover"
           />
+        )}
+
+        {/* Angle Label matching Figma */}
+        {activeImage.label && (
+          <span className="absolute top-4 left-4 text-[11px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+            {activeImage.label}
+          </span>
         )}
 
         {/* Zoom trigger */}

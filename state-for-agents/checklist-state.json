@@ -37,16 +37,147 @@
       "status": "pending"
     },
     {
-      "index": 5,
-      "id": "5-products-detail",
+      "id": "pdp-monolith-hoodie",
       "area": "Shopping",
-      "name": "Product Detail Page (PDP)",
+      "name": "PDP: Monolith Heavyweight Hoodie",
       "route": "/products/monolith-heavyweight-hoodie-vintage-black",
-      "purpose": "Architectural PDP with thumbnail gallery, interactive color/size selectors, stock counters, accordions, and customer reviews.",
-      "status": "pending"
+      "image": "/products/2.jpeg",
+      "purpose": "500 GSM architectural loopback French terry hoodie, packaging unboxing radio (+₹250), CM/IN sizing table, and customer reviews.",
+      "status": "done",
+      "index": 5
     },
     {
-      "index": 6,
+      "id": "pdp-atelier-tee",
+      "area": "Shopping",
+      "name": "PDP: Atelier Raw-Edge Relaxed Tee",
+      "route": "/products/atelier-raw-edge-relaxed-tee",
+      "image": "/products/1.jpeg",
+      "purpose": "280 GSM single-origin combed organic cotton tee with dynamic Textile Integrity & Fiber Characteristics table (4 comparison columns).",
+      "status": "done",
+      "index": 6
+    },
+    {
+      "id": "pdp-solitude-trousers",
+      "area": "Shopping",
+      "name": "PDP: Solitude Wide-Leg Canvas Trousers",
+      "route": "/products/solitude-wide-leg-canvas-trousers",
+      "image": "/products/3.jpeg",
+      "purpose": "Heavyweight duck canvas pleated trousers with waist/inseam sizing matrix and utilitarian pockets.",
+      "status": "done",
+      "index": 7
+    },
+    {
+      "id": "pdp-crewneck-slate",
+      "area": "Shopping",
+      "name": "PDP: Kinetic Heavy Fleece Crewneck",
+      "route": "/products/unplugged-oversized-crewneck-slate",
+      "image": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "Heavy fleece crewneck with drop-shoulder silhouette, sizing table with CM/IN toggles, and apparel FAQs.",
+      "status": "done",
+      "index": 8
+    },
+    {
+      "id": "pdp-carryall-tote",
+      "area": "Shopping",
+      "name": "PDP: Heavy Canvas Utility Carryall Tote",
+      "route": "/products/heavy-canvas-utility-carryall-tote",
+      "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "28L utilitarian carryall tote bag. Size pills strictly hidden; strap radio options (Shoulder Drop ₹0 vs Padded Crossbody +₹150).",
+      "status": "done",
+      "index": 9
+    },
+    {
+      "id": "pdp-dad-cap",
+      "area": "Shopping",
+      "name": "PDP: Low-Profile Distressed Dad Cap",
+      "route": "/products/washed-cotton-dad-cap-minimal",
+      "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "Low-profile 6-panel washed cotton cap with debossed antique brass buckle closure. Size pills hidden; strict table omission.",
+      "status": "done",
+      "index": 10
+    },
+    {
+      "id": "pdp-zip-hoodie",
+      "area": "Shopping",
+      "name": "PDP: Architectural Drop-Shoulder Zip Hoodie",
+      "route": "/products/architectural-zip-hoodie",
+      "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "520 GSM extra-dense combed organic terry with two-way matte gunmetal zipper and sizing chart.",
+      "status": "done",
+      "index": 11
+    },
+    {
+      "id": "pdp-bomber-jacket",
+      "area": "Shopping",
+      "name": "PDP: Technical Shell Modular Bomber Jacket",
+      "route": "/products/technical-shell-modular-bomber-jacket",
+      "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "3-layer waterproof breathable membrane with Aquaguard zippers, interior shoulder carry strap, and outerwear sizing specs.",
+      "status": "done",
+      "index": 12
+    },
+    {
+      "id": "pdp-waffle-tee",
+      "area": "Shopping",
+      "name": "PDP: Raw Hem Heavyweight Thermal Waffle Tee",
+      "route": "/products/raw-hem-heavyweight-thermal-waffle-tee",
+      "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "360 GSM honeycomb knitted cotton with raw-cut hem, graceful image fallback handling, and sizing guide.",
+      "status": "done",
+      "index": 13
+    },
+    {
+      "id": "pdp-chore-coat",
+      "area": "Shopping",
+      "name": "PDP: Japanese Selvedge Chore Coat",
+      "route": "/products/japanese-selvedge-cotton-chore-coat",
+      "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "14.5 oz shuttle-loomed selvedge denim chore coat with copper rivet reinforcements and sizing table.",
+      "status": "done",
+      "index": 14
+    },
+    {
+      "id": "pdp-studio-blanket",
+      "area": "Shopping",
+      "name": "PDP: Brushed Cashmere Studio Blanket",
+      "route": "/products/brushed-cashmere-ribbed-studio-blanket",
+      "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "100% Grade-A Mongolian cashmere throw. Strict table omission (specTable: null); edge finish radio options (+₹300).",
+      "status": "done",
+      "index": 15
+    },
+    {
+      "id": "pdp-windbreaker",
+      "area": "Shopping",
+      "name": "PDP: Minimalist Modular Ripstop Windbreaker",
+      "route": "/products/modular-lightweight-ripstop-windbreaker",
+      "image": "https://images.unsplash.com/photo-1544441893-675973e31985?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "Diamond micro-ripstop windbreaker with packable self-stow hood and sizing table.",
+      "status": "done",
+      "index": 16
+    },
+    {
+      "id": "pdp-ceramic-mug",
+      "area": "Shopping",
+      "name": "PDP: Stoneware Emblem Ceramic Mug",
+      "route": "/products/stoneware-emblem-ceramic-mug",
+      "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "Wheel-thrown stoneware ceramic mug. Capacity chips (350ml / 450ml), 1,240°C kiln-firing ceramic specs table, and food-safe FAQs.",
+      "status": "done",
+      "index": 17
+    },
+    {
+      "id": "pdp-kids-tee",
+      "area": "Shopping",
+      "name": "PDP: Kids Organic Cotton Emblem Tee",
+      "route": "/products/kids-organic-cotton-emblem-tee",
+      "image": "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=1200&auto=format&fit=crop&q=80",
+      "purpose": "Little Atelier kids organic tee with age/height growth chart table (2-3Y to 10-11Y), anti-chafe flatlock seams, and child-safe FAQs.",
+      "status": "done",
+      "index": 18
+    },
+    {
+      "index": 19,
       "id": "6-cart",
       "area": "Purchase",
       "name": "Shopping Bag",
@@ -55,7 +186,7 @@
       "status": "pending"
     },
     {
-      "index": 7,
+      "index": 20,
       "id": "7-checkout",
       "area": "Purchase",
       "name": "Checkout & Simulation",
@@ -64,7 +195,7 @@
       "status": "pending"
     },
     {
-      "index": 8,
+      "index": 21,
       "id": "8-checkout-success",
       "area": "Purchase",
       "name": "Order Confirmation & Receipt",
@@ -73,7 +204,7 @@
       "status": "pending"
     },
     {
-      "index": 9,
+      "index": 22,
       "id": "9-wishlist",
       "area": "Discovery",
       "name": "Saved Garments",
@@ -82,7 +213,7 @@
       "status": "pending"
     },
     {
-      "index": 10,
+      "index": 23,
       "id": "10-search",
       "area": "Discovery",
       "name": "Catalog Search",
@@ -91,7 +222,7 @@
       "status": "pending"
     },
     {
-      "index": 11,
+      "index": 24,
       "id": "11-track-order",
       "area": "Support",
       "name": "Order Tracking",
@@ -100,7 +231,7 @@
       "status": "pending"
     },
     {
-      "index": 12,
+      "index": 25,
       "id": "12-size-guide",
       "area": "Support",
       "name": "Interactive Size Guide",
@@ -109,7 +240,7 @@
       "status": "pending"
     },
     {
-      "index": 13,
+      "index": 26,
       "id": "13-about",
       "area": "Brand",
       "name": "Brand Philosophy",
@@ -118,7 +249,7 @@
       "status": "pending"
     },
     {
-      "index": 14,
+      "index": 27,
       "id": "14-about-sustainability",
       "area": "Brand",
       "name": "Sustainability & POD",
@@ -127,7 +258,7 @@
       "status": "pending"
     },
     {
-      "index": 15,
+      "index": 28,
       "id": "15-our-story",
       "area": "Brand",
       "name": "Our Story",
@@ -136,7 +267,7 @@
       "status": "pending"
     },
     {
-      "index": 16,
+      "index": 29,
       "id": "16-journal",
       "area": "Brand",
       "name": "Editorial Journal",
@@ -145,7 +276,7 @@
       "status": "pending"
     },
     {
-      "index": 17,
+      "index": 30,
       "id": "17-journal-article",
       "area": "Brand",
       "name": "Journal Article View",
@@ -154,7 +285,7 @@
       "status": "pending"
     },
     {
-      "index": 18,
+      "index": 31,
       "id": "18-blog",
       "area": "Brand",
       "name": "Blog Index",
@@ -163,7 +294,7 @@
       "status": "pending"
     },
     {
-      "index": 19,
+      "index": 32,
       "id": "19-blog-article",
       "area": "Brand",
       "name": "Blog Article View",
@@ -172,7 +303,7 @@
       "status": "pending"
     },
     {
-      "index": 20,
+      "index": 33,
       "id": "20-contact",
       "area": "Support",
       "name": "Concierge & Inquiries",
@@ -181,7 +312,7 @@
       "status": "pending"
     },
     {
-      "index": 21,
+      "index": 34,
       "id": "21-faq",
       "area": "Support",
       "name": "Frequently Asked Questions",
@@ -190,7 +321,7 @@
       "status": "pending"
     },
     {
-      "index": 22,
+      "index": 35,
       "id": "22-account",
       "area": "Account",
       "name": "Customer Account Portal",
@@ -199,7 +330,7 @@
       "status": "pending"
     },
     {
-      "index": 23,
+      "index": 36,
       "id": "23-account-orders",
       "area": "Account",
       "name": "Account Order History",
@@ -208,7 +339,7 @@
       "status": "pending"
     },
     {
-      "index": 24,
+      "index": 37,
       "id": "24-account-order-details",
       "area": "Account",
       "name": "Account Order Details",
@@ -217,7 +348,7 @@
       "status": "pending"
     },
     {
-      "index": 25,
+      "index": 38,
       "id": "25-login",
       "area": "Auth",
       "name": "Customer Login",
@@ -226,7 +357,7 @@
       "status": "pending"
     },
     {
-      "index": 26,
+      "index": 39,
       "id": "26-register",
       "area": "Auth",
       "name": "Customer Registration",
@@ -235,7 +366,7 @@
       "status": "pending"
     },
     {
-      "index": 27,
+      "index": 40,
       "id": "27-forgot-password",
       "area": "Auth",
       "name": "Forgot Password",
@@ -244,7 +375,7 @@
       "status": "pending"
     },
     {
-      "index": 28,
+      "index": 41,
       "id": "28-reset-password",
       "area": "Auth",
       "name": "Reset Password",
@@ -253,7 +384,7 @@
       "status": "pending"
     },
     {
-      "index": 29,
+      "index": 42,
       "id": "29-policies",
       "area": "Policies",
       "name": "Policy Hub",
@@ -262,7 +393,7 @@
       "status": "pending"
     },
     {
-      "index": 30,
+      "index": 43,
       "id": "30-policies-privacy",
       "area": "Policies",
       "name": "Privacy Policy",
@@ -271,7 +402,7 @@
       "status": "pending"
     },
     {
-      "index": 31,
+      "index": 44,
       "id": "31-privacy-policy",
       "area": "Policies",
       "name": "Privacy Policy (Direct URL)",
@@ -280,7 +411,7 @@
       "status": "pending"
     },
     {
-      "index": 32,
+      "index": 45,
       "id": "32-policies-returns",
       "area": "Policies",
       "name": "Returns & Refunds Policy",
@@ -289,7 +420,7 @@
       "status": "pending"
     },
     {
-      "index": 33,
+      "index": 46,
       "id": "33-returns-refunds",
       "area": "Policies",
       "name": "Returns & Refunds (Direct URL)",
@@ -298,7 +429,7 @@
       "status": "pending"
     },
     {
-      "index": 34,
+      "index": 47,
       "id": "34-policies-shipping",
       "area": "Policies",
       "name": "Shipping Policy",
@@ -307,7 +438,7 @@
       "status": "pending"
     },
     {
-      "index": 35,
+      "index": 48,
       "id": "35-shipping-policy",
       "area": "Policies",
       "name": "Shipping Policy (Direct URL)",
@@ -316,7 +447,7 @@
       "status": "pending"
     },
     {
-      "index": 36,
+      "index": 49,
       "id": "36-policies-terms",
       "area": "Policies",
       "name": "Terms & Conditions",
@@ -325,7 +456,7 @@
       "status": "pending"
     },
     {
-      "index": 37,
+      "index": 50,
       "id": "37-terms",
       "area": "Policies",
       "name": "Terms (Direct URL)",
@@ -334,7 +465,7 @@
       "status": "pending"
     },
     {
-      "index": 38,
+      "index": 51,
       "id": "38-checklist",
       "area": "System",
       "name": "Storefront Checklist & Tracker",
@@ -343,7 +474,7 @@
       "status": "pending"
     },
     {
-      "index": 39,
+      "index": 52,
       "id": "39-design-system",
       "area": "System",
       "name": "Design System Specimen",
@@ -352,7 +483,7 @@
       "status": "pending"
     },
     {
-      "index": 40,
+      "index": 53,
       "id": "40-not-found",
       "area": "System",
       "name": "Custom 404 Experience",
@@ -361,6 +492,6 @@
       "status": "pending"
     }
   ],
-  "lastSavedAt": "2026-10-26T08:25:27.283Z",
-  "updatedBy": "user"
+  "lastSavedAt": "2026-10-29T09:50:11.427Z",
+  "updatedBy": "Meet Rabadiya"
 }

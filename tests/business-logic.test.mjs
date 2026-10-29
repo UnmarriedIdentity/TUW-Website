@@ -171,4 +171,99 @@ describe('Deterministic local fonts (Windows == macOS)', () => {
     }
     assert.ok(css.includes('font-synthesis-weight: none'), 'css must disable faux-weight synthesis');
   });
+
+  test('all product slugs are concise, clean, and bounded (<= 45 characters)', () => {
+    const fixturesContent = readFileSync(join(repoRoot, 'src/mocks/fixtures.ts'), 'utf8');
+    const slugMatches = [...fixturesContent.matchAll(/slug:\s*['"]([^'"]+)['"]/g)].map((m) => m[1]);
+    assert.ok(slugMatches.length >= 14, 'expected at least 14 product/collection slugs');
+
+    for (const slug of slugMatches) {
+      assert.ok(
+        slug.length <= 45,
+        `slug exceeds 45 characters: "${slug}" (${slug.length} chars)`,
+      );
+      assert.match(slug, /^[a-z0-9]+(-[a-z0-9]+)*$/, `slug must be clean kebab-case: "${slug}"`);
+    }
+
+    assert.ok(fixturesContent.includes("slug: 'architectural-zip-hoodie'"));
+    assert.ok(fixturesContent.includes("aliases: ['oversized-architectural-heavyweight-french-terry-drop-shoulder-zip-hoodie']"));
+  });
+  test('ProductCard and FilterBar conform to Figma Shop All v4 specs and zero admin purple', () => {
+    const cardContent = readFileSync(join(repoRoot, 'src/components/commerce/ProductCard.tsx'), 'utf8');
+    const filterContent = readFileSync(join(repoRoot, 'src/components/commerce/FilterBar.tsx'), 'utf8');
+    const gridContent = readFileSync(join(repoRoot, 'src/components/commerce/ProductGrid.tsx'), 'utf8');
+
+    // Invariant: Zero admin purple (#7539FF) in storefront card and filter components
+    assert.ok(!cardContent.includes('#7539FF'), 'ProductCard must not contain admin purple #7539FF');
+    assert.ok(!filterContent.includes('#7539FF'), 'FilterBar must not contain admin purple #7539FF');
+
+    // Normal state invariants: collection label, wishlist heart, product image
+    assert.ok(cardContent.includes('collectionLabel'), 'ProductCard must compute and display collectionLabel');
+    assert.ok(cardContent.includes('toggleWishlist'), 'ProductCard must support toggleWishlist');
+
+    // Hover state invariants: carousel navigation, indicator dashes, quick size bar, swatches + active color name
+    assert.ok(cardContent.includes('handlePrevImage'), 'ProductCard must support handlePrevImage');
+    assert.ok(cardContent.includes('handleNextImage'), 'ProductCard must support handleNextImage');
+    assert.ok(cardContent.includes('activeColorObj?.name'), 'ProductCard must render active color name');
+    assert.ok(cardContent.includes('handleQuickAdd'), 'ProductCard must support handleQuickAdd size selection');
+
+    // ProductGrid editorial banners for Figma Shop all v4
+    assert.ok(gridContent.includes('Acid Wash Collection'), 'ProductGrid must support Acid Wash Collection banner');
+    assert.ok(gridContent.includes('The Minimal Frame'), 'ProductGrid must support The Minimal Frame editorial card');
+
+    // Figma Filter & Sort by drawer invariants (Figma Node frame specs)
+    assert.ok(filterContent.includes('FIGMA_FILTER_COLORS'), 'FilterBar must export FIGMA_FILTER_COLORS');
+    assert.ok(filterContent.includes('FIGMA_SORT_OPTIONS'), 'FilterBar must export FIGMA_SORT_OPTIONS');
+    assert.ok(filterContent.includes('FIGMA_PRICE_RANGES'), 'FilterBar must export FIGMA_PRICE_RANGES');
+    assert.ok(filterContent.includes('Clear all'), 'FilterBar must provide Clear all outline pill CTA');
+    assert.ok(filterContent.includes('results'), 'FilterBar must provide Show results pill CTA');
+    assert.ok(filterContent.includes('Bottle Green'), 'FilterBar must include Bottle Green in Figma colors');
+    assert.ok(filterContent.includes('Light Baby Pink'), 'FilterBar must include Light Baby Pink in Figma colors');
+    // Rolls-Royce luxury typography reveal invariants
+    const cssContent = readFileSync(join(repoRoot, 'src/app/globals.css'), 'utf8');
+    assert.ok(cssContent.includes('tuw-stagger-reveal'), 'globals.css must define tuw-stagger-reveal keyframes');
+    assert.ok(cssContent.includes('.tuw-reveal-item'), 'globals.css must define .tuw-reveal-item');
+    assert.ok(filterContent.includes('tuw-reveal-item'), 'FilterBar must apply tuw-reveal-item to drawer elements');
+    assert.ok(filterContent.includes('tuw-delay-'), 'FilterBar must apply staggered animation delays');
+
+    // Luxury Toast Notification & Deduplication Invariants
+    const storeContent = readFileSync(join(repoRoot, 'src/mocks/store.tsx'), 'utf8');
+    const toastContent = readFileSync(join(repoRoot, 'src/components/ui/Toast.tsx'), 'utf8');
+    assert.ok(storeContent.includes('lastToastRef'), 'store.tsx must have lastToastRef deduplication guard');
+    assert.ok(storeContent.includes('<Toast'), 'store.tsx must render Toast component');
+    assert.ok(toastContent.includes('tuw-toast-enter'), 'Toast.tsx must apply tuw-toast-enter animation');
+    assert.ok(toastContent.includes('tuw-toast-progress'), 'Toast.tsx must render progress depletion bar');
+    assert.ok(cssContent.includes('tuw-toast-enter'), 'globals.css must define tuw-toast-enter');
+
+    // ProductCard Silky Slow-Living Luxury Motion Invariants
+    assert.ok(cardContent.includes('tuw-card-expand'), 'ProductCard must use tuw-card-expand for smooth grid accordion size bar');
+    assert.ok(cardContent.includes('tuw-size-enter'), 'ProductCard must use tuw-size-enter for smooth size glide');
+    assert.ok(cardContent.includes('tuw-droplet-size'), 'ProductCard must use tuw-droplet-size for water-drop size buttons ripple');
+    assert.ok(cardContent.includes('tuw-droplet-swatch'), 'ProductCard must use tuw-droplet-swatch for water-drop swatches ripple');
+    assert.ok(cardContent.includes('tuw-droplet-color-label'), 'ProductCard must use tuw-droplet-color-label for active color glide');
+    assert.ok(cardContent.includes('tuw-nav-arrow-left'), 'ProductCard must use tuw-nav-arrow-left for smooth carousel chevron glide');
+    assert.ok(cardContent.includes('tuw-nav-arrow-right'), 'ProductCard must use tuw-nav-arrow-right for smooth carousel chevron glide');
+    assert.ok(cardContent.includes('tuw-dashes-reveal'), 'ProductCard must use tuw-dashes-reveal for smooth carousel dashes reveal');
+    assert.ok(cardContent.includes('tuw-crossfade-idle'), 'ProductCard must use tuw-crossfade-idle for seamless eyebrow cross-fade');
+    assert.ok(cardContent.includes('tuw-crossfade-hover'), 'ProductCard must use tuw-crossfade-hover for seamless swatches cross-fade');
+    assert.ok(cssContent.includes('.tuw-card-expand'), 'globals.css must define .tuw-card-expand');
+    assert.ok(cssContent.includes('.tuw-size-enter'), 'globals.css must define .tuw-size-enter');
+    assert.ok(cssContent.includes('.tuw-droplet-size'), 'globals.css must define .tuw-droplet-size');
+    assert.ok(cssContent.includes('.tuw-droplet-swatch'), 'globals.css must define .tuw-droplet-swatch');
+    assert.ok(cssContent.includes('.tuw-droplet-color-label'), 'globals.css must define .tuw-droplet-color-label');
+
+    // Figma Canonical Checkout Invariants (media_1793276628297_7100bb4c.png)
+    const checkoutContent = readFileSync(join(repoRoot, 'src/app/checkout/page.tsx'), 'utf8');
+    const paymentContent = readFileSync(join(repoRoot, 'src/components/commerce/PaymentSimulationPanel.tsx'), 'utf8');
+
+    assert.ok(!checkoutContent.includes('#7539FF'), 'checkout/page.tsx must not contain admin purple #7539FF');
+    assert.ok(!paymentContent.includes('#7539FF'), 'PaymentSimulationPanel.tsx must not contain admin purple #7539FF');
+    assert.ok(checkoutContent.includes('bg-store-checkout-teal'), 'checkout must use Figma dark teal bg-store-checkout-teal');
+    assert.ok(checkoutContent.includes('bg-store-checkout-gold'), 'checkout must use Figma gold bg-store-checkout-gold');
+    assert.ok(paymentContent.includes('Card Holder'), 'PaymentSimulationPanel must render Card Holder in card mockup');
+    assert.ok(checkoutContent.includes('Details'), 'checkout must provide 3-step indicator with Details');
+    assert.ok(checkoutContent.includes('lg:sticky'), 'checkout order summary must be sticky on desktop');
+    assert.ok(checkoutContent.includes('COUPON CODE'), 'checkout order summary must include COUPON CODE label');
+    assert.ok(checkoutContent.includes('unlocked free shipping'), 'checkout must include free shipping progress banner');
+  });
 });
