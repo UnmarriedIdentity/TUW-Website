@@ -10,29 +10,17 @@ import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 import ProductGallery from '@/components/commerce/ProductGallery';
 import VariantSelector from '@/components/commerce/VariantSelector';
-import ProductCard from '@/components/commerce/ProductCard';
 import DynamicDataTable from '@/components/commerce/DynamicDataTable';
 import DynamicAccordionFaq from '@/components/commerce/DynamicAccordionFaq';
+import ProductReviews from '@/components/commerce/ProductReviews';
+import RelatedProductsSection from '@/components/commerce/RelatedProductsSection';
+import { EditorialQuote, EditorialFeatureSplit } from '@/components/editorial';
 import { useStore } from '@/mocks/store';
-import { ProductColor } from '@/lib/types';
+import { ProductColor, ReviewItem } from '@/lib/types';
 import {
-  CheckCircle,
   ChevronDown,
-  MessageSquare,
   ArrowRight,
 } from 'lucide-react';
-
-interface ReviewItem {
-  id: string;
-  author: string;
-  role: string;
-  verified: boolean;
-  rating: number;
-  date: string;
-  title: string;
-  content: string;
-  variant: string;
-}
 
 // 1. Shirt / Apparel Reviews
 const SHIRT_REVIEWS: ReviewItem[] = [
@@ -208,9 +196,6 @@ export default function ProductDetailPage({
   // Accordion state for product details
   const [openAccordion, setOpenAccordion] = useState<string | null>('details');
 
-  // Write a Review modal state
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   if (!product) {
     return (
@@ -560,172 +545,61 @@ export default function ProductDetailPage({
         )}
 
         {/* ======================================================== */}
-        {/* 3. CUSTOMER REVIEWS & RATINGS BREAKDOWN */}
+        {/* 3. REUSABLE CUSTOMER REVIEWS & RATINGS BREAKDOWN */}
         {/* ======================================================== */}
-        <section id="reviews" className="my-16 pt-12 border-t border-store-card-border">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-store-gold font-semibold block mb-1">
-                Verified Customer Experiences
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                {templateType === 'kids'
-                  ? 'Parent Reviews & Growth Feedback'
-                  : templateType === 'mug'
-                  ? 'Studio & Tableware Feedback'
-                  : 'Customer Reviews & Atelier Feedback'}
-              </h2>
-            </div>
-            <Button
-              variant="dark"
-              size="md"
-              onClick={() => setIsReviewModalOpen(true)}
-              icon={<MessageSquare size={16} />}
-            >
-              Write a Review
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Rating Breakdown Summary Panel (4 cols on lg) */}
-            <div className="lg:col-span-4 p-6 rounded-2xl bg-store-cream border border-store-card-border space-y-6">
-              <div className="flex items-baseline gap-3">
-                <span className="text-5xl font-bold font-heading text-store-text-primary">
-                  {ratingScore}
-                </span>
-                <div>
-                  <div className="flex text-store-gold text-sm tracking-tight">
-                    ★★★★★
-                  </div>
-                  <span className="text-xs text-store-text-secondary block mt-0.5">
-                    {reviewsCount} verified experiences
-                  </span>
-                </div>
-              </div>
-
-              {/* Progress bars */}
-              <div className="space-y-2.5 text-xs text-store-text-secondary">
-                <div className="flex items-center gap-2">
-                  <span className="w-12 shrink-0">5 Stars</span>
-                  <div className="flex-1 h-2 rounded-full bg-store-card-border overflow-hidden">
-                    <div className="h-full bg-store-charcoal w-11/12 rounded-full" />
-                  </div>
-                  <span className="w-8 text-right font-medium">91%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 shrink-0">4 Stars</span>
-                  <div className="flex-1 h-2 rounded-full bg-store-card-border overflow-hidden">
-                    <div className="h-full bg-store-charcoal w-1/12 rounded-full" />
-                  </div>
-                  <span className="w-8 text-right font-medium">7%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 shrink-0">3 Stars</span>
-                  <div className="flex-1 h-2 rounded-full bg-store-card-border overflow-hidden">
-                    <div className="h-full bg-store-charcoal w-0.5 rounded-full" />
-                  </div>
-                  <span className="w-8 text-right font-medium">2%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 shrink-0">2 Stars</span>
-                  <div className="flex-1 h-2 rounded-full bg-store-card-border overflow-hidden">
-                    <div className="h-full bg-store-charcoal w-0 rounded-full" />
-                  </div>
-                  <span className="w-8 text-right font-medium">0%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 shrink-0">1 Star</span>
-                  <div className="flex-1 h-2 rounded-full bg-store-card-border overflow-hidden">
-                    <div className="h-full bg-store-charcoal w-0 rounded-full" />
-                  </div>
-                  <span className="w-8 text-right font-medium">0%</span>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-store-surface border border-store-card-border text-xs text-store-text-secondary space-y-1">
-                <span className="font-bold text-store-charcoal block">100% Authentic Feedback</span>
-                <p>Only verified purchasers who received catalog orders can submit reviews.</p>
-              </div>
-            </div>
-
-            {/* Review Cards Grid (8 cols on lg: 4 cards in 2x2 grid) */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {activeReviews.map((rev) => (
-                <div
-                  key={rev.id}
-                  className="p-5 rounded-2xl bg-store-surface border border-store-card-border flex flex-col justify-between shadow-xs"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex text-store-gold text-xs tracking-tight">
-                        ★★★★★
-                      </div>
-                      <span className="text-xs text-store-muted">{rev.date}</span>
-                    </div>
-
-                    <h4 className="text-sm font-bold text-store-charcoal mb-1.5">
-                      {rev.title}
-                    </h4>
-
-                    <p className="text-xs text-store-text-secondary leading-relaxed mb-4">
-                      {rev.content}
-                    </p>
-                  </div>
-
-                  <div className="pt-3 border-t border-store-card-border flex items-center justify-between text-xs">
-                    <div>
-                      <span className="font-bold text-store-charcoal block">
-                        {rev.author}
-                      </span>
-                      <span className="text-store-muted">{rev.role}</span>
-                    </div>
-                    <Badge variant="success" size="sm">
-                      Verified
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ProductReviews
+          reviews={activeReviews}
+          ratingScore={ratingScore}
+          reviewsCount={reviewsCount}
+          title={
+            templateType === 'kids'
+              ? 'Parent Reviews & Growth Feedback'
+              : templateType === 'mug'
+              ? 'Studio & Tableware Feedback'
+              : 'Customer Reviews & Atelier Feedback'
+          }
+          eyebrow="Verified Customer Experiences"
+          productTitle={product.title}
+        />
 
         {/* ======================================================== */}
-        {/* 4. "PAIRS WELL WITH" (4-Card Row) */}
+        {/* 4. REUSABLE EDITORIAL QUOTE (Figma Node 197:17347) */}
+        {/* ======================================================== */}
+        <EditorialQuote
+          quote="Don’t let anyone tell you that you have to be a certain way. Be unique, be what you feel like being. Life is too short to be perfect."
+          author="— Emma Nika"
+          iconSrc="/images/editorial/quote-icon.svg"
+        />
+
+        {/* ======================================================== */}
+        {/* 5. REUSABLE 'PAIRS WELL WITH' (Figma Recommendation Row) */}
         {/* ======================================================== */}
         {relatedProducts.length > 0 && (
-          <section className="my-16 pt-12 border-t border-store-card-border">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-store-muted block mb-1">
-                  {templateType === 'kids'
-                    ? 'Kids Wardrobe Essentials'
-                    : templateType === 'mug'
-                    ? 'Studio Tableware Capsule'
-                    : 'Complete The Outfit'}
-                </span>
-                <h2 className="text-2xl font-heading font-medium uppercase tracking-wide text-store-text-primary">
-                  Pairs Well With
-                </h2>
-              </div>
-              <Link
-                href="/shop"
-                className="px-5 py-2.5 rounded-full bg-store-charcoal text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors"
-              >
-                View Catalog
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {relatedProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
-          </section>
+          <RelatedProductsSection
+            products={relatedProducts}
+            title="Pairs Well With"
+            eyebrow={
+              templateType === 'kids'
+                ? 'Kids Wardrobe Essentials'
+                : templateType === 'mug'
+                ? 'Studio Tableware Capsule'
+                : 'Complete The Outfit'
+            }
+          />
         )}
 
         {/* ======================================================== */}
-        {/* 5. DYNAMIC FREQUENTLY ASKED QUESTIONS */}
-        {/* User Invariant: strictly omitted if faqs is null or empty */}
+        {/* 6. REUSABLE SPLIT FEATURE STORY (Figma Node 197:17352) */}
+        {/* ======================================================== */}
+        <EditorialFeatureSplit
+          title="Products made with love."
+          eyebrow="Atelier Craftsmanship"
+          description="Every garment and utilitarian piece is designed with mindful intention and tailored in zero-deadstock ateliers. We eliminate surplus manufacturing by producing solely on-demand with uncompromised organic textiles."
+          imageSrc="/images/editorial/products-made-with-love.png"
+        />
+
+        {/* ======================================================== */}
+        {/* 7. DYNAMIC FREQUENTLY ASKED QUESTIONS */}
         {/* ======================================================== */}
         {product.faqs && product.faqs.length > 0 && (
           <DynamicAccordionFaq
@@ -762,84 +636,6 @@ export default function ProductDetailPage({
           </div>
         </section>
       </main>
-
-      {/* Review submission modal */}
-      <Modal
-        isOpen={isReviewModalOpen}
-        onClose={() => {
-          setIsReviewModalOpen(false);
-          setReviewSubmitted(false);
-        }}
-        maxWidth="max-w-lg"
-        title="Share Your Experience"
-        subtitle={`Submit verified feedback for ${product.title}`}
-      >
-        {reviewSubmitted ? (
-          <div className="text-center py-8 space-y-3">
-            <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto">
-              <CheckCircle size={24} />
-            </div>
-            <h4 className="text-base font-bold text-store-charcoal">Review Received</h4>
-            <p className="text-xs text-store-text-secondary max-w-xs mx-auto">
-              Thank you for sharing your experience. Your verified review has been recorded.
-            </p>
-            <Button
-              variant="dark"
-              size="sm"
-              onClick={() => {
-                setIsReviewModalOpen(false);
-                setReviewSubmitted(false);
-              }}
-            >
-              Done
-            </Button>
-          </div>
-        ) : (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setReviewSubmitted(true);
-            }}
-            className="space-y-4 pt-2"
-          >
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-store-charcoal block mb-1">
-                Your Rating
-              </label>
-              <div className="flex gap-1 text-store-gold text-lg cursor-pointer">
-                ★★★★★
-              </div>
-            </div>
-
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-store-charcoal block mb-1">
-                Headline
-              </label>
-              <input
-                required
-                placeholder="e.g. Exceptional weight and handfeel"
-                className="w-full h-11 px-3 rounded-xl border border-store-card-border bg-store-surface text-xs text-store-charcoal focus:outline-none focus:border-store-charcoal"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-store-charcoal block mb-1">
-                Detailed Comments
-              </label>
-              <textarea
-                required
-                rows={4}
-                placeholder="Describe your tactile handfeel, durability, or sizing experience..."
-                className="w-full p-3 rounded-xl border border-store-card-border bg-store-surface text-xs text-store-charcoal focus:outline-none focus:border-store-charcoal"
-              />
-            </div>
-
-            <Button variant="dark" size="md" fullWidth type="submit">
-              Submit Verified Feedback
-            </Button>
-          </form>
-        )}
-      </Modal>
 
       <Footer />
     </div>
