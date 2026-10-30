@@ -87,7 +87,7 @@ const EXPERIENCE_FEATURES: ExperienceFeature[] = [
   },
 ];
 
-const HERO_VIDEO_SRC = '/videos/h2.mp4';
+const HERO_VIDEO_SRC = '/videos/hero-video.mp4';
 
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState('All Collection');

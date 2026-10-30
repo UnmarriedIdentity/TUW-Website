@@ -9,11 +9,11 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 72,
-    "done": 72,
+    "total": 73,
+    "done": 73,
     "in_progress": 0,
     "backlog": 0,
-    "total_tasks": 72,
+    "total_tasks": 73,
     "pending": 0
   },
   "session": {
@@ -1954,6 +1954,34 @@
         "Per-colour product photos would let the swatches change the picture (most products have one photo)."
       ],
       "pushed": false
+    },
+    {
+      "id": "TL-WEB-073",
+      "category": "homepage",
+      "title": "Hero uses the owner's hero-video.mp4",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "finished": "2026-10-30",
+      "files": [
+        "public/videos/hero-video.mp4 (owner-supplied, 15.6 MB)",
+        "src/app/page.tsx",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Owner set the hero video to /videos/hero-video.mp4 (edited in Cursor). It had been switched to h2.mp4 when committing a311632 because the file was not in the repo; the owner chose to commit the video and the path together.",
+      "log": [
+        "2026-10-30: Homepage hero plays /videos/hero-video.mp4 (1920px, readyState 4, no error). Gates: build 37/37, typecheck 0, 52/52 tests."
+      ],
+      "verified": true,
+      "pushed": false,
+      "design_match": null,
+      "key_decisions": [
+        "Owner confirmed committing the video after being told it may be third-party (GQ) footage that needs permission for a live site."
+      ],
+      "follow_ups": [
+        "Confirm usage rights for the hero footage before launch.",
+        "Consider a compressed web version (file is 15.6 MB)."
+      ]
     }
   ]
 }
