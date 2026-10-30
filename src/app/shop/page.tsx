@@ -8,7 +8,7 @@ import ProductGrid from '@/components/commerce/ProductGrid';
 import FilterBar, { FilterState } from '@/components/commerce/FilterBar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { useStore } from '@/mocks/store';
-import { ChevronLeft, ChevronRight, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { ShieldCheck, Sparkles, Truck } from 'lucide-react';
 import Link from 'next/link';
 
 const availableCategories = [
@@ -17,13 +17,18 @@ const availableCategories = [
   { value: 'hoodies', label: 'Hoodies & sweats' },
   { value: 'pants', label: 'Joggers' },
   { value: 'kids', label: 'Kids' },
-  { value: 'wall-art', label: 'Wall art' },
   { value: 'accessories', label: 'Accessories' },
 ];
+
+// Header navigation lands on /shop?category=men|women; these filter by who a
+// piece is cut for rather than by garment type.
+const audienceLabels: Record<string, string> = { men: 'Men', women: 'Women' };
 
 function ShopContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category') || '';
+  // Mega-menu links combine who and what, e.g. ?audience=men&category=hoodies
+  const audienceParam = searchParams.get('audience') || '';
   const sortParam = searchParams.get('sort') || 'featured';
 
   const { products } = useStore();
@@ -36,27 +41,26 @@ function ShopContent() {
     price: '',
   });
 
+  // Keep the category in step with the URL, including navigating back to /shop.
   useEffect(() => {
-    if (categoryParam) {
-      setFilters((prev) => ({ ...prev, category: categoryParam }));
-    }
+    setFilters((prev) => ({ ...prev, category: categoryParam }));
   }, [categoryParam]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
+    if (audienceParam === 'men' || audienceParam === 'women') {
+      result = result.filter((p) => p.audience?.includes(audienceParam));
+    }
+
     // Filter by category
     if (filters.category) {
-      if (filters.category === 'kids') {
+      if (filters.category === 'men' || filters.category === 'women') {
+        const audience = filters.category;
+        result = result.filter((p) => p.audience?.includes(audience));
+      } else if (filters.category === 'kids') {
         result = result.filter(
-          (p) => p.category === 'kids' || p.slug.includes('kids')
-        );
-      } else if (filters.category === 'wall-art') {
-        result = result.filter(
-          (p) =>
-            p.slug.includes('frame') ||
-            p.slug.includes('art') ||
-            p.slug.includes('minimal')
+          (p) => p.category === 'kids' || Boolean(p.audience?.includes('kids'))
         );
       } else {
         result = result.filter((p) => p.category === filters.category);
@@ -121,10 +125,7 @@ function ShopContent() {
     }
 
     return result;
-  }, [products, filters]);
-
-  const showEditorialBanners =
-    !filters.category && !filters.size && !filters.color && !filters.price;
+  }, [products, filters, audienceParam]);
 
   return (
     <div className="w-full">
@@ -132,40 +133,46 @@ function ShopContent() {
       {/* 1. TOP ANNOUNCEMENT BANNER (< Discover the Acid Wash >)  */}
       {/* ======================================================== */}
       <div className="w-full bg-store-cream/70 border-b border-store-card-border/60 py-2.5 px-4 text-center">
-        <div className="flex items-center justify-center gap-4 text-xs tracking-wider text-store-charcoal font-medium">
-          <ChevronLeft size={14} className="text-store-muted cursor-pointer" />
+        <div className="flex items-center justify-center text-xs tracking-wider text-store-charcoal font-medium">
           <Link
-            href="/shop?category=hoodies"
-            className="hover:underline transition-all"
+            href="/search?q=acid%20wash"
+            className="inline-flex items-center min-h-6 hover:underline transition-all"
           >
             Discover the Acid Wash Collection
           </Link>
-          <ChevronRight size={14} className="text-store-muted cursor-pointer" />
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
         {/* ======================================================== */}
-        {/* 2. FIGMA SHOP HEADER (Shop / New In)                     */}
+        {/* 2. SHOP HEADER: breadcrumb, then title + item count       */}
         {/* ======================================================== */}
-        <div className="text-center mb-8">
-          <div className="mb-2">
-            <Breadcrumb
-              items={[
-                { label: 'Home', href: '/' },
-                { label: 'Catalog' },
-              ]}
-              className="justify-center"
-            />
+        <div className="mb-5 sm:mb-6 space-y-2">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Shop' },
+            ]}
+          />
+          <div className="flex items-baseline gap-3">
+            <h1 className="text-2xl sm:text-3xl font-heading font-medium tracking-tight text-store-charcoal">
+              {[
+                audienceLabels[audienceParam],
+                filters.category
+                  ? audienceLabels[filters.category] ||
+                    availableCategories.find((c) => c.value === filters.category)?.label ||
+                    'Catalog'
+                  : audienceParam
+                  ? ''
+                  : 'New In',
+              ]
+                .filter(Boolean)
+                .join(' · ')}
+            </h1>
+            <span className="text-sm text-store-text-secondary tuw-tabular-nums" aria-live="polite">
+              {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'}
+            </span>
           </div>
-          <span className="text-xs uppercase tracking-widest text-store-muted font-medium block">
-            Shop
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-medium tracking-tight text-store-charcoal mt-1">
-            {filters.category
-              ? availableCategories.find((c) => c.value === filters.category)?.label || 'Catalog'
-              : 'New In'}
-          </h1>
         </div>
 
         {/* ======================================================== */}
@@ -176,15 +183,16 @@ function ShopContent() {
           onFilterChange={setFilters}
           resultCount={filteredProducts.length}
           availableCategories={availableCategories}
+          products={products}
         />
 
         {/* ======================================================== */}
-        {/* 4. PRODUCT GRID (WITH 2-ROW X 2-COL DARK BANNER)         */}
+        {/* 4. PRODUCT GRID                                          */}
         {/* ======================================================== */}
         <div className="pt-6">
+          <h2 className="sr-only">Products</h2>
           <ProductGrid
             products={filteredProducts}
-            showEditorialBanners={showEditorialBanners}
             onResetFilters={() =>
               setFilters({ category: '', size: '', color: '', sort: 'featured', price: '' })
             }
@@ -204,7 +212,7 @@ function ShopContent() {
                 01. Zero Deadstock POD
               </h3>
               <p className="text-xs text-store-text-secondary mt-1 leading-relaxed">
-                Every garment is constructed upon demand through ethical, localized ateliers.
+                Every piece is printed only after you order it.
               </p>
             </div>
           </div>
@@ -215,10 +223,10 @@ function ShopContent() {
             </div>
             <div>
               <h3 className="text-sm font-semibold tracking-wide text-store-charcoal">
-                02. 500+ GSM Heavyweight
+                02. Made in Tiruppur
               </h3>
               <p className="text-xs text-store-text-secondary mt-1 leading-relaxed">
-                Bespoke architectural textiles engineered for enduring drape and structure.
+                Printed and dispatched by our print partner in Tiruppur, India.
               </p>
             </div>
           </div>

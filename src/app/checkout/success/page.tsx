@@ -151,13 +151,13 @@ function OrderSuccessContent() {
                     </div>
                     <div>
                       <div className="font-semibold text-stone-900">{item.title}</div>
-                      <div className="text-stone-500 text-[11px] mt-0.5">
+                      <div className="text-stone-500 text-xs mt-0.5">
                         {item.color} • Size {item.size} • Qty {item.quantity}
                       </div>
                     </div>
                   </div>
                   <div className="font-mono font-medium text-stone-900 text-right">
-                    {formatINR(item.priceINR * item.quantity)}
+                    {formatINR(item.priceINR * item.quantity * 100)}
                   </div>
                 </div>
               ))}
@@ -168,21 +168,21 @@ function OrderSuccessContent() {
           <div className="space-y-1.5 text-xs border-t border-stone-200 pt-4">
             <div className="flex justify-between text-stone-600">
               <span>Subtotal</span>
-              <span className="font-mono">{formatINR(order.subtotalINR)}</span>
+              <span className="font-mono">{formatINR(order.subtotalINR * 100)}</span>
             </div>
             {order.discountINR > 0 && (
               <div className="flex justify-between text-emerald-700 font-medium">
                 <span>Promotional Discount</span>
-                <span className="font-mono">-{formatINR(order.discountINR)}</span>
+                <span className="font-mono">-{formatINR(order.discountINR * 100)}</span>
               </div>
             )}
             <div className="flex justify-between text-stone-600">
               <span>Shipping Fee</span>
-              <span className="font-mono">{order.shippingINR === 0 ? 'FREE' : formatINR(order.shippingINR)}</span>
+              <span className="font-mono">{order.shippingINR === 0 ? 'FREE' : formatINR(order.shippingINR * 100)}</span>
             </div>
             <div className="flex justify-between text-sm font-bold text-stone-900 pt-2 border-t border-stone-200">
-              <span>Total Paid</span>
-              <span className="font-mono">{formatINR(order.totalINR)}</span>
+              <span>{order.paymentStatus === 'pending' ? 'Total due on delivery' : 'Total Paid'}</span>
+              <span className="font-mono">{formatINR(order.totalINR * 100)}</span>
             </div>
           </div>
 

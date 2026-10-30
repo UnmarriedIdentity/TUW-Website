@@ -79,6 +79,7 @@ export default function JournalArticlePage({
             src={article.coverImage}
             alt={article.title}
             className="w-full h-full object-cover"
+            style={{ objectPosition: article.coverPosition }}
           />
         </div>
 

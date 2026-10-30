@@ -34,14 +34,15 @@ under this heading.
 |---|---|---|
 | Section H2 | `text-[clamp(1.75rem,4vw+0.5rem,3rem)]` (28–48px) | 500 |
 | Section eyebrow | `text-base` (16px) | 500 |
-| Product name | `text-base` | 500 |
-| Product price | `text-base` + `tuw-tabular-nums` | 500 |
+| Product card name | `text-lg @[22rem]:text-xl` (card-width container query) | 500 |
+| Product card price | `text-base` + `tuw-tabular-nums` | 400 |
+| Fitting room name / price | `text-base` (+ `tuw-tabular-nums`) | 500 |
 | Editorial card title | `text-lg` | 600 |
 | Card body | `text-base` | 400 |
 | Section description | 16px, 18px or 16→20px as chosen per section | 400 |
 | CTA label | `text-xs` (14px Stratosphere CTA) | 500 (600 emphasis/Stratosphere) |
 | Meta | `text-xs` | 400 |
-| Hero display / subtitle | 32–72px, 22–48px, 12–14px | 300 / 400 / 300 |
+| Hero display / subtitle | 28–40px, 14px | 400 / 300 |
 | Footer signature | brand mark | 900 exception |
 
 - Allowed weights are 300, 400, 500, 600 and 900 (signature only). Homepage

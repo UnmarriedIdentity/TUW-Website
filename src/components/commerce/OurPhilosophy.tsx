@@ -105,8 +105,8 @@ export default function OurPhilosophy() {
             {/* Main Editorial Image */}
             <div className="relative w-full overflow-hidden bg-store-cream border border-store-card-border shadow-xs">
               <img
-                src="/images/editorial-philosophy.jpg"
-                alt="Editorial slow-living fashion portrait with timeless styling"
+                src="/images/about/street-polo.jpg"
+                alt="Woman in a navy knit polo and cream trousers pausing on a city street with a coffee"
                 className="philosophy-visual-img transition-transform duration-700 hover:scale-102"
                 loading="lazy"
               />

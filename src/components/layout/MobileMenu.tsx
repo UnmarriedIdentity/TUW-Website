@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { X, Search, Heart, User, ArrowRight, ShieldCheck, RefreshCw } from 'lucide-react';
+import { Search, Heart, User, ArrowRight, ShieldCheck, RefreshCw, ChevronDown } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Drawer from '../ui/Drawer';
+import type { NavItem } from './navigation';
 
 export interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Primary navigation; items with columns expand to show their sub-links. */
+  items?: NavItem[];
   links: { label: string; href: string }[];
 }
 
@@ -21,7 +24,9 @@ const SECONDARY_LINKS: { label: string; href: string; icon: LucideIcon }[] = [
   { label: 'Track My Order', href: '/track-order', icon: RefreshCw },
 ];
 
-export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, items = [], links }: MobileMenuProps) {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
   return (
     <Drawer
       isOpen={isOpen}
@@ -34,6 +39,64 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
       <div className="flex flex-col h-full justify-between gap-8">
         {/* Navigation Link List */}
         <div className="flex flex-col gap-1">
+          {items.map((item) => {
+            if (!item.columns?.length) {
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onClose}
+                  className="flex items-center justify-between py-3 text-base font-semibold tracking-wide text-store-text-primary hover:text-store-accent border-b border-store-border transition-colors"
+                >
+                  <span>{item.label}</span>
+                  <ArrowRight size={14} className="text-[#8A8A8A]" />
+                </Link>
+              );
+            }
+            const isExpanded = expanded === item.label;
+            const panelId = `mobile-nav-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+            return (
+              <div key={item.href} className="border-b border-store-border">
+                <button
+                  type="button"
+                  aria-expanded={isExpanded}
+                  aria-controls={panelId}
+                  onClick={() => setExpanded(isExpanded ? null : item.label)}
+                  className="w-full flex items-center justify-between py-3 text-base font-semibold tracking-wide text-store-text-primary hover:text-store-accent transition-colors cursor-pointer"
+                >
+                  <span>{item.label}</span>
+                  <ChevronDown
+                    size={16}
+                    className={`text-[#8A8A8A] transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {isExpanded && (
+                  <div id={panelId} className="pb-3 pl-1 space-y-3">
+                    {item.columns.map((column) => (
+                      <div key={column.title}>
+                        <p className="text-xs uppercase tracking-wider text-store-text-secondary mb-1">
+                          {column.title}
+                        </p>
+                        <ul>
+                          {column.links.map((link) => (
+                            <li key={`${link.label}-${link.href}`}>
+                              <Link
+                                href={link.href}
+                                onClick={onClose}
+                                className="block py-2 text-sm text-store-text-primary hover:text-store-accent"
+                              >
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
           {links.map((link) => (
             <Link
               key={link.href}
@@ -71,7 +134,7 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
             <ShieldCheck size={16} className="text-[#10B981]" />
             <span>Ethical POD Promise</span>
           </div>
-          Zero overproduction. Every garment custom-cured on 100% GOTS organic cotton.
+          Zero overproduction. Every piece is printed after you order it.
         </div>
       </div>
     </Drawer>

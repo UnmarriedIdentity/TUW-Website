@@ -68,6 +68,7 @@ interface StoreContextType {
     totalINR: number;
     shippingAddress: Address;
     paymentMethod: 'UPI' | 'Card' | 'COD (Demo)';
+    deliverySpeed?: 'standard' | 'express';
   }) => Order;
   getOrderById: (orderId: string) => Order | undefined;
   getOrderByNumber: (orderNumber: string) => Order | undefined;
@@ -96,6 +97,10 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | null>(null);
 
 const FREE_SHIPPING_THRESHOLD = 3000;
+
+// YYYY-MM-DD in the shopper's own time zone (toISOString would give the UTC
+// date, which is still "yesterday" in India until 05:30).
+const localDate = (d: Date) => d.toLocaleDateString('en-CA');
 const STANDARD_SHIPPING_FEE = 150;
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
@@ -114,22 +119,23 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [hasLoadedStorage, setHasLoadedStorage] = useState(false);
 
-  // Load from localStorage with schema version tuw_website_v2
+  // Load from localStorage with schema version tuw_website_v4 (bumped when product photos became
+  // illustrations, so saved carts and orders never point at removed images). Older keys are ignored.
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('tuw_website_v2_cart') || localStorage.getItem('tuw_storefront_cart');
+      const savedCart = localStorage.getItem('tuw_website_v4_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
 
-      const savedWishlist = localStorage.getItem('tuw_website_v2_wishlist') || localStorage.getItem('tuw_storefront_wishlist');
+      const savedWishlist = localStorage.getItem('tuw_website_v4_wishlist');
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
-      const savedOrders = localStorage.getItem('tuw_website_v2_orders') || localStorage.getItem('tuw_storefront_orders');
+      const savedOrders = localStorage.getItem('tuw_website_v4_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
 
-      const savedReturns = localStorage.getItem('tuw_website_v2_returns') || localStorage.getItem('tuw_storefront_returns');
+      const savedReturns = localStorage.getItem('tuw_website_v4_returns');
       if (savedReturns) setReturns(JSON.parse(savedReturns));
 
-      const savedAddresses = localStorage.getItem('tuw_website_v2_addresses') || localStorage.getItem('tuw_storefront_addresses');
+      const savedAddresses = localStorage.getItem('tuw_website_v4_addresses');
       if (savedAddresses) setAddresses(JSON.parse(savedAddresses));
     } catch (e) {
       console.error('Failed to load storefront state from localStorage', e);
@@ -138,15 +144,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save to localStorage with schema version tuw_website_v2
+  // Save to localStorage with schema version tuw_website_v4
   useEffect(() => {
     if (!hasLoadedStorage) return;
     try {
-      localStorage.setItem('tuw_website_v2_cart', JSON.stringify(cart));
-      localStorage.setItem('tuw_website_v2_wishlist', JSON.stringify(wishlist));
-      localStorage.setItem('tuw_website_v2_orders', JSON.stringify(orders));
-      localStorage.setItem('tuw_website_v2_returns', JSON.stringify(returns));
-      localStorage.setItem('tuw_website_v2_addresses', JSON.stringify(addresses));
+      localStorage.setItem('tuw_website_v4_cart', JSON.stringify(cart));
+      localStorage.setItem('tuw_website_v4_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('tuw_website_v4_orders', JSON.stringify(orders));
+      localStorage.setItem('tuw_website_v4_returns', JSON.stringify(returns));
+      localStorage.setItem('tuw_website_v4_addresses', JSON.stringify(addresses));
     } catch (e) {
       console.error('Failed to save storefront state to localStorage', e);
     }
@@ -302,14 +308,24 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     totalINR: number;
     shippingAddress: Address;
     paymentMethod: 'UPI' | 'Card' | 'COD (Demo)';
+    deliverySpeed?: 'standard' | 'express';
   }): Order => {
-    const num = Math.floor(1000 + Math.random() * 9000);
-    const orderNumber = `TUW-${num}`;
+    // Order numbers must stay unique, or tracking would find an older order.
+    const taken = new Set(orders.map((o) => o.orderNumber));
+    let orderNumber = '';
+    do {
+      orderNumber = `TUW-${Math.floor(1000 + Math.random() * 9000)}`;
+    } while (taken.has(orderNumber));
+    const isCashOnDelivery = orderData.paymentMethod === 'COD (Demo)';
+    const isExpress = orderData.deliverySpeed === 'express';
     const newOrder: Order = {
       id: `ord-${Date.now()}`,
       orderNumber,
-      date: new Date().toISOString().split('T')[0],
+      date: localDate(new Date()),
       status: 'Confirmed',
+      // Payment and fulfilment are tracked separately: COD is collected on delivery.
+      paymentStatus: isCashOnDelivery ? 'pending' : 'paid',
+      fulfillmentStatus: 'queued',
       items: orderData.items,
       subtotalINR: orderData.subtotalINR,
       shippingINR: orderData.shippingINR,
@@ -318,21 +334,25 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       shippingAddress: orderData.shippingAddress,
       paymentMethod: orderData.paymentMethod,
       trackingNumber: `EXP-${Math.floor(100000000 + Math.random() * 900000000)}`,
-      carrier: 'Delhivery Surface Express',
-      estimatedDelivery: new Date(Date.now() + 5 * 86400000).toISOString().split('T')[0],
+      carrier: isExpress ? 'BlueDart Air Priority Express' : 'Delhivery Surface',
+      estimatedDelivery: localDate(new Date(Date.now() + (isExpress ? 3 : 5) * 86400000)),
       trackingEvents: [
         {
-          date: new Date().toISOString().split('T')[0],
+          date: localDate(new Date()),
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           status: 'Order Placed',
           location: 'TUW Master Studio',
-          description: 'Payment verified and print queue allocated.',
+          description: isCashOnDelivery
+            ? 'Cash on delivery order placed and added to the print queue.'
+            : 'Payment verified and print queue allocated.',
         },
       ],
     };
 
     setOrders((prev) => [newOrder, ...prev]);
     clearCart();
+    // A promo applies to one order only.
+    removePromoCode();
     return newOrder;
   };
 
@@ -346,7 +366,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       ...req,
       id: `ret-${Date.now()}`,
       status: 'Requested',
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: localDate(new Date()),
     };
     setReturns((prev) => [newReturn, ...prev]);
     addToast({
@@ -443,11 +463,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setPromoCode('');
     setDiscountPercent(0);
     try {
-      localStorage.removeItem('tuw_website_v2_cart');
-      localStorage.removeItem('tuw_website_v2_wishlist');
-      localStorage.removeItem('tuw_website_v2_orders');
-      localStorage.removeItem('tuw_website_v2_returns');
-      localStorage.removeItem('tuw_website_v2_addresses');
+      localStorage.removeItem('tuw_website_v4_cart');
+      localStorage.removeItem('tuw_website_v4_wishlist');
+      localStorage.removeItem('tuw_website_v4_orders');
+      localStorage.removeItem('tuw_website_v4_returns');
+      localStorage.removeItem('tuw_website_v4_addresses');
       localStorage.removeItem('tuw_storefront_cart');
       localStorage.removeItem('tuw_storefront_wishlist');
       localStorage.removeItem('tuw_storefront_orders');

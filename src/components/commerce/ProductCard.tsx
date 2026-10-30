@@ -13,6 +13,18 @@ export interface ProductCardProps {
   collectionName?: string;
 }
 
+// The collection each category is sold under (matches /collections).
+const COLLECTION_BY_CATEGORY: Record<Product['category'], string> = {
+  hoodies: 'Hoodies & Sweats',
+  tees: 'Everyday Tees',
+  pants: 'Joggers & Sweatpants',
+  jackets: 'Outerwear',
+  kids: 'Kids',
+  accessories: 'Objects',
+  mugs: 'Objects',
+  capsules: 'Capsules',
+};
+
 export default function ProductCard({
   product,
   className = '',
@@ -72,6 +84,7 @@ export default function ProductCard({
       color: colorName,
       size,
       priceINR: product.priceINR,
+      priceMinorINR: product.priceMinorINR,
       quantity: 1,
       image: activeImage,
     });
@@ -85,21 +98,13 @@ export default function ProductCard({
     collectionName ||
     (product.isNew
       ? 'New'
-      : product.category === 'hoodies'
+      : product.title.startsWith('Acid Wash')
       ? 'Acid Wash Collection'
-      : product.category === 'tees'
-      ? 'Atelier Collection'
-      : product.category === 'jackets'
-      ? 'Outerwear Series'
-      : product.category === 'pants'
-      ? 'Canvas Series'
-      : product.category === 'kids'
-      ? 'Kids Atelier'
-      : 'Atelier Objects');
+      : COLLECTION_BY_CATEGORY[product.category] || 'Atelier Collection');
 
   return (
-    <div
-      className={`group relative flex flex-col w-full bg-store-canvas rounded-2xl border border-store-card-border/50 overflow-hidden transition-all duration-500 ease-out hover:shadow-lg hover:shadow-black/5 hover:border-store-card-border ${
+    <article
+      className={`@container group relative flex flex-col w-full bg-store-canvas rounded-2xl border border-store-card-border/50 overflow-hidden transition-all duration-500 ease-out hover:shadow-lg hover:shadow-black/5 hover:border-store-card-border ${
         isHovered ? 'tuw-card-is-hovered' : ''
       } ${className}`}
       onMouseEnter={() => setIsHovered(true)}
@@ -113,17 +118,19 @@ export default function ProductCard({
       {/* ======================================================== */}
       <button
         type="button"
-        aria-label={isFavorite ? 'Remove from wishlist' : 'Save to wishlist'}
+        aria-label={isFavorite ? `Remove ${product.title} from wishlist` : `Save ${product.title} to wishlist`}
+        aria-pressed={isFavorite}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           toggleWishlist(product.id);
         }}
-        className="absolute top-3.5 right-3.5 z-30 p-1 text-store-charcoal/70 hover:text-store-charcoal hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="absolute top-3.5 right-3.5 z-30 p-1 text-store-charcoal/70 hover:text-store-charcoal hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold"
       >
         <Heart
           size={18}
           strokeWidth={1.5}
+          aria-hidden="true"
           className={
             isFavorite
               ? 'fill-store-terracotta text-store-terracotta'
@@ -143,6 +150,7 @@ export default function ProductCard({
           <ImageWithFallback
             src={activeImage}
             alt={product.title}
+            fallbackText="Photo coming soon"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         </Link>
@@ -153,7 +161,7 @@ export default function ProductCard({
             type="button"
             aria-label="Previous image"
             onClick={handlePrevImage}
-            className="absolute left-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-left"
+            className="absolute left-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold"
           >
             <ChevronLeft size={15} strokeWidth={2} />
           </button>
@@ -165,7 +173,7 @@ export default function ProductCard({
             type="button"
             aria-label="Next image"
             onClick={handleNextImage}
-            className="absolute right-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-right"
+            className="absolute right-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold"
           >
             <ChevronRight size={15} strokeWidth={2} />
           </button>
@@ -208,7 +216,7 @@ export default function ProductCard({
                     type="button"
                     disabled={!s.inStock}
                     onClick={(e) => handleQuickAdd(e, s.size)}
-                    className={`w-full py-1 text-xs font-semibold tracking-wider uppercase transition-colors text-center cursor-pointer rounded ${
+                    className={`w-full py-1 text-xs font-semibold tracking-wider uppercase transition-colors text-center cursor-pointer rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold ${
                       !s.inStock
                         ? 'opacity-30 line-through cursor-not-allowed text-store-muted'
                         : quickAddFeedback === s.size
@@ -230,7 +238,7 @@ export default function ProductCard({
                 <button
                   type="button"
                   onClick={(e) => handleQuickAdd(e, 'One Size')}
-                  className="w-full py-1 text-xs font-semibold uppercase tracking-wider text-store-charcoal hover:text-black transition-colors text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-1 text-xs font-semibold uppercase tracking-wider text-store-charcoal hover:text-black transition-colors text-center flex items-center justify-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold"
                 >
                   <Plus size={13} />
                   {quickAddFeedback === 'One Size' ? 'Added to Bag' : 'Quick Add to Bag'}
@@ -249,7 +257,7 @@ export default function ProductCard({
       {/* ======================================================== */}
       <div className="p-4 space-y-1.5">
         {/* Line 1: State-driven silky cross-fade (Zero text overlap or sudden pop) */}
-        <div className="relative min-h-5 overflow-hidden flex items-center">
+        <div className="relative min-h-7 py-0.5 overflow-hidden flex items-center">
           {/* Eyebrow Collection Label (Normal resting state) */}
           <div
             className={`absolute inset-0 flex items-center tuw-crossfade-idle ${
@@ -271,13 +279,13 @@ export default function ProductCard({
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5" role="group" aria-label={`${product.title} colours`}>
               {product.colors.map((color, colorIdx) => {
                 const isSelected = activeColorValue === color.value;
                 return (
                   <span
                     key={color.value}
-                    className={`inline-flex items-center justify-center tuw-droplet-swatch tuw-swatch-delay-${colorIdx % 8}`}
+                    className={`inline-flex items-center justify-center w-6 h-6 shrink-0 tuw-droplet-swatch tuw-swatch-delay-${colorIdx % 8}`}
                   >
                     <button
                       type="button"
@@ -293,10 +301,10 @@ export default function ProductCard({
                         );
                         if (matchIdx !== -1) setActiveImageIndex(matchIdx);
                       }}
-                      className={`w-3.5 h-3.5 rounded-full border transition-all duration-200 cursor-pointer ${
+                      className={`w-3.5 h-3.5 rounded-full border transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold ${
                         isSelected
-                          ? 'ring-1 ring-offset-2 ring-store-charcoal scale-110'
-                          : 'border-store-card-border hover:scale-105'
+                          ? 'ring-1 ring-offset-2 ring-store-charcoal'
+                          : 'border-store-card-border hover:scale-110'
                       }`}
                       style={{ backgroundColor: color.hex }}
                     />
@@ -312,23 +320,23 @@ export default function ProductCard({
 
         {/* Line 2: Title */}
         <Link href={`/products/${product.slug}`} className="block group/title">
-          <h3 className="text-sm font-medium text-store-charcoal leading-snug group-hover/title:underline tracking-wide truncate">
+          <h3 className="text-lg @[22rem]:text-xl font-medium text-primary-dark leading-snug">
             {product.title}
           </h3>
         </Link>
 
         {/* Line 3: Price */}
         <div className="flex items-center gap-2 pt-0.5">
-          <span className="text-sm font-medium text-store-charcoal">
+          <p className="text-base text-store-text-secondary tuw-tabular-nums">
             ₹{product.priceINR.toLocaleString()}
-          </span>
+          </p>
           {product.compareAtPriceINR && (
-            <span className="text-xs text-store-muted line-through">
+            <span className="text-xs text-store-muted line-through tuw-tabular-nums">
               ₹{product.compareAtPriceINR.toLocaleString()}
             </span>
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 }

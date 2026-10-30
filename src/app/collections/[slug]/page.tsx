@@ -18,6 +18,9 @@ export default function CollectionDetailPage({
   const { products } = useStore();
 
   const collection = STORE_COLLECTIONS.find((c) => c.slug === resolvedParams.slug);
+  const collectionProducts = collection?.categories
+    ? products.filter((p) => collection.categories!.includes(p.category))
+    : products;
 
   if (!collection) {
     return (
@@ -70,7 +73,8 @@ export default function CollectionDetailPage({
 
         {/* Garment Grid for Capsule */}
         <div className="pt-6">
-          <ProductGrid products={products} />
+          <h2 className="sr-only">Products</h2>
+          <ProductGrid products={collectionProducts} />
         </div>
       </main>
 

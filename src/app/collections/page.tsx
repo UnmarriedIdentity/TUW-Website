@@ -25,7 +25,7 @@ export default function CollectionsPage() {
             Capsule Collections
           </h1>
           <p className="text-sm text-[#666] mt-2 leading-relaxed">
-            Limited conceptual releases exploring dense structural weaves, unbleached duck canvas, and intentional minimalist uniforms.
+            Our pieces grouped by type, each printed with the leaping deer after you order.
           </p>
         </div>
 

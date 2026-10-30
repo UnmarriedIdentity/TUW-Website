@@ -12,7 +12,10 @@ import Input from '@/components/ui/Input';
 import Modal from '@/components/ui/Modal';
 import Textarea from '@/components/ui/Textarea';
 import Select from '@/components/ui/Select';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import { useRouter } from 'next/navigation';
 import { useStore } from '@/mocks/store';
+import { useDemoSession } from '@/mocks/auth';
 import { Package, MapPin, User, RotateCcw, Shield, Truck, ExternalLink, AlertCircle } from 'lucide-react';
 
 export default function AccountPage() {
@@ -24,6 +27,16 @@ export default function AccountPage() {
     submitReturnRequest,
     resetStoreData,
   } = useStore();
+  const router = useRouter();
+  // AccountGate only renders this page once a demo session exists.
+  const { session, signOut } = useDemoSession();
+  const accountName = session?.name ?? '';
+  const accountEmail = session?.email ?? '';
+
+  const handleSignOut = () => {
+    signOut();
+    router.push('/');
+  };
 
   const [activeTab, setActiveTab] = useState<'orders' | 'addresses' | 'returns' | 'profile'>('orders');
 
@@ -90,17 +103,22 @@ export default function AccountPage() {
               My Account
             </h1>
             <p className="text-sm text-[#666] mt-1">
-              Welcome back, Arjun Rao (arjun.rao@example.com)
+              Welcome back, {accountName} ({accountEmail})
             </p>
           </div>
 
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={resetStoreData}
-          >
-            Reset Demo Account State
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={resetStoreData}
+            >
+              Reset Demo Account State
+            </Button>
+            <Button variant="dark" size="sm" onClick={handleSignOut}>
+              Log out
+            </Button>
+          </div>
         </div>
 
         {/* Tab Navigation */}
@@ -185,15 +203,16 @@ export default function AccountPage() {
                     {order.items.map((item) => (
                       <div key={item.id} className="py-4 first:pt-0 last:pb-0 flex gap-4">
                         <div className="w-16 h-20 rounded-xl overflow-hidden bg-[#F4F1EA] shrink-0 border border-[#E2DDCF]">
-                          <img
+                          <ImageWithFallback
                             src={item.image}
                             alt={item.title}
+                            fallbackText=""
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="flex-1 flex justify-between">
                           <div>
-                            <h4 className="text-sm font-bold text-[#1A1A1A]">{item.title}</h4>
+                            <h2 className="text-sm font-bold text-[#1A1A1A]">{item.title}</h2>
                             <p className="text-xs text-[#8A8A8A] mt-0.5">
                               {item.color} • Size {item.size} • Qty {item.quantity}
                             </p>
@@ -239,7 +258,7 @@ export default function AccountPage() {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-base font-bold text-[#1A1A1A]">{addr.fullName}</h4>
+                      <h2 className="text-base font-bold text-[#1A1A1A]">{addr.fullName}</h2>
                       {addr.isDefault && <Badge variant="dark">Primary</Badge>}
                     </div>
                     <p className="text-xs text-[#666] leading-relaxed">
@@ -281,7 +300,7 @@ export default function AccountPage() {
           <div className="bg-white rounded-3xl border border-[#E2DDCF] p-6 sm:p-8 shadow-xs">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E2DDCF]">
               <div>
-                <h3 className="text-base font-bold text-[#1A1A1A]">Return & Exchange Requests</h3>
+                <h2 className="text-base font-bold text-[#1A1A1A]">Return & Exchange Requests</h2>
                 <p className="text-xs text-[#666] mt-0.5">
                   14-day hassle-free doorstep pickup policy for all unworn garments.
                 </p>
@@ -314,7 +333,7 @@ export default function AccountPage() {
                       <p className="text-xs text-[#666] mt-1">
                         <strong>{ret.itemTitle}</strong> • Reason: {ret.reason}
                       </p>
-                      <span className="text-[11px] text-[#8A8A8A]">Logged on {ret.createdAt}</span>
+                      <span className="text-xs text-[#8A8A8A]">Logged on {ret.createdAt}</span>
                     </div>
 
                     <div className="text-xs text-[#10B981] font-semibold flex items-center gap-1">
@@ -330,24 +349,24 @@ export default function AccountPage() {
         {/* TAB 4: PROFILE */}
         {activeTab === 'profile' && (
           <div className="bg-white rounded-3xl border border-[#E2DDCF] p-6 sm:p-8 shadow-xs max-w-2xl space-y-6">
-            <h3 className="text-base font-bold text-[#1A1A1A] pb-3 border-b border-[#E2DDCF]">
+            <h2 className="text-base font-bold text-[#1A1A1A] pb-3 border-b border-[#E2DDCF]">
               Profile & Account Credentials
-            </h3>
+            </h2>
 
             <div className="space-y-4">
-              <Input label="Account Name" value="Arjun Rao" readOnly />
-              <Input label="Registered Email" value="arjun.rao@example.com" readOnly />
+              <Input label="Account Name" value={accountName} readOnly />
+              <Input label="Registered Email" value={accountEmail} readOnly />
               <Input label="Contact Mobile" value="+91 98450 12345" readOnly />
             </div>
 
             <div className="pt-4 border-t border-[#E2DDCF] space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#5A5A5A]">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#5A5A5A]">
                 Security Preview
-              </h4>
+              </h3>
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#FAF9F6] border border-[#E2DDCF]">
                 <div>
                   <div className="text-xs font-bold text-[#1A1A1A]">Two-Factor Authentication</div>
-                  <p className="text-[11px] text-[#8A8A8A]">SMS OTP verification on demo checkout</p>
+                  <p className="text-xs text-[#8A8A8A]">SMS OTP verification on demo checkout</p>
                 </div>
                 <Badge variant="success">Active</Badge>
               </div>

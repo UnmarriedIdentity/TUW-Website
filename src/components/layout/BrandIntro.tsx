@@ -1,13 +1,30 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import TuwEmblem from './TuwEmblem';
+
+// The intro plays once per browser session, on the homepage only, so deep
+// links (shared product pages) and repeat visits open straight to content.
+const INTRO_SEEN_KEY = 'tuw_intro_seen';
+
+// Runs while the server HTML is parsed, before first paint: hides the overlay
+// for visitors who already saw it this session, avoiding a dark flash.
+const INTRO_SEEN_SCRIPT = `try{if(sessionStorage.getItem('${INTRO_SEEN_KEY}')==='1')document.documentElement.setAttribute('data-intro-seen','')}catch(e){}`;
 
 const BRAND_WORDS = [
   { word: 'THE', chars: ['T', 'H', 'E'] },
   { word: 'UNPLUGGED', chars: ['U', 'N', 'P', 'L', 'U', 'G', 'G', 'E', 'D'] },
   { word: 'WEAR', chars: ['W', 'E', 'A', 'R'] },
 ];
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(INTRO_SEEN_KEY, '1');
+  } catch {
+    // Storage blocked: the intro may replay, which is harmless.
+  }
+}
 
 export default function BrandIntro() {
   // Homespace ID Staggered Letter-by-Letter Architecture:
@@ -21,12 +38,25 @@ export default function BrandIntro() {
   const [taglineVisible, setTaglineVisible] = useState(false);
   const [shutterUp, setShutterUp] = useState(false);
   const [done, setDone] = useState(false);
+  const isHome = usePathname() === '/';
 
   useEffect(() => {
     // 1. Accessibility: check for prefers-reduced-motion
+    if (!isHome) {
+      setDone(true);
+      return;
+    }
     if (typeof window !== 'undefined') {
+      // Read only here; the flag is written when the intro finishes or is
+      // skipped, so React's dev double-effect cannot mark it seen too early.
+      let seenThisSession = false;
+      try {
+        seenThisSession = sessionStorage.getItem(INTRO_SEEN_KEY) === '1';
+      } catch {
+        // Storage blocked (private mode): fall back to playing the intro.
+      }
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || seenThisSession) {
         setDone(true);
         return;
       }
@@ -58,6 +88,7 @@ export default function BrandIntro() {
 
     // Step 5 (3000ms): Unmount from DOM after animation clears
     const tDone = setTimeout(() => {
+      markIntroSeen();
       setDone(true);
     }, 3000);
 
@@ -66,6 +97,7 @@ export default function BrandIntro() {
         if (typeof window !== 'undefined') {
           document.body.style.overflow = '';
         }
+        markIntroSeen();
         setDone(true);
       }
     };
@@ -82,9 +114,9 @@ export default function BrandIntro() {
       }
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [isHome]);
 
-  if (done) {
+  if (!isHome || done) {
     return null;
   }
 
@@ -92,6 +124,7 @@ export default function BrandIntro() {
     if (typeof window !== 'undefined') {
       document.body.style.overflow = '';
     }
+    markIntroSeen();
     setDone(true);
   };
 
@@ -99,6 +132,8 @@ export default function BrandIntro() {
   let globalCharIndex = 0;
 
   return (
+    <>
+    <script dangerouslySetInnerHTML={{ __html: INTRO_SEEN_SCRIPT }} />
     <aside
       aria-label="The Unplugged Wear Brand Introduction"
       aria-live="polite"
@@ -171,10 +206,11 @@ export default function BrandIntro() {
       <button
         type="button"
         onClick={handleSkip}
-        className="absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-2xs font-sans uppercase tracking-wider text-white/60 hover:text-white transition-colors z-20 cursor-pointer pointer-events-auto"
+        className="absolute top-6 right-6 min-h-6 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-sans uppercase tracking-wider text-white/80 hover:text-white transition-colors z-20 cursor-pointer pointer-events-auto"
       >
         Skip [Esc]
       </button>
     </aside>
+    </>
   );
 }

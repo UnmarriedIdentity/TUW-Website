@@ -29,7 +29,7 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="hover:text-store-charcoal transition-colors shrink-0"
+                className="inline-flex items-center min-h-6 hover:text-store-charcoal transition-colors shrink-0"
               >
                 {item.label}
               </Link>

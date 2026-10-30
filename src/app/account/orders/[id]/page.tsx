@@ -136,13 +136,13 @@ export default function OrderDetailPage({ params }: PageProps) {
                           Color: <strong>{item.color}</strong> • Size: <strong>{item.size}</strong>
                         </p>
                         <p className="text-xs text-stone-500 mt-0.5">
-                          Quantity: {item.quantity} × {formatINR(item.priceINR)}
+                          Quantity: {item.quantity} × {formatINR(item.priceINR * 100)}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
                       <span className="font-mono font-bold text-stone-900 text-sm">
-                        {formatINR(item.priceINR * item.quantity)}
+                        {formatINR(item.priceINR * item.quantity * 100)}
                       </span>
                     </div>
                   </div>
@@ -178,7 +178,7 @@ export default function OrderDetailPage({ params }: PageProps) {
                           <span className="text-stone-500">{evt.location}</span>
                         </div>
                         <p className="text-stone-600 mt-0.5">{evt.description}</p>
-                        <p className="text-[11px] text-stone-400 mt-1 font-mono">
+                        <p className="text-xs text-stone-400 mt-1 font-mono">
                           {evt.date} at {evt.time}
                         </p>
                       </div>
@@ -204,26 +204,26 @@ export default function OrderDetailPage({ params }: PageProps) {
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between text-stone-600">
                   <span>Subtotal</span>
-                  <span className="font-mono">{formatINR(order.subtotalINR)}</span>
+                  <span className="font-mono">{formatINR(order.subtotalINR * 100)}</span>
                 </div>
                 {order.discountINR > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
                     <span>Discount</span>
-                    <span className="font-mono">-{formatINR(order.discountINR)}</span>
+                    <span className="font-mono">-{formatINR(order.discountINR * 100)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-stone-600">
                   <span>Shipping</span>
                   <span className="font-mono">
-                    {order.shippingINR === 0 ? 'FREE' : formatINR(order.shippingINR)}
+                    {order.shippingINR === 0 ? 'FREE' : formatINR(order.shippingINR * 100)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-stone-900 pt-2 border-t border-stone-200">
                   <span>Total</span>
-                  <span className="font-mono">{formatINR(order.totalINR)}</span>
+                  <span className="font-mono">{formatINR(order.totalINR * 100)}</span>
                 </div>
               </div>
-              <div className="pt-3 border-t border-stone-100 text-[11px] text-stone-500">
+              <div className="pt-3 border-t border-stone-100 text-xs text-stone-500">
                 Payment Mode: <strong className="text-stone-800">{order.paymentMethod}</strong>
               </div>
             </div>
@@ -257,12 +257,12 @@ export default function OrderDetailPage({ params }: PageProps) {
                 <ShieldCheck size={16} className="text-emerald-600" />
                 <span>Garment Guarantee</span>
               </div>
-              <p className="text-[11px] leading-relaxed">
+              <p className="text-xs leading-relaxed">
                 Eligible for returns within 7 days of delivery in unworn condition with tags attached.
               </p>
               <Link
-                href="/returns-refunds"
-                className="inline-block text-[11px] font-semibold text-stone-900 hover:underline"
+                href="/policies/returns"
+                className="inline-block text-xs font-semibold text-stone-900 hover:underline"
               >
                 Review Return Policy →
               </Link>

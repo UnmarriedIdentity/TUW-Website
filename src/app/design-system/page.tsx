@@ -47,10 +47,10 @@ export default function StorefrontDesignSystemPage() {
   const typeScale = [
     {
       role: 'Editorial Display',
-      size: '32–72px',
-      weight: '300 (Light)',
-      sample: 'Architectural Form. Zero Deadstock.',
-      css: 'text-[clamp(2rem,5vw+0.5rem,4.5rem)] font-light tracking-tight',
+      size: '28–40px',
+      weight: '400 (Regular)',
+      sample: 'Architectural Form. Pure Permanence.',
+      css: 'text-[clamp(1.75rem,1.5vw+1.25rem,2.5rem)] font-normal tracking-tight',
     },
     {
       role: 'Heading 1 (Page Title)',
@@ -131,7 +131,7 @@ export default function StorefrontDesignSystemPage() {
             The Unplugged Wear Design System
           </h1>
           <p className="text-sm text-[#676767] max-w-2xl leading-relaxed font-sans">
-            Living specimen documenting Jost headings and Outfit body text (generic sans fallback only), the 3-tier Figma Color Style foundation, and the 1612×529 Frame layout metrics.
+            Living specimen documenting Outfit for headings and body text (generic sans fallback only), the 3-tier Figma Color Style foundation, and the 1612×529 Frame layout metrics.
           </p>
         </div>
 
@@ -193,11 +193,11 @@ export default function StorefrontDesignSystemPage() {
               </div>
             </div>
 
-            {/* Frame Reproduction: Upper Text in Futura, Lower Text in Outfit */}
+            {/* Frame Reproduction: Upper Text and Lower Text both in Outfit */}
             <div className="p-8 sm:p-12 rounded-2xl bg-[#FCFAF6] border border-dashed border-[#57AFFF] flex flex-col" style={{ gap: '150px' }}>
               <div>
                 <span className="text-xs font-mono uppercase text-[#676767] block mb-2">
-                  Upper Text • Heading Font (Futura Medium 500, Size 128px / responsive)
+                  Upper Text • Heading Font (Outfit Medium 500, Size 128px / responsive)
                 </span>
                 <p className="font-heading text-4xl sm:text-6xl text-[#0F0F0F] uppercase tracking-wider">
                   THE UNPLUGGED WEAR

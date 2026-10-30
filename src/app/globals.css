@@ -10,7 +10,7 @@
 @theme {
   --font-sans: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
   /* Figma Node 82:5702 Color Style Foundation */
@@ -45,6 +45,7 @@
   --color-store-link: #002B3A;
   --color-header-topbar: #171535;
   --color-store-cream: #F4F1EA;
+  --color-store-card-panel: #F3F2F0; /* Figma product card panel */
   --color-store-card-border: #E2DDCF;
   --color-store-gold: #C8A96A;
   --color-store-terracotta: #AD512F;
@@ -66,7 +67,7 @@
   --radius-form-input: 0.75rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
-  --text-2xs: 0.625rem;
+  --text-2xs: 0.75rem; /* 12px floor: no storefront text below 12px (WCAG legibility) */
 
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.08);
 }
@@ -80,7 +81,7 @@ html {
 }
 
 :root {
-  --font-heading: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
@@ -303,8 +304,20 @@ h6,
 }
 
 /* Storefront Layout & Geometry Utilities */
+/* Hero fills exactly the first screen below the header, so no sliver of the
+   next section shows. Header = main bar (4.5625rem + 1px border), plus the
+   2.25rem top bar from md up. svh keeps it steady while mobile URL bars move;
+   the 30rem floor keeps the copy clear of the top on very short screens. */
 .hero-viewport-height {
-  min-height: clamp(36rem, 85vh, 56rem);
+  --hero-header-offset: calc(4.5625rem + 1px);
+  min-height: max(30rem, calc(100vh - var(--hero-header-offset)));
+  min-height: max(30rem, calc(100svh - var(--hero-header-offset)));
+}
+
+@media (min-width: 48rem) {
+  .hero-viewport-height {
+    --hero-header-offset: calc(2.25rem + 4.5625rem + 1px);
+  }
 }
 
 .aspect-card-tall {
@@ -339,9 +352,6 @@ h6,
   background: linear-gradient(180deg, rgba(15, 15, 15, 0.25) 0%, rgba(15, 15, 15, 0.05) 35%, rgba(15, 15, 15, 0.45) 68%, rgba(15, 15, 15, 0.86) 100%);
 }
 
-.hero-scrim-horizontal {
-  background: linear-gradient(90deg, rgba(15, 15, 15, 0.45) 0%, rgba(15, 15, 15, 0.15) 50%, rgba(15, 15, 15, 0) 100%);
-}
 
 
 
@@ -429,7 +439,8 @@ h6,
 }
 
 .jitter-brand-signature {
-  font-size: clamp(1.85rem, 5.4vw, 5.25rem);
+  /* 6.5vw cap keeps the Outfit Black wordmark inside a 360px phone; desktop stays 5.4vw */
+  font-size: min(clamp(1.85rem, 5.4vw, 5.25rem), 6.5vw);
   line-height: 1.05;
   letter-spacing: 0.08em;
   white-space: nowrap;
@@ -442,6 +453,33 @@ h6,
 
 .jitter-brand-signature:hover {
   opacity: 0.95;
+}
+
+/* Header mega-menu panel reveal */
+@keyframes tuw-mega-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tuw-mega-in {
+  animation: tuw-mega-in 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuw-mega-in {
+    animation: none;
+  }
+}
+
+/* Already seen this session (flag set by BrandIntro's inline script before paint) */
+html[data-intro-seen] .intro-shutter-wrap {
+  display: none;
 }
 
 /* Homespace ID Staggered Letter-by-Letter Curtain Intro Standards */
@@ -744,7 +782,7 @@ h6,
    Editorial Philosophy Section (Slow-Living Luxury Specimen)
    -------------------------------------------------------------------------- */
 .philosophy-headline {
-  font-family: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
+  font-family: var(--font-heading);
   letter-spacing: -0.04em;
   line-height: 0.98;
   font-size: clamp(2.5rem, 5.5vw, 5rem);
@@ -851,6 +889,23 @@ h6,
 .tuw-toast-progress {
   animation: tuw-toast-progress 4s linear forwards;
   will-change: width;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion Preference (WCAG 2.2 AA)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *:not([class*="intro-"]):not([class*="intro-"] *) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .tuw-marquee-container {
+    animation: none !important;
+    overflow-x: auto;
+  }
 }
 
 /* --------------------------------------------------------------------------

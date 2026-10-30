@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
  *   - product price   16px / 500
  *   - descriptions    keep their per-section size at weight 400
  *   - no 700 / 800 inside a homepage section
- *   - hero display / subtitle 300-400, footer signature 900 stay exceptions
+ *   - hero display 400 / subtitle 300, footer signature 900 stay exceptions
  *
  * Colour, spacing, borders and radii are deliberately out of scope here.
  */
@@ -25,7 +25,6 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SECTION_FILES = [
   'src/app/page.tsx',
   'src/components/commerce/OurPhilosophy.tsx',
-  'src/components/commerce/CommunityPraise.tsx',
   'src/components/commerce/VirtualFittingRoom.tsx',
   'src/components/layout/BrandIntro.tsx',
 ];
@@ -49,8 +48,8 @@ describe('Homepage typography roles (weight & size only)', () => {
     const sectionHeadings = h2s.filter(({ cls }) => !cls.includes('philosophy-headline'));
 
     // Hero, Explore, Customer Experience, Recommendations, Stratosphere,
-    // Community Praise and Virtual Fitting Room. The footer brand signature
-    // (footer.tsx) and the Our Philosophy Playfair display headline are
+    // and Virtual Fitting Room. The footer brand signature
+    // (footer.tsx) and the Our Philosophy display headline are
     // documented exceptions in docs/DESIGN_SYSTEM.md.
     assert.equal(displayHeadlines.length, 1, 'the Our Philosophy display headline stays an exception');
     assert.ok(
@@ -62,7 +61,7 @@ describe('Homepage typography roles (weight & size only)', () => {
       'Our Philosophy display headline must not become bold'
     );
 
-    assert.equal(sectionHeadings.length, 6, 'expected 6 homepage section h2 elements');
+    assert.equal(sectionHeadings.length, 5, 'expected 5 homepage section h2 elements');
     for (const { file, cls } of sectionHeadings) {
       assert.ok(
         cls.includes(H2_SIZE),
@@ -75,12 +74,12 @@ describe('Homepage typography roles (weight & size only)', () => {
   });
 
   test('every section eyebrow is 16px / weight 500', () => {
+    assert.ok(
+      !read('src/app/page.tsx').includes('SS26 • Slow-Living Atelier'),
+      'hero must not bring back the SS26 kicker above the headline'
+    );
+
     const eyebrows = [
-      {
-        name: 'Hero kicker',
-        src: read('src/app/page.tsx'),
-        re: /text-base uppercase tracking-editorial text-white\/70 font-sans font-medium/,
-      },
       {
         name: 'Our Philosophy eyebrow',
         src: read('src/components/commerce/OurPhilosophy.tsx'),
@@ -107,13 +106,16 @@ describe('Homepage typography roles (weight & size only)', () => {
     }
   });
 
-  test('product names and product prices render at 16px / weight 500', () => {
+  test('product names and prices keep their agreed sizes and weights', () => {
     const page = read('src/app/page.tsx');
+    const card = read('src/components/commerce/ProductCard.tsx');
     const vfr = read('src/components/commerce/VirtualFittingRoom.tsx');
 
+    // Explore the Collection renders the shared Figma ProductCard (18-20px / 500 name, 16px / 400 price).
+    assert.ok(page.includes('<ProductCard key={product.id} product={product} />'), 'homepage uses the shared ProductCard');
     const roles = [
-      { name: 'Explore product name', src: page, re: /<h3 className="font-sans text-base font-medium text-store-text-primary leading-tight">/ },
-      { name: 'Explore product price', src: page, re: /<span className="font-heading font-medium text-base text-store-text-primary block tuw-tabular-nums">/ },
+      { name: 'Card product name (18-20px / 500)', src: card, re: /<h3 className="text-lg @\[22rem\]:text-xl font-medium text-primary-dark leading-snug">/ },
+      { name: 'Card product price (16px / 400)', src: card, re: /<p className="text-base text-store-text-secondary tuw-tabular-nums">/ },
       { name: 'VFR card name', src: vfr, re: /<p className="font-sans text-base font-medium text-store-text-primary">\{look\.title\}<\/p>/ },
       { name: 'VFR card price', src: vfr, re: /<p className="font-heading font-medium text-base text-store-text-primary tuw-tabular-nums mt-1">/ },
       { name: 'VFR worn name', src: vfr, re: /<p className="font-heading text-base font-medium text-store-text-primary mt-1">/ },
@@ -121,7 +123,7 @@ describe('Homepage typography roles (weight & size only)', () => {
     ];
 
     for (const role of roles) {
-      assert.ok(role.re.test(role.src), `${role.name} must be text-base / font-medium (16px / 500)`);
+      assert.ok(role.re.test(role.src), `${role.name} must keep its agreed size and weight`);
     }
 
     assert.ok(
@@ -136,7 +138,6 @@ describe('Homepage typography roles (weight & size only)', () => {
 
   test('section descriptions keep their agreed sizes at weight 400', () => {
     const page = read('src/app/page.tsx');
-    const praise = read('src/components/commerce/CommunityPraise.tsx');
     const vfr = read('src/components/commerce/VirtualFittingRoom.tsx');
 
     const descriptions = [
@@ -144,8 +145,6 @@ describe('Homepage typography roles (weight & size only)', () => {
       { name: 'Customer Experience description (16 -> 20px)', src: page, re: /<p className="text-base sm:text-xl text-white\/70 font-sans leading-relaxed">/ },
       { name: 'Recommendations description (18px, frozen)', src: page, re: /<p className="text-lg text-store-text-secondary font-sans mt-1">/ },
       { name: 'Stratosphere description (16 -> 18px)', src: page, re: /<p className="text-base sm:text-lg text-white\/80 max-w-xl mx-auto leading-relaxed font-sans">/ },
-      { name: 'Community Praise description (18px)', src: praise, re: /<p className="text-lg text-store-text-secondary max-w-lg mx-auto font-sans mt-3 leading-relaxed">/ },
-      { name: 'Community Praise quote (16px)', src: praise, re: /<p className="text-base text-store-text-primary font-sans leading-relaxed mb-6 font-normal">/ },
       { name: 'VFR description (18px)', src: vfr, re: /<p className="text-lg text-store-text-secondary font-sans mt-2 max-w-lg">/ },
     ];
 
@@ -168,9 +167,12 @@ describe('Homepage typography roles (weight & size only)', () => {
     const page = read('src/app/page.tsx');
     const footer = read('src/components/layout/Footer.tsx');
 
-    assert.ok(/font-light text-\[clamp\(2rem,5vw\+0\.5rem,4\.5rem\)\]/.test(page), 'hero display line 1 stays 300');
-    assert.ok(/font-normal text-\[clamp\(1\.375rem,3vw\+0\.5rem,3rem\)\]/.test(page), 'hero display line 2 stays 400');
-    assert.ok(/text-xs sm:text-sm text-white\/75 font-sans font-light/.test(page), 'hero subtitle stays 12-14px / 300');
+    assert.ok(
+      /<h1 className="font-heading font-normal text-\[clamp\(1\.75rem,1\.5vw\+1\.25rem,2\.5rem\)\]/.test(page),
+      'hero headline stays a 28-40px / 400 caption (luxury-house scale, not a billboard)'
+    );
+    assert.ok(/text-sm text-white\/75 font-sans font-light/.test(page), 'hero subtitle stays 14px / 300');
+    assert.ok(page.includes("'Pause background video'"), 'looping hero video keeps its pause control (WCAG 2.2.2)');
     assert.ok(/font-heading font-black uppercase jitter-brand-signature/.test(footer), 'footer brand signature stays 900');
   });
 
@@ -191,7 +193,22 @@ describe('Homepage typography roles (weight & size only)', () => {
 
     assert.ok(!specimen.includes('800 (ExtraBold)'), 'type specimen must not advertise 800');
     assert.ok(!specimen.includes('700 (Bold)'), 'type specimen must not advertise 700');
-    assert.ok(specimen.includes('300 (Light)'), 'type specimen must advertise the 300 hero display');
+    assert.ok(specimen.includes('28–40px'), 'type specimen must advertise the 28-40px hero display');
     assert.ok(specimen.includes('500 (Medium)'), 'type specimen must advertise weight 500');
+  });
+});
+
+
+describe('Honest demo authentication', () => {
+  test('login and register state demo status and fake no third-party sign-in', () => {
+    const login = read('src/app/login/page.tsx');
+    const register = read('src/app/register/page.tsx');
+    assert.ok(login.includes('demoNotice="Demo sign-in'), 'login must state it is a demo sign-in');
+    assert.ok(register.includes('demoNotice="Demo sign-up'), 'register must state it is a demo sign-up');
+    for (const src of [login, register]) {
+      assert.ok(!/Sign in with (Google|Apple)/.test(src), 'no simulated Google/Apple sign-in buttons');
+      assert.ok(src.includes('noValidate'), 'forms use inline errors instead of browser bubbles');
+    }
+    assert.ok(login.includes("next.startsWith('/') && !next.startsWith('//')"), 'login ?next= only allows same-site paths');
   });
 });

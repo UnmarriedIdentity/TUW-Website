@@ -35,9 +35,9 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     title: 'Catalog',
     links: [
       { label: 'All Apparel', href: '/shop' },
-      { label: '500 GSM French Terry Hoodies', href: '/shop?category=hoodies' },
-      { label: '280 GSM Combed Jersey Tees', href: '/shop?category=tees' },
-      { label: 'Pleated Duck Canvas Pants', href: '/shop?category=pants' },
+      { label: 'Hoodies & Sweats', href: '/shop?category=hoodies' },
+      { label: 'T-Shirts', href: '/shop?category=tees' },
+      { label: 'Joggers & Sweatpants', href: '/shop?category=pants' },
       { label: 'Capsule Collections', href: '/collections' },
       { label: 'Saved Wishlist', href: '/wishlist' },
     ],
@@ -46,9 +46,9 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     id: 'ethos',
     title: 'Ethos',
     links: [
-      { label: 'About The Unplugged Wear', href: '/our-story' },
+      { label: 'About The Unplugged Wear', href: '/about' },
       { label: 'Sustainability Manifesto', href: '/about/sustainability' },
-      { label: 'Editorial Journal', href: '/blog' },
+      { label: 'Editorial Journal', href: '/journal' },
       { label: 'Fit & Sizing Architecture', href: '/size-guide' },
       { label: 'Track Shipment', href: '/track-order' },
       { label: 'Contact Studio Concierge', href: '/contact' },
@@ -58,19 +58,19 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     id: 'policies',
     title: 'Policies',
     links: [
-      { label: 'Disclosures & FAQ', href: '/faqs' },
-      { label: 'Returns & Exchanges', href: '/returns-refunds' },
-      { label: 'Shipping & Delivery', href: '/shipping-policy' },
-      { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Terms of Service', href: '/terms' },
+      { label: 'Disclosures & FAQ', href: '/faq' },
+      { label: 'Returns & Exchanges', href: '/policies/returns' },
+      { label: 'Shipping & Delivery', href: '/policies/shipping' },
+      { label: 'Privacy Policy', href: '/policies/privacy' },
+      { label: 'Terms of Service', href: '/policies/terms' },
     ],
   },
 ];
 
 const FOOTER_LEGAL_LINKS: FooterLink[] = [
-  { label: 'Tiruppur Atelier', href: '/our-story' },
-  { label: 'Privacy', href: '/privacy-policy' },
-  { label: 'Terms', href: '/terms' },
+  { label: 'Tiruppur Atelier', href: '/about' },
+  { label: 'Privacy', href: '/policies/privacy' },
+  { label: 'Terms', href: '/policies/terms' },
 ];
 
 export default function Footer() {
@@ -102,13 +102,13 @@ export default function Footer() {
                   </span>
                 </div>
                 <p className="text-base text-store-text-secondary max-w-sm leading-relaxed font-sans font-light">
-                  Quiet, dense organic garments built to outlast fast-paced digital cycles. Printed
-                  purely on-demand in Tiruppur to guarantee zero deadstock and zero excess inventory.
+                  Everyday pieces printed with the leaping deer. Printed only after you order, in
+                  Tiruppur, so nothing is made that nobody wanted.
                 </p>
                 <div className="flex items-center gap-4 text-base text-store-text-secondary pt-1 font-medium">
                   <span className="flex items-center gap-1.5">
                     <Shield size={14} className="text-store-action-primary" />
-                    GOTS Organic Certified
+                    Printed to Order
                   </span>
                   <span className="flex items-center gap-1.5">
                     <RefreshCw size={14} className="text-store-action-primary" />
@@ -124,16 +124,16 @@ export default function Footer() {
                   aria-labelledby={`footer-${column.id}-heading`}
                   className="space-y-3"
                 >
-                  <h3
+                  <h2
                     id={`footer-${column.id}-heading`}
                     className="font-heading font-medium uppercase tracking-wider text-store-text-primary"
                   >
                     {column.title}
-                  </h3>
+                  </h2>
                   <ul className="space-y-2.5 text-base text-store-text-secondary">
                     {column.links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} className="hover:text-store-text-primary transition-colors">
+                        <Link href={link.href} className="inline-flex items-center min-h-6 hover:text-store-text-primary transition-colors">
                           {link.label}
                         </Link>
                       </li>
@@ -155,7 +155,7 @@ export default function Footer() {
                 {FOOTER_LEGAL_LINKS.map((link, index) => (
                   <React.Fragment key={link.href}>
                     {index > 0 && <span aria-hidden="true">•</span>}
-                    <Link href={link.href} className="hover:text-store-text-primary transition-colors">
+                    <Link href={link.href} className="inline-flex items-center min-h-6 hover:text-store-text-primary transition-colors">
                       {link.label}
                     </Link>
                   </React.Fragment>
@@ -163,39 +163,36 @@ export default function Footer() {
               </nav>
             </div>
 
-            {/* Slow-Living Disclaimer Note matching Jitter footer disclaimer */}
-            <div className="pt-3 pb-6 text-sm text-store-text-secondary/70 max-w-4xl leading-relaxed">
-              All architectural garments from The Unplugged Wear are tailored on-demand from 500 GSM organic French terry and combed jersey in Tiruppur, India. Zero deadstock inventory is held. Constructed intentionally for slow-living slow fashion permanence.
-            </div>
-
-            {/* Interactive Demo Controls Ribbon per MOCK_DATA.md */}
-            <div className="pt-4 border-t border-store-border flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-store-text-secondary">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-semibold text-store-text-primary uppercase tracking-wider text-2xs">
-                  Demo Scenarios:
-                </span>
-                {[
-                  { id: 'normal', label: 'Normal Baseline' },
-                  { id: 'empty', label: 'Empty States' },
-                  { id: 'error', label: 'Simulated Error' },
-                  { id: 'long_content', label: 'Long Multiline Text' },
-                ].map((sc) => (
-                  <button
-                    key={sc.id}
-                    type="button"
-                    onClick={() => setScenario(sc.id as any)}
-                    className={`px-2.5 py-1 rounded-full text-2xs font-medium transition-all cursor-pointer ${
-                      scenario === sc.id
-                        ? 'bg-primary-dark text-white font-semibold'
-                        : 'bg-store-canvas border border-store-border text-store-text-secondary hover:text-store-text-primary hover:bg-store-cream'
-                    }`}
-                  >
-                    {sc.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-4">
+            {/* Demo controls (required by the UI phase): tucked into a closed
+                disclosure so shoppers are not shown test tooling by default. */}
+            <details className="pt-4 border-t border-store-border text-xs text-store-text-secondary">
+              <summary className="inline-flex items-center min-h-6 cursor-pointer font-medium text-store-text-secondary hover:text-store-text-primary">
+                Demo tools (preview build)
+              </summary>
+              <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-semibold text-store-text-primary">Scenario:</span>
+                  {[
+                    { id: 'normal', label: 'Normal Baseline' },
+                    { id: 'empty', label: 'Empty States' },
+                    { id: 'error', label: 'Simulated Error' },
+                    { id: 'long_content', label: 'Long Multiline Text' },
+                  ].map((sc) => (
+                    <button
+                      key={sc.id}
+                      type="button"
+                      aria-pressed={scenario === sc.id}
+                      onClick={() => setScenario(sc.id as any)}
+                      className={`min-h-6 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                        scenario === sc.id
+                          ? 'bg-primary-dark text-white font-semibold'
+                          : 'bg-store-canvas border border-store-border text-store-text-secondary hover:text-store-text-primary hover:bg-store-cream'
+                      }`}
+                    >
+                      {sc.label}
+                    </button>
+                  ))}
+                </div>
                 <button
                   type="button"
                   onClick={() => {
@@ -203,15 +200,12 @@ export default function Footer() {
                       resetStoreData();
                     }
                   }}
-                  className="text-store-gold hover:underline font-medium text-2xs flex items-center gap-1 cursor-pointer"
+                  className="inline-flex items-center min-h-6 text-store-gold hover:underline font-medium text-xs cursor-pointer"
                 >
-                  <span>Reset Demo State</span>
+                  Reset Demo State
                 </button>
-                <span className="text-store-text-secondary/60 text-2xs hidden sm:inline">
-                  Local mock storage (tuw_website_v2) · Independent client state
-                </span>
               </div>
-            </div>
+            </details>
           </div>
         </div>
 
@@ -244,7 +238,7 @@ export default function Footer() {
                     Crafted for Quiet Permanence.
                   </h3>
                   <p className="text-sm text-white/70 max-w-sm font-sans leading-relaxed">
-                    Heavyweight 500 GSM organic French terry tailored on-demand with zero deadstock inventory.
+                    Hoodies, tees and everyday objects, made in Tiruppur.
                   </p>
                 </div>
               </div>
@@ -261,11 +255,15 @@ export default function Footer() {
                 {subscribed ? (
                   <div className="flex items-center gap-2 p-3 rounded-full bg-white/10 border border-white/20 text-xs text-secondary-mint">
                     <CheckCircle2 size={16} />
-                    <span>You are subscribed to the TUW Dispatch. Welcome.</span>
+                    <span>Demo only: no email was stored or sent. The newsletter is not live yet.</span>
                   </div>
                 ) : (
                   <form onSubmit={handleSubscribe} className="flex gap-2">
+                    <label htmlFor="footer-dispatch-email" className="sr-only">
+                      Email address for the TUW Dispatch newsletter
+                    </label>
                     <input
+                      id="footer-dispatch-email"
                       type="email"
                       placeholder="Enter your email"
                       value={email}
@@ -296,11 +294,9 @@ export default function Footer() {
               </h2>
 
               <div className="flex items-center gap-3 sm:gap-5 text-xs uppercase tracking-wider text-white/50 font-sans font-medium mt-2.5">
-                <span>100% GOTS Organic</span>
-                <span>•</span>
-                <span>Zero Deadstock</span>
-                <span>•</span>
-                <span>Tailored On-Demand</span>
+                <span>Tiruppur, India</span>
+                <span aria-hidden="true">•</span>
+                <span>Printed to Order</span>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,14 +12,14 @@ describe('Server Route & Asset Coverage Invariants', () => {
     'src/app/checkout/success/page.tsx',
     'src/app/account/orders/page.tsx',
     'src/app/account/orders/[id]/page.tsx',
-    'src/app/our-story/page.tsx',
-    'src/app/blog/page.tsx',
-    'src/app/blog/[slug]/page.tsx',
-    'src/app/faqs/page.tsx',
-    'src/app/shipping-policy/page.tsx',
-    'src/app/returns-refunds/page.tsx',
-    'src/app/privacy-policy/page.tsx',
-    'src/app/terms/page.tsx',
+    'src/app/about/page.tsx',
+    'src/app/journal/page.tsx',
+    'src/app/journal/[slug]/page.tsx',
+    'src/app/faq/page.tsx',
+    'src/app/policies/shipping/page.tsx',
+    'src/app/policies/returns/page.tsx',
+    'src/app/policies/privacy/page.tsx',
+    'src/app/policies/terms/page.tsx',
     'src/app/api/checkout/route.ts',
     'src/app/api/orders/[id]/route.ts',
     'src/app/api/contact/route.ts',
@@ -35,6 +35,29 @@ describe('Server Route & Asset Coverage Invariants', () => {
       assert.equal(existsSync(fullPath), true, `Missing expected file: ${relPath}`);
     });
   }
+
+  // One URL per page: legacy duplicates are redirects, not second copies.
+  test('legacy duplicate URLs redirect to their canonical page', () => {
+    const config = readFileSync(join(repoRoot, 'next.config.ts'), 'utf8');
+    const pairs = [
+      ['/faqs', '/faq'],
+      ['/blog', '/journal'],
+      ['/blog/:slug', '/journal/:slug'],
+      ['/our-story', '/about'],
+      ['/privacy-policy', '/policies/privacy'],
+      ['/returns-refunds', '/policies/returns'],
+      ['/shipping-policy', '/policies/shipping'],
+      ['/terms', '/policies/terms'],
+    ];
+    for (const [source, destination] of pairs) {
+      assert.ok(
+        config.includes(`source: '${source}', destination: '${destination}', permanent: true`),
+        `missing redirect ${source} -> ${destination}`,
+      );
+      const legacyPage = join(repoRoot, 'src/app', source.replace('/:slug', '/[slug]'), 'page.tsx');
+      assert.equal(existsSync(legacyPage), false, `duplicate page still exists for ${source}`);
+    }
+  });
 });
 
 describe('Razorpay Server Signature & Security Checks', () => {

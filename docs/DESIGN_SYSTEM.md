@@ -2,7 +2,7 @@
 
 ## Font
 
-Use Urbanist throughout the V2 admin interface. The storefront does not use it: `tuw-website` sets headings in Jost and body copy in Outfit, both self-hosted through `next/font/local` (see "Storefront homepage type roles" below). Use separate app-level typography tokens so website styling can evolve independently. Source: https://fonts.google.com/specimen/Urbanist . Include the license if self-hosting. Do not mix Montserrat, Plus Jakarta Sans or Inter into V2 specimens.
+Use Urbanist throughout the V2 admin interface. The storefront does not use it: `tuw-website` sets headings and body copy in Outfit, self-hosted through `next/font/local` (see "Storefront homepage type roles" below). Use separate app-level typography tokens so website styling can evolve independently. Source: https://fonts.google.com/specimen/Urbanist . Include the license if self-hosting. Do not mix Montserrat, Plus Jakarta Sans or Inter into V2 specimens.
 
 ## Type scale
 
@@ -22,14 +22,14 @@ Use 700 sparingly for emphasis. Default letter spacing is zero. Use sentence cas
 
 ## Storefront homepage type roles (size and weight only)
 
-Authority for `tuw-website` homepage sections: header, hero, Our Philosophy, Explore Best Selling, Customer Experience, Community Praise, Virtual Fitting Room, Product Recommendations, Stratosphere, footer. Headings use Jost (`.font-heading`, the Futura-like family) and body copy uses Outfit (`.font-sans`). This section defines **font weight and font size only** — colour, letter spacing, spacing, borders and radii are not part of it.
+Authority for `tuw-website` homepage sections: header, hero, Our Philosophy, Explore the Collection, Customer Experience, Virtual Fitting Room, Product Recommendations, Stratosphere, footer. Headings (`.font-heading`) and body copy (`.font-sans`) both use Outfit. This section defines **font weight and font size only** — colour, letter spacing, spacing, borders and radii are not part of it.
 
 ### Allowed weights
 
 | Weight | Used for |
 |---:|---|
-| 300 | Hero display and hero subtitle only |
-| 400 | Body copy, all section descriptions, names and meta |
+| 300 | Hero subtitle only |
+| 400 | Hero headline, body copy, all section descriptions, names and meta |
 | 500 | Every section H2, every eyebrow, product names, product prices, CTA labels |
 | 600 | Card titles, emphasis pills, micro badges |
 | 900 | Footer brand signature only (documented exception) |
@@ -42,13 +42,15 @@ Authority for `tuw-website` homepage sections: header, hero, Our Philosophy, Exp
 |---|---:|---:|---|
 | Section H2 | 28–48px responsive | 500 | `font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight` |
 | Section eyebrow | 16px | 500 | `font-sans text-base font-medium uppercase` |
-| Product name | 16px | 500 | `font-sans text-base font-medium` |
-| Product price | 16px | 500 | `font-heading text-base font-medium tuw-tabular-nums` |
+| Product card name (shop + homepage, Figma card) | 18px → 20px (cards 22rem and wider) | 500 | `text-lg @[22rem]:text-xl font-medium text-primary-dark` |
+| Product card price | 16px | 400 | `text-base text-store-text-secondary tuw-tabular-nums` |
+| Product name (fitting room) | 16px | 500 | `font-sans text-base font-medium` |
+| Product price (fitting room) | 16px | 500 | `font-heading text-base font-medium tuw-tabular-nums` |
 | Editorial card title | 18px | 600 | `font-heading text-lg font-semibold` |
 | Card body | 16px | 400 | `font-sans text-base` |
 | CTA / control label | 12–14px | 500 (600 on emphasis pills) | `font-sans text-xs font-medium uppercase` |
 | Meta / footnote | 12px | 400 | `font-sans text-xs` |
-| Micro badge | 10–12px | 600 | `text-2xs font-semibold` |
+| Micro badge | 12px | 600 | `text-2xs font-semibold` (12px floor, no smaller text) |
 
 **Section H2** — one size for every section heading: 28px at 360px, 48px from 1024px up, weight 500 at every breakpoint.
 
@@ -62,15 +64,14 @@ Descriptions keep the size already chosen for their section; they are not forced
 |---|---|
 | Explore Best Selling | 16px |
 | Customer Experience | 16px mobile → 20px desktop (`text-base sm:text-xl`) |
-| Community Praise | 18px |
 | Virtual Fitting Room | 18px |
 | Product Recommendations | 18px (frozen — do not change) |
 | Stratosphere | 16px → 18px (`text-base sm:text-lg`) |
 
 ### Documented exceptions
 
-- **Hero display**: line 1 `font-light` at `clamp(2rem,5vw+0.5rem,4.5rem)` (32–72px / 300), line 2 `font-normal` at `clamp(1.375rem,3vw+0.5rem,3rem)` (22–48px / 400), subtitle `text-xs sm:text-sm font-light` (12–14px / 300).
-- **Our Philosophy headline**: `.philosophy-headline` in `globals.css`, Playfair Display at `clamp(2.5rem,5.5vw,5rem)` (40–80px / 400). Display headline, kept as-is until a font-family pass is approved.
+- **Hero display**: bottom-centred campaign caption sized like luxury house heroes (Louis Vuitton 32px / 400, COS 35px). One `<h1>` at `font-normal text-[clamp(1.75rem,1.5vw+1.25rem,2.5rem)]` (28–40px / 400): one line from `md` up, two lines on phones. No kicker. Subtitle `text-sm font-light` (14px / 300). CTAs are underlined `text-xs` uppercase text links (500), 44px tall. Hero height is the viewport minus the header. The background video has a pause/play control (WCAG 2.2.2).
+- **Our Philosophy headline**: `.philosophy-headline` in `globals.css`, Outfit (`--font-heading`) at `clamp(2.5rem,5.5vw,5rem)` (40–80px / 400). Display headline with its own size and tracking.
 - **Footer**: statement `font-light` (16px / 300) and brand signature `font-black` (900) stay as they are.
 - **Chrome outside the sections**: header wordmark, header micro badges, mobile menu, brand intro and footer link columns are not part of this pass.
 - **Stratosphere CTA**: stays `text-sm font-semibold` (14px / 600).

@@ -17,7 +17,7 @@ function SearchPageContent() {
 
   const [query, setQuery] = useState(initialQuery);
 
-  const suggestedTerms = ['Hoodies', '500 GSM', 'French Terry', 'Organic Cotton', 'Tees', 'Pants'];
+  const suggestedTerms = ['Hoodies', 'Sweatshirt', 'Oversized Tee', 'Acid Wash', 'Joggers', 'Mug'];
 
   const searchResults = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -54,8 +54,9 @@ function SearchPageContent() {
         <div className="relative mt-6">
           <SearchIcon size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#8A8A8A]" />
           <input
-            type="text"
-            placeholder="Search by keywords (e.g. 500 GSM, French Terry, Slate, Cargo)..."
+            type="search"
+            aria-label="Search the catalog"
+            placeholder="Search by keywords (e.g. hoodie, oversized tee, acid wash)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full h-14 pl-12 pr-12 rounded-2xl border border-[#E2DDCF] bg-white text-base outline-none shadow-xs focus:border-[#1A1A1A] transition-colors"
@@ -94,8 +95,8 @@ function SearchPageContent() {
       <div className="pt-8 border-t border-[#E2DDCF]">
         {query.trim() === '' ? (
           <div>
-            <h3 className="text-base font-bold text-[#1A1A1A] mb-6">Explore Active Essentials</h3>
-            <ProductGrid products={products.slice(0, 4)} />
+            <h2 className="text-base font-bold text-[#1A1A1A] mb-6">Explore Active Essentials</h2>
+            <ProductGrid products={products.slice(0, 3)} />
           </div>
         ) : searchResults.length > 0 ? (
           <div>
@@ -106,7 +107,7 @@ function SearchPageContent() {
           </div>
         ) : (
           <div className="text-center py-16 bg-white rounded-3xl border border-[#E2DDCF] p-8 max-w-xl mx-auto shadow-xs">
-            <h3 className="text-lg font-bold text-[#1A1A1A]">No matches for &ldquo;{query}&rdquo;</h3>
+            <h2 className="text-lg font-bold text-[#1A1A1A]">No matches for &ldquo;{query}&rdquo;</h2>
             <p className="text-xs text-[#666] mt-2 leading-relaxed">
               We couldn&apos;t find any garments matching this term. Check your spelling or browse our curated categories:
             </p>
@@ -121,7 +122,7 @@ function SearchPageContent() {
                 href="/shop?category=tees"
                 className="px-4 py-2 rounded-full bg-[#F4F1EA] text-xs font-semibold hover:bg-[#1A1A1A] hover:text-white transition-colors"
               >
-                Organic Tees
+                Oversized Tees
               </Link>
               <Link
                 href="/shop?category=pants"

@@ -77,7 +77,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "4-collections-detail",
     "area": "Shopping",
     "name": "Capsule Detail",
-    "route": "/collections/winter-monolith",
+    "route": "/collections/hoodies-and-sweats",
     "purpose": "Dedicated capsule collection view with curated matching product grid.",
     "status": "pending"
   },
@@ -95,7 +95,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "pdp-atelier-tee",
     "area": "Shopping",
     "name": "PDP: Atelier Raw-Edge Relaxed Tee",
-    "route": "/products/atelier-raw-edge-relaxed-tee",
+    "route": "/products/oversized-classic-tee",
     "image": "/products/1.jpeg",
     "purpose": "280 GSM single-origin combed organic cotton tee with dynamic Textile Integrity & Fiber Characteristics table (4 comparison columns).",
     "status": "done",
@@ -307,7 +307,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "15-our-story",
     "area": "Brand",
     "name": "Our Story",
-    "route": "/our-story",
+    "route": "/about",
     "purpose": "The founding journey of The Unplugged Wear and tactile design ethos.",
     "status": "pending"
   },
@@ -325,7 +325,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "17-journal-article",
     "area": "Brand",
     "name": "Journal Article View",
-    "route": "/journal/the-anatomy-of-500-gsm-cotton",
+    "route": "/journal/choosing-our-blanks",
     "purpose": "Rich editorial article with typographic hierarchy, pull quotes, and author info.",
     "status": "pending"
   },
@@ -334,7 +334,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "18-blog",
     "area": "Brand",
     "name": "Blog Index",
-    "route": "/blog",
+    "route": "/journal",
     "purpose": "Canonical blog index (aliases Journal entries).",
     "status": "pending"
   },
@@ -343,7 +343,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "19-blog-article",
     "area": "Brand",
     "name": "Blog Article View",
-    "route": "/blog/zero-deadstock-print-on-demand",
+    "route": "/journal/zero-deadstock-print-on-demand",
     "purpose": "Individual blog post view with related stories and share metadata.",
     "status": "pending"
   },
@@ -451,7 +451,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "31-privacy-policy",
     "area": "Policies",
     "name": "Privacy Policy (Direct URL)",
-    "route": "/privacy-policy",
+    "route": "/policies/privacy",
     "purpose": "Vanity alias route to Privacy Policy.",
     "status": "pending"
   },
@@ -469,7 +469,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "33-returns-refunds",
     "area": "Policies",
     "name": "Returns & Refunds (Direct URL)",
-    "route": "/returns-refunds",
+    "route": "/policies/returns",
     "purpose": "Vanity alias route to Returns & Refunds Policy.",
     "status": "pending"
   },
@@ -487,7 +487,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "35-shipping-policy",
     "area": "Policies",
     "name": "Shipping Policy (Direct URL)",
-    "route": "/shipping-policy",
+    "route": "/policies/shipping",
     "purpose": "Vanity alias route to Shipping Policy.",
     "status": "pending"
   },
@@ -505,7 +505,7 @@ export const DEFAULT_CHECKLIST: ChecklistItem[] = [
     "id": "37-terms",
     "area": "Policies",
     "name": "Terms (Direct URL)",
-    "route": "/terms",
+    "route": "/policies/terms",
     "purpose": "Vanity alias route to Terms & Conditions.",
     "status": "pending"
   },

@@ -74,6 +74,10 @@ export type Product = {
   title: string;
   subtitle: string;
   category: 'hoodies' | 'tees' | 'jackets' | 'pants' | 'accessories' | 'capsules' | 'mugs' | 'kids';
+  /** Who the piece is cut for; drives the Men / Women / Kids navigation. */
+  audience?: ('men' | 'women' | 'kids')[];
+  /** Print-partner base style code (e.g. Qikink "UH83"); fulfilment only, never rendered. */
+  partnerStyleCode?: string;
   priceINR: number;
   priceMinorINR?: number; // Integer minor-unit INR paise (e.g. 389900 = ₹3,899)
   compareAtPriceINR?: number;
@@ -110,6 +114,8 @@ export type Collection = {
   coverImage: string;
   productCount: number;
   tagline: string;
+  /** Product categories this collection groups; omitted means every product. */
+  categories?: Product['category'][];
 };
 
 export type CartItem = {
@@ -196,6 +202,8 @@ export type JournalArticle = {
   excerpt: string;
   category: 'Craft' | 'Slow Living' | 'Sustainability' | 'Design';
   coverImage: string;
+  /** CSS object-position for the 16:10 cover crop, so portrait photos keep the face in frame. */
+  coverPosition?: string;
   author: string;
   readTime: string;
   publishedAt: string;

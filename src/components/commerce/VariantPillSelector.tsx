@@ -104,11 +104,6 @@ export default function VariantPillSelector({
               }`}
             >
               <span className="text-center truncate w-full">{s.size}</span>
-              {s.inStock && s.stockCount <= 3 && (
-                <span className="text-xs font-normal text-store-terracotta leading-none -mt-0.5">
-                  {s.stockCount} left
-                </span>
-              )}
             </button>
           );
         })}
@@ -120,7 +115,7 @@ export default function VariantPillSelector({
           {selectedSize.inStock ? (
             <span className="text-emerald-700 font-medium flex items-center gap-1">
               <Check size={13} />
-              In stock for next-day dispatch • {selectedSize.stockCount} allocated
+              Printed to order • usually dispatched within a few business days
             </span>
           ) : (
             <span className="text-red-700 font-medium flex items-center gap-1">

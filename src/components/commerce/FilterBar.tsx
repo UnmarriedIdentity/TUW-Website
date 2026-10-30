@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import type { Product } from '@/lib/types';
 import { SlidersHorizontal, X, Plus, Minus, Check } from 'lucide-react';
 import Drawer from '../ui/Drawer';
 
@@ -19,6 +20,8 @@ export interface FilterBarProps {
   availableCategories: { value: string; label: string; count?: number }[];
   availableSizes?: string[];
   availableColors?: { value: string; name: string; hex: string; count?: number }[];
+  /** Full catalog, used to show real match counts beside each filter option. */
+  products?: Product[];
 }
 
 export const FIGMA_FILTER_COLORS = [
@@ -45,7 +48,6 @@ export const FIGMA_CATEGORIES = [
   { value: 'hoodies', label: 'Hoodies & sweats', count: 4 },
   { value: 'pants', label: 'Joggers', count: 3 },
   { value: 'kids', label: 'Kids', count: 2 },
-  { value: 'wall-art', label: 'Wall art', count: 4 },
   { value: 'accessories', label: 'Accessories', count: 4 },
 ];
 
@@ -61,7 +63,20 @@ export default function FilterBar({
   onFilterChange,
   resultCount,
   availableCategories,
+  products = [],
 }: FilterBarProps) {
+  // Real per-option counts from the catalog (the Figma mock's numbers were placeholders).
+  const countByCategory = (value: string) =>
+    products.filter((p) => (value === 'kids' ? p.category === 'kids' || Boolean(p.audience?.includes('kids')) : p.category === value)).length;
+  const countByColour = (value: string) =>
+    products.filter((p) => p.colors.some((c) => c.value === value)).length;
+  const countByPrice = (value: string) =>
+    products.filter((p) =>
+      value === 'under-1500' ? p.priceINR < 1500
+      : value === '1500-3000' ? p.priceINR >= 1500 && p.priceINR <= 3000
+      : value === '3000-5000' ? p.priceINR > 3000 && p.priceINR <= 5000
+      : p.priceINR > 5000
+    ).length;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Accordion section states matching Figma screenshot (Sort: open, Category: closed, Colour: open, Price: closed)
@@ -127,56 +142,46 @@ export default function FilterBar({
   const currentSortLabel =
     FIGMA_SORT_OPTIONS.find((s) => s.value === filters.sort)?.label || 'Novelty';
 
-  // Dynamic button label: if Black is selected with 0 other active filters, matches Figma "Show 22 results"
-  const displayResultCount = useMemo(() => {
-    if (selectedColors.length === 1 && selectedColors[0] === 'black' && resultCount === 0) {
-      return 22;
-    }
-    return resultCount > 0 ? resultCount : 22;
-  }, [selectedColors, resultCount]);
+  // The drawer button always reports the real number of matches.
+  const displayResultCount = resultCount;
 
   return (
-    <div className="flex flex-col gap-6 pb-4">
+    <div className="flex flex-col gap-4 pb-2">
       {/* ======================================================== */}
-      {/* 1. CATEGORY NAVIGATION PILLS (Centered Row matching Figma) */}
+      {/* 1. ONE ROW: category pills (left, scroll on phones) +      */}
+      {/*    Filter & Sort by (right)                               */}
       {/* ======================================================== */}
-      <div className="flex items-center justify-center gap-2 flex-wrap">
-        {availableCategories.map((cat) => {
-          const isActive = filters.category === cat.value;
-          return (
-            <button
-              key={cat.value}
-              type="button"
-              onClick={() => onFilterChange({ ...filters, category: cat.value })}
-              className={`px-5 py-2 rounded-full text-xs font-medium tracking-wide transition-all cursor-pointer ${
-                isActive
-                  ? 'bg-primary-dark text-white shadow-xs'
-                  : 'bg-white border border-store-card-border text-store-charcoal hover:border-store-charcoal'
-              }`}
-            >
-              {cat.label}
-            </button>
-          );
-        })}
-      </div>
+      <div className="flex items-center gap-4 border-b border-store-card-border/80 pb-4">
+        <div className="flex-1 min-w-0 flex items-center gap-2 overflow-x-auto no-scrollbar p-1 -m-1">
+          {availableCategories.map((cat) => {
+            const isActive = filters.category === cat.value;
+            return (
+              <button
+                key={cat.value}
+                type="button"
+                onClick={() => onFilterChange({ ...filters, category: cat.value })}
+                aria-pressed={isActive}
+                className={`shrink-0 px-4 h-9 rounded-full text-sm font-medium whitespace-nowrap transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold ${
+                  isActive
+                    ? 'bg-primary-dark text-white shadow-xs'
+                    : 'bg-white border border-store-card-border text-store-charcoal hover:border-store-charcoal'
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
 
-      {/* ======================================================== */}
-      {/* 2. SUB-BAR: Item Count (Left) + Filter & Sort By (Right) */}
-      {/* ======================================================== */}
-      <div className="flex items-center justify-between pt-2 border-b border-store-card-border/80 pb-4">
-        {/* Left: Item Count */}
-        <span className="text-xs text-store-muted font-normal tracking-wide">
-          {resultCount} items
-        </span>
-
-        {/* Right: Filter & Sort Trigger */}
+        {/* Filter & Sort trigger (the item count sits next to the page title) */}
         <button
           type="button"
           onClick={() => setIsDrawerOpen(true)}
-          className="inline-flex items-center gap-2 text-xs font-medium text-store-charcoal hover:text-black transition-colors cursor-pointer"
+          className="shrink-0 inline-flex items-center gap-2 h-9 px-1 text-sm font-medium text-store-charcoal hover:text-black transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold rounded-full"
         >
-          <span>Filter & Sort by</span>
-          <SlidersHorizontal size={14} className="text-store-charcoal" />
+          <span className="hidden sm:inline">Filter & Sort by</span>
+          <span className="sm:hidden">Filter</span>
+          <SlidersHorizontal size={14} aria-hidden="true" className="text-store-charcoal" />
           {activeFiltersCount > 0 && (
             <span className="w-4 h-4 rounded-full bg-store-charcoal text-white text-xs font-bold flex items-center justify-center">
               {activeFiltersCount}
@@ -282,7 +287,7 @@ export default function FilterBar({
               onClick={() => setIsDrawerOpen(false)}
               className="w-full py-3.5 px-4 rounded-full bg-primary-dark text-white hover:bg-black text-xs font-semibold uppercase tracking-wider text-center transition-colors cursor-pointer"
             >
-              Show {displayResultCount} results
+              Show {displayResultCount} {displayResultCount === 1 ? 'result' : 'results'}
             </button>
           </div>
         }
@@ -393,7 +398,7 @@ export default function FilterBar({
                         </span>
                       </div>
                       <span className="text-xs text-store-muted tabular-nums">
-                        {cat.count}
+                        {countByCategory(cat.value)}
                       </span>
                     </button>
                   );
@@ -465,7 +470,7 @@ export default function FilterBar({
                         </span>
                       </div>
                       <span className="text-xs text-store-muted tabular-nums">
-                        {col.count}
+                        {countByColour(col.value)}
                       </span>
                     </button>
                   );
@@ -517,7 +522,7 @@ export default function FilterBar({
                         </span>
                       </div>
                       <span className="text-xs text-store-muted tabular-nums">
-                        {pr.count}
+                        {countByPrice(pr.value)}
                       </span>
                     </button>
                   );

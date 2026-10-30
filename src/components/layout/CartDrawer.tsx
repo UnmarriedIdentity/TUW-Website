@@ -44,7 +44,7 @@ export default function CartDrawer() {
       position="right"
       maxWidth="max-w-md"
       title={`Shopping Bag (${cart.reduce((a, b) => a + b.quantity, 0)})`}
-      subtitle="Heavyweight Organic POD Apparel"
+      subtitle="Printed to order"
     >
       {cart.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full text-center py-16">
@@ -53,7 +53,7 @@ export default function CartDrawer() {
           </div>
           <h4 className="text-base font-bold text-[#1A1A1A]">Your bag is empty</h4>
           <p className="text-xs text-[#8A8A8A] max-w-xs mt-1 leading-relaxed">
-            Discover our dense 500 GSM French terry hoodies and combed organic staples.
+            Discover our hoodies, tees and everyday pieces.
           </p>
           <div className="mt-6">
             <Button
@@ -237,7 +237,7 @@ export default function CartDrawer() {
               </Button>
             </div>
 
-            <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#8A8A8A] pt-1">
+            <div className="flex items-center justify-center gap-1.5 text-xs text-[#8A8A8A] pt-1">
               <ShieldCheck size={14} className="text-[#10B981]" />
               <span>Demo Checkout • No actual card charges</span>
             </div>

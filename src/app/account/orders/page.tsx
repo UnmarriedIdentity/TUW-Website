@@ -95,7 +95,7 @@ export default function AccountOrdersPage() {
                     <div className="text-right">
                       <span className="text-xs text-stone-500 block">Total</span>
                       <span className="font-bold text-stone-900 font-mono text-sm">
-                        {formatINR(order.totalINR)}
+                        {formatINR(order.totalINR * 100)}
                       </span>
                     </div>
                     <Button
@@ -124,12 +124,12 @@ export default function AccountOrdersPage() {
                       </div>
                       <div className="min-w-0 flex-1 text-xs">
                         <p className="font-semibold text-stone-900 truncate">{item.title}</p>
-                        <p className="text-stone-500 text-[11px]">
+                        <p className="text-stone-500 text-xs">
                           {item.color} • Size {item.size} • Qty {item.quantity}
                         </p>
                       </div>
                       <span className="font-mono text-xs font-medium text-stone-900">
-                        {formatINR(item.priceINR * item.quantity)}
+                        {formatINR(item.priceINR * item.quantity * 100)}
                       </span>
                     </div>
                   ))}
