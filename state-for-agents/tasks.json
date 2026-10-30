@@ -18,8 +18,10 @@
   },
   "session": {
     "branch": "urvil",
-    "tip": "33b601d",
-    "unpushed": [],
+    "tip": "a311632",
+    "unpushed": [
+      "a311632"
+    ],
     "next_up": "Owner confirmations: rights for the supplied lifestyle photos, draft retail prices, social URLs in src/lib/site.ts, fabric facts; move forgot/reset password onto AuthShell; replace placeholder model photos with real garment photography before launch.",
     "pending_verifications": [],
     "last_updated": "2026-10-30",
@@ -1455,7 +1457,8 @@
         "2026-10-30: Opened TL-WEB-062 on branch urvil at user request to use Outfit across the storefront.",
         "2026-10-30: Gates green: typecheck 0 errors, 45/45 unit tests pass, next build clean; built CSS shows .philosophy-headline{font-family:var(--font-heading)} and zero Jost/Playfair rules; dev server computed fonts for body, h1, h2 and .philosophy-headline all resolve to Outfit. Awaiting commit to close.",
         "2026-10-30: Fixed regression from the Outfit switch: footer .jitter-brand-signature (Outfit Black is wider than Jost) overflowed 360px phones by 17px; font-size now min(clamp(1.85rem,5.4vw,5.25rem),6.5vw), desktop unchanged, scrollWidth 360 at 360px.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1493,7 +1496,8 @@
         "2026-10-30: Replaced 36-88px billboard headline with 28-40px / 400 bottom-centred caption and underlined text-link CTAs after benchmarking LV, Zara and COS. Verified at 360/768/1024/1440: heading, subtitle and links centred (0px offset), headline one line md+ / two lines on phones, pause button vertically centred on the links and never overlapping, hero bottom = viewport bottom, no horizontal scroll.",
         "2026-10-30: Hero video switched to existing /videos/h2.mp4 (model in heavyweight hoodie, 1280x720, 10s loop); verified playing at 1440x900 and model stays centred in the 360x780 crop.",
         "2026-10-30: Tightened space under hero links: caption padding pb-6/sm:pb-8/lg:pb-10 (was 12/16/20), pause button offsets moved to stay centred on the links. Visual gap under link underline 88px -> 48px at 1470x802; 32/40/48/48px at 360/768/1024/1440, hero still flush with viewport, no horizontal scroll.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1574,7 +1578,8 @@
         "2026-10-30: Header currency picker (USD default, no effect) replaced with static '₹ INR'; no $ prices remain.",
         "2026-10-30: BrandIntro plays on '/' only, once per session (flag written on finish/skip; pre-paint inline script + html[data-intro-seen] CSS avoids flash).",
         "2026-10-30: Gates green: typecheck 0, 46/46 tests, next build 44/44, built CSS has html[data-intro-seen] .intro-shutter-wrap{display:none}. Browser-verified /shop filters (all 14, men 9, women 10, kids 1, joggers 2, accessories 2), PDPs, collections, search, cart, orders, sustainability, journal: zero banned claim/price strings. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1614,7 +1619,8 @@
         "2026-10-30: Opened at user request (navbar + sub-navbar like elietahari.com, with images).",
         "2026-10-30: Header row switched to a 3-column grid (logo centred without a positioned wrapper) so panels anchor to the full-width sticky header; also removes the 360px wordmark/search-icon collision.",
         "2026-10-30: Verified: hover and keyboard focus open panels (aria-expanded/aria-controls), Tab enters panel links, Escape and blur close, link click closes; panels 1440px wide flush under header; tiles fit at 1024 (w-36) and 1440 (xl:w-52) with no horizontal scroll; 29/29 menu links return 200; audience+category filters correct (Men·T-shirts 4, Women·Hoodies 4, Men/Women·Joggers 2); mobile drawer accordion expands. Gates: typecheck 0, 46/46 tests, build 44/44, built CSS .tuw-mega-in present. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1681,7 +1687,8 @@
         "2026-10-30: 360px PDP overflow fixed (purchase row flex-1/min-w-0, price hidden on phones); breadcrumbs, top bar, nav, footer links >=24px; --text-2xs raised to 12px and all text-[10/11px] removed; heading levels fixed site-wide; demo storage keys bumped to tuw_website_v3 after catalog change.",
         "2026-10-30: Verified: prod server 308s for all 8 legacy URLs, 404 for unknown product/journal/collection and internal pages, per-product <title>; dev audit at 360/1440 on 12 pages: 0 overflow, 0 heading skips, 0 sub-12px text, 0 unlabeled inputs. Gates: typecheck 0, 47/47 tests, build 37/37. Awaiting commit to close.",
         "2026-10-30: Every route now has its own <title>/description via route layouts; 13 private routes (search, cart, checkout, account, wishlist, track-order, auth pages) are robots noindex,follow. Verified in dev HTML and prod build output. Gates: typecheck 0, 47/47 tests, build 37/37.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1720,7 +1727,8 @@
         "2026-10-30: Fixed catalog image mapping found during review: section image w3 is a cropped hoodie, moved from Oversized Sweatshirt (prod-4) to Cropped Hoodie (prod-10) incl. demo orders and nav tiles; removed mug handle-side.png from prod-13 (baked-in fake '4.6 ★★★★★' rating).",
         "2026-10-30: Verified at 360/768/1440: 0 overflow, 1 h1, 0 heading skips, 0 sub-12px text, 0 broken/alt-less images, values buttons aria-pressed + aria-live, hotspots on garment at all widths, 13/13 links/anchors resolve. Gates: build 37/37, typecheck 0, 47/47 tests. Awaiting commit to close.",
         "2026-10-30: Owner-supplied photos placed: cream-polo (A small team in Surat), street-polo (Made slowly; detail crop for 'Slow mornings' replacing the text placeholder tile), office-polo for the former cropped-hoodie tile ('Desk days'), bottom-anchored with scale-125 so its Polo Ralph Lauren chest logo stays out of frame (verified at 360/768/1440). Desk days spans 2 cols on phones to fill the bento gap. Also: Cropped Hoodie default colour reordered to Maroon to match its photo. Gates: build 37/37, typecheck 0, 48/48 tests.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1759,7 +1767,8 @@
         "2026-10-30: Verified in browser: empty submit shows inline errors (no browser bubbles) and focuses email; invalid email keeps typed values; /login?next=/checkout lands on /checkout with session-only storage; Remember me + next=//evil.example lands on /account with localStorage; register shows 'Use at least 8 characters.' / 'Passwords do not match.' with name/email kept; 360/1440: 0 overflow, 0 small text, 0 unlabeled inputs, phone top bar on one line. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
         "2026-10-30: Owner asked to keep the original photos and fix cropping: auth photo now sits in a padded rounded frame anchored to the top (heads visible at 1440x600, 1470x802, 1920x1080). Original register-hero.png restored; original login-hero.png NOT restored (it is a photo of Ana de Armas, a real celebrity), login keeps the brand hoodie model. Gates: build 37/37, typecheck 0, 48/48 tests.",
         "2026-10-30: Login photo replaced with owner-supplied image (public/images/login-hero.webp, 736x1104, couple walking). Crest moved from top-left to the bottom caption block so faces at the top of any photo stay clear; verified at 1470x802 and 1440x600 on login and register. Gates: build 37/37, typecheck 0, 48/48 tests.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1800,7 +1809,8 @@
       "log": [
         "2026-10-30: Verified in browser: Philosophy image at 1440 (526x710), 768 and 360 shows head to knees, no overflow; homepage Journal cards and /journal at 360 keep both faces in frame; article hero at 1440 shows the man head to belt. 'The Art of Being Unavailable' keeps its stock cover. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
         "2026-10-30: Owner flagged old studio photos across About, Shop and menus. Swapped every editorial/lifestyle spot (About Weekends, Shop Minimal Frame tile, Men/Women/About menu tiles). Product cards, product menu tiles, About detail hotspots and the quality row keep the real garment photos (they show what the customer receives). Verified at 1440 and 360: heads in frame, 0 horizontal overflow, white overlay text legible. /shop?category=men re-tested by direct load and via header and About-page links: 9 men's products, no banners, no tote or women-only items. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1837,7 +1847,8 @@
       "log": [
         "2026-10-30: Verified: 0 references to 'section image' in src/tests; /shop has 12 illustrated cards, 0 'Photo coming soon', 0 broken images; PDP /products/classic-polo, /account/orders, Men and New Collection menus, About 04/05 render illustrations; About hotspots sit on chest mark, hood, sleeve and pocket; homepage at 360 has no horizontal overflow. Gates: build 37/37, typecheck 0, 48/48 tests (h2 count 5 -> 4 after removing the fitting room). Awaiting commit to close.",
         "2026-10-30: Owner rejected the drawings and the fitting-room removal. Restored VirtualFittingRoom (HEAD + catalog-driven sets), its CSS block, homepage section, exports and typography tests; replaced 11 drawings with the owner photos (alt text marks them as placeholder model photos) and deleted the unused SVGs. Verified at 1440: homepage grid and fitting room (Men/Women tabs) show photos, fresh load requests no section-image or deleted SVG, 0 broken images; About hotspots sit on chest, collar, sleeve and waist. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1883,7 +1894,8 @@
       "description": "Owner-supplied demo credentials seeded in src/mocks/auth.ts; login accepts only that account (inline error keeps input), with a 'Fill in the demo account' button. Account routes sit behind AccountGate; account page shows the session name/email and a Log out button. Checkout prefills from the session and its default address (guests start empty). Walkthrough fixes: express delivery no longer adds the standard fee on top; free-shipping bar uses the discounted subtotal; bag drawer closes on 'Proceed to Checkout' (Button now forwards onClick/aria-label when rendered as a link); confirmation/order history/order detail showed prices 100x too small (rupees passed to the paise formatter); new orders get paymentStatus/fulfillmentStatus, unique order numbers, local dates, express carrier/ETA, and clear the promo; COD button reads 'Place Order' and confirmation says 'Total due on delivery'; checkout labels linked to inputs, inline errors with focus on the first invalid field, delivery speed is a keyboard radio group, payment errors use role=alert; 8 fixture order lines had empty images.",
       "log": [
         "2026-10-30: Browser walkthrough at 1440 (and 360 for checkout): /account signed out -> gate with ?next; wrong password -> inline error, input kept, focus password; demo login (Remember me) -> /account 'Welcome back, Arjun Rao (<demo email>)'; hoodie XL -> drawer -> checkout (drawer closes) -> details prefilled -> express -> Rs 4,149 -> simulated decline (input and bag kept, no order) -> success -> TUW-1661 card/paid/queued, success page Rs 4,149.00; crop top + UNPLUGGED10 + standard COD -> Rs 1,499 (fee 150), payment pending, local date, promo cleared, track-order finds it; express on that cart Rs 1,599 (old code Rs 1,749); log out -> session cleared, /account/orders gated; guest checkout -> empty fields, inline errors, focus first invalid, keyboard radio for delivery; 360 checkout: no overflow, no text under 12px. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
@@ -1927,7 +1939,8 @@
         "2026-10-30: Verified at 1440 on / and /shop: 14 cards, 3 columns; hover shows size bar + swatches with card height unchanged (618px); Navy Blue + M quick add put 'Oversized Classic Tee, Navy Blue, M' in the bag without navigating and opened the drawer; focusing the heart reveals the layer and tab order runs heart -> sizes -> colours -> name; at 375 (touch, no hover) the layer stays hidden (opacity 0, pointer-events none), no overflow. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
         "2026-10-30: Verified /shop: grid starts 364px from top at 1440 and 768, 312px at 360; Hoodies & sweats pill -> title 'Hoodies & sweats', '4 items', aria-pressed true; Filter opens the drawer; View all -> 14 items; 360 pills row scrolls (604px in 257px) with Filter pinned right, no page overflow. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
         "2026-10-30: Verified /shop at 1440 and 1280: 4 x 286px columns, names 18px on one line, equal card heights (486px), first row fully above the fold; hover size bar fits 7 sizes (min 34px each) and up to 8 swatches without overflow; 1024: 3 x 304px; homepage stays 3 x 389px with 20px names. Gates: build 37/37, typecheck 0, 52/52 tests; built CSS has the 22rem container rules and xl:grid-cols-4. Awaiting commit to close.",
-        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip).",
+        "urvil:a311632"
       ],
       "finished": "2026-10-30",
       "verified": true,
