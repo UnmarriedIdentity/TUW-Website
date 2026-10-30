@@ -18,9 +18,11 @@
   },
   "session": {
     "branch": "urvil",
-    "tip": "a311632",
+    "tip": "15edf64",
     "unpushed": [
-      "a311632"
+      "a311632",
+      "5cf7ee3",
+      "15edf64"
     ],
     "next_up": "Owner confirmations: rights for the supplied lifestyle photos, draft retail prices, social URLs in src/lib/site.ts, fabric facts; move forgot/reset password onto AuthShell; replace placeholder model photos with real garment photography before launch.",
     "pending_verifications": [],
@@ -1970,7 +1972,8 @@
       ],
       "description": "Owner set the hero video to /videos/hero-video.mp4 (edited in Cursor). It had been switched to h2.mp4 when committing a311632 because the file was not in the repo; the owner chose to commit the video and the path together.",
       "log": [
-        "2026-10-30: Homepage hero plays /videos/hero-video.mp4 (1920px, readyState 4, no error). Gates: build 37/37, typecheck 0, 52/52 tests."
+        "2026-10-30: Homepage hero plays /videos/hero-video.mp4 (1920px, readyState 4, no error). Gates: build 37/37, typecheck 0, 52/52 tests.",
+        "urvil:15edf64"
       ],
       "verified": true,
       "pushed": false,
