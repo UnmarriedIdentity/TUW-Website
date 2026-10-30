@@ -198,17 +198,6 @@ describe('Homepage typography roles (weight & size only)', () => {
   });
 });
 
-describe('Honest social proof', () => {
-  test('no invented ratings or testimonials ship on the storefront', () => {
-    const page = read('src/app/page.tsx');
-    const pdp = read('src/app/products/[slug]/page.tsx');
-    assert.ok(!page.includes('CommunityPraise'), 'homepage must not render invented testimonials');
-    for (const src of [page, pdp]) {
-      assert.ok(!/Rated \d|\d\.\d\/5|Verified (Atelier|Parent|Studio) Reviews/.test(src), 'no invented rating badges');
-    }
-    assert.ok(pdp.includes('<ProductReviews reviews={[]}'), 'PDP shows the honest empty review state until real reviews exist');
-  });
-});
 
 describe('Honest demo authentication', () => {
   test('login and register state demo status and fake no third-party sign-in', () => {

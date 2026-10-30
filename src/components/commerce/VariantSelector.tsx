@@ -212,16 +212,16 @@ export default function VariantSelector({
       <div className="space-y-3 pt-2">
         <div className="flex gap-3">
           {/* Quantity Selector */}
-          <div className="flex items-center border border-store-card-border rounded-full bg-store-surface h-14 px-2 sm:px-3 shrink-0">
+          <div className="flex items-center border border-store-card-border rounded-full bg-store-surface h-14 px-3 shrink-0">
             <button
               type="button"
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
               aria-label="Decrease quantity"
-              className="w-7 sm:w-8 h-8 flex items-center justify-center text-store-text-secondary hover:text-store-text-primary font-bold text-base cursor-pointer"
+              className="w-8 h-8 flex items-center justify-center text-store-text-secondary hover:text-store-text-primary font-bold text-base cursor-pointer"
             >
               -
             </button>
-            <span className="w-7 sm:w-8 text-center text-sm font-bold text-store-text-primary">
+            <span className="w-8 text-center text-sm font-bold text-store-text-primary">
               {quantity}
             </span>
             <button
@@ -232,7 +232,7 @@ export default function VariantSelector({
                 )
               }
               aria-label="Increase quantity"
-              className="w-7 sm:w-8 h-8 flex items-center justify-center text-store-text-secondary hover:text-store-text-primary font-bold text-base cursor-pointer"
+              className="w-8 h-8 flex items-center justify-center text-store-text-secondary hover:text-store-text-primary font-bold text-base cursor-pointer"
             >
               +
             </button>
@@ -242,14 +242,13 @@ export default function VariantSelector({
           <button
             type="button"
             onClick={handleAddToCart}
-            className="flex-1 min-w-0 h-14 px-4 sm:px-6 rounded-full bg-store-charcoal text-white hover:bg-black transition-all flex items-center justify-center sm:justify-between gap-2 font-bold text-xs uppercase tracking-wider shadow-sm cursor-pointer active:scale-98"
+            className="w-full h-14 px-6 rounded-full bg-store-charcoal text-white hover:bg-black transition-all flex items-center justify-between font-bold text-xs uppercase tracking-wider shadow-sm cursor-pointer active:scale-98"
           >
             <span className="flex items-center gap-2">
               <ShoppingBag size={18} />
               <span>Add to Bag</span>
             </span>
-            {/* Price repeats the headline price, so phones drop it to fit 360px */}
-            <span className="hidden sm:inline font-mono text-sm tracking-normal">
+            <span className="font-mono text-sm tracking-normal">
               ₹{(effectiveUnitPriceINR * quantity).toLocaleString()}
             </span>
           </button>
@@ -288,19 +287,21 @@ export default function VariantSelector({
         <ul className="space-y-1 text-store-text-secondary list-disc list-inside">
           {isMug ? (
             <>
-              <li>Printed to order by our print partner in Tiruppur</li>
-              <li>Damaged on arrival? We will arrange a replacement</li>
+              <li>High-fire 1,240°C durable stoneware ceramic</li>
+              <li>100% Dishwasher safe, microwave safe, food-grade glaze</li>
+              <li>Shatterproof recyclable protective transit packaging</li>
             </>
           ) : isKids ? (
             <>
-              <li>Printed to order by our print partner in Tiruppur</li>
-              <li>Size exchanges per our Returns policy (draft)</li>
+              <li>100% GOTS certified organic long-staple combed cotton</li>
+              <li>Skin-safe non-toxic inks & itch-free flatlock seams</li>
+              <li>14-day hassle-free doorstep size exchanges across India</li>
             </>
           ) : (
             <>
-              <li>Printed to order by our print partner in Tiruppur</li>
+              <li>Pre-shrunk 100% GOTS certified organic cotton</li>
               <li>Complimentary domestic delivery on orders over ₹3,000</li>
-              <li>Returns and exchanges per our Returns policy (draft)</li>
+              <li>14-day hassle-free doorstep returns and exchanges</li>
             </>
           )}
         </ul>

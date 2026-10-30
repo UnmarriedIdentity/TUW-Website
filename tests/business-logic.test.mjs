@@ -192,16 +192,25 @@ describe('Deterministic local fonts (Windows == macOS)', () => {
     assert.ok(cardContent.includes('collectionLabel'), 'ProductCard must compute and display collectionLabel');
     assert.ok(cardContent.includes('toggleWishlist'), 'ProductCard must support toggleWishlist');
 
-    // Borderless Figma card: no border or rounded frame, and a calm hover that never shifts layout
-    assert.ok(cardContent.includes('bg-store-card-panel'), 'ProductCard sits on the Figma card panel colour');
-    const frame = cardContent.match(/<article[\s\S]*?className=\{`([^`]*)`\}/)[1];
-    assert.ok(!/\bborder\b|rounded/.test(frame), 'ProductCard frame has no border or rounded corners');
-    assert.ok(cardContent.includes('group-hover:scale-103'), 'hover is a slow photo zoom');
-    // Hover keeps sizes (quick add) and colours, as overlays so the card never changes height
-    assert.ok(cardContent.includes('quickAdd(s.size)'), 'hover offers quick add by size');
-    assert.ok(cardContent.includes('setPreviewColor(color.value)'), 'hover swatches preview the colour');
-    assert.ok(cardContent.includes('absolute inset-x-0 bottom-0'), 'size bar overlays the photo instead of expanding the card');
-    assert.ok(!cardContent.includes('tuw-card-expand'), 'old expanding size bar must not return');
+    // ProductCard Luxury Bordered Frame & Motion Invariants
+    assert.ok(cardContent.includes('rounded-2xl'), 'ProductCard has rounded-2xl corners');
+    assert.ok(cardContent.includes('border-store-card-border'), 'ProductCard has store-card-border');
+    assert.ok(cardContent.includes('handlePrevImage'), 'ProductCard must support handlePrevImage');
+    assert.ok(cardContent.includes('handleNextImage'), 'ProductCard must support handleNextImage');
+    assert.ok(cardContent.includes('activeColorObj'), 'ProductCard must resolve active color');
+    assert.ok(cardContent.includes('handleQuickAdd'), 'ProductCard must support handleQuickAdd size selection');
+
+    // ProductCard Silky Slow-Living Luxury Motion Invariants
+    assert.ok(cardContent.includes('tuw-card-expand'), 'ProductCard must use tuw-card-expand for smooth grid accordion size bar');
+    assert.ok(cardContent.includes('tuw-size-enter'), 'ProductCard must use tuw-size-enter for smooth size glide');
+    assert.ok(cardContent.includes('tuw-droplet-size'), 'ProductCard must use tuw-droplet-size for water-drop size buttons ripple');
+    assert.ok(cardContent.includes('tuw-droplet-swatch'), 'ProductCard must use tuw-droplet-swatch for water-drop swatches ripple');
+    assert.ok(cardContent.includes('tuw-droplet-color-label'), 'ProductCard must use tuw-droplet-color-label for active color glide');
+    assert.ok(cardContent.includes('tuw-nav-arrow-left'), 'ProductCard must use tuw-nav-arrow-left for smooth carousel chevron glide');
+    assert.ok(cardContent.includes('tuw-nav-arrow-right'), 'ProductCard must use tuw-nav-arrow-right for smooth carousel chevron glide');
+    assert.ok(cardContent.includes('tuw-dashes-reveal'), 'ProductCard must use tuw-dashes-reveal for smooth carousel dashes reveal');
+    assert.ok(cardContent.includes('tuw-crossfade-idle'), 'ProductCard must use tuw-crossfade-idle for seamless eyebrow cross-fade');
+    assert.ok(cardContent.includes('tuw-crossfade-hover'), 'ProductCard must use tuw-crossfade-hover for seamless swatches cross-fade');
 
     // Shop grid shows products only (owner removed the editorial banners)
     assert.ok(!gridContent.includes('Acid Wash Collection'), 'no Acid Wash banner in the product grid');
@@ -231,9 +240,11 @@ describe('Deterministic local fonts (Windows == macOS)', () => {
     assert.ok(toastContent.includes('tuw-toast-progress'), 'Toast.tsx must render progress depletion bar');
     assert.ok(cssContent.includes('tuw-toast-enter'), 'globals.css must define tuw-toast-enter');
 
-    // ProductCard hover is a single slow zoom; the old size-bar / swatch motion CSS is gone
-    assert.ok(!cssContent.includes('.tuw-card-expand'), 'unused card expansion CSS must not return');
-    assert.ok(!cssContent.includes('.tuw-droplet-size'), 'unused droplet CSS must not return');
+    // ProductCard Silky Slow-Living Luxury Motion Invariants
+    assert.ok(cssContent.includes('.tuw-card-expand'), 'globals.css must define .tuw-card-expand');
+    assert.ok(cssContent.includes('.tuw-size-enter'), 'globals.css must define .tuw-size-enter');
+    assert.ok(cssContent.includes('.tuw-droplet-size'), 'globals.css must define .tuw-droplet-size');
+    assert.ok(cssContent.includes('.tuw-droplet-swatch'), 'globals.css must define .tuw-droplet-swatch');
 
     // Figma Canonical Checkout Invariants (media_1793276628297_7100bb4c.png)
     const checkoutContent = readFileSync(join(repoRoot, 'src/app/checkout/page.tsx'), 'utf8');

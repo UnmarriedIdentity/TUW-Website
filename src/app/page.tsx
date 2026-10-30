@@ -117,11 +117,12 @@ export default function HomePage() {
     }
   };
 
-  // Filter best sellers
-  const filteredProducts =
+  // Filter best sellers: capped to exactly 6 cards for the homepage showcase
+  const filteredProducts = (
     activeCategory === 'All Collection'
       ? HOME_PRODUCTS
-      : HOME_PRODUCTS.filter((p) => CATEGORY_LABELS[p.category].toLowerCase() === activeCategory.toLowerCase());
+      : HOME_PRODUCTS.filter((p) => CATEGORY_LABELS[p.category].toLowerCase() === activeCategory.toLowerCase())
+  ).slice(0, 6);
 
   return (
     <div className="min-h-screen flex flex-col bg-store-canvas text-store-text-primary selection:bg-store-action-primary selection:text-white">
