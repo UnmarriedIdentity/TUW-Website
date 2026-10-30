@@ -39,7 +39,8 @@ export default function ProductGallery({
 
   const totalSlides = images.length + (videoUrl ? 1 : 0);
   const isVideoActive = Boolean(videoUrl && activeIndex === images.length);
-  const activeImage = images[activeIndex] || images[0];
+  // Pieces awaiting photography render the fallback tile instead of crashing.
+  const activeImage = images[activeIndex] || images[0] || { url: '', alt: title, label: undefined };
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % totalSlides);
@@ -68,13 +69,14 @@ export default function ProductGallery({
             <ImageWithFallback
               src={activeImage.url}
               alt={activeImage.alt}
+              fallbackText="Photo coming soon"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
             />
           )}
 
           {/* Angle Label matching Figma */}
           {activeImage.label && (
-            <span className="absolute top-4 left-4 text-[11px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+            <span className="absolute top-4 left-4 text-xs font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
               {activeImage.label}
             </span>
           )}
@@ -134,7 +136,7 @@ export default function ProductGallery({
                     <Maximize2 size={14} />
                   </button>
                   {img.label && (
-                    <span className="absolute top-3 left-3 text-[10px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+                    <span className="absolute top-3 left-3 text-xs font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
                       {img.label}
                     </span>
                   )}
@@ -166,7 +168,7 @@ export default function ProductGallery({
 
         {/* Angle Label matching Figma */}
         {activeImage.label && (
-          <span className="absolute top-4 left-4 text-[11px] font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
+          <span className="absolute top-4 left-4 text-xs font-mono tracking-wider font-semibold uppercase text-store-charcoal/90 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none shadow-2xs border border-store-card-border/60 z-10">
             {activeImage.label}
           </span>
         )}

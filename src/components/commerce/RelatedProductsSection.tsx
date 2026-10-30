@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import ImageWithFallback from '../ui/ImageWithFallback';
 import { Plus } from 'lucide-react';
 import { Product } from '@/lib/types';
 import ProductCard from './ProductCard';
@@ -81,9 +82,10 @@ export default function RelatedProductsSection({
           {pairsItems!.map((item) => (
             <div key={item.id} className="group flex flex-col">
               <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-store-card-border bg-store-canvas flex items-center justify-center p-3 shadow-2xs transition-all hover:border-store-charcoal/40">
-                <img
+                <ImageWithFallback
                   src={item.image}
                   alt={item.title}
+                  fallbackText="Photo coming soon"
                   className="w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-102"
                   loading="lazy"
                 />

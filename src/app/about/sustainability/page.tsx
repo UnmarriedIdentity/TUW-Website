@@ -29,7 +29,7 @@ export default function SustainabilityPage() {
             Sustainability Through Intentional Production
           </h1>
           <p className="text-sm sm:text-base text-[#666] leading-relaxed">
-            We reject the industry dogma of speculative mass-manufacturing. Here is our exact, verified process for sustainable POD apparel.
+            We reject the industry dogma of speculative mass-manufacturing. Here is how printing to order works, and what we are still confirming.
           </p>
         </div>
 
@@ -39,9 +39,9 @@ export default function SustainabilityPage() {
             <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] text-[#15803D] flex items-center justify-center">
               <ShieldCheck size={20} />
             </div>
-            <h3 className="text-base font-bold text-[#1A1A1A]">100% GOTS Certified Organic Cotton</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">Printed Only After You Order</h2>
             <p className="text-xs text-[#666] leading-relaxed">
-              Sourced exclusively from certified organic farming cooperatives in Central India. Grown without synthetic pesticides, genetically modified seeds, or toxic defoliants.
+              Every piece starts as a blank garment held by our print partner and is printed with our design only once someone has ordered it.
             </p>
           </div>
 
@@ -49,9 +49,9 @@ export default function SustainabilityPage() {
             <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] text-[#1D4ED8] flex items-center justify-center">
               <RefreshCw size={20} />
             </div>
-            <h3 className="text-base font-bold text-[#1A1A1A]">Zero Deadstock Inventory Model</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">Zero Deadstock Inventory Model</h2>
             <p className="text-xs text-[#666] leading-relaxed">
-              Traditional brands forecast demand and inevitably incinerate what goes unsold. Our garments exist as organic blanks until purchased by you, eliminating 100% of unsold deadstock.
+              Traditional brands forecast demand and inevitably incinerate what goes unsold. Our garments stay blank until you order them, so we never hold unsold printed stock.
             </p>
           </div>
 
@@ -59,9 +59,9 @@ export default function SustainabilityPage() {
             <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] text-[#B45309] flex items-center justify-center">
               <Droplets size={20} />
             </div>
-            <h3 className="text-base font-bold text-[#1A1A1A]">Non-Toxic Water-Based Inks</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">Materials &amp; Inks (Draft)</h2>
             <p className="text-xs text-[#666] leading-relaxed">
-              Our direct-to-garment digital pigment inks are OEKO-TEX Standard 100 and Eco-Passport certified. They contain zero heavy metals, formaldehydes, or microplastic plastisols.
+              Fabric composition, ink type and any certifications will be published here once our print partner confirms them in writing. We will not list a certification we cannot show.
             </p>
           </div>
 
@@ -69,24 +69,24 @@ export default function SustainabilityPage() {
             <div className="w-10 h-10 rounded-xl bg-[#FAF5FF] text-[#7539FF] flex items-center justify-center">
               <Sun size={20} />
             </div>
-            <h3 className="text-base font-bold text-[#1A1A1A]">Solar-Assisted Curing Ateliers</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">Made in Tiruppur</h2>
             <p className="text-xs text-[#666] leading-relaxed">
-              Our partner production floors in Tiruppur utilize rooftop solar PV arrays to offset up to 70% of energy consumed during the thermal ink curing and garment setting phase.
+              Our print partner prints and dispatches every order from Tiruppur, India, one of the country&apos;s largest knitwear centres.
             </p>
           </div>
         </div>
 
         {/* Plastic-Free Packaging */}
         <div className="p-8 rounded-3xl bg-[#F4F1EA] border border-[#E2DDCF] my-8 space-y-3">
-          <h3 className="text-base font-bold text-[#1A1A1A]">100% Plastic-Free Packaging</h3>
+          <h2 className="text-base font-bold text-[#1A1A1A]">Packaging (Draft)</h2>
           <p className="text-xs text-[#666] leading-relaxed">
-            Your package arrives in FSC-certified unbleached kraft paper mailers secured with natural starch-based water-activated tape. Garments are wrapped in tissue paper made from recycled cotton rag. No single-use polybags ever touch our shipments.
+            Packaging is handled by our print partner. We will describe it here once the details are confirmed.
           </p>
         </div>
 
         <div className="pt-6 text-center">
           <Button variant="dark" size="lg" href="/shop">
-            Shop Sustainable Essentials
+            Shop the Collection
           </Button>
         </div>
       </main>

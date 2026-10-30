@@ -34,14 +34,14 @@ export default function ReturnsPolicyPage() {
 
         <div className="bg-white rounded-3xl border border-[#E2DDCF] p-8 sm:p-12 shadow-xs prose prose-neutral max-w-none text-sm text-[#4A4A4A] space-y-6 leading-relaxed">
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">1. 14-Day Return Window</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">1. 14-Day Return Window</h2>
             <p>
               We want you to feel complete confidence in the drape and weight of our garments. If your piece does not fit as desired, you may request an exchange or return within 14 calendar days of confirmed doorstep delivery.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">2. Item Condition Requirements</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">2. Item Condition Requirements</h2>
             <p>
               To maintain hygiene and fair atelier restocking standards:
             </p>
@@ -53,7 +53,7 @@ export default function ReturnsPolicyPage() {
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">3. Doorstep Pickup & Refund Timeline</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">3. Doorstep Pickup & Refund Timeline</h2>
             <p>
               Once you log an RMA request from your <a href="/account" className="underline font-semibold">Account Dashboard</a>, our courier partners (Delhivery / BlueDart) will arrive within 48 hours for reverse pickup. Upon arrival at our inspection atelier and quality sign-off, full refunds are processed to your original payment mode within 3-5 business days.
             </p>

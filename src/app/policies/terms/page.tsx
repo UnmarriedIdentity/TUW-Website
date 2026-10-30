@@ -34,28 +34,28 @@ export default function TermsOfServicePage() {
 
         <div className="bg-white rounded-3xl border border-[#E2DDCF] p-8 sm:p-12 shadow-xs prose prose-neutral max-w-none text-sm text-[#4A4A4A] space-y-6 leading-relaxed">
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">1. Agreement to Terms</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">1. Agreement to Terms</h2>
             <p>
               By accessing or using the services of The Unplugged Wear (&ldquo;TUW&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;), you agree to be bound by these Terms of Service. If you do not agree with any portion of these terms, please discontinue use of this site.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">2. Print-on-Demand (POD) Production Nature</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">2. Print-on-Demand (POD) Production Nature</h2>
             <p>
-              All apparel presented on The Unplugged Wear is manufactured on-demand. When an order is placed, raw organic blanks are pulled from clean room storage and printed with high-resolution digital water pigments. As each garment is custom-printed, slight tonal variations in fiber absorbency are a natural characteristic of organic cotton.
+              All apparel presented on The Unplugged Wear is manufactured on-demand. When an order is placed, a blank garment is printed by our print partner. As each garment is printed individually, slight variations in print tone are normal.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">3. Pricing and Order Accuracy</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">3. Pricing and Order Accuracy</h2>
             <p>
               All prices are listed in Indian Rupees (INR) and are inclusive of Goods and Services Tax (GST). We reserve the right to correct accidental pricing errors before order fulfillment.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">4. Limitation of Liability</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">4. Limitation of Liability</h2>
             <p>
               To the fullest extent permitted by applicable Indian law, The Unplugged Wear shall not be liable for indirect, incidental, or consequential damages resulting from platform use.
             </p>

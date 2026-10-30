@@ -89,8 +89,8 @@ export default function StandaloneSizeGuidePage() {
             activeTab={activeCategory}
             onChange={(c) => setActiveCategory(c as any)}
             tabs={[
-              { id: 'hoodies', label: 'French Terry Hoodies & Sweats' },
-              { id: 'tees', label: 'Organic Combed T-Shirts' },
+              { id: 'hoodies', label: 'Hoodies & Sweats' },
+              { id: 'tees', label: 'T-Shirts' },
               { id: 'pants', label: 'Pleated Canvas Trousers' },
             ]}
           />
@@ -157,9 +157,9 @@ export default function StandaloneSizeGuidePage() {
 
         {/* Fit recommendations */}
         <div className="mt-8 p-6 rounded-3xl bg-[#F4F1EA] border border-[#E2DDCF] space-y-3 text-xs text-[#5A5A5A] leading-relaxed">
-          <h4 className="font-bold text-[#1A1A1A] uppercase tracking-wider">
+          <h2 className="font-bold text-[#1A1A1A] uppercase tracking-wider">
             How to Measure Flat
-          </h4>
+          </h2>
           <p>
             • <strong>Chest Width:</strong> Measure 2.5cm below armholes straight across the garment, multiplied by two for circumference.
           </p>

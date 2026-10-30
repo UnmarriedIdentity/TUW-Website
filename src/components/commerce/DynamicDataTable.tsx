@@ -85,9 +85,9 @@ export default function DynamicDataTable({
       <div className={`${hasSideScale ? 'lg:col-span-8' : 'w-full'} space-y-3`}>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-store-text-primary">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-store-text-primary">
               {table.title}
-            </h3>
+            </h2>
             {table.description && (
               <p className="text-xs text-store-text-secondary mt-0.5">
                 {table.description}

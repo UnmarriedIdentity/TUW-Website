@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Heart, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { Product } from '@/lib/types';
 import { useStore } from '@/mocks/store';
+import { formatINR } from '@/lib/format';
 import ImageWithFallback from '../ui/ImageWithFallback';
 
 export interface ProductCardProps {
@@ -13,322 +14,168 @@ export interface ProductCardProps {
   collectionName?: string;
 }
 
-export default function ProductCard({
-  product,
-  className = '',
-  collectionName,
-}: ProductCardProps) {
+// The collection each category is sold under (matches /collections).
+const COLLECTION_BY_CATEGORY: Record<Product['category'], string> = {
+  hoodies: 'Hoodies & Sweats',
+  tees: 'Everyday Tees',
+  pants: 'Joggers & Sweatpants',
+  jackets: 'Outerwear',
+  kids: 'Kids',
+  accessories: 'Objects',
+  mugs: 'Objects',
+  capsules: 'Capsules',
+};
+
+// Shown on hover (and on keyboard focus). Both layers sit on top of existing
+// space, so the card never changes height. Touch screens skip the hover layer
+// and go straight to the product page, where size and colour are chosen.
+const HOVER_LAYER =
+  'opacity-0 pointer-events-none transition duration-300 ease-out group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto';
+
+/**
+ * Borderless product card from the Figma Website UI: photo on a warm grey
+ * panel, wishlist heart, then collection, name and price. On hover the sizes
+ * slide over the bottom of the photo for a quick add, and the collection line
+ * turns into the colour swatches.
+ */
+export default function ProductCard({ product, className = '', collectionName }: ProductCardProps) {
   const { isInWishlist, toggleWishlist, addToCart } = useStore();
-
-  const [selectedColor, setSelectedColor] = useState<string>(
-    product.colors[0]?.value || ''
-  );
-  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
-  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [quickAddFeedback, setQuickAddFeedback] = useState<string | null>(null);
-
-  const activeColorValue = hoveredColor || selectedColor;
-  const activeColorObj =
-    product.colors.find((c) => c.value === activeColorValue) ||
-    product.colors[0];
-
-  // Resolve active image based on color matching or carousel index
-  const activeColorImage = product.images.find(
-    (img) => img.color === activeColorValue
-  );
-  const activeImage =
-    activeColorImage?.url ||
-    product.images[activeImageIndex]?.url ||
-    product.images[0]?.url ||
-    '';
-
   const isFavorite = isInWishlist(product.id);
+  const href = `/products/${product.slug}`;
 
-  const handlePrevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (product.images.length <= 1) return;
-    setActiveImageIndex(
-      (prev) => (prev - 1 + product.images.length) % product.images.length
-    );
-  };
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.value || '');
+  const [previewColor, setPreviewColor] = useState<string | null>(null);
+  const [addedSize, setAddedSize] = useState<string | null>(null);
 
-  const handleNextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (product.images.length <= 1) return;
-    setActiveImageIndex((prev) => (prev + 1) % product.images.length);
-  };
+  const activeColor =
+    product.colors.find((c) => c.value === (previewColor || selectedColor)) || product.colors[0];
+  const image =
+    product.images.find((img) => img.color === activeColor?.value) || product.images[0];
 
-  const handleQuickAdd = (e: React.MouseEvent, size: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const colorName = activeColorObj ? activeColorObj.name : 'Standard';
+  const collectionLabel =
+    collectionName ||
+    (product.title.startsWith('Acid Wash') ? 'Acid Wash Collection' : COLLECTION_BY_CATEGORY[product.category]);
 
+  const quickAdd = (size: string) => {
     addToCart({
       productId: product.id,
       title: product.title,
-      color: colorName,
+      color: activeColor?.name || 'Standard',
       size,
       priceINR: product.priceINR,
+      priceMinorINR: product.priceMinorINR,
       quantity: 1,
-      image: activeImage,
+      image: image?.url || '',
     });
-
-    setQuickAddFeedback(size);
-    setTimeout(() => setQuickAddFeedback(null), 1500);
+    setAddedSize(size);
+    setTimeout(() => setAddedSize(null), 1500);
   };
 
-  // Derive collection eyebrow label matching Figma "Acid Wash Collection" / "New"
-  const collectionLabel =
-    collectionName ||
-    (product.isNew
-      ? 'New'
-      : product.category === 'hoodies'
-      ? 'Acid Wash Collection'
-      : product.category === 'tees'
-      ? 'Atelier Collection'
-      : product.category === 'jackets'
-      ? 'Outerwear Series'
-      : product.category === 'pants'
-      ? 'Canvas Series'
-      : product.category === 'kids'
-      ? 'Kids Atelier'
-      : 'Atelier Objects');
-
   return (
-    <div
-      className={`group relative flex flex-col w-full bg-store-canvas rounded-2xl border border-store-card-border/50 overflow-hidden transition-all duration-500 ease-out hover:shadow-lg hover:shadow-black/5 hover:border-store-card-border ${
-        isHovered ? 'tuw-card-is-hovered' : ''
-      } ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setHoveredColor(null);
-      }}
+    <article
+      className={`@container group relative flex flex-col w-full bg-store-card-panel ${className}`}
+      onMouseLeave={() => setPreviewColor(null)}
     >
-      {/* ======================================================== */}
-      {/* 1. TOP WISHLIST HEART ICON (Direct subtle placement)     */}
-      {/* ======================================================== */}
       <button
         type="button"
-        aria-label={isFavorite ? 'Remove from wishlist' : 'Save to wishlist'}
+        aria-label={isFavorite ? `Remove ${product.title} from wishlist` : `Save ${product.title} to wishlist`}
+        aria-pressed={isFavorite}
         onClick={(e) => {
           e.preventDefault();
-          e.stopPropagation();
           toggleWishlist(product.id);
         }}
-        className="absolute top-3.5 right-3.5 z-30 p-1 text-store-charcoal/70 hover:text-store-charcoal hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="absolute top-4 right-4 z-20 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/85 text-primary-dark hover:bg-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold"
       >
         <Heart
-          size={18}
+          size={20}
           strokeWidth={1.5}
-          className={
-            isFavorite
-              ? 'fill-store-terracotta text-store-terracotta'
-              : 'text-store-charcoal/70'
-          }
+          aria-hidden="true"
+          className={isFavorite ? 'fill-store-terracotta text-store-terracotta' : ''}
         />
       </button>
 
-      {/* ======================================================== */}
-      {/* 2. PRODUCT IMAGE FRAME (3:4 Aspect with Centered Graphic) */}
-      {/* ======================================================== */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-store-cream/30 flex items-center justify-center">
-        <Link
-          href={`/products/${product.slug}`}
-          className="block w-full h-full"
-        >
-          <ImageWithFallback
-            src={activeImage}
-            alt={product.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          />
-        </Link>
+      <div className="relative aspect-4/5 overflow-hidden">
+        <ImageWithFallback
+          src={image?.url || ''}
+          alt=""
+          fallbackText="Photo coming soon"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-103"
+        />
 
-        {/* Carousel Previous Arrow (Smooth Glide Reveal on Hover) */}
-        {product.images.length > 1 && (
-          <button
-            type="button"
-            aria-label="Previous image"
-            onClick={handlePrevImage}
-            className="absolute left-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-left"
+        {/* Quick add: sizes slide up over the bottom of the photo */}
+        {product.sizes.length > 0 && (
+          <div
+            className={`absolute inset-x-0 bottom-0 z-20 translate-y-3 group-hover:translate-y-0 group-focus-within:translate-y-0 bg-white/95 backdrop-blur-xs px-3 py-2.5 ${HOVER_LAYER}`}
           >
-            <ChevronLeft size={15} strokeWidth={2} />
-          </button>
-        )}
-
-        {/* Carousel Next Arrow (Smooth Glide Reveal on Hover) */}
-        {product.images.length > 1 && (
-          <button
-            type="button"
-            aria-label="Next image"
-            onClick={handleNextImage}
-            className="absolute right-2.5 top-1/2 z-20 w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs border border-store-card-border/80 flex items-center justify-center text-store-charcoal shadow-xs hover:bg-white hover:scale-105 active:scale-95 cursor-pointer tuw-nav-arrow-right"
-          >
-            <ChevronRight size={15} strokeWidth={2} />
-          </button>
-        )}
-
-        {/* Carousel Dash Indicators (Smooth Upward Glide Reveal on Hover) */}
-        {product.images.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 z-20 flex items-center gap-1.5 pointer-events-none tuw-dashes-reveal">
-            {product.images.slice(0, 4).map((_, idx) => (
-              <span
-                key={idx}
-                className={`h-0.5 rounded-full transition-all duration-300 ${
-                  idx === activeImageIndex
-                    ? 'w-7 bg-store-charcoal'
-                    : 'w-4 bg-store-card-border'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ======================================================== */}
-      {/* 3. QUICK SIZE BAR (Silky Smooth Grid Accordion Expansion) */}
-      {/* ======================================================== */}
-      <div
-        className={`w-full bg-white border-t border-b border-store-card-border/60 tuw-card-expand ${
-          isHovered ? 'tuw-card-expanded' : ''
-        }`}
-      >
-        <div className="tuw-card-expand-inner">
-          <div className="px-3 py-2 flex items-center justify-between gap-1 tuw-size-enter">
-            {product.sizes && product.sizes.length > 0 ? (
-              product.sizes.map((s, idx) => (
-                <span
-                  key={s.size}
-                  className={`flex-1 flex tuw-droplet-size tuw-droplet-delay-${idx % 8}`}
-                >
-                  <button
-                    type="button"
-                    disabled={!s.inStock}
-                    onClick={(e) => handleQuickAdd(e, s.size)}
-                    className={`w-full py-1 text-xs font-semibold tracking-wider uppercase transition-colors text-center cursor-pointer rounded ${
-                      !s.inStock
-                        ? 'opacity-30 line-through cursor-not-allowed text-store-muted'
-                        : quickAddFeedback === s.size
-                        ? 'bg-store-charcoal text-white font-bold'
-                        : 'text-store-charcoal hover:bg-store-cream hover:text-black hover:font-bold'
-                    }`}
-                    title={
-                      !s.inStock
-                        ? `${s.size} (Sold Out)`
-                        : `Quick add size ${s.size} to bag`
-                    }
-                  >
-                    {quickAddFeedback === s.size ? '✓' : s.size}
-                  </button>
-                </span>
-              ))
-            ) : (
-              <span className="w-full flex tuw-droplet-size tuw-droplet-delay-0">
+            <p className="sr-only">
+              Quick add {product.title} in {activeColor?.name}
+            </p>
+            <div className="flex items-center justify-between gap-1">
+              {product.sizes.map((s) => (
                 <button
+                  key={s.size}
                   type="button"
-                  onClick={(e) => handleQuickAdd(e, 'One Size')}
-                  className="w-full py-1 text-xs font-semibold uppercase tracking-wider text-store-charcoal hover:text-black transition-colors text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  disabled={!s.inStock}
+                  onClick={() => quickAdd(s.size)}
+                  aria-label={s.inStock ? `Add size ${s.size} to bag` : `Size ${s.size} sold out`}
+                  className={`flex-1 min-h-8 rounded-md text-sm font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold disabled:cursor-not-allowed disabled:line-through disabled:opacity-40 ${
+                    addedSize === s.size ? 'bg-primary-dark text-white' : 'text-primary-dark hover:bg-store-card-panel'
+                  }`}
                 >
-                  <Plus size={13} />
-                  {quickAddFeedback === 'One Size' ? 'Added to Bag' : 'Quick Add to Bag'}
+                  {addedSize === s.size ? '✓' : s.size}
                 </button>
-              </span>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      {/* ======================================================== */}
-      {/* 4. PRODUCT METADATA CONTAINER */}
-      {/* Line 1: Silky Cross-Fade: Eyebrow <-> Swatches + Color */}
-      {/* Line 2: Product Title */}
-      {/* Line 3: Price */}
-      {/* ======================================================== */}
-      <div className="p-4 space-y-1.5">
-        {/* Line 1: State-driven silky cross-fade (Zero text overlap or sudden pop) */}
-        <div className="relative min-h-5 overflow-hidden flex items-center">
-          {/* Eyebrow Collection Label (Normal resting state) */}
-          <div
-            className={`absolute inset-0 flex items-center tuw-crossfade-idle ${
-              isHovered
-                ? 'opacity-0 -translate-y-2 pointer-events-none'
-                : 'opacity-100 translate-y-0 pointer-events-auto'
-            }`}
-          >
-            <span className="text-xs uppercase tracking-wider text-store-muted font-normal truncate">
-              {collectionLabel}
-            </span>
-          </div>
-
-          {/* Color Swatches and Active Color Name (Hover revealed state) */}
-          <div
-            className={`flex items-center justify-between w-full tuw-crossfade-hover ${
-              isHovered
-                ? 'opacity-100 translate-y-0 pointer-events-auto'
-                : 'opacity-0 translate-y-2 pointer-events-none'
-            }`}
-          >
-            <div className="flex items-center gap-1.5">
-              {product.colors.map((color, colorIdx) => {
-                const isSelected = activeColorValue === color.value;
-                return (
-                  <span
+      {/* Text follows the card width (container query), not the screen, so it fits 3 or 4 per row */}
+      <div className="px-5 pt-5 pb-6 @[22rem]:px-6 space-y-1.5">
+        {/* Collection line; on hover the colour swatches take its place */}
+        <div className="relative h-6">
+          <p className="absolute inset-0 flex items-center text-sm text-store-text-secondary truncate transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0">
+            {collectionLabel}
+          </p>
+          {product.colors.length > 0 && (
+            <div className={`absolute inset-0 z-20 flex items-center justify-between gap-3 ${HOVER_LAYER}`}>
+              <div className="flex items-center gap-1.5" role="group" aria-label={`${product.title} colours`}>
+                {product.colors.map((color) => (
+                  <button
                     key={color.value}
-                    className={`inline-flex items-center justify-center tuw-droplet-swatch tuw-swatch-delay-${colorIdx % 8}`}
-                  >
-                    <button
-                      type="button"
-                      aria-label={`Select ${color.name}`}
-                      onMouseEnter={() => setHoveredColor(color.value)}
-                      onMouseLeave={() => setHoveredColor(null)}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setSelectedColor(color.value);
-                        const matchIdx = product.images.findIndex(
-                          (img) => img.color === color.value
-                        );
-                        if (matchIdx !== -1) setActiveImageIndex(matchIdx);
-                      }}
-                      className={`w-3.5 h-3.5 rounded-full border transition-all duration-200 cursor-pointer ${
-                        isSelected
-                          ? 'ring-1 ring-offset-2 ring-store-charcoal scale-110'
-                          : 'border-store-card-border hover:scale-105'
-                      }`}
-                      style={{ backgroundColor: color.hex }}
-                    />
-                  </span>
-                );
-              })}
+                    type="button"
+                    aria-label={color.name}
+                    aria-pressed={color.value === selectedColor}
+                    onMouseEnter={() => setPreviewColor(color.value)}
+                    onMouseLeave={() => setPreviewColor(null)}
+                    onClick={() => setSelectedColor(color.value)}
+                    className={`w-4 h-4 rounded-full border border-black/15 transition-transform cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold ${
+                      color.value === activeColor?.value
+                        ? 'ring-1 ring-offset-2 ring-offset-store-card-panel ring-primary-dark'
+                        : 'hover:scale-110'
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                  />
+                ))}
+              </div>
+              <span className="text-sm text-store-text-secondary truncate">{activeColor?.name}</span>
             </div>
-            <span className="text-xs text-store-muted font-medium capitalize truncate pl-2 tuw-droplet-color-label">
-              {activeColorObj?.name || 'Standard'}
-            </span>
-          </div>
-        </div>
-
-        {/* Line 2: Title */}
-        <Link href={`/products/${product.slug}`} className="block group/title">
-          <h3 className="text-sm font-medium text-store-charcoal leading-snug group-hover/title:underline tracking-wide truncate">
-            {product.title}
-          </h3>
-        </Link>
-
-        {/* Line 3: Price */}
-        <div className="flex items-center gap-2 pt-0.5">
-          <span className="text-sm font-medium text-store-charcoal">
-            ₹{product.priceINR.toLocaleString()}
-          </span>
-          {product.compareAtPriceINR && (
-            <span className="text-xs text-store-muted line-through">
-              ₹{product.compareAtPriceINR.toLocaleString()}
-            </span>
           )}
         </div>
+
+        <h3 className="text-lg @[22rem]:text-xl font-medium text-primary-dark leading-snug">
+          {/* Stretched link: the whole card opens the product */}
+          <Link
+            href={href}
+            className="underline-offset-4 decoration-1 group-hover:underline focus-visible:outline-none focus-visible:underline after:absolute after:inset-0"
+          >
+            {product.title}
+          </Link>
+        </h3>
+        <p className="text-base text-store-text-secondary tuw-tabular-nums">
+          {formatINR(product.priceMinorINR ?? product.priceINR * 100).replace(/\.00$/, '')}
+        </p>
       </div>
-    </div>
+    </article>
   );
 }

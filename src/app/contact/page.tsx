@@ -69,7 +69,7 @@ export default function ContactPage() {
                 <div className="w-16 h-16 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] flex items-center justify-center mx-auto">
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-[#1A1A1A]">Message Transmitted</h3>
+                <h2 className="text-xl font-bold text-[#1A1A1A]">Message Transmitted</h2>
                 <p className="text-xs text-[#666] max-w-md mx-auto leading-relaxed">
                   Thank you, <strong>{name}</strong>. Our editorial and care team will respond to <strong>{email}</strong> within 24 business hours.
                 </p>
@@ -157,9 +157,9 @@ export default function ContactPage() {
           {/* Info Sidebar (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 rounded-3xl bg-[#F4F1EA] border border-[#E2DDCF] space-y-4">
-              <h3 className="text-base font-bold text-[#1A1A1A] uppercase tracking-wider">
+              <h2 className="text-base font-bold text-[#1A1A1A] uppercase tracking-wider">
                 Studio Headquarters
-              </h3>
+              </h2>
 
               <div className="space-y-3 text-xs text-[#5A5A5A]">
                 <div className="flex items-start gap-3">

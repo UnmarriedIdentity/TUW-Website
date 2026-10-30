@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 import PaymentSimulationPanel from '@/components/commerce/PaymentSimulationPanel';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import { useStore } from '@/mocks/store';
+import { useDemoSession } from '@/mocks/auth';
 import { Address, Order } from '@/lib/types';
 import {
   ShieldCheck,
@@ -24,12 +25,16 @@ import {
   Tag,
 } from 'lucide-react';
 
+const EXPRESS_FEE = 250;
+
 export default function CheckoutPage() {
   const router = useRouter();
   const {
     cart,
     cartSubtotal,
     shippingFee,
+    freeShippingThreshold,
+    freeShippingRemaining,
     discountAmount,
     promoCode,
     applyPromoCode,
@@ -40,39 +45,69 @@ export default function CheckoutPage() {
     createOrder,
   } = useStore();
 
-  const total = cartSubtotal - discountAmount + shippingFee;
+  const { session } = useDemoSession();
 
   // 3-step checkout flow matching Figma Node Checkout (media_1793276628297_7100bb4c.png)
   // Step 1: Your cart -> Step 2: Your details -> Step 3: Payment
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  // Form states for Step 2 (Your details)
-  const [firstName, setFirstName] = useState('Arjun');
-  const [lastName, setLastName] = useState('Rao');
-  const [email, setEmail] = useState('arjun.rao@example.com');
-  const [phone, setPhone] = useState(addresses[0]?.phone || '+91 98450 12345');
-  const [addressLine1, setAddressLine1] = useState(addresses[0]?.addressLine1 || 'Flat 402, Skyline Residency');
-  const [addressLine2, setAddressLine2] = useState(addresses[0]?.addressLine2 || '12th Main, Indiranagar');
-  const [city, setCity] = useState(addresses[0]?.city || 'Bengaluru');
-  const [state, setState] = useState(addresses[0]?.state || 'Karnataka');
-  const [postalCode, setPostalCode] = useState(addresses[0]?.postalCode || '560038');
+  // Form states for Step 2 (Your details). Guests start empty; a demo
+  // sign-in fills them from the account and its default address.
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [addressLine1, setAddressLine1] = useState('');
+  const [addressLine2, setAddressLine2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('India');
+  const [prefilledFor, setPrefilledFor] = useState('');
+
+  useEffect(() => {
+    if (!session || prefilledFor === session.email) return;
+    const [first = '', ...rest] = session.name.split(' ');
+    const saved = addresses.find((a) => a.isDefault) || addresses[0];
+    // Only fill empty fields, so nothing the shopper typed is overwritten.
+    const fill = (setter: React.Dispatch<React.SetStateAction<string>>, value?: string) =>
+      setter((current) => current || value || '');
+    fill(setFirstName, first);
+    fill(setLastName, rest.join(' '));
+    fill(setEmail, session.email);
+    if (saved) {
+      fill(setPhone, saved.phone);
+      fill(setAddressLine1, saved.addressLine1);
+      fill(setAddressLine2, saved.addressLine2);
+      fill(setCity, saved.city);
+      fill(setState, saved.state);
+      fill(setPostalCode, saved.postalCode);
+    }
+    setPrefilledFor(session.email);
+  }, [session, addresses, prefilledFor]);
 
   const [deliverySpeed, setDeliverySpeed] = useState<'standard' | 'express'>('standard');
+  // Express replaces the standard fee rather than adding to it.
+  const deliveryFee = deliverySpeed === 'express' ? EXPRESS_FEE : shippingFee;
+  const total = cartSubtotal - discountAmount + deliveryFee;
   const [promoInput, setPromoInput] = useState('');
   const [promoMessage, setPromoMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateDetails = () => {
     const errs: Record<string, string> = {};
-    if (!firstName.trim()) errs.firstName = 'First name is required';
-    if (!lastName.trim()) errs.lastName = 'Last name is required';
     if (!email.trim() || !email.includes('@')) errs.email = 'Valid email is required';
     if (!phone.trim()) errs.phone = 'Phone number is required';
+    if (!firstName.trim()) errs.firstName = 'First name is required';
+    if (!lastName.trim()) errs.lastName = 'Last name is required';
     if (!addressLine1.trim()) errs.addressLine1 = 'Street address is required';
     if (!city.trim()) errs.city = 'City is required';
     if (!postalCode.trim()) errs.postalCode = 'Postal PIN code is required';
     setErrors(errs);
+    const firstInvalid = Object.keys(errs)[0];
+    if (firstInvalid) {
+      document.getElementById(`checkout-${firstInvalid}`)?.focus();
+    }
     return Object.keys(errs).length === 0;
   };
 
@@ -115,11 +150,12 @@ export default function CheckoutPage() {
     const newOrder = createOrder({
       items: cart,
       subtotalINR: cartSubtotal,
-      shippingINR: deliverySpeed === 'express' ? 250 : shippingFee,
+      shippingINR: deliveryFee,
       discountINR: discountAmount,
-      totalINR: total + (deliverySpeed === 'express' ? 250 : 0),
+      totalINR: total,
       shippingAddress,
       paymentMethod,
+      deliverySpeed,
     });
 
     router.push(`/checkout/success?order=${encodeURIComponent(newOrder.orderNumber)}`);
@@ -157,6 +193,18 @@ export default function CheckoutPage() {
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
+        {/* Truthful demo feedback (project rule): stated before any input */}
+        <div
+          role="note"
+          className="mb-6 flex items-start gap-2.5 rounded-xl border border-store-gold/40 bg-store-cream px-4 py-3 text-sm text-store-text-primary"
+        >
+          <ShieldCheck size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-store-gold" />
+          <p>
+            <span className="font-semibold">Demo checkout sandbox</span> — no payment will be
+            collected and no order will be printed or shipped.
+          </p>
+        </div>
+
         {/* ======================================================== */}
         {/* TOP ROW: Header Title (L) + Floating 3-Step Indicator (R)*/}
         {/* Byte-identical to Figma media_1793276765072_2f83cc78.png */}
@@ -380,12 +428,27 @@ export default function CheckoutPage() {
 
             {/* STEP 2: YOUR DETAILS (Figma Screen 2) */}
             {step === 2 && (
-              <form onSubmit={handleProceedToPayment} className="space-y-6">
+              <form onSubmit={handleProceedToPayment} noValidate className="space-y-6">
                 <div className="border-b border-store-card-border pb-4">
                   <span className="text-xs font-bold uppercase tracking-wider text-store-muted">
                     Delivery Address & Speed
                   </span>
                 </div>
+
+                {/* Signed-in state: details come from the demo account */}
+                <p className="text-sm text-store-text-secondary">
+                  {session ? (
+                    <>Signed in as <span className="font-medium text-store-text-primary">{session.email}</span>. Your saved address is filled in below.</>
+                  ) : (
+                    <>
+                      Checking out as a guest.{' '}
+                      <Link href="/login?next=/checkout" className="font-medium text-store-text-primary underline underline-offset-4">
+                        Log in
+                      </Link>{' '}
+                      to use your saved address.
+                    </>
+                  )}
+                </p>
 
                 {/* Section 1: Contact */}
                 <div className="space-y-4">
@@ -394,10 +457,13 @@ export default function CheckoutPage() {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-email" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         Email Address (for order tracking)
                       </label>
                       <input
+                        id="checkout-email"
+                        aria-invalid={errors.email ? true : undefined}
+                        aria-describedby={errors.email ? 'checkout-email-error' : undefined}
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -406,14 +472,17 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.email && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.email}</p>
+                        <p id="checkout-email-error" className="text-2xs text-store-terracotta mt-1">{errors.email}</p>
                       )}
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-phone" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         Contact Phone (for delivery courier)
                       </label>
                       <input
+                        id="checkout-phone"
+                        aria-invalid={errors.phone ? true : undefined}
+                        aria-describedby={errors.phone ? 'checkout-phone-error' : undefined}
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -422,7 +491,7 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.phone && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.phone}</p>
+                        <p id="checkout-phone-error" className="text-2xs text-store-terracotta mt-1">{errors.phone}</p>
                       )}
                     </div>
                   </div>
@@ -435,10 +504,13 @@ export default function CheckoutPage() {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-firstName" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         First Name
                       </label>
                       <input
+                        id="checkout-firstName"
+                        aria-invalid={errors.firstName ? true : undefined}
+                        aria-describedby={errors.firstName ? 'checkout-firstName-error' : undefined}
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
@@ -447,14 +519,17 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.firstName && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.firstName}</p>
+                        <p id="checkout-firstName-error" className="text-2xs text-store-terracotta mt-1">{errors.firstName}</p>
                       )}
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-lastName" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         Last Name
                       </label>
                       <input
+                        id="checkout-lastName"
+                        aria-invalid={errors.lastName ? true : undefined}
+                        aria-describedby={errors.lastName ? 'checkout-lastName-error' : undefined}
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
@@ -463,16 +538,19 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.lastName && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.lastName}</p>
+                        <p id="checkout-lastName-error" className="text-2xs text-store-terracotta mt-1">{errors.lastName}</p>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                    <label htmlFor="checkout-addressLine1" className="text-xs font-medium text-store-charcoal block mb-1.5">
                       Street Address / Flat / Building
                     </label>
                     <input
+                      id="checkout-addressLine1"
+                      aria-invalid={errors.addressLine1 ? true : undefined}
+                      aria-describedby={errors.addressLine1 ? 'checkout-addressLine1-error' : undefined}
                       type="text"
                       value={addressLine1}
                       onChange={(e) => setAddressLine1(e.target.value)}
@@ -481,15 +559,16 @@ export default function CheckoutPage() {
                       required
                     />
                     {errors.addressLine1 && (
-                      <p className="text-2xs text-store-terracotta mt-1">{errors.addressLine1}</p>
+                      <p id="checkout-addressLine1-error" className="text-2xs text-store-terracotta mt-1">{errors.addressLine1}</p>
                     )}
                   </div>
 
                   <div>
-                    <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                    <label htmlFor="checkout-addressLine2" className="text-xs font-medium text-store-charcoal block mb-1.5">
                       Apartment, Suite, Unit, Landmark (Optional)
                     </label>
                     <input
+                      id="checkout-addressLine2"
                       type="text"
                       value={addressLine2}
                       onChange={(e) => setAddressLine2(e.target.value)}
@@ -500,10 +579,13 @@ export default function CheckoutPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-city" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         City
                       </label>
                       <input
+                        id="checkout-city"
+                        aria-invalid={errors.city ? true : undefined}
+                        aria-describedby={errors.city ? 'checkout-city-error' : undefined}
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
@@ -512,14 +594,15 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.city && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.city}</p>
+                        <p id="checkout-city-error" className="text-2xs text-store-terracotta mt-1">{errors.city}</p>
                       )}
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-state" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         State
                       </label>
                       <input
+                        id="checkout-state"
                         type="text"
                         value={state}
                         onChange={(e) => setState(e.target.value)}
@@ -529,10 +612,13 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-store-charcoal block mb-1.5">
+                      <label htmlFor="checkout-postalCode" className="text-xs font-medium text-store-charcoal block mb-1.5">
                         PIN / Postal Code
                       </label>
                       <input
+                        id="checkout-postalCode"
+                        aria-invalid={errors.postalCode ? true : undefined}
+                        aria-describedby={errors.postalCode ? 'checkout-postalCode-error' : undefined}
                         type="text"
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
@@ -541,7 +627,7 @@ export default function CheckoutPage() {
                         required
                       />
                       {errors.postalCode && (
-                        <p className="text-2xs text-store-terracotta mt-1">{errors.postalCode}</p>
+                        <p id="checkout-postalCode-error" className="text-2xs text-store-terracotta mt-1">{errors.postalCode}</p>
                       )}
                     </div>
                   </div>
@@ -549,23 +635,30 @@ export default function CheckoutPage() {
 
                 {/* Section 3: Delivery Method */}
                 <div className="space-y-4 pt-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-store-charcoal">
+                  <h3 id="checkout-delivery-heading" className="text-xs font-bold uppercase tracking-wider text-store-charcoal">
                     3. Delivery Speed
                   </h3>
-                  <div className="space-y-3">
+                  <div role="radiogroup" aria-labelledby="checkout-delivery-heading" className="space-y-3">
                     <label
-                      onClick={() => setDeliverySpeed('standard')}
-                      className={`flex items-start justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                      className={`flex items-start justify-between p-4 rounded-xl border cursor-pointer transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-store-gold ${
                         deliverySpeed === 'standard'
                           ? 'border-store-charcoal bg-store-cream/60 ring-1 ring-store-charcoal'
                           : 'border-store-card-border bg-white hover:border-store-charcoal'
                       }`}
                     >
+                      <input
+                        type="radio"
+                        name="delivery-speed"
+                        value="standard"
+                        checked={deliverySpeed === 'standard'}
+                        onChange={() => setDeliverySpeed('standard')}
+                        className="sr-only"
+                      />
                       <div className="flex gap-3">
                         <Truck size={20} className="text-store-charcoal mt-0.5 shrink-0" />
                         <div>
                           <div className="text-sm font-bold text-store-charcoal">
-                            Delhivery Surface Carbon-Neutral
+                            Delhivery Surface
                           </div>
                           <p className="text-xs text-store-muted mt-0.5">
                             Standard 3-5 business days after atelier printing & QC.
@@ -578,13 +671,20 @@ export default function CheckoutPage() {
                     </label>
 
                     <label
-                      onClick={() => setDeliverySpeed('express')}
-                      className={`flex items-start justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                      className={`flex items-start justify-between p-4 rounded-xl border cursor-pointer transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-store-gold ${
                         deliverySpeed === 'express'
                           ? 'border-store-charcoal bg-store-cream/60 ring-1 ring-store-charcoal'
                           : 'border-store-card-border bg-white hover:border-store-charcoal'
                       }`}
                     >
+                      <input
+                        type="radio"
+                        name="delivery-speed"
+                        value="express"
+                        checked={deliverySpeed === 'express'}
+                        onChange={() => setDeliverySpeed('express')}
+                        className="sr-only"
+                      />
                       <div className="flex gap-3">
                         <PackageCheck size={20} className="text-store-action-primary mt-0.5 shrink-0" />
                         <div>
@@ -596,7 +696,7 @@ export default function CheckoutPage() {
                           </p>
                         </div>
                       </div>
-                      <span className="text-sm font-bold text-store-charcoal">₹250</span>
+                      <span className="text-sm font-bold text-store-charcoal">₹{EXPRESS_FEE}</span>
                     </label>
                   </div>
                 </div>
@@ -633,7 +733,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <PaymentSimulationPanel
-                  totalAmount={total + (deliverySpeed === 'express' ? 250 : 0)}
+                  totalAmount={total}
                   onPaymentSuccess={handlePaymentSuccess}
                   onPaymentFail={(reason) => console.log('Payment declined:', reason)}
                   onCancel={() => setStep(2)}
@@ -672,11 +772,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between">
                   <span>Shipping</span>
                   <span className="font-semibold text-white">
-                    {deliverySpeed === 'express'
-                      ? '₹250'
-                      : shippingFee === 0
-                      ? 'Free'
-                      : `₹${shippingFee}`}
+                    {deliveryFee === 0 ? 'Free' : `₹${deliveryFee}`}
                   </span>
                 </div>
 
@@ -727,7 +823,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={promoInput}
                     onChange={(e) => setPromoInput(e.target.value)}
-                    placeholder="BOOOM55"
+                    placeholder="Promo code"
                     className="flex-1 bg-transparent text-white placeholder-white/40 text-xs tracking-wider outline-hidden py-1 uppercase"
                   />
                   <button
@@ -763,14 +859,16 @@ export default function CheckoutPage() {
               {/* Free Shipping Unlocked Progress Bar (media_1793276684365_5c63b95e.png) */}
               <div className="p-3.5 rounded-2xl bg-store-checkout-teal-light/40 border border-white/10 space-y-2">
                 <span className="text-xs text-white font-medium block">
-                  {cartSubtotal >= 3000
+                  {freeShippingRemaining === 0
                     ? 'You have unlocked free shipping'
-                    : `Add ₹${(3000 - cartSubtotal).toLocaleString()} to unlock free shipping`}
+                    : `Add ₹${freeShippingRemaining.toLocaleString()} to unlock free shipping`}
                 </span>
                 <div className="w-full h-1.5 rounded-full bg-black/25 overflow-hidden">
                   <div
                     className="h-full rounded-full bg-store-checkout-gold transition-all duration-500"
-                    style={{ width: `${Math.min(100, Math.round((cartSubtotal / 3000) * 100))}%` }}
+                    style={{
+                      width: `${Math.min(100, Math.round(((freeShippingThreshold - freeShippingRemaining) / freeShippingThreshold) * 100))}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -779,7 +877,7 @@ export default function CheckoutPage() {
               <div className="pt-4 border-t border-white/15 flex items-baseline justify-between">
                 <span className="text-sm font-medium text-white/90">Total</span>
                 <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  ₹{(total + (deliverySpeed === 'express' ? 250 : 0)).toLocaleString()}
+                  ₹{total.toLocaleString()}
                 </span>
               </div>
 

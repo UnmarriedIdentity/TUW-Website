@@ -40,7 +40,7 @@ export default function FaqPage() {
             Frequently Asked Questions
           </h1>
           <p className="text-sm text-[#666] mt-2 leading-relaxed">
-            Everything you need to know about our GOTS organic heavyweight textiles, on-demand printing process, and doorstep returns.
+            Everything you need to know about sizing, printing to order, shipping and returns.
           </p>
         </div>
 

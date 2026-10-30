@@ -6,6 +6,7 @@ import Badge from '@/components/ui/Badge';
 import { useStore } from '@/mocks/store';
 import { formatINR } from '@/lib/format';
 import { cn } from '@/lib/cn';
+import { STORE_PRODUCTS } from '@/mocks/fixtures';
 
 export type FittingAudience = 'men' | 'women' | 'kids';
 
@@ -22,136 +23,47 @@ interface FittingSet {
   cards: FittingLook[];
 }
 
-const AUDIENCE_ORDER: FittingAudience[] = ['men', 'women', 'kids'];
-
 const AUDIENCE_LABELS: Record<FittingAudience, string> = {
   men: 'Men',
   women: 'Women',
   kids: 'Kids',
 };
 
-const FITTING_SETS: Record<FittingAudience, FittingSet> = {
-  men: {
-    base: {
-      id: 'nc-m3',
-      title: 'Atelier Signature Overshirt',
-      cat: 'OVERSHIRT',
-      priceINR: 2100,
-      image: '/images/section%20image/m3.png',
-      badge: 'Signature Drop',
-    },
-    cards: [
-      {
-        id: 'nc-m1',
-        title: 'Tailored Ivory Oxford',
-        cat: 'OXFORD SHIRT',
-        priceINR: 1899,
-        image: '/images/section%20image/m1.png',
-      },
-      {
-        id: 'nc-m2',
-        title: 'Sandstone Camp Shirt',
-        cat: 'CAMP SHIRT',
-        priceINR: 1450,
-        image: '/images/section%20image/m2.png',
-      },
-      {
-        id: 'nc-m4',
-        title: 'Canyon Twill Overshirt',
-        cat: 'OVERSHIRT',
-        priceINR: 1750,
-        image: '/images/section%20image/m4.png',
-      },
-      {
-        id: 'nc-m5',
-        title: 'Onyx Minimal Tee',
-        cat: 'T-SHIRT',
-        priceINR: 1299,
-        image: '/images/section%20image/m5.png',
-      },
-    ],
-  },
-  women: {
-    base: {
-      id: 'nc-w3',
-      title: 'Atelier Sculpted Dress',
-      cat: 'DRESS',
-      priceINR: 2299,
-      image: '/images/section%20image/w3.png',
-      badge: 'Signature Drop',
-    },
-    cards: [
-      {
-        id: 'nc-w1',
-        title: 'Ivory Draped Blouse',
-        cat: 'BLOUSE',
-        priceINR: 1799,
-        image: '/images/section%20image/w1.png',
-      },
-      {
-        id: 'nc-w2',
-        title: 'Rosewood Soft Knit',
-        cat: 'KNIT',
-        priceINR: 1599,
-        image: '/images/section%20image/w2.png',
-      },
-      {
-        id: 'nc-w4',
-        title: 'Ecru Relaxed Shirt',
-        cat: 'SHIRT',
-        priceINR: 1499,
-        image: '/images/section%20image/w4.png',
-      },
-      {
-        id: 'nc-w5',
-        title: 'Noir Gallery Tee',
-        cat: 'T-SHIRT',
-        priceINR: 1399,
-        image: '/images/section%20image/w5.png',
-      },
-    ],
-  },
-  kids: {
-    base: {
-      id: 'nc-k3',
-      title: 'Little Atelier Pinafore',
-      cat: 'PINAFORE',
-      priceINR: 1299,
-      image: '/images/section%20image/k3.png',
-      badge: 'Signature Drop',
-    },
-    cards: [
-      {
-        id: 'nc-k1',
-        title: 'Mini Ivory Shirt',
-        cat: 'SHIRT',
-        priceINR: 999,
-        image: '/images/section%20image/k1.png',
-      },
-      {
-        id: 'nc-k2',
-        title: 'Playdate Soft Set',
-        cat: 'SET',
-        priceINR: 1199,
-        image: '/images/section%20image/k2.png',
-      },
-      {
-        id: 'nc-k4',
-        title: 'Dune Twill Shirt',
-        cat: 'SHIRT',
-        priceINR: 1099,
-        image: '/images/section%20image/k4.png',
-      },
-      {
-        id: 'nc-k5',
-        title: 'Cloud Soft Sweatshirt',
-        cat: 'SWEATSHIRT',
-        priceINR: 899,
-        image: '/images/section%20image/k5.png',
-      },
-    ],
-  },
+// Looks come straight from the catalog: each audience shows the pieces whose
+// placeholder model photo matches it (men: /images/lifestyle, women:
+// /images/about), so the name, price and picture on a card stay together.
+const MODEL_FOLDER: Record<FittingAudience, string> = {
+  men: '/images/lifestyle/',
+  women: '/images/about/',
+  kids: '/images/kids/',
 };
+
+function buildFittingSet(audience: FittingAudience): FittingSet {
+  const looks: FittingLook[] = STORE_PRODUCTS.filter((p) => {
+    const url = p.images[0]?.url || '';
+    return url.startsWith(MODEL_FOLDER[audience]) && Boolean(p.audience?.includes(audience));
+  })
+    .slice(0, 4)
+    .map((p) => ({
+      id: p.id,
+      title: p.title,
+      cat: p.title.split(' ').slice(-1)[0].toUpperCase(),
+      priceINR: p.priceINR,
+      image: encodeURI(p.images[0].url),
+    }));
+  return { base: { ...looks[0], badge: 'Printed to order' }, cards: looks };
+}
+
+const FITTING_SETS: Record<FittingAudience, FittingSet> = {
+  men: buildFittingSet('men'),
+  women: buildFittingSet('women'),
+  kids: buildFittingSet('kids'),
+};
+
+// Only offer tabs that have at least one photographed piece.
+const AUDIENCE_ORDER = (['men', 'women', 'kids'] as FittingAudience[]).filter(
+  (key) => FITTING_SETS[key].cards.length > 0
+);
 
 export default function VirtualFittingRoom() {
   const { isInWishlist, toggleWishlist } = useStore();

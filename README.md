@@ -55,7 +55,7 @@ Every storefront route is deployed live, pre-rendered with zero runtime external
 | 3 | [**`/register`**](https://tuw-storefront.vercel.app/register) | **Customer Registration** | Standalone pixel-perfect registration screen matching Figma Node `233:11647` with lifestyle hero imagery and form validation. | 🟢 Live |
 | 4 | [**`/forgot-password`**](https://tuw-storefront.vercel.app/forgot-password) | **Forgot Password** | Secure password reset request flow with email validation and simulated recovery dispatch. | 🟢 Live |
 | 5 | [**`/reset-password`**](https://tuw-storefront.vercel.app/reset-password) | **Reset Password** | New password confirmation view with token validation and security guidelines. | 🟢 Live |
-| 6 | [**`/design-system`**](https://tuw-storefront.vercel.app/design-system) | **Design System Specimen** | Interactive specimen showcasing Futura/Outfit typography, 3-tier color tokens, 1612×529 auto-layout frame metrics, and UI component catalog. | 🟢 Live |
+| 6 | [**`/design-system`**](https://tuw-storefront.vercel.app/design-system) | **Design System Specimen** | Interactive specimen showcasing Outfit typography, 3-tier color tokens, 1612×529 auto-layout frame metrics, and UI component catalog. | 🟢 Live |
 | 7 | [**`/shop`**](https://tuw-storefront.vercel.app/shop) | **Catalog & Shop** | Complete product browsing with desktop FilterBar, mobile slide-over filter drawer, sort dropdown, and active filter pills. | 🟢 Live |
 | 8 | [**`/products/[slug]`**](https://tuw-storefront.vercel.app/products/monolith-heavyweight-hoodie-vintage-black) | **Product Detail Page (PDP)** | Architectural PDP with thumbnail gallery, interactive color/size selectors, stock counters, accordions, and customer reviews. | 🟢 Live |
 | 9 | [**`/collections`**](https://tuw-storefront.vercel.app/collections) | **Capsule Collections** | Seasonal slow-fashion capsule overview with high-res lookbook banners and garment counts. | 🟢 Live |
@@ -119,13 +119,13 @@ Every product detail page adapts dynamically to the product's attributes — ren
    - Surface: Pure White (`#FFFFFF`)
    - Typography: Deep Charcoal (`#0F0F0F` / `#1A1A1A`)
    - Accent: Refined Gold (`#C8A96A`) & Secondary Teal (`#005B6C`)
-   - Headings: **Futura** (`--font-heading`, uppercase tracking)
+   - Headings: **Outfit** (`--font-heading`, uppercase tracking)
    - Body & Controls: **Outfit** (`--font-sans`, weights 300 to 800)
 
 2. **Rolls-Royce Inspired Header Animation**:
    - **Top Bar (36px, `#171535`)**: Displays Blogs, FAQ's, Support, 4 social vector icons, and interactive currency selector (USD, INR, EUR, GBP).
    - **Main Bar (73px, `#FCFAF6`)**:
-     - At the top of the page, the center brand displays **THE UNPLUGGED WEAR** wordmark in Futura uppercase.
+     - At the top of the page, the center brand displays **THE UNPLUGGED WEAR** wordmark in Outfit uppercase.
      - As the user scrolls (`scrollY > 24px`), the wordmark smoothly morphs into the **Official Leaping Deer Silhouette Emblem** with zero layout shift (CLS = 0).
      - As the user scrolls back to top, it seamlessly reverses back to the full wordmark.
 
@@ -155,3 +155,15 @@ pnpm run build
 # Start production server
 pnpm run start
 ```
+
+### Internal QA pages
+
+`/design-system` and `/checklist` are internal tools. They work in `pnpm run dev`, and return 404 in production builds. They are prerendered, so to keep them on a deployment the variable must be set when building (on Vercel, add it as a project environment variable):
+
+```bash
+TUW_INTERNAL_PAGES=1 pnpm run build
+```
+
+### Demo sign-in
+
+Login is a local demo: there is no server, and only the seeded demo account can sign in. Its email and password live in `src/mocks/auth.ts` (`DEMO_ACCOUNT`), and the login page has a **Fill in the demo account** button. Signing in unlocks `/account` and its order pages, and fills checkout with the account's saved address; guests can still check out by typing their details. Payments are simulated on the checkout page and nothing is charged.

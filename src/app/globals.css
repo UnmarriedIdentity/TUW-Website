@@ -10,7 +10,7 @@
 @theme {
   --font-sans: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
   /* Figma Node 82:5702 Color Style Foundation */
@@ -45,6 +45,7 @@
   --color-store-link: #002B3A;
   --color-header-topbar: #171535;
   --color-store-cream: #F4F1EA;
+  --color-store-card-panel: #F3F2F0; /* Figma product card panel */
   --color-store-card-border: #E2DDCF;
   --color-store-gold: #C8A96A;
   --color-store-terracotta: #AD512F;
@@ -66,7 +67,7 @@
   --radius-form-input: 0.75rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
-  --text-2xs: 0.625rem;
+  --text-2xs: 0.75rem; /* 12px floor: no storefront text below 12px (WCAG legibility) */
 
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.08);
 }
@@ -80,7 +81,7 @@ html {
 }
 
 :root {
-  --font-heading: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-urbanist: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
 
@@ -303,8 +304,20 @@ h6,
 }
 
 /* Storefront Layout & Geometry Utilities */
+/* Hero fills exactly the first screen below the header, so no sliver of the
+   next section shows. Header = main bar (4.5625rem + 1px border), plus the
+   2.25rem top bar from md up. svh keeps it steady while mobile URL bars move;
+   the 30rem floor keeps the copy clear of the top on very short screens. */
 .hero-viewport-height {
-  min-height: clamp(36rem, 85vh, 56rem);
+  --hero-header-offset: calc(4.5625rem + 1px);
+  min-height: max(30rem, calc(100vh - var(--hero-header-offset)));
+  min-height: max(30rem, calc(100svh - var(--hero-header-offset)));
+}
+
+@media (min-width: 48rem) {
+  .hero-viewport-height {
+    --hero-header-offset: calc(2.25rem + 4.5625rem + 1px);
+  }
 }
 
 .aspect-card-tall {
@@ -339,9 +352,6 @@ h6,
   background: linear-gradient(180deg, rgba(15, 15, 15, 0.25) 0%, rgba(15, 15, 15, 0.05) 35%, rgba(15, 15, 15, 0.45) 68%, rgba(15, 15, 15, 0.86) 100%);
 }
 
-.hero-scrim-horizontal {
-  background: linear-gradient(90deg, rgba(15, 15, 15, 0.45) 0%, rgba(15, 15, 15, 0.15) 50%, rgba(15, 15, 15, 0) 100%);
-}
 
 
 
@@ -429,7 +439,8 @@ h6,
 }
 
 .jitter-brand-signature {
-  font-size: clamp(1.85rem, 5.4vw, 5.25rem);
+  /* 6.5vw cap keeps the Outfit Black wordmark inside a 360px phone; desktop stays 5.4vw */
+  font-size: min(clamp(1.85rem, 5.4vw, 5.25rem), 6.5vw);
   line-height: 1.05;
   letter-spacing: 0.08em;
   white-space: nowrap;
@@ -442,6 +453,33 @@ h6,
 
 .jitter-brand-signature:hover {
   opacity: 0.95;
+}
+
+/* Header mega-menu panel reveal */
+@keyframes tuw-mega-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tuw-mega-in {
+  animation: tuw-mega-in 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuw-mega-in {
+    animation: none;
+  }
+}
+
+/* Already seen this session (flag set by BrandIntro's inline script before paint) */
+html[data-intro-seen] .intro-shutter-wrap {
+  display: none;
 }
 
 /* Homespace ID Staggered Letter-by-Letter Curtain Intro Standards */
@@ -744,7 +782,7 @@ h6,
    Editorial Philosophy Section (Slow-Living Luxury Specimen)
    -------------------------------------------------------------------------- */
 .philosophy-headline {
-  font-family: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
+  font-family: var(--font-heading);
   letter-spacing: -0.04em;
   line-height: 0.98;
   font-size: clamp(2.5rem, 5.5vw, 5rem);
@@ -851,187 +889,6 @@ h6,
 .tuw-toast-progress {
   animation: tuw-toast-progress 4s linear forwards;
   will-change: width;
-}
-
-/* --------------------------------------------------------------------------
-   ProductCard: Silky Slow-Living Luxury Hover Reveal & Expansion Motion
-   -------------------------------------------------------------------------- */
-.tuw-card-expand {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: grid-template-rows, opacity;
-}
-
-.tuw-card-expand.tuw-card-expanded {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-
-.tuw-card-expand-inner {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.tuw-size-enter {
-  transform: translate3d(0, 8px, 0);
-  opacity: 0;
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.04s, opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
-  will-change: transform, opacity;
-}
-
-.tuw-card-expanded .tuw-size-enter {
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-}
-
-.tuw-nav-arrow-left {
-  transform: translate3d(-10px, -50%, 0);
-  opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
-  will-change: transform, opacity;
-}
-
-.group:hover .tuw-nav-arrow-left {
-  transform: translate3d(0, -50%, 0);
-  opacity: 1;
-}
-
-.tuw-nav-arrow-right {
-  transform: translate3d(10px, -50%, 0);
-  opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
-  will-change: transform, opacity;
-}
-
-.group:hover .tuw-nav-arrow-right {
-  transform: translate3d(0, -50%, 0);
-  opacity: 1;
-}
-
-.tuw-dashes-reveal {
-  transform: translate3d(-50%, 8px, 0);
-  opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.group:hover .tuw-dashes-reveal {
-  transform: translate3d(-50%, 0, 0);
-  opacity: 1;
-}
-
-.tuw-crossfade-idle {
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.tuw-crossfade-hover {
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-/* --------------------------------------------------------------------------
-   ProductCard: Staggered Water-Drop Hover Entrance Motion
-   Surface-tension spring curve cubic-bezier(0.34, 1.45, 0.64, 1) creates
-   an organic droplet drop-in ripple for quick sizes and color swatches.
-   -------------------------------------------------------------------------- */
-.tuw-droplet-size {
-  opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(0.75);
-  transition: transform 0.35s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.tuw-card-expanded .tuw-droplet-size,
-.group:hover .tuw-droplet-size,
-.tuw-card-is-hovered .tuw-droplet-size {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-.tuw-card-expanded .tuw-droplet-delay-0,
-.group:hover .tuw-droplet-delay-0,
-.tuw-card-is-hovered .tuw-droplet-delay-0 { transition-delay: 35ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-1,
-.group:hover .tuw-droplet-delay-1,
-.tuw-card-is-hovered .tuw-droplet-delay-1 { transition-delay: 70ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-2,
-.group:hover .tuw-droplet-delay-2,
-.tuw-card-is-hovered .tuw-droplet-delay-2 { transition-delay: 105ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-3,
-.group:hover .tuw-droplet-delay-3,
-.tuw-card-is-hovered .tuw-droplet-delay-3 { transition-delay: 140ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-4,
-.group:hover .tuw-droplet-delay-4,
-.tuw-card-is-hovered .tuw-droplet-delay-4 { transition-delay: 175ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-5,
-.group:hover .tuw-droplet-delay-5,
-.tuw-card-is-hovered .tuw-droplet-delay-5 { transition-delay: 210ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-6,
-.group:hover .tuw-droplet-delay-6,
-.tuw-card-is-hovered .tuw-droplet-delay-6 { transition-delay: 245ms; }
-
-.tuw-card-expanded .tuw-droplet-delay-7,
-.group:hover .tuw-droplet-delay-7,
-.tuw-card-is-hovered .tuw-droplet-delay-7 { transition-delay: 280ms; }
-
-.tuw-droplet-swatch {
-  opacity: 0;
-  transform: translate3d(0, 8px, 0) scale(0.35);
-  transition: transform 0.38s cubic-bezier(0.34, 1.5, 0.64, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.group:hover .tuw-droplet-swatch,
-.tuw-card-is-hovered .tuw-droplet-swatch {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-.group:hover .tuw-swatch-delay-0,
-.tuw-card-is-hovered .tuw-swatch-delay-0 { transition-delay: 45ms; }
-
-.group:hover .tuw-swatch-delay-1,
-.tuw-card-is-hovered .tuw-swatch-delay-1 { transition-delay: 85ms; }
-
-.group:hover .tuw-swatch-delay-2,
-.tuw-card-is-hovered .tuw-swatch-delay-2 { transition-delay: 125ms; }
-
-.group:hover .tuw-swatch-delay-3,
-.tuw-card-is-hovered .tuw-swatch-delay-3 { transition-delay: 165ms; }
-
-.group:hover .tuw-swatch-delay-4,
-.tuw-card-is-hovered .tuw-swatch-delay-4 { transition-delay: 205ms; }
-
-.group:hover .tuw-swatch-delay-5,
-.tuw-card-is-hovered .tuw-swatch-delay-5 { transition-delay: 245ms; }
-
-.group:hover .tuw-swatch-delay-6,
-.tuw-card-is-hovered .tuw-swatch-delay-6 { transition-delay: 285ms; }
-
-.group:hover .tuw-swatch-delay-7,
-.tuw-card-is-hovered .tuw-swatch-delay-7 { transition-delay: 325ms; }
-
-.tuw-droplet-color-label {
-  opacity: 0;
-  transform: translate3d(6px, 0, 0);
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.group:hover .tuw-droplet-color-label,
-.tuw-card-is-hovered .tuw-droplet-color-label {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition-delay: 190ms;
 }
 
 /* --------------------------------------------------------------------------

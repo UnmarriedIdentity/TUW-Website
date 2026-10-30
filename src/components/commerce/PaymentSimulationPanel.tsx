@@ -323,8 +323,8 @@ export default function PaymentSimulationPanel({
 
       {/* 5. Error Notice if Triggered */}
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-store-terracotta/10 border border-store-terracotta/30 text-xs text-store-terracotta flex items-start gap-2.5">
-          <AlertCircle size={16} className="shrink-0 mt-0.5" />
+        <div role="alert" className="p-4 rounded-xl bg-store-terracotta/10 border border-store-terracotta/30 text-xs text-store-terracotta flex items-start gap-2.5">
+          <AlertCircle size={16} aria-hidden="true" className="shrink-0 mt-0.5" />
           <span>{errorMessage}</span>
         </div>
       )}
@@ -394,7 +394,10 @@ export default function PaymentSimulationPanel({
             </>
           ) : (
             <>
-              <span>Complete Payment (₹{totalAmount.toLocaleString()})</span>
+              <span>
+                {/* Nothing is charged now for pay on delivery, so it places the order instead */}
+                {selectedMethod === 'COD (Demo)' ? 'Place Order' : 'Complete Payment'} (₹{totalAmount.toLocaleString()})
+              </span>
               <ArrowRight size={14} />
             </>
           )}

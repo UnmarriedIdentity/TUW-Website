@@ -34,21 +34,21 @@ export default function PrivacyPolicyPage() {
 
         <div className="bg-white rounded-3xl border border-[#E2DDCF] p-8 sm:p-12 shadow-xs prose prose-neutral max-w-none text-sm text-[#4A4A4A] space-y-6 leading-relaxed">
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">1. Data We Collect</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">1. Data We Collect</h2>
             <p>
               We collect information necessary to fulfill your garment orders, including recipient name, email address, postal delivery address, and phone number. Payment card credentials are never held directly on our servers; all transactions utilize PCI-DSS certified gateway tokens.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">2. Zero Third-Party Advertising Trackers</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">2. Zero Third-Party Advertising Trackers</h2>
             <p>
               The Unplugged Wear operates without third-party invasive cross-site ad retargeting trackers. We believe in quiet digital privacy. Your contact details are never sold, rented, or traded to marketing broker networks.
             </p>
           </section>
 
           <section>
-            <h3 className="text-base font-bold text-[#1A1A1A]">3. Data Deletion Rights</h3>
+            <h2 className="text-base font-bold text-[#1A1A1A]">3. Data Deletion Rights</h2>
             <p>
               You have the right to request deletion of your address book, order history, and account profile at any time by contacting studio@theunpluggedwear.com.
             </p>

@@ -65,7 +65,7 @@ export default function CartPage() {
             </div>
             <h2 className="text-xl font-bold text-[#1A1A1A]">Your shopping bag is empty</h2>
             <p className="text-sm text-[#666] max-w-sm mx-auto mt-2 leading-relaxed">
-              Explore our architectural French terry hoodies and combed organic staples.
+              Explore our hoodies, tees and everyday pieces.
             </p>
             <div className="mt-6">
               <Button variant="dark" size="lg" href="/shop">
@@ -241,7 +241,7 @@ export default function CartPage() {
                   </Button>
                 </div>
 
-                <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#8A8A8A] pt-1">
+                <div className="flex items-center justify-center gap-1.5 text-xs text-[#8A8A8A] pt-1">
                   <ShieldCheck size={14} className="text-[#10B981]" />
                   <span>Sandbox Environment • No Real Cards</span>
                 </div>

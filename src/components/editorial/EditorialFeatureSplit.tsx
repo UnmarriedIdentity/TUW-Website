@@ -16,7 +16,7 @@ export interface EditorialFeatureSplitProps {
 export default function EditorialFeatureSplit({
   title = 'Products made with love.',
   eyebrow = 'Atelier Craftsmanship',
-  description = 'Every garment and utilitarian piece is designed with mindful intention and tailored in zero-deadstock ateliers. We eliminate surplus manufacturing by producing solely on-demand with uncompromised organic textiles.',
+  description = 'Every garment and utilitarian piece is designed with mindful intention and tailored in zero-deadstock ateliers. We avoid surplus by printing only on demand.',
   imageSrc = '/images/editorial/products-made-with-love.png',
   imageAlt = 'Crafted with care in verified atelier',
   reversed = false,

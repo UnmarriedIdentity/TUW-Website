@@ -9,8 +9,8 @@
 
 The Unplugged Wear design system is built strictly from Figma Node `82:5702`:
 
-- **Heading Typography (Upper Text)**: **Futura** (`--font-heading`, Medium 500, uppercase) — used exclusively for `<h1>` through `<h6>`, hero titles, section headings, and brand mastheads.
-- **Body & Everywhere Else (Lower Text)**: **Outfit** (`--font-sans`, `--font-body`, Medium 500 & Regular 400) — loaded via `next/font/google` and used across body text, navigation, buttons, cards, form controls, and metadata.
+- **Heading Typography (Upper Text)**: **Outfit** (`--font-heading`, Medium 500, uppercase) — used exclusively for `<h1>` through `<h6>`, hero titles, section headings, and brand mastheads.
+- **Body & Everywhere Else (Lower Text)**: **Outfit** (`--font-sans`, `--font-body`, Medium 500 & Regular 400) — self-hosted via `next/font/local` and used across body text, navigation, buttons, cards, form controls, and metadata.
 - **Figma Auto-Layout Frame (Sidebar Details)**:
   - **Position**: `X: 270`, `Y: 452`
   - **Auto Layout Flow**: Column (`direction: column`)
@@ -41,7 +41,7 @@ The Unplugged Wear design system is built strictly from Figma Node `82:5702`:
 Tokens are globally available via `@theme` and `:root` in `globals.css`:
 
 ```css
-/* Heading with Futura uppercase */
+/* Heading with Outfit uppercase */
 h1, .heroHeading {
   font-family: var(--font-heading);
   text-transform: uppercase;
@@ -71,16 +71,16 @@ h1, .heroHeading {
 
 | Role | Font Family | Size | Line Height | Weight | CSS Utility Class |
 |---|---|---|---|---|---|
-| **Brand Masthead** | Futura | 128px / responsive | 1.06em | Medium (500) | `.font-heading uppercase` |
-| **Heading 1 (Page Title)** | Futura | 32–40px | 1.2em | Medium (500) | `.font-heading text-4xl uppercase` |
-| **Heading 2 (Section)** | Futura | 28–48px | 1.2em | Medium (500) | `.font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium` |
-| **Heading 3 (Subsection)** | Futura | 18px | 1.3em | SemiBold (600) | `.font-heading text-lg font-semibold` |
+| **Brand Masthead** | Outfit | 128px / responsive | 1.06em | Medium (500) | `.font-heading uppercase` |
+| **Heading 1 (Page Title)** | Outfit | 32–40px | 1.2em | Medium (500) | `.font-heading text-4xl uppercase` |
+| **Heading 2 (Section)** | Outfit | 28–48px | 1.2em | Medium (500) | `.font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium` |
+| **Heading 3 (Subsection)** | Outfit | 18px | 1.3em | SemiBold (600) | `.font-heading text-lg font-semibold` |
 | **Body Large** | Outfit | 16px | 24px | Regular (400) | `.font-sans text-base` |
 | **Body Default** | Outfit | 14px | 22px | Regular (400) | `.font-sans text-sm` |
 | **Control / Button** | Outfit | 14px | 20px | Medium (500) | `.font-sans font-medium text-sm` |
 | **Caption / Metadata** | Outfit | 12px | 18px | Regular (400) | `.font-sans text-xs` |
 
-Storefront homepage roles on top of this scale (size and weight only, full tables in `docs/DESIGN_SYSTEM.md`): section eyebrow **16px / 500**, product name and product price **16px / 500**, section H2 **28–48px / 500**, card body **16px / 400**, CTA label **12px / 500**. Allowed weights are 300, 400, 500, 600 and 900 (footer signature only); homepage sections use no 700 or 800.
+Storefront homepage roles on top of this scale (size and weight only, full tables in `docs/DESIGN_SYSTEM.md`): section eyebrow **16px / 500**, product card name **18–20px / 500** and price **16px / 400** (fitting room names and prices stay **16px / 500**), section H2 **28–48px / 500**, card body **16px / 400**, CTA label **12px / 500**. Allowed weights are 300, 400, 500, 600 and 900 (footer signature only); homepage sections use no 700 or 800.
 
 ### Example in JSX/TSX:
 

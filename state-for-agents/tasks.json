@@ -9,21 +9,21 @@
   },
   "_demo": "Figma source of truth established. First track TL-WEB-001 closed.",
   "summary": {
-    "total": 61,
-    "done": 61,
+    "total": 72,
+    "done": 72,
     "in_progress": 0,
     "backlog": 0,
-    "total_tasks": 61,
+    "total_tasks": 72,
     "pending": 0
   },
   "session": {
-    "branch": "preview",
-    "tip": "ca9a0b6",
+    "branch": "urvil",
+    "tip": "33b601d",
     "unpushed": [],
-    "next_up": null,
+    "next_up": "Owner confirmations: rights for the supplied lifestyle photos, draft retail prices, social URLs in src/lib/site.ts, fabric facts; move forgot/reset password onto AuthShell; replace placeholder model photos with real garment photography before launch.",
     "pending_verifications": [],
-    "last_updated": "2026-10-29",
-    "updated_by": "Meet Rabadiya"
+    "last_updated": "2026-10-30",
+    "updated_by": "Urvil Kargathala"
   },
   "workflow": {
     "how_to_close_a_task": "gates green → status done + log commit + design_match + verified + finished → recompute summary → refresh session → commit code + tracker together",
@@ -1429,6 +1429,518 @@
         "Preserved WCAG 2.2 AA reduced motion with 0.01ms instant transition fallback",
         "All verification gates green: typecheck 0, 45 unit tests pass, 44 routes build cleanly, selector CSS proof verified"
       ]
+    },
+    {
+      "id": "TL-WEB-062",
+      "category": "typography",
+      "title": "Outfit-only storefront typography (retire Jost headings and Playfair headline)",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/app/fonts/jost-latin-*-normal.woff2 (removed)",
+        "src/app/design-system/page.tsx",
+        "tests/business-logic.test.mjs",
+        "tests/homepage-typography.test.mjs",
+        "README.md",
+        "DESIGN_SYSTEM_USAGE.md",
+        "docs/DESIGN_SYSTEM.md",
+        "docs/UI_CHECKLIST.md",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Use Outfit for every storefront text role: --font-heading now resolves to Outfit, the Our Philosophy .philosophy-headline uses --font-heading instead of the never-loaded Playfair Display stack, and the Jost next/font/local loader plus its vendored woff2 files are removed.",
+      "log": [
+        "2026-10-30: Opened TL-WEB-062 on branch urvil at user request to use Outfit across the storefront.",
+        "2026-10-30: Gates green: typecheck 0 errors, 45/45 unit tests pass, next build clean; built CSS shows .philosophy-headline{font-family:var(--font-heading)} and zero Jost/Playfair rules; dev server computed fonts for body, h1, h2 and .philosophy-headline all resolve to Outfit. Awaiting commit to close.",
+        "2026-10-30: Fixed regression from the Outfit switch: footer .jitter-brand-signature (Outfit Black is wider than Jost) overflowed 360px phones by 17px; font-size now min(clamp(1.85rem,5.4vw,5.25rem),6.5vw), desktop unchanged, scrollWidth 360 at 360px.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Kept the .font-heading utility and --font-heading token so heading call sites are unchanged; only the token value moved to Outfit",
+        "Deviates from Figma Node 82:5702 (Futura headings) by explicit owner request"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "@fontsource/jost stays in package.json but is no longer used; remove in a dependency cleanup if wanted"
+      ]
+    },
+    {
+      "id": "TL-WEB-063",
+      "category": "hero",
+      "title": "Homepage hero rebuild: luxury-scale caption, no kicker, full-screen height, video pause control",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/app/page.tsx",
+        "src/app/globals.css",
+        "tests/homepage-typography.test.mjs",
+        "docs/DESIGN_SYSTEM.md",
+        "state-for-agents/skills/design-system/SKILL.md",
+        "src/app/design-system/page.tsx",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Remove the 'SS26 • Slow-Living Atelier' kicker; set both headline lines at one clamp(2.25rem,4.5vw+1rem,5.5rem) / 300 size with per-line side-bearing offsets so glyph ink sits on the header gutter; widen the copy block to max-w-4xl so 'Architectural Form.' no longer wraps; full-width stacked CTAs on phones; add a pause/play control for the looping background video (WCAG 2.2.2) and start paused under prefers-reduced-motion. Video source is a single HERO_VIDEO_SRC constant, now /videos/h2.mp4 (existing brand clip: model in heavyweight hoodie) until a licensed 30s hero cut is supplied.",
+      "log": [
+        "2026-10-30: Opened TL-WEB-063 at user request (proper hero, heading alignment, remove SS26 kicker, 30s video).",
+        "2026-10-30: Gates green: typecheck 0 errors, 45/45 unit tests pass, next build 44/44 clean. Computed-layout check at 360/768/1024/1440: heading ink, subtitle, CTAs and header nav share the 16/24/32/112px gutter, both headline lines render on one line each, no horizontal scroll, pause button never overlaps copy and toggles video + aria-label. Awaiting commit to close.",
+        "2026-10-30: Fixed gap under hero: hero bottom now equals viewport bottom (0px) at 360x780, 768x1024, 1024x768, 1440x900 and 1470x802. Gates green: typecheck 0, 45/45 tests, build 44/44; built CSS proof .hero-viewport-height{...100svh - var(--hero-header-offset)...}.",
+        "2026-10-30: Replaced 36-88px billboard headline with 28-40px / 400 bottom-centred caption and underlined text-link CTAs after benchmarking LV, Zara and COS. Verified at 360/768/1024/1440: heading, subtitle and links centred (0px offset), headline one line md+ / two lines on phones, pause button vertically centred on the links and never overlapping, hero bottom = viewport bottom, no horizontal scroll.",
+        "2026-10-30: Hero video switched to existing /videos/h2.mp4 (model in heavyweight hoodie, 1280x720, 10s loop); verified playing at 1440x900 and model stays centred in the 360x780 crop.",
+        "2026-10-30: Tightened space under hero links: caption padding pb-6/sm:pb-8/lg:pb-10 (was 12/16/20), pause button offsets moved to stay centred on the links. Visual gap under link underline 88px -> 48px at 1470x802; 32/40/48/48px at 360/768/1024/1440, hero still flush with viewport, no horizontal scroll.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Pause button sits top-right on phones (CTAs are full width) and bottom-right aligned to the CTA baseline from sm up",
+        "Hero height = 100svh minus header (74px phones, 110px md+) with a 30rem floor, replacing clamp(36rem,85vh,56rem) that left a ~10px sliver of the next section visible; hero border-b removed",
+        "Benchmarked hero copy on live sites at 1440px: Louis Vuitton 32px/400 centred title + 16px text links, COS 35px uppercase, Zara no hero headline. Hero h1 now clamp(1.75rem,1.5vw+1.25rem,2.5rem) / 400 (28-40px), bottom-centred, underlined text-link CTAs; left-side scrim removed"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "public/videos/hero-video.mp4 was added outside this task (43.8s 1920x960 GQ Mexico clip of Ana de Armas, downloaded via ytmp3.gg) and HERO_VIDEO_SRC points at it. Third-party copyrighted footage of a real person: do not commit or deploy it; restore /videos/h2.mp4 or a licensed clip before commit.",
+        "Hero video now /videos/h2.mp4 (existing, previously unused brand clip). User-supplied GQ Mexico clip of Ana de Armas not used: third-party copyrighted footage, watermark removal requested, and celebrity likeness implies endorsement. Needs footage the brand owns or has licensed.",
+        "Header wordmark collides with the search icon at 360px (pre-existing, outside hero scope)"
+      ]
+    },
+    {
+      "id": "TL-WEB-064",
+      "category": "site-audit-critical",
+      "title": "Fix all critical audit findings: invisible images, Qikink catalog, nav filters, fake reviews, unverified claims, discounts/urgency, INR currency, brand intro",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/components/ui/ImageWithFallback.tsx",
+        "src/mocks/fixtures.ts",
+        "src/lib/types.ts",
+        "src/app/page.tsx",
+        "src/app/products/[slug]/page.tsx",
+        "src/app/shop/page.tsx",
+        "src/app/collections/[slug]/page.tsx",
+        "src/app/collections/page.tsx",
+        "src/components/commerce/FilterBar.tsx",
+        "src/components/commerce/ProductCard.tsx",
+        "src/components/commerce/ProductGallery.tsx",
+        "src/components/commerce/ProductGrid.tsx",
+        "src/components/commerce/ProductReviews.tsx",
+        "src/components/commerce/RelatedProductsSection.tsx",
+        "src/components/commerce/VariantPillSelector.tsx",
+        "src/components/commerce/VariantSelector.tsx",
+        "src/components/commerce/VirtualFittingRoom.tsx",
+        "src/components/commerce/CommunityPraise.tsx (removed)",
+        "src/components/commerce/index.ts",
+        "src/components/layout/BrandIntro.tsx",
+        "src/components/layout/Header.tsx",
+        "src/components/layout/Footer.tsx",
+        "src/components/layout/AnnouncementBar.tsx",
+        "src/components/layout/CartDrawer.tsx",
+        "src/components/layout/MobileMenu.tsx",
+        "src/components/editorial/EditorialFeatureSplit.tsx",
+        "src/app/layout.tsx",
+        "src/app/globals.css",
+        "src/app/about/page.tsx",
+        "src/app/about/sustainability/page.tsx",
+        "src/app/cart/page.tsx",
+        "src/app/checkout/page.tsx",
+        "src/app/faq/page.tsx",
+        "src/app/login/page.tsx",
+        "src/app/register/page.tsx",
+        "src/app/search/page.tsx",
+        "src/app/size-guide/page.tsx",
+        "src/app/policies/terms/page.tsx",
+        "src/app/policies/shipping/page.tsx",
+        "src/app/checklist/page.tsx",
+        "tests/business-logic.test.mjs",
+        "tests/homepage-typography.test.mjs",
+        "docs/DESIGN_SYSTEM.md",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Resolves the 8 critical findings from the 2026-10-30 full-site audit.",
+      "log": [
+        "2026-10-30: ImageWithFallback now reads img.complete/naturalWidth after hydration; /shop 13/13 images visible on direct load (was 0/14), broken src shows fallback.",
+        "2026-10-30: Catalog rebuilt from Qikink 'Final Listing.xls': 14 products (UH83, UC22, UJ29, UH35, tote, MP25, UH62, UR50, UC61, FC32, FC39, US52, black mug, kids hoodie) with sheet sizes/colours/weights/print areas; old slugs kept as aliases; collections, demo orders, homepage collection grid, PDP pairs and virtual fitting room all derive from the catalog.",
+        "2026-10-30: Men/Women filter by new Product.audience; Wall art pill removed; FilterBar counts computed from catalog (Figma placeholder counts and 'Show 22 results' removed); '1 item' grammar.",
+        "2026-10-30: Removed invented reviews/ratings (PDP review datasets, 4.6/128 badge, homepage CommunityPraise 'Rated 4.9/5 by 3,800+'); PDP shows honest 'No reviews yet' state.",
+        "2026-10-30: Removed unverified GOTS/OEKO-TEX/GSM/ELS/non-toxic/carbon-neutral/solar claims site-wide (except hero subtitle, out of scope); composition shown as draft notice; spec tables use Qikink sheet facts.",
+        "2026-10-30: Removed compare-at prices, % OFF badge, 'X left', 'next-day dispatch / N allocated', 'Limited Release'.",
+        "2026-10-30: Header currency picker (USD default, no effect) replaced with static '₹ INR'; no $ prices remain.",
+        "2026-10-30: BrandIntro plays on '/' only, once per session (flag written on finish/skip; pre-paint inline script + html[data-intro-seen] CSS avoids flash).",
+        "2026-10-30: Gates green: typecheck 0, 46/46 tests, next build 44/44, built CSS has html[data-intro-seen] .intro-shutter-wrap{display:none}. Browser-verified /shop filters (all 14, men 9, women 10, kids 1, joggers 2, accessories 2), PDPs, collections, search, cart, orders, sustainability, journal: zero banned claim/price strings. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Retail prices are DRAFT (reused prior tiers per category) pending owner sign-off",
+        "Products without real photography show a 'Photo coming soon' tile rather than unrelated stock imagery",
+        "Accessories carry no audience so Men/Women show apparel only",
+        "Hero subtitle '500 GSM organic' left untouched at owner's request (hero excluded from audit)"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "Owner to confirm retail prices",
+        "Owner to supply product photography for 6 imageless pieces",
+        "Hero subtitle still claims '500 GSM organic'",
+        "Brand title/tagline 'organic' wording to be confirmed with Qikink spec sheets",
+        "Posters (Wall art) can be added from Qikink listing once artwork exists"
+      ]
+    },
+    {
+      "id": "TL-WEB-065",
+      "category": "navigation",
+      "title": "Header mega-menu with image tiles (Elie Tahari pattern) + mobile sub-navigation",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/components/layout/navigation.ts",
+        "src/components/layout/Header.tsx",
+        "src/components/layout/MobileMenu.tsx",
+        "src/app/shop/page.tsx",
+        "src/app/globals.css",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Desktop nav items (Men, Women, Kids, New Collection, About) open a full-width hover/focus panel with link columns and image tiles; tiles resolve name, photo and price from the live catalog by slug. Mobile drawer gets expandable sections from the same model. /shop accepts ?audience=&category= and re-syncs category when navigating back to /shop.",
+      "log": [
+        "2026-10-30: Opened at user request (navbar + sub-navbar like elietahari.com, with images).",
+        "2026-10-30: Header row switched to a 3-column grid (logo centred without a positioned wrapper) so panels anchor to the full-width sticky header; also removes the 360px wordmark/search-icon collision.",
+        "2026-10-30: Verified: hover and keyboard focus open panels (aria-expanded/aria-controls), Tab enters panel links, Escape and blur close, link click closes; panels 1440px wide flush under header; tiles fit at 1024 (w-36) and 1440 (xl:w-52) with no horizontal scroll; 29/29 menu links return 200; audience+category filters correct (Men·T-shirts 4, Women·Hoodies 4, Men/Women·Joggers 2); mobile drawer accordion expands. Gates: typecheck 0, 46/46 tests, build 44/44, built CSS .tuw-mega-in present. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": "partial",
+      "key_decisions": [
+        "Tiles reference products by slug and are resolved from useStore() so menu imagery cannot drift from the catalog",
+        "No unrelated editorial/stock imagery in tiles (About uses the brand's own model shot)",
+        "Touch-only large screens navigate on tap (panels are hover/focus enhancements)"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "Add Wall art / posters column once poster artwork exists"
+      ]
+    },
+    {
+      "id": "TL-WEB-066",
+      "category": "site-audit-ux-a11y",
+      "title": "Fix audit UX/content and phone/accessibility findings",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/app/page.tsx",
+        "src/components/layout/Footer.tsx",
+        "src/components/layout/Header.tsx",
+        "src/components/layout/BrandIntro.tsx",
+        "src/lib/site.ts",
+        "next.config.ts",
+        "src/app/faq/layout.tsx",
+        "src/app/journal/layout.tsx",
+        "src/app/journal/[slug]/layout.tsx",
+        "src/app/about/layout.tsx",
+        "src/app/about/sustainability/layout.tsx",
+        "src/app/policies/privacy/layout.tsx",
+        "src/app/policies/returns/layout.tsx",
+        "src/app/policies/shipping/layout.tsx",
+        "src/app/policies/terms/layout.tsx",
+        "src/app/products/[slug]/layout.tsx",
+        "src/app/collections/[slug]/layout.tsx",
+        "src/app/design-system/layout.tsx",
+        "src/app/checklist/layout.tsx",
+        "src/app/{faqs,blog,blog/[slug],our-story,privacy-policy,returns-refunds,shipping-policy,terms}/page.tsx (removed)",
+        "src/app/checkout/page.tsx",
+        "src/components/commerce/VariantSelector.tsx",
+        "src/components/commerce/ProductCard.tsx",
+        "src/components/commerce/DynamicDataTable.tsx",
+        "src/components/commerce/CollectionCard.tsx",
+        "src/components/ui/Breadcrumb.tsx",
+        "src/mocks/store.tsx",
+        "src/app/globals.css",
+        "heading/size edits in about, sustainability, contact, journal, policies, account, search, track-order, size-guide, login, cart, orders pages",
+        "tests/api-and-integrations.test.mjs",
+        "README.md",
+        "docs/DESIGN_SYSTEM.md",
+        "state-for-agents/tasks.json",
+        "18 metadata layouts: shop, collections, contact, policies, size-guide, search, cart, checkout, checkout/success, account, account/orders, account/orders/[id], wishlist, track-order, login, register, forgot-password, reset-password"
+      ],
+      "description": "Second batch of audit fixes: homepage template copy, footer (demo tools, repeats, socials, newsletter label), duplicate routes, 404s and internal-page gating, checkout demo notice, 360px PDP overflow, tap targets, 12px text floor, heading order.",
+      "log": [
+        "2026-10-30: Homepage: 'What You Can Expect' and 'Made When You Order It' copy; 'From the Journal' cards now built from JOURNAL_ARTICLES (old cards linked to 3 nonexistent journal slugs).",
+        "2026-10-30: Footer: demo controls in a closed <details> (Reset Demo State kept per project rule) at 12px with 24px targets; slogan repeats trimmed; newsletter input labelled and success message states demo; social icons now come from site.social and render only when a real URL is set (none yet).",
+        "2026-10-30: Canonical routes /faq, /journal, /about, /policies/*; 8 wrapper routes deleted and 308-redirected; client-page metadata moved into route layouts; products/journal/collection [slug] layouts return real 404s and per-item titles; /design-system and /checklist 404 in production unless TUW_INTERNAL_PAGES=1 at build.",
+        "2026-10-30: Checkout shows 'Demo checkout sandbox — no payment will be collected' above the heading.",
+        "2026-10-30: 360px PDP overflow fixed (purchase row flex-1/min-w-0, price hidden on phones); breadcrumbs, top bar, nav, footer links >=24px; --text-2xs raised to 12px and all text-[10/11px] removed; heading levels fixed site-wide; demo storage keys bumped to tuw_website_v3 after catalog change.",
+        "2026-10-30: Verified: prod server 308s for all 8 legacy URLs, 404 for unknown product/journal/collection and internal pages, per-product <title>; dev audit at 360/1440 on 12 pages: 0 overflow, 0 heading skips, 0 sub-12px text, 0 unlabeled inputs. Gates: typecheck 0, 47/47 tests, build 37/37. Awaiting commit to close.",
+        "2026-10-30: Every route now has its own <title>/description via route layouts; 13 private routes (search, cart, checkout, account, wishlist, track-order, auth pages) are robots noindex,follow. Verified in dev HTML and prod build output. Gates: typecheck 0, 47/47 tests, build 37/37.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Keep the real pages at /faq, /journal, /about, /policies/* and redirect the thin wrappers (metadata moved into layout.tsx since pages are client components)",
+        "Social icons hidden until the owner supplies real profile URLs in src/lib/site.ts",
+        "12px text floor via the --text-2xs token rather than per-component patches"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "Owner to add real social profile URLs in src/lib/site.ts"
+      ]
+    },
+    {
+      "id": "TL-WEB-067",
+      "category": "about-page",
+      "title": "Redesign About Us page from owner mockup",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/app/about/page.tsx",
+        "src/app/about/layout.tsx",
+        "public/images/about/our-story-couple.webp",
+        "src/mocks/fixtures.ts",
+        "src/components/layout/navigation.ts",
+        "state-for-agents/tasks.json",
+        "public/images/about/cream-polo.jpg",
+        "public/images/about/street-polo.jpg",
+        "public/images/about/office-polo.jpg"
+      ],
+      "description": "New About page following the owner's mockup: B&W hero, 'A small team in Surat' with catalog-computed stats, 'Made slowly. Worn often.', on-page chapter nav, interactive 'What we hold on to' values, hoodie hotspot 'Every detail has a reason', 'Small batches of one' with checks, lifestyle bento, 'Fewer things. Better kept.' close.",
+      "log": [
+        "2026-10-30: Built from owner mockup; Ana de Armas AI image not used (real-person likeness), replaced with brand model photo; team/testimonial/Instagram blocks from the second reference not used (fabricated people).",
+        "2026-10-30: Fixed catalog image mapping found during review: section image w3 is a cropped hoodie, moved from Oversized Sweatshirt (prod-4) to Cropped Hoodie (prod-10) incl. demo orders and nav tiles; removed mug handle-side.png from prod-13 (baked-in fake '4.6 ★★★★★' rating).",
+        "2026-10-30: Verified at 360/768/1440: 0 overflow, 1 h1, 0 heading skips, 0 sub-12px text, 0 broken/alt-less images, values buttons aria-pressed + aria-live, hotspots on garment at all widths, 13/13 links/anchors resolve. Gates: build 37/37, typecheck 0, 47/47 tests. Awaiting commit to close.",
+        "2026-10-30: Owner-supplied photos placed: cream-polo (A small team in Surat), street-polo (Made slowly; detail crop for 'Slow mornings' replacing the text placeholder tile), office-polo for the former cropped-hoodie tile ('Desk days'), bottom-anchored with scale-125 so its Polo Ralph Lauren chest logo stays out of frame (verified at 360/768/1440). Desk days spans 2 cols on phones to fill the bento gap. Also: Cropped Hoodie default colour reordered to Maroon to match its photo. Gates: build 37/37, typecheck 0, 48/48 tests.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": "partial",
+      "key_decisions": [
+        "Hero play button from the mockup omitted (no video exists; a non-working play button would be a dead control)",
+        "Stats computed from STORE_PRODUCTS (14 styles, 22 colours shown, 1 print partner) instead of the mockup's numbers"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "Owner to confirm rights to the couple photo (public/images/about/our-story-couple.webp)",
+        "Owner to confirm the founder line naming Opalworks and Urvil Kargathala should be public",
+        "Replace placeholder model/render photos with real product photography when available",
+        "Owner to confirm rights to the three Pinterest-sourced About photos; street-polo shows adidas-style striped sneakers (minor third-party mark)"
+      ]
+    },
+    {
+      "id": "TL-WEB-068",
+      "category": "auth-pages",
+      "title": "Login and register: honest demo auth, brand photos, field-level validation",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/components/layout/AuthShell.tsx",
+        "src/app/login/page.tsx",
+        "src/app/register/page.tsx",
+        "src/app/track-order/page.tsx",
+        "public/images/login-hero.png (removed)",
+        "tests/homepage-typography.test.mjs",
+        "state-for-agents/tasks.json",
+        "public/images/login-hero.webp (owner-supplied)"
+      ],
+      "description": "Shared AuthShell layout; always-visible demo notices; simulated Google/Apple sign-in removed; login/register photos replaced with brand model shots (old login photo resembled a real celebrity); register asks for full name with clear placeholders and an up-front 8-character hint; noValidate forms with inline, screen-reader-linked errors that keep input and focus the first invalid field; Remember me chooses localStorage vs sessionStorage; login honours same-site ?next=; UK spelling and calmer copy; Track Order thumbnails use ImageWithFallback.",
+      "log": [
+        "2026-10-30: Verified in browser: empty submit shows inline errors (no browser bubbles) and focuses email; invalid email keeps typed values; /login?next=/checkout lands on /checkout with session-only storage; Remember me + next=//evil.example lands on /account with localStorage; register shows 'Use at least 8 characters.' / 'Passwords do not match.' with name/email kept; 360/1440: 0 overflow, 0 small text, 0 unlabeled inputs, phone top bar on one line. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
+        "2026-10-30: Owner asked to keep the original photos and fix cropping: auth photo now sits in a padded rounded frame anchored to the top (heads visible at 1440x600, 1470x802, 1920x1080). Original register-hero.png restored; original login-hero.png NOT restored (it is a photo of Ana de Armas, a real celebrity), login keeps the brand hoodie model. Gates: build 37/37, typecheck 0, 48/48 tests.",
+        "2026-10-30: Login photo replaced with owner-supplied image (public/images/login-hero.webp, 736x1104, couple walking). Crest moved from top-left to the bottom caption block so faces at the top of any photo stay clear; verified at 1470x802 and 1440x600 on login and register. Gates: build 37/37, typecheck 0, 48/48 tests.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Removed Google/Apple buttons rather than simulate third-party auth; real providers arrive with the backend phase",
+        "Auth stays demo-only in browser storage; nothing else reads it yet"
+      ],
+      "pushed": false,
+      "follow_ups": [
+        "Forgot/reset password pages not yet moved to AuthShell or given demo notices",
+        "Owner to confirm rights to public/images/register-hero.png (street-style photo of unknown origin)",
+        "Owner to confirm rights to public/images/login-hero.webp; a larger source (>=1400px wide) would look sharper on retina screens"
+      ]
+    },
+    {
+      "id": "TL-WEB-069",
+      "category": "editorial-imagery",
+      "title": "Owner lifestyle photos in homepage and journal editorial spots",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "public/images/lifestyle/linen-man.jpg (owner-supplied)",
+        "src/components/commerce/OurPhilosophy.tsx",
+        "src/lib/types.ts",
+        "src/mocks/fixtures.ts",
+        "src/app/page.tsx",
+        "src/app/journal/page.tsx",
+        "src/app/journal/[slug]/page.tsx",
+        "state-for-agents/tasks.json",
+        "src/app/about/page.tsx",
+        "src/components/commerce/ProductGrid.tsx",
+        "src/components/layout/navigation.ts",
+        "src/components/layout/Header.tsx"
+      ],
+      "description": "Owner-supplied lady and man photos placed in editorial spots, not product cards: Our Philosophy image is now the street polo photo; journal covers for 'Choosing Our Blanks' (man in linen shirt) and 'Printing on Demand' (cream polo) use owner photos. JournalArticle gains optional coverPosition so portrait photos keep faces in the 16:10 crop on the homepage cards, /journal and the article hero. Follow-up: About 'Weekends' tile uses the linen photo; Shop 'The Minimal Frame' story tile is now a full-bleed couple photo (login-hero.webp) and its false 'cut, sewn, and numbered' copy is replaced; Men and Women mega-menus gain a 'From the Journal' editorial tile (linen / cream polo) and the About menu tile uses the couple photo instead of a product shot. NavFeature gains imagePosition.",
+      "log": [
+        "2026-10-30: Verified in browser: Philosophy image at 1440 (526x710), 768 and 360 shows head to knees, no overflow; homepage Journal cards and /journal at 360 keep both faces in frame; article hero at 1440 shows the man head to belt. 'The Art of Being Unavailable' keeps its stock cover. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
+        "2026-10-30: Owner flagged old studio photos across About, Shop and menus. Swapped every editorial/lifestyle spot (About Weekends, Shop Minimal Frame tile, Men/Women/About menu tiles). Product cards, product menu tiles, About detail hotspots and the quality row keep the real garment photos (they show what the customer receives). Verified at 1440 and 360: heads in frame, 0 horizontal overflow, white overlay text legible. /shop?category=men re-tested by direct load and via header and About-page links: 9 men's products, no banners, no tote or women-only items. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Product cards keep showing the actual garments: the catalogue has no polos or trousers, so these outfits cannot represent a product.",
+        "Office polo photo not used on the homepage: its chest logo (third-party trademark) cannot be cropped out of a 16:10 frame with the face in view.",
+        "Shop Minimal Frame copy no longer claims pieces are cut, sewn and numbered: they are printed on partner blanks."
+      ],
+      "follow_ups": [
+        "Owner to confirm usage rights for all supplied lifestyle photos.",
+        "public/images/editorial-philosophy.jpg is now unused; delete once the owner confirms."
+      ],
+      "pushed": false
+    },
+    {
+      "id": "TL-WEB-070",
+      "category": "product-imagery",
+      "title": "Retire studio model photos; owner's lifestyle photos as placeholder product images",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "public/images/section image/ (16 files removed)",
+        "public/images/illustrations/kids-pullover-hoodie-yellow.svg (only remaining drawing)",
+        "src/mocks/fixtures.ts",
+        "src/mocks/store.tsx",
+        "src/app/about/page.tsx",
+        "src/components/commerce/VirtualFittingRoom.tsx",
+        "src/components/layout/navigation.ts",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Owner asked that the studio model photos (section image m*/w*/k*) no longer be used. After a first pass with flat drawings, the owner chose to use their four lifestyle photos for now: man in linen (lifestyle/linen-man.jpg) and two women (about/cream-polo.jpg, about/street-polo.jpg) are placeholder model photos on every apparel/accessory product, order lines, the Hoodies & Sweats cover, About 04 hotspots and About 05 cards. Kids Pullover Hoodie keeps a drawing (no child photo supplied); the mug keeps its existing drawings; office-polo.jpg is not used on products (visible third-party logo). Virtual Fitting Room kept: it now builds Men/Women looks from products whose photo matches the audience and hides tabs with no photos. Men mega-menu shows one tile (all men's pieces share one photo); duplicate journal tiles removed. Demo storage keys bumped to tuw_website_v4.",
+      "log": [
+        "2026-10-30: Verified: 0 references to 'section image' in src/tests; /shop has 12 illustrated cards, 0 'Photo coming soon', 0 broken images; PDP /products/classic-polo, /account/orders, Men and New Collection menus, About 04/05 render illustrations; About hotspots sit on chest mark, hood, sleeve and pocket; homepage at 360 has no horizontal overflow. Gates: build 37/37, typecheck 0, 48/48 tests (h2 count 5 -> 4 after removing the fitting room). Awaiting commit to close.",
+        "2026-10-30: Owner rejected the drawings and the fitting-room removal. Restored VirtualFittingRoom (HEAD + catalog-driven sets), its CSS block, homepage section, exports and typography tests; replaced 11 drawings with the owner photos (alt text marks them as placeholder model photos) and deleted the unused SVGs. Verified at 1440: homepage grid and fitting room (Men/Women tabs) show photos, fresh load requests no section-image or deleted SVG, 0 broken images; About hotspots sit on chest, collar, sleeve and waist. Gates: build 37/37, typecheck 0, 48/48 tests. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Owner decision: lifestyle photos stand in for product photography until real shots exist; alt text says 'placeholder model photo'.",
+        "office-polo.jpg kept off product cards because its chest logo belongs to another brand.",
+        "Kids hoodie keeps a drawing rather than an adult photo."
+      ],
+      "follow_ups": [
+        "LAUNCH BLOCKER: replace placeholder model photos with photos of the actual garments before going live (cards currently show clothes the store does not sell).",
+        "Owner to confirm usage rights for the four lifestyle photos.",
+        "Supply a kids photo to replace the remaining kids hoodie drawing."
+      ],
+      "pushed": false
+    },
+    {
+      "id": "TL-WEB-071",
+      "category": "auth-checkout",
+      "title": "Seeded demo sign-in and end-to-end checkout walkthrough fixes",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/mocks/auth.ts (new: DEMO_ACCOUNT, session helpers, useDemoSession)",
+        "src/components/layout/AccountGate.tsx (new)",
+        "src/app/account/layout.tsx",
+        "src/app/account/page.tsx",
+        "src/app/login/page.tsx",
+        "src/app/register/page.tsx",
+        "src/app/checkout/page.tsx",
+        "src/app/checkout/success/page.tsx",
+        "src/app/account/orders/page.tsx",
+        "src/app/account/orders/[id]/page.tsx",
+        "src/components/ui/Button.tsx",
+        "src/components/commerce/PaymentSimulationPanel.tsx",
+        "src/mocks/store.tsx",
+        "src/mocks/fixtures.ts",
+        "tests/business-logic.test.mjs",
+        "README.md",
+        "state-for-agents/tasks.json"
+      ],
+      "description": "Owner-supplied demo credentials seeded in src/mocks/auth.ts; login accepts only that account (inline error keeps input), with a 'Fill in the demo account' button. Account routes sit behind AccountGate; account page shows the session name/email and a Log out button. Checkout prefills from the session and its default address (guests start empty). Walkthrough fixes: express delivery no longer adds the standard fee on top; free-shipping bar uses the discounted subtotal; bag drawer closes on 'Proceed to Checkout' (Button now forwards onClick/aria-label when rendered as a link); confirmation/order history/order detail showed prices 100x too small (rupees passed to the paise formatter); new orders get paymentStatus/fulfillmentStatus, unique order numbers, local dates, express carrier/ETA, and clear the promo; COD button reads 'Place Order' and confirmation says 'Total due on delivery'; checkout labels linked to inputs, inline errors with focus on the first invalid field, delivery speed is a keyboard radio group, payment errors use role=alert; 8 fixture order lines had empty images.",
+      "log": [
+        "2026-10-30: Browser walkthrough at 1440 (and 360 for checkout): /account signed out -> gate with ?next; wrong password -> inline error, input kept, focus password; demo login (Remember me) -> /account 'Welcome back, Arjun Rao (<demo email>)'; hoodie XL -> drawer -> checkout (drawer closes) -> details prefilled -> express -> Rs 4,149 -> simulated decline (input and bag kept, no order) -> success -> TUW-1661 card/paid/queued, success page Rs 4,149.00; crop top + UNPLUGGED10 + standard COD -> Rs 1,499 (fee 150), payment pending, local date, promo cleared, track-order finds it; express on that cart Rs 1,599 (old code Rs 1,749); log out -> session cleared, /account/orders gated; guest checkout -> empty fields, inline errors, focus first invalid, keyboard radio for delivery; 360 checkout: no overflow, no text under 12px. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": null,
+      "key_decisions": [
+        "Only the seeded demo account can log in; register still signs the new name in on this browser but is not saved as an account.",
+        "Demo credentials live in the mock seed (src/mocks/auth.ts), not in UI copy.",
+        "Guest checkout stays available; signing in only prefills details."
+      ],
+      "follow_ups": [
+        "Forgot/reset password pages still accept any input (not on AuthShell yet).",
+        "Header account icon does not show signed-in state."
+      ],
+      "pushed": false
+    },
+    {
+      "id": "TL-WEB-072",
+      "category": "shop",
+      "title": "Borderless Figma product card on shop + homepage, banners removed, overlay hover with sizes and colours",
+      "status": "done",
+      "owner": "Urvil Kargathala",
+      "started": "2026-10-30",
+      "files": [
+        "src/components/commerce/ProductCard.tsx",
+        "src/components/commerce/ProductGrid.tsx",
+        "src/app/shop/page.tsx",
+        "src/app/search/page.tsx",
+        "src/app/globals.css",
+        "tests/business-logic.test.mjs",
+        "state-for-agents/tasks.json",
+        "src/app/page.tsx",
+        "tests/homepage-typography.test.mjs",
+        "docs/DESIGN_SYSTEM.md",
+        "DESIGN_SYSTEM_USAGE.md",
+        "state-for-agents/skills/design-system/SKILL.md",
+        "src/components/commerce/FilterBar.tsx"
+      ],
+      "description": "ProductCard rebuilt to the Figma Website UI card: no border or radius, warm grey panel (--color-store-card-panel #F3F2F0), 4:5 photo, heart top-right on a soft white disc, then collection label, name (primary-dark, 18-20px) and price. Hover reduced to a slow 3% photo zoom plus underlined name; carousel arrows, quick size bar, swatches and their ~180 lines of motion CSS removed. Collection label is now truthful (category collection, or Acid Wash Collection for acid wash pieces) instead of labelling every hoodie Acid Wash. Whole card is one stretched link; heart is a separate aria-pressed button. Shop grid drops both editorial banners (Acid Wash Collection and The Minimal Frame) and uses 1/2/3 columns; search suggestions show 3. Follow-up (owner asked for colours and sizes back on hover, and the same card on the homepage): hover now slides a size bar over the bottom of the photo (quick add with the chosen colour, check-mark feedback) and swaps the collection line for colour swatches + colour name; both are overlays, so the card height never changes. Also revealed on keyboard focus; touch screens skip the layer. Homepage Explore the Collection now renders ProductCard (BestSellingCard removed). Design docs and typography test updated: card name 18-20px/500, card price 16px/400; fitting room keeps 16px/500. Shop header tightened (owner: too much space): six centred rows became three left-aligned ones; breadcrumb Home > Shop, then 30px title with the live item count beside it, then category pills and Filter & Sort on one row (pills scroll sideways on phones, button reads 'Filter' there). Redundant 'SHOP' eyebrow and 'Catalog' crumb removed; the Acid Wash announcement strip lost its two arrows, which looked like carousel controls but did nothing. Grid now shows 4 cards per row from 1280px (xl), 3 on laptops, 2 on tablets, 1 on phones. Card text follows card width via a container query (@[22rem]): 18px names and 20px side padding on narrow cards, 20px names on wide ones (homepage 3-up).",
+      "log": [
+        "2026-10-30: Verified /shop at 1440 (3 x 389px columns, 14 cards, no banners, panel rgb(243,242,240), 0 border/radius), 768 (2 cols), 360 (1 col, no overflow, no text under 12px); hover shows zoom + underline only; heart toggles wishlist without navigating. Gates: build 37/37, typecheck 0, 52/52 tests; built CSS has .bg-store-card-panel and group-hover:scale-103. Awaiting commit to close.",
+        "2026-10-30: Verified at 1440 on / and /shop: 14 cards, 3 columns; hover shows size bar + swatches with card height unchanged (618px); Navy Blue + M quick add put 'Oversized Classic Tee, Navy Blue, M' in the bag without navigating and opened the drawer; focusing the heart reveals the layer and tab order runs heart -> sizes -> colours -> name; at 375 (touch, no hover) the layer stays hidden (opacity 0, pointer-events none), no overflow. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
+        "2026-10-30: Verified /shop: grid starts 364px from top at 1440 and 768, 312px at 360; Hoodies & sweats pill -> title 'Hoodies & sweats', '4 items', aria-pressed true; Filter opens the drawer; View all -> 14 items; 360 pills row scrolls (604px in 257px) with Filter pinned right, no page overflow. Gates: build 37/37, typecheck 0, 52/52 tests. Awaiting commit to close.",
+        "2026-10-30: Verified /shop at 1440 and 1280: 4 x 286px columns, names 18px on one line, equal card heights (486px), first row fully above the fold; hover size bar fits 7 sizes (min 34px each) and up to 8 swatches without overflow; 1024: 3 x 304px; homepage stays 3 x 389px with 20px names. Gates: build 37/37, typecheck 0, 52/52 tests; built CSS has the 22rem container rules and xl:grid-cols-4. Awaiting commit to close.",
+        "2026-10-30: Closed. Final gates on the committed tree: build 37/37, typecheck 0, 52/52 tests. Committed on urvil with TL-WEB-062..072 (commit hash recorded in session.tip)."
+      ],
+      "finished": "2026-10-30",
+      "verified": true,
+      "design_match": "partial",
+      "key_decisions": [
+        "Sizes and colours appear as overlays on hover/focus instead of expanding the card.",
+        "Card name follows the Figma card (18-20px); design docs updated to match.",
+        "Four per row from 1280px on shop/search/collections/wishlist; homepage keeps 3 larger cards."
+      ],
+      "follow_ups": [
+        "Per-colour product photos would let the swatches change the picture (most products have one photo)."
+      ],
+      "pushed": false
     }
   ]
 }

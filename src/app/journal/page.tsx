@@ -71,6 +71,7 @@ export default function JournalPage() {
                   src={article.coverImage}
                   alt={article.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  style={{ objectPosition: article.coverPosition }}
                 />
                 <div className="absolute top-4 left-4">
                   <Badge variant="dark">{article.category}</Badge>
@@ -87,9 +88,9 @@ export default function JournalPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-[#1A1A1A] group-hover:underline leading-snug">
+                  <h2 className="text-lg font-bold text-[#1A1A1A] group-hover:underline leading-snug">
                     {article.title}
-                  </h3>
+                  </h2>
 
                   <p className="text-xs text-[#666] mt-2 line-clamp-2 leading-relaxed">
                     {article.excerpt}

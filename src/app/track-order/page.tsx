@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import Input from '@/components/ui/Input';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import { useStore } from '@/mocks/store';
@@ -51,6 +52,7 @@ function TrackOrderContent() {
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1">
             <Input
+              aria-label="Order reference"
               placeholder="Enter order reference (e.g. TUW-9042 or TUW-8812)"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -131,7 +133,7 @@ function TrackOrderContent() {
             <div className="relative pl-6 space-y-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#E2DDCF]">
               {order.trackingEvents?.map((event, idx) => (
                 <div key={idx} className="relative">
-                  <div className="absolute -left-6 top-1 w-4 h-4 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
+                  <div className="absolute -left-6 top-1 w-4 h-4 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center text-xs ring-4 ring-white">
                     ✓
                   </div>
                   <div className="space-y-0.5">
@@ -142,7 +144,7 @@ function TrackOrderContent() {
                       </span>
                     </div>
                     <p className="text-xs text-[#666]">{event.description}</p>
-                    <span className="text-[11px] text-[#8A8A8A] block">{event.location}</span>
+                    <span className="text-xs text-[#8A8A8A] block">{event.location}</span>
                   </div>
                 </div>
               ))}
@@ -158,7 +160,7 @@ function TrackOrderContent() {
               {order.items.map((item) => (
                 <div key={item.id} className="py-3 flex items-center gap-4 text-xs">
                   <div className="w-12 h-16 rounded-lg overflow-hidden bg-[#F4F1EA] shrink-0 border border-[#E2DDCF]">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                    <ImageWithFallback src={item.image} alt={item.title} fallbackText="" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-[#1A1A1A]">{item.title}</h4>
@@ -176,7 +178,7 @@ function TrackOrderContent() {
           <div className="w-14 h-14 rounded-full bg-[#FEF2F2] text-[#EF4444] flex items-center justify-center mx-auto mb-4">
             <AlertCircle size={28} />
           </div>
-          <h3 className="text-lg font-bold text-[#1A1A1A]">Reference &ldquo;{searchedRef}&rdquo; Not Found</h3>
+          <h2 className="text-lg font-bold text-[#1A1A1A]">Reference &ldquo;{searchedRef}&rdquo; Not Found</h2>
           <p className="text-xs text-[#666] max-w-sm mx-auto mt-2 leading-relaxed">
             Please verify the order reference number from your confirmation email or dispatch SMS.
           </p>

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
+  Pause,
+  Play,
   ShoppingBag,
-  Heart,
   ShieldCheck,
   Headphones,
   Users,
@@ -14,184 +15,41 @@ import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import VirtualFittingRoom from '@/components/commerce/VirtualFittingRoom';
-import CommunityPraise from '@/components/commerce/CommunityPraise';
 import OurPhilosophy from '@/components/commerce/OurPhilosophy';
-import { useStore } from '@/mocks/store';
-import { formatINR } from '@/lib/format';
+import ProductCard from '@/components/commerce/ProductCard';
+import { STORE_PRODUCTS, JOURNAL_ARTICLES } from '@/mocks/fixtures';
+import type { Product } from '@/lib/types';
 
 
 
-// 2. Best-Selling Products matching Figma & Blackout specimen
-interface ProductColorVariant {
-  name: string;
-  hex: string;
-  image: string;
-}
+// 2. Explore the Collection: catalog products shown with the shared ProductCard
+const CATEGORY_LABELS: Record<Product['category'], string> = {
+  hoodies: 'Hoodies & Sweats',
+  tees: 'T-shirts',
+  pants: 'Joggers',
+  kids: 'Kids',
+  accessories: 'Accessories',
+  mugs: 'Accessories',
+  jackets: 'Jackets',
+  capsules: 'Capsules',
+};
 
-interface BestSellerItem {
-  id: string;
-  slug: string;
-  title: string;
-  category: string;
-  colorCount: number;
-  priceINR: number;
-  compareAtPriceINR?: number;
-  discountPercent?: number;
-  image: string;
-  hoverImage?: string;
-  isBestseller?: boolean;
-  colors?: ProductColorVariant[];
-  sizes?: string[];
-}
+// Derived from the catalog so the homepage can never drift from /shop.
+const HOME_PRODUCTS = STORE_PRODUCTS.filter((p) => p.images.length > 0);
 
-const BEST_SELLING_PRODUCTS: BestSellerItem[] = [
-  {
-    id: 'bs-1',
-    slug: 'satin-finish-tailored-blazer',
-    title: 'Satin-Finish Tailored Blazer',
-    category: 'Jacket',
-    colorCount: 4,
-    discountPercent: 30,
-    priceINR: 3099,
-    compareAtPriceINR: 4499,
-    image: '/images/products/satin-blazer/pink.png',
-    hoverImage: '/images/products/satin-blazer/black.png',
-    isBestseller: true,
-    colors: [
-      { name: 'Rose', hex: '#D7A19E', image: '/images/products/satin-blazer/pink.png' },
-      { name: 'Crimson', hex: '#E60000', image: '/images/products/satin-blazer/red.png' },
-      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/satin-blazer/lime.png' },
-      { name: 'Onyx Black', hex: '#1B1B1B', image: '/images/products/satin-blazer/black.png' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'bs-2',
-    slug: 'linen-blend-two-piece-suit-set',
-    title: 'Linen-Blend Two-Piece Suit Set',
-    category: 'Jacket',
-    colorCount: 2,
-    discountPercent: 25,
-    priceINR: 1805,
-    compareAtPriceINR: 2400,
-    image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp',
-    hoverImage: '/images/products/linen-suit/blue.png',
-    isBestseller: true,
-    colors: [
-      { name: 'Oatmeal', hex: '#D9D0C1', image: '/images/products/linen-suit/VGDui1szaI2AyRJ8NpHOYaN5lP0.webp' },
-      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/linen-suit/blue.png' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'bs-3',
-    slug: 'oversized-logo-graphic-tee',
-    title: 'Oversized Logo Graphic Tee',
-    category: 'T-shirt',
-    colorCount: 2,
-    discountPercent: 20,
-    priceINR: 2099,
-    compareAtPriceINR: 2600,
-    image: '/images/products/graphic-tee/lime.png',
-    hoverImage: '/images/products/graphic-tee/black.webp',
-    isBestseller: true,
-    colors: [
-      { name: 'Neon Lime', hex: '#B8FA1B', image: '/images/products/graphic-tee/lime.png' },
-      { name: 'Noir Black', hex: '#1B1B1B', image: '/images/products/graphic-tee/black.webp' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'bs-4',
-    slug: 'tailored-wide-leg-pantsuit',
-    title: 'Tailored Wide-Leg Pantsuit',
-    category: 'Pant',
-    colorCount: 2,
-    discountPercent: 30,
-    priceINR: 3499,
-    compareAtPriceINR: 4999,
-    image: '/images/products/pantsuit/blue.png',
-    hoverImage: '/images/products/pantsuit/brown.webp',
-    colors: [
-      { name: 'Royal Blue', hex: '#1D5BD8', image: '/images/products/pantsuit/blue.png' },
-      { name: 'Espresso Brown', hex: '#4A3525', image: '/images/products/pantsuit/brown.webp' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'bs-5',
-    slug: 'short-sleeve-relaxed-fit-shirt',
-    title: 'Short-Sleeve Relaxed Fit Shirt',
-    category: 'Long Sleeve',
-    colorCount: 2,
-    discountPercent: 55,
-    priceINR: 1899,
-    compareAtPriceINR: 3999,
-    image: '/images/products/relaxed-shirt/red.png',
-    hoverImage: '/images/products/relaxed-shirt/ecru.webp',
-    colors: [
-      { name: 'Crimson Red', hex: '#C21B26', image: '/images/products/relaxed-shirt/red.png' },
-      { name: 'Ecru Linen', hex: '#E8E2D5', image: '/images/products/relaxed-shirt/ecru.webp' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-  {
-    id: 'bs-6',
-    slug: 'corduroy-teddy-bomber-jacket',
-    title: 'Corduroy Teddy Bomber Jacket',
-    category: 'Jacket',
-    colorCount: 2,
-    discountPercent: 40,
-    priceINR: 3150,
-    compareAtPriceINR: 5250,
-    image: '/images/products/bomber-jacket/black.png',
-    hoverImage: '/images/products/bomber-jacket/camel.png',
-    isBestseller: true,
-    colors: [
-      { name: 'Pitch Black', hex: '#1B1B1B', image: '/images/products/bomber-jacket/black.png' },
-      { name: 'Warm Camel', hex: '#C49760', image: '/images/products/bomber-jacket/camel.png' },
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-  },
-];
-
-const CATEGORY_PILLS = [
-  'All Collection',
-  'Pullover',
-  'Pant',
-  'Tippers',
-  'T-shirt',
-  'Jacket',
-  'Long Sleeve',
-  'Swim Shorts',
-];
+const CATEGORY_PILLS = ['All Collection', 'Hoodies & Sweats', 'T-shirts', 'Kids', 'Accessories'];
 
 // 3. Virtual fitting room data + interaction live in @/components/commerce/VirtualFittingRoom.tsx
 
-// 4. Product Recommendations / Lookbook Stories
-const RECOMMENDATION_STORIES = [
-  {
-    id: 'story-1',
-    title: 'The Urban Denim Style, Comfortable Feel for City Life',
-    subtitle: 'Crafted for seamless movement, combining structural cotton duck twill with relaxed tailoring.',
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&auto=format&fit=crop&q=80',
-    slug: 'urban-denim-style',
-  },
-  {
-    id: 'story-2',
-    title: 'The Eco-Friendly Wardrobe: Sustainable Choice for Everyday Wear',
-    subtitle: 'Zero inventory waste, water-based non-toxic inks, and 100% GOTS certified organic fibers.',
-    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&auto=format&fit=crop&q=80',
-    slug: 'sustainable-choice',
-  },
-  {
-    id: 'story-3',
-    title: 'The Minimal Approach: Designed for Performance and Comfort',
-    subtitle: 'Architectural cuts that hold their shape over years without synthetic polyester blends.',
-    image: 'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=900&auto=format&fit=crop&q=80',
-    slug: 'minimal-performance',
-  },
-];
+// 4. From the Journal: real articles, so every card links somewhere that exists
+const RECOMMENDATION_STORIES = JOURNAL_ARTICLES.slice(0, 3).map((article) => ({
+  id: article.id,
+  title: article.title,
+  subtitle: article.excerpt,
+  image: article.coverImage,
+  imagePosition: article.coverPosition,
+  slug: article.slug,
+}));
 
 // 5. Customer Experience feature pillars (Section 3)
 interface ExperienceFeature {
@@ -207,189 +65,63 @@ const EXPERIENCE_FEATURES: ExperienceFeature[] = [
     id: 'support',
     icon: Headphones,
     iconClassName: 'text-secondary-mint',
-    title: 'Quick and Friendly Support',
+    title: 'Real People, Real Replies',
     description:
-      'Our support team is always ready to assist you quickly and efficiently, resolving your issues in no time with human care.',
+      'Questions about sizing or an order? Write to us through the contact page and someone from the studio will get back to you.',
   },
   {
     id: 'collection',
     icon: Users,
     iconClassName: 'text-secondary-blue',
-    title: 'New Collection Everyday',
+    title: 'Printed for You',
     description:
-      'Explore our new arrivals and trendiest additions added to our store daily. Stay ahead of fashion and refreshed styles.',
+      'Nothing is printed until you order it, so every piece is made for someone, never for a warehouse.',
   },
   {
     id: 'satisfaction',
     icon: ShieldCheck,
     iconClassName: 'text-store-gold',
-    title: 'Satisfaction Guaranteed',
+    title: 'Honest Details',
     description:
-      'We guarantee your complete satisfaction with every purchase. Enjoy high-quality products and customer care you can rely on.',
+      'Sizes, colours and weights come from our print partner. Anything still being confirmed is clearly marked as a draft.',
   },
 ];
 
-// Interactive Best-Selling Card with Blackout-style Swatch Hover & Size Chips
-function BestSellingCard({
-  item,
-  isFav,
-  onToggleWishlist,
-}: {
-  item: BestSellerItem;
-  isFav: boolean;
-  onToggleWishlist: () => void;
-}) {
-  const [selectedColor, setSelectedColor] = useState<ProductColorVariant | null>(item.colors?.[0] || null);
-  const [hoveredColor, setHoveredColor] = useState<ProductColorVariant | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string>('M');
-
-  // Active display image: hovered color if mouse is over a swatch, otherwise selected color image, otherwise base image
-  const displayImage = hoveredColor?.image || selectedColor?.image || item.image;
-  const activeColorName = hoveredColor?.name || selectedColor?.name || '';
-  const sizes = item.sizes || ['S', 'M', 'L', 'XL'];
-
-  return (
-    <div className="group flex flex-col bg-store-surface rounded-2xl border border-store-border overflow-hidden transition-all duration-300 hover:border-store-action-primary/30 hover:shadow-lg">
-      {/* Image Container matching Blackout Template (Fast, clean dual-image swap on hover) */}
-      <div className="relative aspect-card-tall w-full bg-store-cream overflow-hidden">
-        <Link href={`/products/${item.slug}`} className="block relative w-full h-full">
-          {/* Default / Active Color Image */}
-          <img
-            src={displayImage}
-            alt={`${item.title} ${activeColorName}`}
-            loading="lazy"
-            className={`w-full h-full object-cover transition-all duration-300 ease-out group-hover:scale-105 ${
-              item.hoverImage && !hoveredColor ? 'group-hover:opacity-0' : ''
-            }`}
-          />
-
-          {/* Hover Image (Fast snappy reveal on card hover when not hovering a swatch) */}
-          {item.hoverImage && !hoveredColor && (
-            <img
-              src={item.hoverImage}
-              alt={`${item.title} hover view`}
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
-            />
-          )}
-        </Link>
-
-        {/* Wishlist Heart Button (Clean, crisp, no blur) */}
-        <button
-          type="button"
-          aria-label={isFav ? 'Remove from wishlist' : 'Save to wishlist'}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onToggleWishlist();
-          }}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white border border-store-border flex items-center justify-center text-store-text-primary hover:scale-110 active:scale-95 transition-transform duration-150 cursor-pointer shadow-xs"
-        >
-          <Heart
-            size={16}
-            className={isFav ? 'fill-secondary-purple text-secondary-purple' : 'text-store-text-primary'}
-          />
-        </button>
-      </div>
-
-      {/* Product Details matching Blackout Specimen */}
-      <div className="p-4 flex flex-col gap-2.5">
-        {/* Row 1: Title & Price */}
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans text-base font-medium text-store-text-primary leading-tight">
-            <Link href={`/products/${item.slug}`} className="hover:text-store-action-primary transition-colors">
-              {item.title}
-            </Link>
-          </h3>
-          <div className="flex items-baseline gap-1.5 text-right shrink-0">
-            <span className="font-heading font-medium text-base text-store-text-primary block tuw-tabular-nums">
-              {formatINR(item.priceINR * 100)}
-            </span>
-            {item.compareAtPriceINR && (
-              <span className="text-xs text-store-text-secondary line-through tuw-tabular-nums">
-                {formatINR(item.compareAtPriceINR * 100)}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Row 2: View Details & Size Selector Buttons */}
-        <div className="flex items-center justify-between pt-0.5">
-          <Link
-            href={`/products/${item.slug}`}
-            className="text-xs text-store-text-secondary hover:text-store-text-primary underline underline-offset-2 transition-colors font-medium"
-          >
-            View details
-          </Link>
-
-          {/* Size Pills: [S] [M] [L] [XL] */}
-          <div className="flex items-center gap-1">
-            {sizes.map((s) => {
-              const isSelected = selectedSize === s;
-              return (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setSelectedSize(s)}
-                  className={`h-5 min-w-5 px-1 text-2xs font-semibold border rounded transition-all cursor-pointer flex items-center justify-center ${
-                    isSelected
-                      ? 'bg-store-text-primary text-white border-store-text-primary'
-                      : 'bg-white text-store-text-secondary border-store-border hover:border-store-text-primary hover:text-store-text-primary'
-                  }`}
-                  aria-label={`Select size ${s}`}
-                >
-                  {s}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Row 3: Color Swatches with Real-Time Hover Color Swap */}
-        {item.colors && item.colors.length > 0 && (
-          <div className="flex items-center justify-between pt-1.5 border-t border-store-border/60">
-            <div className="flex items-center gap-1.5">
-              {item.colors.map((color) => {
-                const isActive = (hoveredColor?.name || selectedColor?.name) === color.name;
-                return (
-                  <button
-                    key={color.name}
-                    type="button"
-                    title={color.name}
-                    aria-label={`View ${item.title} in ${color.name}`}
-                    onMouseEnter={() => setHoveredColor(color)}
-                    onMouseLeave={() => setHoveredColor(null)}
-                    onClick={() => setSelectedColor(color)}
-                    className={`w-4 h-4 rounded-full border transition-all cursor-pointer ${
-                      isActive
-                        ? 'ring-2 ring-store-text-primary ring-offset-1 scale-110'
-                        : 'border-store-border hover:scale-105 opacity-80 hover:opacity-100'
-                    }`}
-                    style={{ backgroundColor: color.hex }}
-                  />
-                );
-              })}
-            </div>
-            <span className="text-2xs text-store-text-secondary font-medium lowercase first-letter:uppercase">
-              {hoveredColor ? hoveredColor.name : selectedColor?.name || `${item.colorCount} colors`}
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+const HERO_VIDEO_SRC = '/videos/h2.mp4';
 
 export default function HomePage() {
-  const { isInWishlist, toggleWishlist } = useStore();
-
   const [activeCategory, setActiveCategory] = useState('All Collection');
+
+  // Hero background video: swap HERO_VIDEO_SRC for the final 30s hero cut.
+  // Looping motion longer than 5s needs a pause control (WCAG 2.2.2), and
+  // reduced-motion visitors start on a still frame.
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [isHeroVideoPlaying, setIsHeroVideoPlaying] = useState(true);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+    }
+    setIsHeroVideoPlaying(!video.paused);
+  }, []);
+
+  const toggleHeroVideo = () => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
+    }
+  };
 
   // Filter best sellers
   const filteredProducts =
     activeCategory === 'All Collection'
-      ? BEST_SELLING_PRODUCTS
-      : BEST_SELLING_PRODUCTS.filter((p) => p.category.toLowerCase() === activeCategory.toLowerCase());
+      ? HOME_PRODUCTS
+      : HOME_PRODUCTS.filter((p) => CATEGORY_LABELS[p.category].toLowerCase() === activeCategory.toLowerCase());
 
   return (
     <div className="min-h-screen flex flex-col bg-store-canvas text-store-text-primary selection:bg-store-action-primary selection:text-white">
@@ -397,73 +129,79 @@ export default function HomePage() {
 
       <main id="main-content" tabIndex={-1} className="flex-1">
         {/* =========================================================================
-            SECTION 1: HERO SHOWCASE (Dedicated Video h1, Minimal Text, Rich Interactive Controls)
+            SECTION 1: HERO SHOWCASE (Full-bleed video, single-size two-line headline, pause control)
             ========================================================================= */}
         <section
           aria-label="Hero Showcase"
-          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-end border-b border-store-border select-none"
+          className="relative w-full overflow-hidden bg-primary-dark hero-viewport-height flex flex-col justify-end"
         >
-          {/* Background Video (Dedicated Benchmark Hero Video h1, full muted in continuous loop) */}
+          {/* Background Video (decorative, muted, continuous loop) */}
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <video
-              src="/videos/h1.mp4"
+              ref={heroVideoRef}
+              src={HERO_VIDEO_SRC}
               autoPlay
               loop
               muted
               playsInline
               preload="auto"
+              aria-hidden="true"
+              tabIndex={-1}
+              onPlay={() => setIsHeroVideoPlaying(true)}
+              onPause={() => setIsHeroVideoPlaying(false)}
               className="w-full h-full object-cover video-watermark-cloak"
             />
           </div>
 
           {/* Cinematic Scrim Gradients (Guarantee 100% WCAG 2.1 AA Contrast) */}
-          <div className="absolute inset-0 hero-scrim-horizontal z-10 pointer-events-none" />
           <div className="absolute inset-0 hero-scrim-gradient z-10 pointer-events-none" />
 
-          {/* Quiet Luxury Minimal Editorial Presentation (Bottom Anchored, Unified Cohesive Group) */}
-          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 lg:pb-16 flex-1 flex flex-col justify-end">
-            <div className="max-w-xl space-y-4">
-              {/* Delicate Architectural Eyebrow */}
-              <div className="flex items-center gap-3 text-base uppercase tracking-editorial text-white/70 font-sans font-medium">
-                <span className="w-7 h-px bg-store-gold" />
-                <span>SS26 • Slow-Living Atelier</span>
-              </div>
-
-              {/* Ultra-Refined Minimal Headline */}
-              <h1 className="font-heading tracking-tight text-white leading-[1.04]">
-                <span className="block font-light text-[clamp(2rem,5vw+0.5rem,4.5rem)]">
+          {/* Bottom-centred campaign caption, modelled on luxury house heroes
+              (Louis Vuitton: 32px / 400 title + 16px text links; COS: 35px):
+              the video carries the hero, the copy stays small. */}
+          <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="font-heading font-normal text-[clamp(1.75rem,1.5vw+1.25rem,2.5rem)] tracking-tight text-white leading-tight">
+                <span className="block md:inline">
                   Architectural Form<span className="text-store-gold">.</span>
-                </span>
-                <span className="block font-normal text-[clamp(1.375rem,3vw+0.5rem,3rem)] text-white/80 tracking-wide mt-1">
-                  Pure Permanence
-                </span>
+                </span>{' '}
+                <span className="block md:inline">Pure Permanence.</span>
               </h1>
 
-              {/* Minimal Single-Line Subtitle */}
-              <p className="text-xs sm:text-sm text-white/75 font-sans font-light max-w-sm leading-relaxed tracking-wide">
-                Dense 500 GSM organic essentials, tailored on-demand.
+              <p className="mt-3 text-sm text-white/75 font-sans font-light leading-relaxed">
+                Dense 500 GSM organic essentials, tailored <span className="whitespace-nowrap">on-demand.</span>
               </p>
 
-              {/* Refined Luxury Action Buttons (Directly unified beneath subtitle, zero excessive gap) */}
-              <div className="pt-2 sm:pt-3 flex flex-wrap gap-4 items-center">
+              <div className="mt-5 sm:mt-6 flex items-center justify-center gap-6 sm:gap-10">
                 <Link
                   href="/shop"
-                  className="group inline-flex items-center gap-3 px-8 h-12 rounded-full bg-white text-primary-dark font-sans font-medium text-xs tracking-luxury uppercase hover:bg-store-cream active:scale-95 transition-all shadow-md"
+                  className="inline-flex items-center h-11 text-white font-sans font-medium text-xs tracking-luxury uppercase underline underline-offset-[6px] decoration-white/60 hover:decoration-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold focus-visible:ring-offset-4 focus-visible:ring-offset-primary-dark rounded-sm"
                 >
-                  <span>Explore Collection</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform text-primary-dark" />
+                  Shop Collection
                 </Link>
-
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2 px-7 h-12 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 text-white font-sans font-medium text-xs tracking-luxury uppercase active:scale-95 transition-all"
+                  className="inline-flex items-center h-11 text-white font-sans font-medium text-xs tracking-luxury uppercase underline underline-offset-[6px] decoration-white/60 hover:decoration-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold focus-visible:ring-offset-4 focus-visible:ring-offset-primary-dark rounded-sm"
                 >
-                  <span>The Manifesto</span>
+                  The Manifesto
                 </Link>
               </div>
             </div>
           </div>
 
+          {/* Pause / play: top-right on phones, bottom-right (level with the links) from sm up */}
+          <div className="absolute inset-x-0 top-4 sm:top-auto sm:bottom-[1.875rem] lg:bottom-[2.375rem] z-20 pointer-events-none">
+            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-end">
+              <button
+                type="button"
+                onClick={toggleHeroVideo}
+                aria-label={isHeroVideoPlaying ? 'Pause background video' : 'Play background video'}
+                className="pointer-events-auto inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 hover:bg-white/15 backdrop-blur-md border border-white/20 hover:border-white/40 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-store-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+              >
+                {isHeroVideoPlaying ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
+              </button>
+            </div>
+          </div>
         </section>
 
         {/* =========================================================================
@@ -479,16 +217,13 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
               <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
-                Explore Our Best Selling
-                <br className="hidden sm:inline" />
-                {' '}Product Collection
+                Explore the Collection
               </h2>
             </div>
 
             <div className="max-w-md space-y-4">
               <p className="text-base text-store-text-secondary font-sans leading-relaxed">
-                Discover a curated selection of our most popular and best-selling styles, chosen for
-                quality and modern appeal.
+                Hoodies, tees and everyday objects, each printed with the leaping deer after you order.
               </p>
               <div>
                 <Link
@@ -525,21 +260,16 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* 6 Product Cards Grid (3 columns x 2 rows) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProducts.map((item) => (
-              <BestSellingCard
-                key={item.id}
-                item={item}
-                isFav={isInWishlist(item.id)}
-                onToggleWishlist={() => toggleWishlist(item.id)}
-              />
+          {/* Same borderless card as /shop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </section>
 
         {/* =========================================================================
-            SECTION 3: WE DELIVER EXCEPTIONAL CUSTOMER EXPERIENCES (Figma Teal Banner)
+            SECTION 3: WHAT YOU CAN EXPECT (Figma Teal Banner)
             ========================================================================= */}
         <section className="bg-primary-dark text-white py-20 border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -547,16 +277,14 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
               <div>
                 <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white">
-                  We Deliver Exceptional
-                  <br className="hidden sm:inline" />
-                  {' '}Customer Experiences
+                  What You Can Expect
                 </h2>
               </div>
 
               <div className="max-w-md">
                 <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed">
-                  Take advantage of our dedicated customer service team ready to assist with any
-                  questions or issues you may encounter.
+                  A small studio printing to order. Here is what we can promise, and nothing we
+                  cannot.
                 </p>
               </div>
             </div>
@@ -586,11 +314,6 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            SECTION 3.5: WORDS OF PRAISE FROM OTHERS (Single-Line Testimonial Marquee)
-            ========================================================================= */}
-        <CommunityPraise />
-
-        {/* =========================================================================
             SECTION 4: VIRTUAL FITTING ROOM
             ========================================================================= */}
         <section aria-label="Virtual fitting room" className="py-20 sm:py-28 border-b border-store-border">
@@ -598,16 +321,16 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            SECTION 5: PRODUCT RECOMMENDATIONS (Figma Editorial Cards)
+            SECTION 5: FROM THE JOURNAL (Figma Editorial Cards)
             ========================================================================= */}
         <section className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-store-border">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
               <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-store-text-primary">
-                Product Recommendations
+                From the Journal
               </h2>
               <p className="text-lg text-store-text-secondary font-sans mt-1">
-                Curated editorial content & stories behind every piece we create.
+                Notes on how our pieces are made, and why we print to order.
               </p>
             </div>
 
@@ -615,7 +338,7 @@ export default function HomePage() {
               href="/journal"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-store-action-primary text-white text-xs font-semibold uppercase tracking-wider hover:bg-store-action-hover transition-colors shrink-0 self-start sm:self-auto"
             >
-              <span>2024 Trends</span>
+              <span>Read the Journal</span>
               <ArrowRight size={14} />
             </Link>
           </div>
@@ -629,8 +352,10 @@ export default function HomePage() {
                 <div className="relative aspect-card-story w-full bg-store-cream overflow-hidden">
                   <img
                     src={story.image}
-                    alt={story.title}
+                    alt=""
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ objectPosition: story.imagePosition }}
                   />
                 </div>
                 <div className="p-6 space-y-2">
@@ -677,19 +402,17 @@ export default function HomePage() {
 
           <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <h2 className="font-heading text-[clamp(1.75rem,4vw+0.5rem,3rem)] font-medium tracking-tight text-white leading-tight">
-              Let&apos;s Take Your Fashion to
-              <br className="hidden sm:inline" />
-              {' '}The Stratosphere
+              Made When You Order It
             </h2>
             <p className="text-base sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed font-sans">
-              Ready to elevate your style journey? Step into our latest line crafted for every moment.
+              Choose a piece and it is printed for you in Tiruppur. No warehouse, no leftovers.
             </p>
             <div className="pt-2">
               <Link
                 href="/shop"
                 className="inline-flex items-center gap-2.5 px-8 h-12 rounded-full bg-white text-primary-dark font-sans font-semibold text-sm hover:bg-store-cream active:scale-95 transition-all shadow-lg"
               >
-                <span>Get Started</span>
+                <span>Shop the Collection</span>
                 <ArrowRight size={16} />
               </Link>
             </div>
